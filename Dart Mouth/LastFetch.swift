@@ -19,6 +19,21 @@ class LastFetch: Object {
     dynamic var month: Int = 0
     dynamic var year: Int = 0
     
+    class func createLastFetchForToday() {
+        let realm = try! Realm()
+        let lastFetch = LastFetch()
+        let todaysDate = DateUtil.getTodaysDate()
+        
+        lastFetch.day = todaysDate.day
+        lastFetch.month = todaysDate.month
+        lastFetch.year = todaysDate.year
+        
+        try! realm.write {
+            print("Writing Last Fetch")
+            realm.add(lastFetch)
+        }
+    }
+    
 // Specify properties to ignore (Realm won't persist these)
     
 //  override static func ignoredProperties() -> [String] {

@@ -38,18 +38,6 @@ class InitializationViewController: UIViewController {
             // Today's Recipes are not already loaded, so load them.
             let todaysDate = DateUtil.getTodaysDate()
             api.getRecipesForDate(day: todaysDate.day, month: todaysDate.month, year: todaysDate.year, successHandler: completionHandler)
-            
-            // Create a LastFetch
-            let realm = try! Realm()
-            let lastFetch = LastFetch()
-            lastFetch.day = todaysDate.day
-            lastFetch.month = todaysDate.month
-            lastFetch.year = todaysDate.year
-            
-            try! realm.write {
-                print("Writing Last Fetch")
-                realm.add(lastFetch)
-            }
         } else {
             self.performSegueWithIdentifier("Start After Initializing", sender: self)
         }
@@ -57,6 +45,8 @@ class InitializationViewController: UIViewController {
     
     private func completionHandler(json: JSON) {
         Recipe.saveRecipes(json)
+        // Create a LastFetch so that today is marked as being fetched and doesn't repeat.
+        LastFetch.createLastFetchForToday()
         activityIndicator.stopAnimating()
         self.performSegueWithIdentifier("Start After Initializing", sender: self)
     }
