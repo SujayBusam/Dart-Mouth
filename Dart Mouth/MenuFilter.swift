@@ -28,12 +28,16 @@ struct MenuFilter {
         1: 0, // Breakfast
         3: 1, // Lunch
         5: 2, // Dinner
-        16: 3 // Late Night
+        16: 3, // Late Night
+        
+        // Special case for Novack
+        10: 4,
+        56: 4
     ]
     
     func filter(allItems : [Recipe]) -> [Recipe] {
         return allItems.filter({ (recipe : Recipe) -> Bool in
-            let mealMatch = mealIdDict[recipe.mealId] == meal
+            let mealMatch = mealIdDict[recipe.mealId] == meal || mealIdDict[recipe.mealId] == 4
             let venueMatch = venueKeyDict[recipe.venueKey] == venue
             let stringMatch = searchText.isEmpty || recipe.name.lowercaseString.rangeOfString(self.searchText.lowercaseString) != nil
             return (mealMatch && venueMatch && stringMatch)

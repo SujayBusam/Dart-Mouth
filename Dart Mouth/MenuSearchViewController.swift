@@ -37,7 +37,7 @@ class MenuSearchViewController: UIViewController, UISearchBarDelegate, UITableVi
         
         let realm = try! Realm()
         // TODO(Sujay): Must be a more "Realm-like" way to do this without iterating over returned collection
-        for recipe in realm.objects(Recipe).filter(DateUtil.getTodaysDatePredicate()) {
+        for recipe in realm.objects(Recipe).filter(DateUtil.getTodaysDatePredicate()).sorted("name") {
             allRecipes.append(recipe)
         }
         reloadRecipes()
@@ -51,6 +51,10 @@ class MenuSearchViewController: UIViewController, UISearchBarDelegate, UITableVi
     @IBAction func venueChange(sender: UISegmentedControl) {
         menuFilter.venue = sender.selectedSegmentIndex
         reloadRecipes()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchField.resignFirstResponder()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -93,6 +97,7 @@ class MenuSearchViewController: UIViewController, UISearchBarDelegate, UITableVi
                     if let targetViewController = segue.destinationViewController as? RecipeNutritionViewController {
                         let recipeIndex = recipeTableView.indexPathForSelectedRow!.row
                         targetViewController.recipe = shownRecipes[recipeIndex]
+                        searchField.resignFirstResponder()
                     }
                 default: break
             }

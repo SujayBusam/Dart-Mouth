@@ -21,7 +21,6 @@
 		2375D5ED1BDC09B70065AC14 /* Dart_MouthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2375D5EC1BDC09B70065AC14 /* Dart_MouthTests.swift */; };
 		237630811BEE9498000A6C54 /* MenuFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376307C1BEE9498000A6C54 /* MenuFilter.swift */; };
 		237630821BEE9498000A6C54 /* MenuSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376307D1BEE9498000A6C54 /* MenuSearchViewController.swift */; };
-		237630841BEE9498000A6C54 /* RecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376307F1BEE9498000A6C54 /* RecipeTableViewController.swift */; };
 		2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376308A1BEE94D8000A6C54 /* PreferencesViewController.swift */; };
 		2376308D1BEE94D8000A6C54 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */; };
 		237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */; };
@@ -62,7 +61,6 @@
 		2375D5EE1BDC09B70065AC14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2376307C1BEE9498000A6C54 /* MenuFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuFilter.swift; sourceTree = "<group>"; };
 		2376307D1BEE9498000A6C54 /* MenuSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSearchViewController.swift; sourceTree = "<group>"; };
-		2376307F1BEE9498000A6C54 /* RecipeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTableViewController.swift; sourceTree = "<group>"; };
 		2376308A1BEE94D8000A6C54 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 			children = (
 				2376307C1BEE9498000A6C54 /* MenuFilter.swift */,
 				2376307D1BEE9498000A6C54 /* MenuSearchViewController.swift */,
-				2376307F1BEE9498000A6C54 /* RecipeTableViewController.swift */,
 				237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */,
 			);
 			name = MenuView;
@@ -449,7 +446,6 @@
 				238C8D491BF3F3CC00FF1E43 /* NutrientUtil.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
 				230B1A831BE850A7007E5576 /* Menu.swift in Sources */,
-				237630841BEE9498000A6C54 /* RecipeTableViewController.swift in Sources */,
 				237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */,
 				230B1A811BE84CDA007E5576 /* Mealtime.swift in Sources */,
 				2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */,
