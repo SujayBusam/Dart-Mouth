@@ -1,4 +1,4 @@
-platform :ios, '8.0'
+platform :ios, '9.1'
 use_frameworks!
 
 target 'Dart Mouth' do
