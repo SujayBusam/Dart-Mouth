@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class InitializationViewController: UIViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,6 +30,9 @@ class InitializationViewController: UIViewController {
         let api = DartFoodAPI()
         let realm = try! Realm()
         let predicate = DateUtil.getTodaysDatePredicate()
+        
+        // Activity indicator start
+        activityIndicator.startAnimating()
         
         if realm.objects(LastFetch).filter(predicate).isEmpty {
             // Today's Recipes are not already loaded, so load them.
@@ -52,6 +57,7 @@ class InitializationViewController: UIViewController {
     
     private func completionHandler(json: JSON) {
         Recipe.saveRecipes(json)
+        activityIndicator.stopAnimating()
         self.performSegueWithIdentifier("Start After Initializing", sender: self)
     }
 

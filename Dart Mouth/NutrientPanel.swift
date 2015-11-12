@@ -44,7 +44,6 @@ class NutrientPanel: Object {
         // Write to Realm
         let realm = try! Realm()
         try! realm.write {
-            print("Writing Nutrient Panel")
             realm.add(nutrientPanel)
         }
         

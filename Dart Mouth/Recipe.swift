@@ -77,7 +77,6 @@ class Recipe: Object {
         recipe.mmId = json["mmId"].number!.integerValue
         
         try! realm.write {
-            print("Writing Recipe: \(recipe.name)")
             realm.add(recipe)
         }
     }

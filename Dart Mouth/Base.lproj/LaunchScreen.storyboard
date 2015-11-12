@@ -1,40 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="AXf-VE-wXN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <scene sceneID="Uzi-D4-5xd">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                <viewController id="AXf-VE-wXN" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                        <viewControllerLayoutGuide type="top" id="owm-Br-saU"/>
+                        <viewControllerLayoutGuide type="bottom" id="tZv-i4-lyC"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" id="zXJ-rC-a2C">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Food" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ukx-2r-0zZ">
-                                <rect key="frame" x="248" y="289" width="104" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baker.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="5Td-Cx-hwD">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dartMOUTH.png" translatesAutoresizingMaskIntoConstraints="NO" id="o8F-c5-TXM">
+                                <rect key="frame" x="233" y="211" width="133" height="177"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="8MW-ky-pEL"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NAv-m1-xEg">
+                                <rect key="frame" x="290" y="474" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Ukx-2r-0zZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="BNn-ly-iEm"/>
-                            <constraint firstItem="Ukx-2r-0zZ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="XWS-Xl-vxm"/>
+                            <constraint firstItem="NAv-m1-xEg" firstAttribute="centerX" secondItem="5Td-Cx-hwD" secondAttribute="centerX" id="Qil-H0-7El"/>
+                            <constraint firstItem="NAv-m1-xEg" firstAttribute="centerX" secondItem="o8F-c5-TXM" secondAttribute="centerX" id="fCd-lt-sku"/>
+                            <constraint firstItem="5Td-Cx-hwD" firstAttribute="bottom" secondItem="tZv-i4-lyC" secondAttribute="top" id="gbH-72-vqR"/>
+                            <constraint firstItem="5Td-Cx-hwD" firstAttribute="leading" secondItem="zXJ-rC-a2C" secondAttribute="leading" id="kAl-XR-IXI"/>
+                            <constraint firstAttribute="trailing" secondItem="5Td-Cx-hwD" secondAttribute="trailing" id="lvY-a8-DIn"/>
+                            <constraint firstItem="5Td-Cx-hwD" firstAttribute="top" secondItem="zXJ-rC-a2C" secondAttribute="top" id="nMe-1c-xhj"/>
+                            <constraint firstItem="o8F-c5-TXM" firstAttribute="top" secondItem="owm-Br-saU" secondAttribute="bottom" constant="191" id="nfS-9Y-DR8"/>
+                            <constraint firstItem="o8F-c5-TXM" firstAttribute="centerY" secondItem="5Td-Cx-hwD" secondAttribute="centerY" id="pCq-sX-dSD"/>
+                            <constraint firstItem="NAv-m1-xEg" firstAttribute="top" secondItem="o8F-c5-TXM" secondAttribute="bottom" constant="86" id="q4h-oo-dv8"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="NAv-m1-xEg" id="dwI-0T-hyx"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4kL-pn-gcE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="-53" y="210"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="baker.jpg" width="761" height="778"/>
+        <image name="dartMOUTH.png" width="302" height="396"/>
+    </resources>
 </document>
