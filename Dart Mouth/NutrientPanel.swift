@@ -23,8 +23,7 @@ class NutrientPanel: Object {
     dynamic var protein: Float = 0.0
     
     /*
-        Create a single NutrientPanel from JSON.
-        Returns the created NutrientPanel.
+        Create a single NutrientPanel from JSON and returns it. Does not write to realm.
         // TODO(Sujay): Probably want to return an optional here instead. Also find out if things break if a value is an empty string.
     */
     class func createNutrientPanel(json: JSON) -> NutrientPanel {
@@ -40,12 +39,6 @@ class NutrientPanel: Object {
         nutrientPanel.fiber = NutrientUtil.parseNutrientValue(json["fiberdtry"].string!)
         nutrientPanel.sugars = NutrientUtil.parseNutrientValue(json["sugars"].string!)
         nutrientPanel.protein = NutrientUtil.parseNutrientValue(json["protein"].string!)
-        
-        // Write to Realm
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(nutrientPanel)
-        }
         
         return nutrientPanel
     }

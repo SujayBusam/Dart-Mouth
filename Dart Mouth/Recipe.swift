@@ -40,10 +40,21 @@ class Recipe: Object {
         Parses given NSData as JSON, creates all Recipes in them, and saves them.
     */
     class func saveRecipes(json: JSON) {
-        if let recipes = json["recipes"].array {
-            for recipe in recipes {
-                createRecipe(recipe)
+        if let recipesJSON = json["recipes"].array {
+            let realm = try! Realm()
+            
+            var createdRecipes = [Recipe]()
+            
+            for recipeJSON in recipesJSON {
+                createdRecipes.append(createRecipe(recipeJSON))
             }
+            
+            print("Writing Recipes and Nutrients")
+            try! realm.write {
+                realm.add(createdRecipes)
+            }
+            print("Done writing")
+            
         } else {
             // Bad data input.
             // TODO(Sujay): deal with this error.
@@ -51,11 +62,11 @@ class Recipe: Object {
     }
     
     /*
-        Create a single Recipe from JSON.
+        Create a single Recipe from JSON. Does not write to Realm.
+        Creation of a Recipe necessitates creation of its NutrientPanel. Both are returned in a tuple.
         TODO(Sujay): May need a custom primary key for each Recipe
     */
-    class func createRecipe(json: JSON) {
-        let realm = try! Realm()
+    class func createRecipe(json: JSON) -> Recipe {
         let recipe = Recipe()
         
         let nutrientPanel = NutrientPanel.createNutrientPanel(json["nutrients"])
@@ -76,9 +87,7 @@ class Recipe: Object {
         recipe.rank = json["rank"].number!.integerValue
         recipe.mmId = json["mmId"].number!.integerValue
         
-        try! realm.write {
-            realm.add(recipe)
-        }
+        return recipe
     }
     
     // Specify properties to ignore (Realm won't persist these)

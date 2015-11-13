@@ -29,7 +29,6 @@ class LastFetch: Object {
         lastFetch.year = todaysDate.year
         
         try! realm.write {
-            print("Writing Last Fetch")
             realm.add(lastFetch)
         }
     }

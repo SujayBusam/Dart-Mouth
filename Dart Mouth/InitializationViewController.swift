@@ -31,7 +31,7 @@ class InitializationViewController: UIViewController {
         let realm = try! Realm()
         let predicate = DateUtil.getTodaysDatePredicate()
         
-        // Activity indicator start
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         activityIndicator.startAnimating()
         
         if realm.objects(LastFetch).filter(predicate).isEmpty {
@@ -44,10 +44,13 @@ class InitializationViewController: UIViewController {
     }
     
     private func completionHandler(json: JSON) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.activityIndicator.stopAnimating()
         Recipe.saveRecipes(json)
         // Create a LastFetch so that today is marked as being fetched and doesn't repeat.
+        print("Writing Last Fetch")
         LastFetch.createLastFetchForToday()
-        activityIndicator.stopAnimating()
+        
         self.performSegueWithIdentifier("Start After Initializing", sender: self)
     }
 

@@ -41,20 +41,22 @@ class DartFoodAPI {
             (data, response, error) -> Void in
             
             if error != nil {
-                // Deal with error better.
+                // TODO(Sujay): Deal with server error.
                 print("Error getting Recipes from server")
             } else {
                 // TODO(Sujay): Probably should surround with try-catch instead of forced try. E.g. what if response is unexpected or not JSON?
                 let jsonObject = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
                 let json = JSON(jsonObject)
 
-                // Have to perform on main thread.
+                // Have to perform on main queue.
                 dispatch_async(dispatch_get_main_queue(), {
+                    print("Executing success handler")
                     successHandler(json)
                 })
             }
         })
         
+        print("Hitting backend")
         task.resume()
     }
 }
