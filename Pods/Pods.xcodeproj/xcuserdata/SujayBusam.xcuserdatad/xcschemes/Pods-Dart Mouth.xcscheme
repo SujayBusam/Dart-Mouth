@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '5B768262719DF470A0B58C3F'
+               BlueprintIdentifier = '35D1D0A1904E1DBA432AD187'
                BlueprintName = 'Pods-Dart Mouth'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_Dart_Mouth.framework'>
