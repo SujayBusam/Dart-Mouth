@@ -1,13 +1,18 @@
 PODS:
   - Bolts/Tasks (1.5.0)
+  - ChameleonFramework/Default (2.0.6)
+  - ChameleonFramework/Swift (2.0.6):
+    - ChameleonFramework/Default
   - Parse (1.10.0):
     - Bolts/Tasks (~> 1.5)
 
 DEPENDENCIES:
+  - ChameleonFramework/Swift
   - Parse
 
 SPEC CHECKSUMS:
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
+  ChameleonFramework: a6b466873ff9a4ce3a5196c20bccf1a97ad9f446
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
 
 COCOAPODS: 0.39.0

@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ChameleonFramework
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,10 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        Parse.enableLocalDatastore()
-        
         // Initialize Parse.
+        Parse.enableLocalDatastore()
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
+        
+        // Status bar will have white text app-wide
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
+        // App-wide colors of Navigation Bar
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        let defaultNavigationBarFrame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 64)
+        UINavigationBar.appearance().barTintColor = GradientColor(UIGradientStyle.LeftToRight, frame: defaultNavigationBarFrame, colors: [FlatGreen(), FlatGreenDark()])
         
         return true
     }
