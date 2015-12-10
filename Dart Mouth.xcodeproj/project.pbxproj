@@ -131,7 +131,6 @@
 				23BF16BA1C0D319D00F2CD8E /* Main.storyboard */,
 				23A08E111BF30B79002685A6 /* Initialization */,
 				23073D7C1BF2D47900887F92 /* Util */,
-				2376308E1BEE94E0000A6C54 /* PreferencesView */,
 				239BFA7B1C190DCB00617EE7 /* Views */,
 				230B1A841BEAC825007E5576 /* API */,
 				2397926D1BE5521100B969AC /* Models */,
@@ -199,6 +198,7 @@
 		239BFA7B1C190DCB00617EE7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2376308E1BEE94E0000A6C54 /* PreferencesView */,
 				2376308F1BEE94E9000A6C54 /* DiaryView */,
 				237630851BEE94A0000A6C54 /* MenuView */,
 			);
