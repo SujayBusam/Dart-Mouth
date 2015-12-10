@@ -10,7 +10,7 @@ import Foundation
 
 class DateUtil {
     
-    struct customDate {
+    struct CustomDate {
         var day: Int = 0
         var month: Int = 0
         var year: Int = 0
@@ -22,12 +22,12 @@ class DateUtil {
         }
     }
     
-    class func getTodaysDate() -> customDate {
+    class func getTodaysDate() -> CustomDate {
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components(NSCalendarUnit.Year.union(NSCalendarUnit.Month.union(NSCalendarUnit.Day)), fromDate: date)
         
-        return customDate(day: components.day, month: components.month, year: components.year)
+        return CustomDate(day: components.day, month: components.month, year: components.year)
     }
     
     class func getTodaysDatePredicate() -> NSPredicate  {
