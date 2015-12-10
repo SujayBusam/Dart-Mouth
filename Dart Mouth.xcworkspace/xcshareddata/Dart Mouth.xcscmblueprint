@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "24C7B15F0F3F0847211CE787C5F7C531958787B6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DC0AB4AA4D43CAA8A3FFBBB766C8F1C3B8E96A58" : 0,
+    "24C7B15F0F3F0847211CE787C5F7C531958787B6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F222CEAC-2EA8-451F-89FB-3F57962AAA46",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DC0AB4AA4D43CAA8A3FFBBB766C8F1C3B8E96A58" : "Dart%20Mouth\/Pods\/",
+    "24C7B15F0F3F0847211CE787C5F7C531958787B6" : "Dart%20Mouth\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Dart Mouth",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Dart Mouth.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SujayBusam\/Dart-Mouth.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "24C7B15F0F3F0847211CE787C5F7C531958787B6"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SujayBusam\/DartMouthPods.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DC0AB4AA4D43CAA8A3FFBBB766C8F1C3B8E96A58"
+    }
+  ]
+}
