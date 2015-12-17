@@ -20,7 +20,8 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        testQuery2()
+        let date = DateUtil.getTodaysDate()
+        print(date.shortWeekdayString())
         self.performSegueWithIdentifier("Start After Initialization", sender: self)
     }
     

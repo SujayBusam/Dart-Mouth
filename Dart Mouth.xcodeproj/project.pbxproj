@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		23073D7E1BF2D49000887F92 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23073D7D1BF2D49000887F92 /* DateUtil.swift */; };
 		230B1A861BEAC859007E5576 /* DartFoodAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230B1A851BEAC859007E5576 /* DartFoodAPI.swift */; };
+		233F94FF1C1930CA00C0D714 /* DateNavigationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */; };
 		2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2375D5D71BDC09B70065AC14 /* AppDelegate.swift */; };
 		2375D5DF1BDC09B70065AC14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2375D5DE1BDC09B70065AC14 /* Assets.xcassets */; };
 		2375D5E21BDC09B70065AC14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2375D5E01BDC09B70065AC14 /* LaunchScreen.storyboard */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		23073D7D1BF2D49000887F92 /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		230B1A851BEAC859007E5576 /* DartFoodAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DartFoodAPI.swift; sourceTree = "<group>"; };
+		233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateNavigationControl.swift; sourceTree = "<group>"; };
 		23757699ACDEC8980594772C /* Pods-Dart MouthTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart MouthTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dart MouthTests/Pods-Dart MouthTests.release.xcconfig"; sourceTree = "<group>"; };
 		2375D5D41BDC09B70065AC14 /* Dart Mouth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dart Mouth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2375D5D71BDC09B70065AC14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -128,7 +130,6 @@
 		2375D5D61BDC09B70065AC14 /* Dart Mouth */ = {
 			isa = PBXGroup;
 			children = (
-				23BF16BA1C0D319D00F2CD8E /* Main.storyboard */,
 				23A08E111BF30B79002685A6 /* Initialization */,
 				23073D7C1BF2D47900887F92 /* Util */,
 				239BFA7B1C190DCB00617EE7 /* Views */,
@@ -151,6 +152,7 @@
 		2375D5F71BDC09D40065AC14 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				23BF16BA1C0D319D00F2CD8E /* Main.storyboard */,
 				23A4C6261BF41F4E001455B7 /* dartMOUTH.png */,
 				23A4C6271BF41F4E001455B7 /* baker.jpg */,
 				2375D5E01BDC09B70065AC14 /* LaunchScreen.storyboard */,
@@ -168,6 +170,7 @@
 				237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */,
 				239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */,
 				239BFA791C190CF200617EE7 /* MenuViewController.swift */,
+				233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */,
 			);
 			name = MenuView;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
 				237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */,
 				2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */,
+				233F94FF1C1930CA00C0D714 /* DateNavigationControl.swift in Sources */,
 				239BFA761C190CA300617EE7 /* MenuViewControllerOld.swift in Sources */,
 				23073D7E1BF2D49000887F92 /* DateUtil.swift in Sources */,
 			);

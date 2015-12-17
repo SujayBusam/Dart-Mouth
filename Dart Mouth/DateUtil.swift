@@ -8,29 +8,51 @@
 
 import Foundation
 
-class DateUtil {
+struct DateUtil {
+    
+    static let weekdayMap = [
+        1: "Sunday",
+        2: "Monday",
+        3: "Tuesday",
+        4: "Wednesday",
+        5: "Thursday",
+        6: "Friday",
+        7: "Saturday",
+    ]
+    
+    static func weekdayStringForInt(day: Int) -> String {
+        return weekdayMap[day]!
+    }
+    
+    static func shortWeekdayStringForInt(day: Int) -> String {
+        let weekday = weekdayStringForInt(day)
+        return weekday.substringToIndex(weekday.startIndex.advancedBy(3))
+    }
     
     struct CustomDate {
         var day: Int = 0
         var month: Int = 0
         var year: Int = 0
+        var weekday: Int = 0
         
-        init(day: Int, month: Int, year: Int) {
-            self.day = day
-            self.month = month
-            self.year = year
+        func weekdayString() -> String {
+            return weekdayMap[self.weekday]!
+        }
+        
+        func shortWeekdayString() -> String {
+            let weekday = weekdayString()
+            return weekday.substringToIndex(weekday.startIndex.advancedBy(3))
         }
     }
     
-    class func getTodaysDate() -> CustomDate {
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(NSCalendarUnit.Year.union(NSCalendarUnit.Month.union(NSCalendarUnit.Day)), fromDate: date)
+    func getTodaysDate() -> CustomDate {
+        let unitFlags: NSCalendarUnit = [.Year, .Month, .Day, .Weekday]
+        let components = NSCalendar.currentCalendar().components(unitFlags, fromDate: NSDate())
         
-        return CustomDate(day: components.day, month: components.month, year: components.year)
+        return CustomDate(day: components.day, month: components.month, year: components.year, weekday: components.weekday)
     }
     
-    class func getTodaysDatePredicate() -> NSPredicate  {
+    func getTodaysDatePredicate() -> NSPredicate  {
         let todaysDate = getTodaysDate()
         return NSPredicate(format: "day == %d AND month == %d AND year == %d", todaysDate.day, todaysDate.month, todaysDate.year)
     }
