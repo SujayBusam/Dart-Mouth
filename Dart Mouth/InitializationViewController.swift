@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
 import Parse
-import SwiftyJSON
 
 class InitializationViewController: UIViewController {
 
@@ -20,8 +18,6 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        let date = DateUtil.getTodaysDate()
-        print(date.shortWeekdayString())
         self.performSegueWithIdentifier("Start After Initialization", sender: self)
     }
     
@@ -47,11 +43,10 @@ class InitializationViewController: UIViewController {
     // Testing Parse
     private func testQuery2() {
         let offeringQuery = PFQuery(className: "Offering")
-        let todaysDate = DateUtil.getTodaysDate()
         
         offeringQuery.whereKey("month", equalTo: 11)
         offeringQuery.whereKey("day", equalTo: 24)
-        offeringQuery.whereKey("year", equalTo: todaysDate.year)
+        offeringQuery.whereKey("year", equalTo: 2015)
         offeringQuery.whereKey("venueKey", equalTo: "CYC")
         offeringQuery.whereKey("mealName", equalTo: "Lunch")
         

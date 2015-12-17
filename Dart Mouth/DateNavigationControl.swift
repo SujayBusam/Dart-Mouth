@@ -39,45 +39,58 @@ class DateNavigationControl: UIView {
     weak var dataSource: DateNavigationControlDataSource?
     
     // Calculated dimensions
-    var buttonHeight: CGFloat { return CGFloat(self.bounds.height) }
-    var buttonWidth: CGFloat { return CGFloat(self.bounds.height) }
-    var dateLabelHeight: CGFloat { return CGFloat(self.bounds.height) }
-    var dateLabelWidth: CGFloat { return CGFloat(self.bounds.width - 2 * buttonWidth) }
+    var buttonSize: CGFloat { return CGFloat(min(frame.height, frame.width)) }
+    var dateLabelHeight: CGFloat { return CGFloat(frame.height) }
+    var dateLabelWidth: CGFloat { return CGFloat(frame.width - 2 * buttonSize) }
     
     // Setup left arrow, right arrow, and date label.
     private func setupSubviews() {
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.blackColor()
         
         // Setup left button
-        leftButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
+        leftButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
         leftButton.setImage(UIImage(named: "LeftArrowWhite"), forState: UIControlState.Normal)
+        leftButton.backgroundColor = UIColor.redColor()
         
         // Setup right button
-        rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
+        rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
         rightButton.setImage(UIImage(named: "RightArrowWhite"), forState: UIControlState.Normal)
+        rightButton.backgroundColor = UIColor.blueColor()
         
         // Setup date label
         dateLabel = UILabel(frame: CGRect(x: 0, y: 0, width: dateLabelWidth, height: dateLabelHeight))
         dateLabel.textAlignment = NSTextAlignment.Center
         dateLabel.textColor = UIColor.whiteColor()
-        dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
         dateLabel.adjustsFontSizeToFitWidth = true
-        updateDate()
+        dateLabel.backgroundColor = UIColor.greenColor()
+        updateDateLabel()
         
         self.addSubview(leftButton)
         self.addSubview(rightButton)
         self.addSubview(dateLabel)
         
-        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .Right)
-        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .Left)
-        dateLabel.autoCenterInSuperview()
+        setupConstraints()
     }
     
-    func updateDate() {
+    // Use PureLayout to set up constraints for positioning the subviews.
+    private func setupConstraints() {
+        let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Right)
+        leftButton.autoSetDimensionsToSize(CGSize(width: buttonSize, height: buttonSize))
+        
+        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
+        rightButton.autoSetDimensionsToSize(CGSize(width: buttonSize, height: buttonSize))
+
+        dateLabel.autoCenterInSuperview()
+        dateLabel.autoSetDimensionsToSize(CGSize(width: dateLabelWidth, height: dateLabelHeight))
+    }
+    
+    func updateDateLabel() {
         if let date = dataSource?.dateForDateNavigationControl(self) {
-            // Display date in the format of "Thu, Jan. 10" for example.
+            // Display date in the format of "Thu, Jan 10" for example.
             let formatter = NSDateFormatter()
-            formatter.dateFormat = "EEE, MMM. d"
+            formatter.dateFormat = "EEE, MMM d"
             dateLabel.text = formatter.stringFromDate(date)
         } else {
             dateLabel.text = "N/A"
