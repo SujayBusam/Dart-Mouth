@@ -1,59 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="AXf-VE-wXN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="suK-NX-6vU">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="Uzi-D4-5xd">
+        <scene sceneID="gHG-cY-DyV">
             <objects>
-                <viewController id="AXf-VE-wXN" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="owm-Br-saU"/>
-                        <viewControllerLayoutGuide type="bottom" id="tZv-i4-lyC"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zXJ-rC-a2C">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="11L-OE-v9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="suK-NX-6vU" sceneMemberID="viewController">
+                    <imageView key="view" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" id="jAj-XQ-uKh">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baker.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="5Td-Cx-hwD">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dartMOUTH.png" translatesAutoresizingMaskIntoConstraints="NO" id="o8F-c5-TXM">
-                                <rect key="frame" x="233" y="211" width="133" height="177"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="133" id="8MW-ky-pEL"/>
-                                </constraints>
-                            </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NAv-m1-xEg">
-                                <rect key="frame" x="290" y="474" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="NAv-m1-xEg" firstAttribute="centerX" secondItem="5Td-Cx-hwD" secondAttribute="centerX" id="Qil-H0-7El"/>
-                            <constraint firstItem="NAv-m1-xEg" firstAttribute="centerX" secondItem="o8F-c5-TXM" secondAttribute="centerX" id="fCd-lt-sku"/>
-                            <constraint firstItem="5Td-Cx-hwD" firstAttribute="bottom" secondItem="tZv-i4-lyC" secondAttribute="top" id="gbH-72-vqR"/>
-                            <constraint firstItem="5Td-Cx-hwD" firstAttribute="leading" secondItem="zXJ-rC-a2C" secondAttribute="leading" id="kAl-XR-IXI"/>
-                            <constraint firstAttribute="trailing" secondItem="5Td-Cx-hwD" secondAttribute="trailing" id="lvY-a8-DIn"/>
-                            <constraint firstItem="5Td-Cx-hwD" firstAttribute="top" secondItem="zXJ-rC-a2C" secondAttribute="top" id="nMe-1c-xhj"/>
-                            <constraint firstItem="o8F-c5-TXM" firstAttribute="top" secondItem="owm-Br-saU" secondAttribute="bottom" constant="191" id="nfS-9Y-DR8"/>
-                            <constraint firstItem="o8F-c5-TXM" firstAttribute="centerY" secondItem="5Td-Cx-hwD" secondAttribute="centerY" id="pCq-sX-dSD"/>
-                            <constraint firstItem="NAv-m1-xEg" firstAttribute="top" secondItem="o8F-c5-TXM" secondAttribute="bottom" constant="86" id="q4h-oo-dv8"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="activityIndicator" destination="NAv-m1-xEg" id="dwI-0T-hyx"/>
-                    </connections>
+                    </imageView>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4kL-pn-gcE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-53" y="210"/>
+            <point key="canvasLocation" x="-229" y="197"/>
         </scene>
     </scenes>
     <resources>
-        <image name="baker.jpg" width="761" height="778"/>
-        <image name="dartMOUTH.png" width="302" height="396"/>
+        <image name="MainLogo" width="302" height="396"/>
     </resources>
 </document>

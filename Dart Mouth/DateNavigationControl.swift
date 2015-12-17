@@ -14,8 +14,10 @@ import PureLayout
     Pressing the left arrow decrements the date, pressing the right arrow increments it.
 */
 
-protocol DateNavigationControlDataSource: class {
+protocol DateNavigationControlDelegate: class {
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate
+    func leftArrowWasPressed(sender: UIButton) -> Void
+    func rightArrowWasPressed(sender: UIButton) -> Void
 }
 
 class DateNavigationControl: UIView {
@@ -26,6 +28,7 @@ class DateNavigationControl: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        print("Initializing control")
         super.init(coder: aDecoder)
         setupSubviews()
     }
@@ -35,8 +38,7 @@ class DateNavigationControl: UIView {
     var rightButton: UIButton!
     var dateLabel: UILabel!
     
-    // Data source and delegate
-    weak var dataSource: DateNavigationControlDataSource?
+    weak var delegate: DateNavigationControlDelegate?
     
     // Calculated dimensions
     var buttonSize: CGFloat { return CGFloat(min(frame.height, frame.width)) }
@@ -45,25 +47,24 @@ class DateNavigationControl: UIView {
     
     // Setup left arrow, right arrow, and date label.
     private func setupSubviews() {
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.clearColor()
         
         // Setup left button
         leftButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
         leftButton.setImage(UIImage(named: "LeftArrowWhite"), forState: UIControlState.Normal)
-        leftButton.backgroundColor = UIColor.redColor()
+        leftButton.addTarget(self, action: "leftArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup right button
         rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
         rightButton.setImage(UIImage(named: "RightArrowWhite"), forState: UIControlState.Normal)
-        rightButton.backgroundColor = UIColor.blueColor()
+        rightButton.addTarget(self, action: "rightArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup date label
         dateLabel = UILabel(frame: CGRect(x: 0, y: 0, width: dateLabelWidth, height: dateLabelHeight))
         dateLabel.textAlignment = NSTextAlignment.Center
         dateLabel.textColor = UIColor.whiteColor()
-        dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle2)
+        dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
         dateLabel.adjustsFontSizeToFitWidth = true
-        dateLabel.backgroundColor = UIColor.greenColor()
         updateDateLabel()
         
         self.addSubview(leftButton)
@@ -87,7 +88,7 @@ class DateNavigationControl: UIView {
     }
     
     func updateDateLabel() {
-        if let date = dataSource?.dateForDateNavigationControl(self) {
+        if let date = delegate?.dateForDateNavigationControl(self) {
             // Display date in the format of "Thu, Jan 10" for example.
             let formatter = NSDateFormatter()
             formatter.dateFormat = "EEE, MMM d"
@@ -96,6 +97,9 @@ class DateNavigationControl: UIView {
             dateLabel.text = "N/A"
         }
     }
+    
+    func leftArrowWasPressed(sender: UIButton) { delegate?.leftArrowWasPressed(sender) }
+    func rightArrowWasPressed(sender: UIButton) { delegate?.rightArrowWasPressed(sender) }
 
     /*
     // Only override drawRect: if you perform custom drawing.

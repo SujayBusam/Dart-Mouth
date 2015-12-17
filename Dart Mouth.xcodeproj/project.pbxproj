@@ -22,8 +22,6 @@
 		239BFA761C190CA300617EE7 /* MenuViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */; };
 		239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA791C190CF200617EE7 /* MenuViewController.swift */; };
 		23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A08E121BF30B94002685A6 /* InitializationViewController.swift */; };
-		23A4C6281BF41F4E001455B7 /* dartMOUTH.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A4C6261BF41F4E001455B7 /* dartMOUTH.png */; };
-		23A4C6291BF41F4E001455B7 /* baker.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23A4C6271BF41F4E001455B7 /* baker.jpg */; };
 		23BF16BB1C0D319D00F2CD8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BF16BA1C0D319D00F2CD8E /* Main.storyboard */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
@@ -60,8 +58,6 @@
 		239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewControllerOld.swift; sourceTree = "<group>"; };
 		239BFA791C190CF200617EE7 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		23A08E121BF30B94002685A6 /* InitializationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializationViewController.swift; sourceTree = "<group>"; };
-		23A4C6261BF41F4E001455B7 /* dartMOUTH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dartMOUTH.png; sourceTree = "<group>"; };
-		23A4C6271BF41F4E001455B7 /* baker.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = baker.jpg; sourceTree = "<group>"; };
 		23BF16BA1C0D319D00F2CD8E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,8 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				23BF16BA1C0D319D00F2CD8E /* Main.storyboard */,
-				23A4C6261BF41F4E001455B7 /* dartMOUTH.png */,
-				23A4C6271BF41F4E001455B7 /* baker.jpg */,
 				2375D5E01BDC09B70065AC14 /* LaunchScreen.storyboard */,
 				2375D5D71BDC09B70065AC14 /* AppDelegate.swift */,
 				2375D5DE1BDC09B70065AC14 /* Assets.xcassets */,
@@ -325,9 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23A4C6281BF41F4E001455B7 /* dartMOUTH.png in Resources */,
 				23BF16BB1C0D319D00F2CD8E /* Main.storyboard in Resources */,
-				23A4C6291BF41F4E001455B7 /* baker.jpg in Resources */,
 				2375D5E21BDC09B70065AC14 /* LaunchScreen.storyboard in Resources */,
 				2375D5DF1BDC09B70065AC14 /* Assets.xcassets in Resources */,
 			);
