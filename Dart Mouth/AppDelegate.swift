@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // App-wide colors of Navigation Bar
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         let defaultNavigationBarFrame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 64)
-        UINavigationBar.appearance().barTintColor = GradientColor(UIGradientStyle.LeftToRight, frame: defaultNavigationBarFrame, colors: [FlatMint(), FlatMintDark()])
+        UINavigationBar.appearance().barTintColor = GradientColor(UIGradientStyle.LeftToRight, frame: defaultNavigationBarFrame, colors: [ColorUtil.appPrimaryColorLight, ColorUtil.appPrimaryColorDark])
         
         return true
     }
