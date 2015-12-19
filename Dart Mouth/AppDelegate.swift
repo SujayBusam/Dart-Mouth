@@ -21,13 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
         
-        // Status bar will have white text app-wide
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
-        
-        // App-wide colors of Navigation Bar
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        let defaultNavigationBarFrame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 64)
-        UINavigationBar.appearance().barTintColor = GradientColor(UIGradientStyle.LeftToRight, frame: defaultNavigationBarFrame, colors: [ColorUtil.appPrimaryColorLight, ColorUtil.appPrimaryColorDark])
+        Chameleon.setGlobalThemeUsingPrimaryColor(FlatMintDark(), withSecondaryColor: FlatNavyBlueDark(), andContentStyle: .Light)
         
         return true
     }

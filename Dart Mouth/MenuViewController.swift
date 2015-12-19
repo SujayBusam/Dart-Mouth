@@ -9,14 +9,16 @@
 import UIKit
 import PureLayout
 import ChameleonFramework
+import AKPickerView_Swift
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate {
+class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPickerViewDataSource, AKPickerViewDelegate {
     
     // String constants, in case we ever need to change them
     private struct Constants {
         static let Foco = "Foco"
         static let Hop = "HOP"
         static let Novack = "Novack"
+        
         static let Breakfast = "Breakfast"
         static let Lunch = "Lunch"
         static let Dinner = "Dinner"
@@ -38,6 +40,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate {
     
     var venueSegmentedControl: UISegmentedControl!
     var mealtimeSegmentedControl: UISegmentedControl!
+    var menuPickerView: AKPickerView! {
+        didSet {
+            menuPickerView.delegate = self
+            menuPickerView.dataSource = self
+        }
+    }
 
     @IBOutlet weak var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
@@ -63,13 +71,16 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate {
     
     func setupViews() {
         venueSegmentedControl = UISegmentedControl(items: Segments.Venues)
-        venueSegmentedControl.tintColor = ColorUtil.appPrimaryColorLight
         
         mealtimeSegmentedControl = UISegmentedControl(items: Segments.MealTimes)
-        mealtimeSegmentedControl.tintColor = ColorUtil.appPrimaryColorLight
+        
+        menuPickerView = AKPickerView()
+        menuPickerView.textColor = ColorUtil.appPrimaryColorLight
+        menuPickerView.interitemSpacing = 10
         
         self.view.addSubview(venueSegmentedControl)
         self.view.addSubview(mealtimeSegmentedControl)
+        self.view.addSubview(menuPickerView)
     }
     
     func setupConstraints() {
@@ -80,10 +91,17 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate {
         mealtimeSegmentedControl.autoPinEdge(.Top, toEdge: .Bottom, ofView: venueSegmentedControl, withOffset: venueSegmentedControl.layoutMargins.bottom)
         mealtimeSegmentedControl.autoPinEdgeToSuperviewMargin(.Left)
         mealtimeSegmentedControl.autoPinEdgeToSuperviewMargin(.Right)
+        
+        menuPickerView.autoPinEdge(.Top, toEdge: .Bottom, ofView: mealtimeSegmentedControl, withOffset: mealtimeSegmentedControl.layoutMargins.bottom)
+        menuPickerView.autoPinEdgeToSuperviewMargin(.Left)
+        menuPickerView.autoPinEdgeToSuperviewMargin(.Right)
     }
     
+    // MARK: - Event functions for segmented controls
     
-    // MARK: Delegate functions for custom DateNavigationControl
+    
+    
+    // MARK: - Delegate functions for custom DateNavigationControl
     
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate {
         return date
@@ -105,7 +123,23 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate {
         }
     }
     
-    // MARK: Miscellaneous
+    // MARK: - AKPickerViewDataSource
+    
+    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
+        return 9
+    }
+    
+    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
+        return ["some", "thing", "here", "more", "again", "so", "123", "asdf", "ninth"][item]
+    }
+    
+    // MARK: - AKPickerViewDelegate
+    
+    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
+        print("Item \(item) selected.")
+    }
+    
+    // MARK: - Miscellaneous
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -1,4 +1,5 @@
 PODS:
+  - AKPickerView-Swift (1.0.0)
   - Bolts/Tasks (1.5.0)
   - ChameleonFramework/Default (2.0.6)
   - ChameleonFramework/Swift (2.0.6):
@@ -8,11 +9,13 @@ PODS:
   - PureLayout (3.0.1)
 
 DEPENDENCIES:
+  - AKPickerView-Swift
   - ChameleonFramework/Swift
   - Parse
   - PureLayout
 
 SPEC CHECKSUMS:
+  AKPickerView-Swift: 933897031753447302cf3167a0a5c738a58b219c
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   ChameleonFramework: a6b466873ff9a4ce3a5196c20bccf1a97ad9f446
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
