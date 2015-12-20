@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import Parse
 import ChameleonFramework
-import AKPickerView_Swift
 import HTHorizontalSelectionList
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate {
+class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate {
     
     // String constants, in case we ever need to change them
     private struct Constants {
@@ -95,6 +95,10 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
     }
     
+    @IBOutlet weak var dateNavigationControl: DateNavigationControl! {
+        didSet { dateNavigationControl.delegate = self }
+    }
+    
     // Selectors for venue, mealtime, and menu
     @IBOutlet
     var venueSelectionList: HTHorizontalSelectionList! {
@@ -119,9 +123,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             menuSelectionList.delegate = self
         }
     }
-
-    @IBOutlet weak var dateNavigationControl: DateNavigationControl! {
-        didSet { dateNavigationControl.delegate = self }
+    
+    @IBOutlet weak var recipesTableView: UITableView! {
+        didSet {
+            recipesTableView.dataSource = self
+            recipesTableView.delegate = self
+        }
     }
     
     // MARK: - Computed properties
@@ -145,6 +152,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     func updateUI() {
         dateNavigationControl.updateDateLabel()
+
         for selectionList in selectionLists {
             selectionList.reloadData()
         }
@@ -222,9 +230,28 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = recipesTableView.dequeueReusableCellWithIdentifier("recipeCell", forIndexPath: indexPath)
+        
+        cell.textLabel!.text = "Cell \(indexPath.row)"
+        return cell
+    }
+    
+    
+    
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
         updateUI()
     }
+    
+    // MARK: - UITableViewDataSource Protocol Methods
     
     
     // MARK: - Miscellaneous

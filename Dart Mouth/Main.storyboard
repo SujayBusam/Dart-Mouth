@@ -65,13 +65,30 @@
                                     <constraint firstAttribute="height" constant="30" id="zYM-RM-r0e"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e7d-2z-TXi">
+                                <rect key="frame" x="0.0" y="183" width="600" height="368"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeCell" id="tIT-KW-wme">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tIT-KW-wme" id="BWA-8O-i8V">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="e7d-2z-TXi" firstAttribute="bottom" secondItem="QXI-WP-nAZ" secondAttribute="top" id="6Di-3u-JOu"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="trailing" secondItem="YVm-zM-oX9" secondAttribute="trailing" id="Ibl-wJ-99x"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="top" secondItem="hhW-2e-54e" secondAttribute="bottom" constant="5" id="JFN-xt-nrE"/>
+                            <constraint firstItem="e7d-2z-TXi" firstAttribute="leading" secondItem="kC9-dz-moB" secondAttribute="leading" id="LXV-Dg-NJe"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="top" secondItem="Ela-Vs-fgK" secondAttribute="bottom" constant="8" symbolic="YES" id="NHh-wC-aRM"/>
                             <constraint firstAttribute="trailing" secondItem="YVm-zM-oX9" secondAttribute="trailing" id="PBY-bV-OmC"/>
+                            <constraint firstItem="e7d-2z-TXi" firstAttribute="top" secondItem="kC9-dz-moB" secondAttribute="bottom" constant="8" symbolic="YES" id="Qj1-ve-6MJ"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="leading" secondItem="3ae-nm-uEE" secondAttribute="leading" id="RhK-MS-AUt"/>
                             <constraint firstItem="kC9-dz-moB" firstAttribute="leading" secondItem="YVm-zM-oX9" secondAttribute="leading" id="S0O-Ud-jWB"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="trailing" secondItem="kC9-dz-moB" secondAttribute="trailing" id="YOS-aS-NkB"/>
@@ -80,6 +97,7 @@
                             <constraint firstItem="kC9-dz-moB" firstAttribute="top" secondItem="YVm-zM-oX9" secondAttribute="bottom" constant="8" symbolic="YES" id="hh7-S6-ASy"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="leading" secondItem="Ela-Vs-fgK" secondAttribute="leading" id="pRY-nq-B7e"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="trailing" secondItem="3ae-nm-uEE" secondAttribute="trailing" id="qGA-ky-bVC"/>
+                            <constraint firstItem="e7d-2z-TXi" firstAttribute="trailing" secondItem="kC9-dz-moB" secondAttribute="trailing" id="qbq-G1-Dt9"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="top" secondItem="jU6-gf-RTg" secondAttribute="top" constant="110" id="r19-ZQ-wCh"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="top" secondItem="3ae-nm-uEE" secondAttribute="bottom" constant="8" id="w7S-KS-tz2"/>
                         </constraints>
@@ -102,6 +120,7 @@
                         <outlet property="dateNavigationControl" destination="mdO-Rn-b6K" id="DWO-9O-QT0"/>
                         <outlet property="mealtimeSelectionList" destination="YVm-zM-oX9" id="7ZG-CH-lgS"/>
                         <outlet property="menuSelectionList" destination="kC9-dz-moB" id="x6C-Aj-uJ2"/>
+                        <outlet property="recipesTableView" destination="e7d-2z-TXi" id="xTK-Yr-Q77"/>
                         <outlet property="venueSelectionList" destination="Ela-Vs-fgK" id="nVv-yJ-TeL"/>
                         <segue destination="eao-ef-CKE" kind="show" identifier="Show Nutrition Info" id="Foi-lJ-Ykz"/>
                     </connections>
