@@ -41,15 +41,50 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // Mappings from venue to mealtimes and venue to menus
     private struct SelectionMappings {
         static let MealTimes: [String: [String]] = [
-            Constants.Foco: [Constants.Breakfast, Constants.Lunch, Constants.Dinner, Constants.LateNight],
-            Constants.Hop: [Constants.Breakfast, Constants.Lunch, Constants.Dinner, Constants.LateNight],
-            Constants.Novack: [Constants.AllDay],
+            Constants.Foco: [
+                Constants.Breakfast,
+                Constants.Lunch,
+                Constants.Dinner,
+                Constants.LateNight,
+            ],
+            
+            Constants.Hop: [
+                Constants.Breakfast,
+                Constants.Lunch,
+                Constants.Dinner,
+                Constants.LateNight,
+            ],
+            
+            Constants.Novack: [
+                Constants.AllDay
+            ],
         ]
         
         static let Menus: [String: [String]] = [
-            Constants.Foco: [Constants.Specials, Constants.EverydayItems, Constants.GlutenFree, Constants.Beverage, Constants.Condiments],
-            Constants.Hop: [Constants.Specials, Constants.EverydayItems, Constants.CYCDeli, Constants.CYCGrill, Constants.CYCGrabGo, Constants.CYCSnacks, Constants.Beverage, Constants.Cereal, Constants.Condiments],
-            Constants.Novack: [Constants.Specials, Constants.EverydayItems]
+            Constants.Foco: [
+                Constants.Specials,
+                Constants.EverydayItems,
+                Constants.GlutenFree,
+                Constants.Beverage,
+                Constants.Condiments,
+            ],
+            
+            Constants.Hop: [
+                Constants.Specials,
+                Constants.EverydayItems,
+                Constants.CYCDeli,
+                Constants.CYCGrill,
+                Constants.CYCGrabGo,
+                Constants.CYCSnacks,
+                Constants.Beverage,
+                Constants.Cereal,
+                Constants.Condiments,
+            ],
+            
+            Constants.Novack: [
+                Constants.Specials,
+                Constants.EverydayItems,
+            ]
         ]
     }
     
