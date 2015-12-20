@@ -155,6 +155,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
 
         for selectionList in selectionLists {
             selectionList.reloadData()
+            
+            if selectionList.selectedButtonIndex >= numberOfItemsInSelectionList(selectionList) ||
+                selectionList.selectedButtonIndex < 0 {
+                selectionList.selectedButtonIndex = 0
+            }
         }
     }
     
@@ -230,6 +235,13 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
+    func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
+        updateUI()
+    }
+    
+    // MARK: - UITableViewDataSource Protocol Methods
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -244,14 +256,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         cell.textLabel!.text = "Cell \(indexPath.row)"
         return cell
     }
-    
-    
-    
-    func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
-        updateUI()
-    }
-    
-    // MARK: - UITableViewDataSource Protocol Methods
     
     
     // MARK: - Miscellaneous
