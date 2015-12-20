@@ -8,7 +8,6 @@
         <!--View Controller-->
         <scene sceneID="gHG-cY-DyV">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="11L-OE-v9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="suK-NX-6vU" sceneMemberID="viewController">
                     <imageView key="view" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" id="jAj-XQ-uKh">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -16,6 +15,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="11L-OE-v9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-229" y="197"/>
         </scene>

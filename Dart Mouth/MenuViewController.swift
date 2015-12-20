@@ -23,14 +23,34 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         static let Lunch = "Lunch"
         static let Dinner = "Dinner"
         static let LateNight = "Late Night"
+        static let AllDay = "All Day"
+        
+        static let Specials = "Today's Specials"
+        static let EverydayItems = "Everyday Items"
+        static let Beverage = "Beverage"
+        static let Cereal = "Cereal"
+        static let Condiments = "Condiments"
+        static let GlutenFree = "Additional Gluten Free"
+        
+        static let CYCDeli = "Courtyard Deli"
+        static let CYCGrill = "Courtyard Grill"
+        static let CYCGrabGo = "Grab & Go"
+        static let CYCSnacks = "Courtyard Snacks"
     }
     
-    let menus = ["Everyday Items", "Specials", "Grill"]
-    
-    // Constants for segments
-    private struct Segments {
-        static let Venues = [Constants.Foco, Constants.Hop, Constants.Novack]
-        static let MealTimes = [Constants.Breakfast, Constants.Lunch, Constants.Dinner, Constants.LateNight]
+    // Mappings from venue to mealtimes and venue to menus
+    private struct SelectionMappings {
+        static let MealTimes: [String: [String]] = [
+            Constants.Foco: [Constants.Breakfast, Constants.Lunch, Constants.Dinner, Constants.LateNight],
+            Constants.Hop: [Constants.Breakfast, Constants.Lunch, Constants.Dinner, Constants.LateNight],
+            Constants.Novack: [Constants.AllDay],
+        ]
+        
+        static let Menus: [String: [String]] = [
+            Constants.Foco: [Constants.Specials, Constants.EverydayItems, Constants.GlutenFree, Constants.Beverage, Constants.Condiments],
+            Constants.Hop: [Constants.Specials, Constants.EverydayItems, Constants.CYCDeli, Constants.CYCGrill, Constants.CYCGrabGo, Constants.CYCSnacks, Constants.Beverage, Constants.Cereal, Constants.Condiments],
+            Constants.Novack: [Constants.Specials, Constants.EverydayItems]
+        ]
     }
     
     // The current menu date.
@@ -69,8 +89,19 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         didSet { dateNavigationControl.delegate = self }
     }
     
+    // MARK: - Computed properties
+    
+    var selectionLists: [HTHorizontalSelectionList] {
+        return [venueSelectionList, mealtimeSelectionList, menuSelectionList]
+    }
+    
+    var venues: [String] {
+        return [Constants.Foco, Constants.Hop, Constants.Novack]
+    }
+    
+    // MARK: - Controller / View Setup
+    
     override func viewDidLoad() {
-        print("Loading vc")
         super.viewDidLoad()
         
         setupViews()
@@ -78,14 +109,26 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func updateUI() {
-        print("Updating control UI")
         dateNavigationControl.updateDateLabel()
+        for selectionList in selectionLists {
+            selectionList.reloadData()
+        }
     }
     
     func setupViews() {
-        venueSelectionList.centerAlignButtons = true
-        mealtimeSelectionList.centerAlignButtons = true
-        menuSelectionList.centerAlignButtons = true
+        // Setup properties for the three HTHorizontalSelectionLists
+        for selectionList in selectionLists {
+            let normalStateColor = FlatGray()
+            
+            selectionList.centerAlignButtons = true
+            selectionList.bottomTrimColor = normalStateColor
+            selectionList.selectionIndicatorAnimationMode = .HeavyBounce
+            selectionList.selectionIndicatorColor = ColorUtil.appPrimaryColorDark
+            
+            selectionList.setTitleColor(normalStateColor, forState: .Normal)
+            selectionList.setTitleColor(ColorUtil.appPrimaryColorDark, forState: .Selected)
+            selectionList.setTitleFont(UIFont.boldSystemFontOfSize(13), forState: .Normal)
+        }
     }
     
     // MARK: - DateNavigationControlDelegate protocol methods
@@ -113,26 +156,29 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
     func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
+        let venue = self.venues[venueSelectionList.selectedButtonIndex]
+        
         switch selectionList {
         case venueSelectionList:
-            return Segments.Venues.count
+            return self.venues.count
         case mealtimeSelectionList:
-            return Segments.MealTimes.count
+            return SelectionMappings.MealTimes[venue]!.count
         case menuSelectionList:
-            return menus.count
+            return SelectionMappings.Menus[venue]!.count
         default:
             return -1
         }
     }
     
     func selectionList(selectionList: HTHorizontalSelectionList!, titleForItemWithIndex index: Int) -> String! {
+        let venue = self.venues[venueSelectionList.selectedButtonIndex]
         switch selectionList {
         case venueSelectionList:
-            return Segments.Venues[index]
+            return venues[index]
         case mealtimeSelectionList:
-            return Segments.MealTimes[index]
+            return SelectionMappings.MealTimes[venue]![index]
         case menuSelectionList:
-            return menus[index]
+            return SelectionMappings.Menus[venue]![index]
         default:
             return "Error"
         }
@@ -142,7 +188,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
-        print("Selected: \(index)")
+        updateUI()
     }
     
     

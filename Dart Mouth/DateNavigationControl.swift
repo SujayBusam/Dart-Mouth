@@ -28,7 +28,6 @@ class DateNavigationControl: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        print("Initializing control")
         super.init(coder: aDecoder)
         setupSubviews()
     }
