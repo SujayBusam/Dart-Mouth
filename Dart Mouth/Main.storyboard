@@ -34,27 +34,81 @@
                         <viewControllerLayoutGuide type="bottom" id="QXI-WP-nAZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jU6-gf-RTg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ae-nm-uEE">
+                                <rect key="frame" x="0.0" y="63" width="600" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="wJL-gx-3nb"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ela-Vs-fgK" customClass="HTHorizontalSelectionList">
+                                <rect key="frame" x="0.0" y="64" width="600" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="MOT-NN-q39"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC9-dz-moB" customClass="HTHorizontalSelectionList">
+                                <rect key="frame" x="0.0" y="140" width="600" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="zYM-RM-r0e"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVm-zM-oX9" customClass="HTHorizontalSelectionList">
+                                <rect key="frame" x="0.0" y="102" width="600" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="73T-wt-roW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ela-Vs-fgK" firstAttribute="trailing" secondItem="YVm-zM-oX9" secondAttribute="trailing" id="Ibl-wJ-99x"/>
+                            <constraint firstItem="Ela-Vs-fgK" firstAttribute="top" secondItem="hhW-2e-54e" secondAttribute="bottom" id="JFN-xt-nrE"/>
+                            <constraint firstItem="YVm-zM-oX9" firstAttribute="top" secondItem="Ela-Vs-fgK" secondAttribute="bottom" constant="8" symbolic="YES" id="NHh-wC-aRM"/>
+                            <constraint firstAttribute="trailing" secondItem="YVm-zM-oX9" secondAttribute="trailing" id="PBY-bV-OmC"/>
+                            <constraint firstItem="Ela-Vs-fgK" firstAttribute="leading" secondItem="3ae-nm-uEE" secondAttribute="leading" id="RhK-MS-AUt"/>
+                            <constraint firstItem="kC9-dz-moB" firstAttribute="leading" secondItem="YVm-zM-oX9" secondAttribute="leading" id="S0O-Ud-jWB"/>
+                            <constraint firstItem="YVm-zM-oX9" firstAttribute="trailing" secondItem="kC9-dz-moB" secondAttribute="trailing" id="YOS-aS-NkB"/>
+                            <constraint firstItem="kC9-dz-moB" firstAttribute="top" secondItem="jU6-gf-RTg" secondAttribute="top" constant="148" id="f03-eA-x2X"/>
+                            <constraint firstItem="kC9-dz-moB" firstAttribute="leading" secondItem="jU6-gf-RTg" secondAttribute="leading" id="fcK-hD-eXI"/>
+                            <constraint firstItem="kC9-dz-moB" firstAttribute="top" secondItem="YVm-zM-oX9" secondAttribute="bottom" constant="8" symbolic="YES" id="hh7-S6-ASy"/>
+                            <constraint firstItem="YVm-zM-oX9" firstAttribute="leading" secondItem="Ela-Vs-fgK" secondAttribute="leading" id="pRY-nq-B7e"/>
+                            <constraint firstItem="Ela-Vs-fgK" firstAttribute="trailing" secondItem="3ae-nm-uEE" secondAttribute="trailing" id="qGA-ky-bVC"/>
+                            <constraint firstItem="YVm-zM-oX9" firstAttribute="top" secondItem="jU6-gf-RTg" secondAttribute="top" constant="110" id="r19-ZQ-wCh"/>
+                            <constraint firstItem="Ela-Vs-fgK" firstAttribute="top" secondItem="3ae-nm-uEE" secondAttribute="bottom" id="w7S-KS-tz2"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="r19-ZQ-wCh"/>
+                                <exclude reference="f03-eA-x2X"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="Bzg-SI-Yfg">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="mdO-Rn-b6K" customClass="DateNavigationControl" customModule="Dart_Mouth" customModuleProvider="target">
-                            <rect key="frame" x="92.5" y="5.5" width="190" height="33"/>
+                            <rect key="frame" x="205" y="5.5" width="190" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="dateNavigationControl" destination="mdO-Rn-b6K" id="DWO-9O-QT0"/>
+                        <outlet property="mealtimeSelectionList" destination="YVm-zM-oX9" id="7ZG-CH-lgS"/>
+                        <outlet property="menuSelectionList" destination="kC9-dz-moB" id="x6C-Aj-uJ2"/>
+                        <outlet property="venueSelectionList" destination="Ela-Vs-fgK" id="nVv-yJ-TeL"/>
                         <segue destination="eao-ef-CKE" kind="show" identifier="Show Nutrition Info" id="Foi-lJ-Ykz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NIS-rd-z7v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196.5" y="42.5"/>
+            <point key="canvasLocation" x="-1197" y="42"/>
         </scene>
         <!--Recipe Nutrition View Controller-->
         <scene sceneID="2Ef-En-hdG">

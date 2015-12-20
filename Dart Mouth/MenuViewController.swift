@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PureLayout
 import ChameleonFramework
 import AKPickerView_Swift
 import HTHorizontalSelectionList
@@ -26,6 +25,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         static let LateNight = "Late Night"
     }
     
+    let menus = ["Everyday Items", "Specials", "Grill"]
+    
     // Constants for segments
     private struct Segments {
         static let Venues = [Constants.Foco, Constants.Hop, Constants.Novack]
@@ -40,8 +41,23 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     // Selectors for venue, mealtime, and menu
-    var venueSegmentedControl: UISegmentedControl!
-    var mealtimeSegmentedControl: UISegmentedControl!
+    @IBOutlet
+    var venueSelectionList: HTHorizontalSelectionList! {
+        didSet {
+            venueSelectionList.dataSource = self
+            venueSelectionList.delegate = self
+        }
+    }
+    
+    @IBOutlet
+    var mealtimeSelectionList: HTHorizontalSelectionList! {
+        didSet {
+            mealtimeSelectionList.dataSource = self
+            mealtimeSelectionList.delegate = self
+        }
+    }
+    
+    @IBOutlet
     var menuSelectionList: HTHorizontalSelectionList! {
         didSet {
             menuSelectionList.dataSource = self
@@ -58,8 +74,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         super.viewDidLoad()
         
         setupViews()
-        setupConstraints()
-        
         updateUI()
     }
     
@@ -69,33 +83,9 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func setupViews() {
-        venueSegmentedControl = UISegmentedControl(items: Segments.Venues)
-        venueSegmentedControl.selectedSegmentIndex = Segments.Venues.indexOf(Constants.Foco)!
-        
-        mealtimeSegmentedControl = UISegmentedControl(items: Segments.MealTimes)
-        // TODO: select smarter default based on current time
-        mealtimeSegmentedControl.selectedSegmentIndex = Segments.MealTimes.indexOf(Constants.Breakfast)!
-        
-        menuSelectionList = HTHorizontalSelectionList(frame: CGRectMake(0, 0, self.view.frame.width, 80))
-        
-        self.view.addSubview(venueSegmentedControl)
-        self.view.addSubview(mealtimeSegmentedControl)
-        self.view.addSubview(menuSelectionList)
-    }
-    
-    func setupConstraints() {
-        venueSegmentedControl.autoPinToTopLayoutGuideOfViewController(self, withInset: self.view.layoutMargins.top)
-        venueSegmentedControl.autoPinEdgeToSuperviewMargin(.Left)
-        venueSegmentedControl.autoPinEdgeToSuperviewMargin(.Right)
-        
-        mealtimeSegmentedControl.autoPinEdge(.Top, toEdge: .Bottom, ofView: venueSegmentedControl, withOffset: venueSegmentedControl.layoutMargins.bottom)
-        mealtimeSegmentedControl.autoPinEdgeToSuperviewMargin(.Left)
-        mealtimeSegmentedControl.autoPinEdgeToSuperviewMargin(.Right)
-        
-        menuSelectionList.autoPinEdge(.Top, toEdge: .Bottom, ofView: mealtimeSegmentedControl, withOffset: mealtimeSegmentedControl.layoutMargins.bottom)
-        menuSelectionList.autoSetDimensionsToSize(CGSizeMake(self.view.frame.width, 40))
-        menuSelectionList.autoPinEdgeToSuperviewMargin(.Left)
-        menuSelectionList.autoPinEdgeToSuperviewMargin(.Right)
+        venueSelectionList.centerAlignButtons = true
+        mealtimeSelectionList.centerAlignButtons = true
+        menuSelectionList.centerAlignButtons = true
     }
     
     // MARK: - DateNavigationControlDelegate protocol methods
@@ -123,11 +113,29 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
     func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
-        return Segments.Venues.count + Segments.MealTimes.count
+        switch selectionList {
+        case venueSelectionList:
+            return Segments.Venues.count
+        case mealtimeSelectionList:
+            return Segments.MealTimes.count
+        case menuSelectionList:
+            return menus.count
+        default:
+            return -1
+        }
     }
     
     func selectionList(selectionList: HTHorizontalSelectionList!, titleForItemWithIndex index: Int) -> String! {
-        return (Segments.Venues + Segments.MealTimes)[index]
+        switch selectionList {
+        case venueSelectionList:
+            return Segments.Venues[index]
+        case mealtimeSelectionList:
+            return Segments.MealTimes[index]
+        case menuSelectionList:
+            return menus[index]
+        default:
+            return "Error"
+        }
     }
     
     
