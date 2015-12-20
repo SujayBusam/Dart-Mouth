@@ -50,17 +50,17 @@ class DateNavigationControl: UIView {
         self.backgroundColor = UIColor.clearColor()
         
         // Setup left button
-        leftButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
+        leftButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
         leftButton.setImage(UIImage(named: "LeftArrowWhite"), forState: UIControlState.Normal)
         leftButton.addTarget(self, action: "leftArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup right button
-        rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
+        rightButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
         rightButton.setImage(UIImage(named: "RightArrowWhite"), forState: UIControlState.Normal)
         rightButton.addTarget(self, action: "rightArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup date label
-        dateLabel = UILabel(frame: CGRect(x: 0, y: 0, width: dateLabelWidth, height: dateLabelHeight))
+        dateLabel = UILabel(frame: CGRectMake(0, 0, dateLabelWidth, dateLabelHeight))
         dateLabel.textAlignment = NSTextAlignment.Center
         dateLabel.textColor = UIColor.whiteColor()
         dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
@@ -78,13 +78,13 @@ class DateNavigationControl: UIView {
     private func setupConstraints() {
         let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         leftButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Right)
-        leftButton.autoSetDimensionsToSize(CGSize(width: buttonSize, height: buttonSize))
+        leftButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
         
         rightButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
-        rightButton.autoSetDimensionsToSize(CGSize(width: buttonSize, height: buttonSize))
+        rightButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
 
         dateLabel.autoCenterInSuperview()
-        dateLabel.autoSetDimensionsToSize(CGSize(width: dateLabelWidth, height: dateLabelHeight))
+        dateLabel.autoSetDimensionsToSize(CGSizeMake(dateLabelWidth, dateLabelHeight))
     }
     
     func updateDateLabel() {

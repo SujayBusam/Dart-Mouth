@@ -10,8 +10,9 @@ import UIKit
 import PureLayout
 import ChameleonFramework
 import AKPickerView_Swift
+import HTHorizontalSelectionList
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPickerViewDataSource, AKPickerViewDelegate {
+class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate {
     
     // String constants, in case we ever need to change them
     private struct Constants {
@@ -38,12 +39,13 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPic
         }
     }
     
+    // Selectors for venue, mealtime, and menu
     var venueSegmentedControl: UISegmentedControl!
     var mealtimeSegmentedControl: UISegmentedControl!
-    var menuPickerView: AKPickerView! {
+    var menuSelectionList: HTHorizontalSelectionList! {
         didSet {
-            menuPickerView.delegate = self
-            menuPickerView.dataSource = self
+            menuSelectionList.dataSource = self
+            menuSelectionList.delegate = self
         }
     }
 
@@ -58,9 +60,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPic
         setupViews()
         setupConstraints()
         
-        venueSegmentedControl.selectedSegmentIndex = 0
-        mealtimeSegmentedControl.selectedSegmentIndex = 0 // TODO: select smarter default based on current time
-        
         updateUI()
     }
     
@@ -71,16 +70,17 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPic
     
     func setupViews() {
         venueSegmentedControl = UISegmentedControl(items: Segments.Venues)
+        venueSegmentedControl.selectedSegmentIndex = Segments.Venues.indexOf(Constants.Foco)!
         
         mealtimeSegmentedControl = UISegmentedControl(items: Segments.MealTimes)
+        // TODO: select smarter default based on current time
+        mealtimeSegmentedControl.selectedSegmentIndex = Segments.MealTimes.indexOf(Constants.Breakfast)!
         
-        menuPickerView = AKPickerView()
-        menuPickerView.textColor = ColorUtil.appPrimaryColorLight
-        menuPickerView.interitemSpacing = 10
+        menuSelectionList = HTHorizontalSelectionList(frame: CGRectMake(0, 0, self.view.frame.width, 80))
         
         self.view.addSubview(venueSegmentedControl)
         self.view.addSubview(mealtimeSegmentedControl)
-        self.view.addSubview(menuPickerView)
+        self.view.addSubview(menuSelectionList)
     }
     
     func setupConstraints() {
@@ -92,19 +92,16 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPic
         mealtimeSegmentedControl.autoPinEdgeToSuperviewMargin(.Left)
         mealtimeSegmentedControl.autoPinEdgeToSuperviewMargin(.Right)
         
-        menuPickerView.autoPinEdge(.Top, toEdge: .Bottom, ofView: mealtimeSegmentedControl, withOffset: mealtimeSegmentedControl.layoutMargins.bottom)
-        menuPickerView.autoPinEdgeToSuperviewMargin(.Left)
-        menuPickerView.autoPinEdgeToSuperviewMargin(.Right)
+        menuSelectionList.autoPinEdge(.Top, toEdge: .Bottom, ofView: mealtimeSegmentedControl, withOffset: mealtimeSegmentedControl.layoutMargins.bottom)
+        menuSelectionList.autoSetDimensionsToSize(CGSizeMake(self.view.frame.width, 40))
+        menuSelectionList.autoPinEdgeToSuperviewMargin(.Left)
+        menuSelectionList.autoPinEdgeToSuperviewMargin(.Right)
     }
     
-    // MARK: - Event functions for segmented controls
-    
-    
-    
-    // MARK: - Delegate functions for custom DateNavigationControl
+    // MARK: - DateNavigationControlDelegate protocol methods
     
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate {
-        return date
+        return self.date
     }
 
     func leftArrowWasPressed(sender: UIButton) {
@@ -123,21 +120,23 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, AKPic
         }
     }
     
-    // MARK: - AKPickerViewDataSource
+    // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
-    func numberOfItemsInPickerView(pickerView: AKPickerView) -> Int {
-        return 9
+    func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
+        return Segments.Venues.count + Segments.MealTimes.count
     }
     
-    func pickerView(pickerView: AKPickerView, titleForItem item: Int) -> String {
-        return ["some", "thing", "here", "more", "again", "so", "123", "asdf", "ninth"][item]
+    func selectionList(selectionList: HTHorizontalSelectionList!, titleForItemWithIndex index: Int) -> String! {
+        return (Segments.Venues + Segments.MealTimes)[index]
     }
     
-    // MARK: - AKPickerViewDelegate
     
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int) {
-        print("Item \(item) selected.")
+    // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
+    
+    func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
+        print("Selected: \(index)")
     }
+    
     
     // MARK: - Miscellaneous
     

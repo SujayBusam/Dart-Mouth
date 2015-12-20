@@ -6,6 +6,7 @@ target 'Dart Mouth' do
   pod 'ChameleonFramework/Swift'
   pod 'PureLayout'
   pod "AKPickerView-Swift"
+  pod 'HTHorizontalSelectionList', '~> 0.6.2'
 end
 
 target 'Dart MouthTests' do
@@ -13,4 +14,5 @@ target 'Dart MouthTests' do
   pod 'ChameleonFramework/Swift'
   pod 'PureLayout'
   pod "AKPickerView-Swift"
+  pod 'HTHorizontalSelectionList', '~> 0.6.2'
 end
