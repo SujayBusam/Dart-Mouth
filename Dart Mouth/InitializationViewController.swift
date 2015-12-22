@@ -18,6 +18,7 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        testQuery2()
         self.performSegueWithIdentifier("Start After Initialization", sender: self)
     }
     
@@ -49,8 +50,12 @@ class InitializationViewController: UIViewController {
         offeringQuery.whereKey("year", equalTo: 2015)
         offeringQuery.whereKey("venueKey", equalTo: "CYC")
         offeringQuery.whereKey("mealName", equalTo: "Lunch")
+        offeringQuery.whereKey("menuName", equalTo: "Everyday Items")
         
         print("Start fetching")
+        
+        
+        
         offeringQuery.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
