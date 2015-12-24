@@ -88,7 +88,7 @@ class InitializationViewController: UIViewController {
     
     
     private func testQuery3() {
-        let offeringQuery = PFQuery(className: "Offering")
+        let offeringQuery = Offering.query()!
         
         offeringQuery.whereKey("month", equalTo: 11)
         offeringQuery.whereKey("day", equalTo: 24)
@@ -112,7 +112,7 @@ class InitializationViewController: UIViewController {
                         
                         if error == nil {
                             if let recipes = objects {
-                                let recipes = recipes as? [Recipe]
+                                let recipes = recipes as! [Recipe]
                                 print("\(recipes)")
                             }
                         } else {

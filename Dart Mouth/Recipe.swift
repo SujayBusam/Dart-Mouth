@@ -11,9 +11,9 @@ import Parse
 
 class Recipe: PFObject, PFSubclassing {
     
-    @NSManaged var dartmouthId: NSNumber
+    @NSManaged var dartmouthId: Int
     @NSManaged var name: String
-    @NSManaged var rank: NSNumber
+    @NSManaged var rank: Int
     @NSManaged var nutrients: PFObject
     @NSManaged var uuid: String
     @NSManaged var category: String

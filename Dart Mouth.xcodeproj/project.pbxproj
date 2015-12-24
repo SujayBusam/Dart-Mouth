@@ -20,6 +20,8 @@
 		237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */; };
 		238C8D491BF3F3CC00FF1E43 /* NutrientUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238C8D481BF3F3CC00FF1E43 /* NutrientUtil.swift */; };
 		238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C8E1C2A2077007720F8 /* Recipe.swift */; };
+		238F1C951C2B7D08007720F8 /* ParseAPIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C941C2B7D08007720F8 /* ParseAPIUtil.swift */; };
+		238F1C971C2B8190007720F8 /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C961C2B8190007720F8 /* Offering.swift */; };
 		239BFA761C190CA300617EE7 /* MenuViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */; };
 		239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA791C190CF200617EE7 /* MenuViewController.swift */; };
 		23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A08E121BF30B94002685A6 /* InitializationViewController.swift */; };
@@ -58,6 +60,8 @@
 		237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
 		238C8D481BF3F3CC00FF1E43 /* NutrientUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutrientUtil.swift; sourceTree = "<group>"; };
 		238F1C8E1C2A2077007720F8 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		238F1C941C2B7D08007720F8 /* ParseAPIUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPIUtil.swift; sourceTree = "<group>"; };
+		238F1C961C2B8190007720F8 /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewControllerOld.swift; sourceTree = "<group>"; };
 		239BFA791C190CF200617EE7 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		23A08E121BF30B94002685A6 /* InitializationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializationViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 				23073D7D1BF2D49000887F92 /* DateUtil.swift */,
 				238C8D481BF3F3CC00FF1E43 /* NutrientUtil.swift */,
 				23B651BD1C23AA3500CDB9AC /* ColorUtil.swift */,
+				238F1C941C2B7D08007720F8 /* ParseAPIUtil.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				238F1C8E1C2A2077007720F8 /* Recipe.swift */,
+				238F1C961C2B8190007720F8 /* Offering.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -440,12 +446,14 @@
 			files = (
 				2376308D1BEE94D8000A6C54 /* DiaryViewController.swift in Sources */,
 				230B1A861BEAC859007E5576 /* DartFoodAPI.swift in Sources */,
+				238F1C951C2B7D08007720F8 /* ParseAPIUtil.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				237630811BEE9498000A6C54 /* MenuFilter.swift in Sources */,
 				23B651BE1C23AA3500CDB9AC /* ColorUtil.swift in Sources */,
 				239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */,
 				238C8D491BF3F3CC00FF1E43 /* NutrientUtil.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
+				238F1C971C2B8190007720F8 /* Offering.swift in Sources */,
 				237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */,
 				238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */,
 				2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */,
