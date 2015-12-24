@@ -18,7 +18,7 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        testQuery2()
+        testQuery3()
         self.performSegueWithIdentifier("Start After Initialization", sender: self)
     }
     
@@ -54,8 +54,6 @@ class InitializationViewController: UIViewController {
         
         print("Start fetching")
         
-        
-        
         offeringQuery.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
@@ -83,7 +81,65 @@ class InitializationViewController: UIViewController {
                 }
             } else {
                 // Error
-                print("Error fetching today's Offerings.")
+                print("Error fetching Offerings.")
+            }
+        }
+    }
+    
+    
+    private func testQuery3() {
+        let offeringQuery = PFQuery(className: "Offering")
+        
+        offeringQuery.whereKey("month", equalTo: 11)
+        offeringQuery.whereKey("day", equalTo: 24)
+        offeringQuery.whereKey("year", equalTo: 2015)
+        offeringQuery.whereKey("venueKey", equalTo: "CYC")
+        offeringQuery.whereKey("mealName", equalTo: "Lunch")
+        offeringQuery.whereKey("menuName", equalTo: "Everyday Items")
+        
+        print("Start fetching")
+        
+        offeringQuery.getFirstObjectInBackgroundWithBlock {
+            (object: PFObject?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let offering = object {
+                    let query = offering.relationForKey("recipes").query()
+                    query.limit = 1000
+                    
+                    query.findObjectsInBackgroundWithBlock {
+                        (objects:[PFObject]?, error: NSError?) -> Void in
+                        
+                        if error == nil {
+                            if let recipes = objects {
+                                let recipes = recipes as? [Recipe]
+                                print("\(recipes)")
+                            }
+                        } else {
+                            print("Error fetching Recipes")
+                        }
+                    }
+                }
+            } else {
+                print("Error fetching Offering.")
+            }
+        }
+    }
+    
+    private func writeRecipe() {
+        let recipe = Recipe()
+        recipe.name = "SujayTest"
+        recipe.dartmouthId = 0101
+        recipe.rank = 0101
+        recipe.uuid = "d8b72f9f5e11f2b3da75a805bfa0f160"
+        recipe.category = "Test Category"
+        
+        recipe.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                print("Success!")
+            } else {
+                print("Problem saving recipe")
             }
         }
     }
