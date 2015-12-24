@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import Parse
 import ChameleonFramework
 import HTHorizontalSelectionList
 
@@ -15,9 +14,10 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     // String constants, in case we ever need to change them
     private struct Constants {
-        static let Foco = "Foco"
+        static let Foco = "DDS"
         static let Hop = "HOP"
         static let Novack = "Novack"
+        static let Venues = [Foco, Hop, Novack]
         
         static let Breakfast = "Breakfast"
         static let Lunch = "Lunch"
@@ -88,12 +88,23 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         ]
     }
     
+    
+    
+    // MARK: - Instance variables
+    
     // The current menu date.
     var date: NSDate = NSDate() {
         didSet {
             updateUI()
         }
     }
+    
+    var api = ParseAPIUtil()
+    var recipes = [Recipe]()
+    
+    
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
@@ -131,15 +142,15 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
     }
     
+    
+    
     // MARK: - Computed properties
     
     var selectionLists: [HTHorizontalSelectionList] {
         return [venueSelectionList, mealtimeSelectionList, menuSelectionList]
     }
     
-    var venues: [String] {
-        return [Constants.Foco, Constants.Hop, Constants.Novack]
-    }
+    
     
     // MARK: - Controller / View Setup
     
@@ -161,23 +172,40 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                 selectionList.selectedButtonIndex = 0
             }
         }
+        
+        let selectedVenue = selectionList(venueSelectionList, titleForItemWithIndex: venueSelectionList.selectedButtonIndex)
+        let selectedMealtime = selectionList(mealtimeSelectionList, titleForItemWithIndex: mealtimeSelectionList.selectedButtonIndex)
+        let selectedMenu = selectionList(menuSelectionList, titleForItemWithIndex: menuSelectionList.selectedButtonIndex)
+        api.recipesForDate(self.date, venueKey: selectedVenue, mealName: selectedMealtime, menuName: selectedMenu, withCompletionHandler: {
+            (recipes: [Recipe]?) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                if recipes != nil {
+                    self.recipes = recipes!
+                } else {
+                    self.recipes.removeAll()
+                }
+                self.recipesTableView.reloadData()
+            }
+        })
     }
-    
+
     func setupViews() {
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
-            let normalStateColor = FlatGray()
             
             selectionList.centerAlignButtons = true
-            selectionList.bottomTrimColor = normalStateColor
+            selectionList.bottomTrimColor = FlatBlackDark()
             selectionList.selectionIndicatorAnimationMode = .HeavyBounce
             selectionList.selectionIndicatorColor = ColorUtil.appPrimaryColorDark
             
-            selectionList.setTitleColor(normalStateColor, forState: .Normal)
+            selectionList.setTitleColor(FlatGrayDark(), forState: .Normal)
             selectionList.setTitleColor(ColorUtil.appPrimaryColorDark, forState: .Selected)
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(13), forState: .Normal)
         }
     }
+    
+    
     
     // MARK: - DateNavigationControlDelegate protocol methods
     
@@ -201,14 +229,16 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
     }
     
+    
+    
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
     func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
-        let venue = self.venues[venueSelectionList.selectedButtonIndex]
+        let venue = Constants.Venues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {
         case venueSelectionList:
-            return self.venues.count
+            return Constants.Venues.count
         case mealtimeSelectionList:
             return SelectionMappings.MealTimes[venue]!.count
         case menuSelectionList:
@@ -219,10 +249,10 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func selectionList(selectionList: HTHorizontalSelectionList!, titleForItemWithIndex index: Int) -> String! {
-        let venue = self.venues[venueSelectionList.selectedButtonIndex]
+        let venue = Constants.Venues[venueSelectionList.selectedButtonIndex]
         switch selectionList {
         case venueSelectionList:
-            return venues[index]
+            return Constants.Venues[index]
         case mealtimeSelectionList:
             return SelectionMappings.MealTimes[venue]![index]
         case menuSelectionList:
@@ -233,29 +263,32 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
+    
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
         updateUI()
     }
     
-    // MARK: - UITableViewDataSource Protocol Methods
     
+    
+    // MARK: - UITableViewDataSource Protocol Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return recipes.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = recipesTableView.dequeueReusableCellWithIdentifier("recipeCell", forIndexPath: indexPath)
         
-        cell.textLabel!.text = "Cell \(indexPath.row)"
+        cell.textLabel!.text = recipes[indexPath.row].name
         return cell
     }
+    
     
     
     // MARK: - Miscellaneous
@@ -265,6 +298,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         // Dispose of any resources that can be recreated.
     }
 
+    
+    
     /*
     // MARK: - Navigation
 

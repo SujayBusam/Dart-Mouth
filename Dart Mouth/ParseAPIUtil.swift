@@ -15,7 +15,7 @@ class ParseAPIUtil {
     * Async function that retrieves Recipes for the given parameters.
     * Calls completion block with the retrieved Recipes.
     */
-    func recipesForDate(date: NSDate, venueKey: String, mealName: String, menuName: String, withBlock successBlock: ([Recipe]) -> Void) {
+    func recipesForDate(date: NSDate, venueKey: String, mealName: String, menuName: String, withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
         
         let components: NSDateComponents = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date)
         
@@ -33,24 +33,27 @@ class ParseAPIUtil {
             
             if error == nil {
                 let offerings = objects as! [Offering]
-                assert(offerings.count == 1)
-                let offering = offerings[0]
-
-                let recipesQuery = offering.relationForKey("recipes").query()
-                recipesQuery.limit = 1000
-                
-                // Get Recipes
-                recipesQuery.findObjectsInBackgroundWithBlock {
-                    (objects: [PFObject]?, error: NSError?) -> Void in
+                if offerings.isEmpty {
+                    completionHandler(nil)
+                } else {
+                    let offering = offerings[0]
                     
-                    if error == nil {
-                        let recipes = objects as! [Recipe]
-                        successBlock(recipes)
-                    } else {
-                        print("Error fetching Recipes for Offering.")
+                    let recipesQuery = offering.relationForKey("recipes").query()
+                    recipesQuery.limit = 1000
+                    
+                    // Get Recipes
+                    recipesQuery.findObjectsInBackgroundWithBlock {
+                        (objects: [PFObject]?, error: NSError?) -> Void in
+                        
+                        if error == nil {
+                            let recipes = objects as! [Recipe]
+                            completionHandler(recipes)
+                        } else {
+                            print("Error fetching Recipes for Offering.")
+                        }
                     }
                 }
-
+                
             } else {
                 print("Error fetching Offering.")
             }
