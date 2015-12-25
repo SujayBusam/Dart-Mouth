@@ -12,84 +12,6 @@ import HTHorizontalSelectionList
 
 class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    // String constants, in case we ever need to change them
-    private struct Constants {
-        static let Foco = "DDS"
-        static let Hop = "HOP"
-        static let Novack = "Novack"
-        static let Venues = [Foco, Hop, Novack]
-        
-        static let Breakfast = "Breakfast"
-        static let Lunch = "Lunch"
-        static let Dinner = "Dinner"
-        static let LateNight = "Late Night"
-        static let AllDay = "All Day"
-        
-        static let Specials = "Today's Specials"
-        static let EverydayItems = "Everyday Items"
-        static let Beverage = "Beverage"
-        static let Cereal = "Cereal"
-        static let Condiments = "Condiments"
-        static let GlutenFree = "Additional Gluten Free"
-        
-        static let CYCDeli = "Courtyard Deli"
-        static let CYCGrill = "Courtyard Grill"
-        static let CYCGrabGo = "Grab & Go"
-        static let CYCSnacks = "Courtyard Snacks"
-    }
-    
-    // Mappings from venue to mealtimes and venue to menus
-    private struct SelectionMappings {
-        static let MealTimes: [String: [String]] = [
-            Constants.Foco: [
-                Constants.Breakfast,
-                Constants.Lunch,
-                Constants.Dinner,
-                Constants.LateNight,
-            ],
-            
-            Constants.Hop: [
-                Constants.Breakfast,
-                Constants.Lunch,
-                Constants.Dinner,
-                Constants.LateNight,
-            ],
-            
-            Constants.Novack: [
-                Constants.AllDay
-            ],
-        ]
-        
-        static let Menus: [String: [String]] = [
-            Constants.Foco: [
-                Constants.Specials,
-                Constants.EverydayItems,
-                Constants.GlutenFree,
-                Constants.Beverage,
-                Constants.Condiments,
-            ],
-            
-            Constants.Hop: [
-                Constants.Specials,
-                Constants.EverydayItems,
-                Constants.CYCDeli,
-                Constants.CYCGrill,
-                Constants.CYCGrabGo,
-                Constants.CYCSnacks,
-                Constants.Beverage,
-                Constants.Cereal,
-                Constants.Condiments,
-            ],
-            
-            Constants.Novack: [
-                Constants.Specials,
-                Constants.EverydayItems,
-            ]
-        ]
-    }
-    
-    
-    
     // MARK: - Instance variables
     
     // The current menu date.
@@ -100,9 +22,9 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     var api = ParseAPIUtil()
-    var recipes = [Recipe]()
+    var displayedRecipes = [Recipe]()
     
-    
+    let allVenues: [Venue] = [.Foco, .Hop, .Novack]
     
     // MARK: - Outlets
     
@@ -150,8 +72,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         return [venueSelectionList, mealtimeSelectionList, menuSelectionList]
     }
     
-    
-    
     // MARK: - Controller / View Setup
     
     override func viewDidLoad() {
@@ -163,33 +83,35 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     func updateUI() {
         dateNavigationControl.updateDateLabel()
-
+        
+        // Update the horizonal selection lists
         for selectionList in selectionLists {
             selectionList.reloadData()
             
             if selectionList.selectedButtonIndex >= numberOfItemsInSelectionList(selectionList) ||
                 selectionList.selectedButtonIndex < 0 {
-                selectionList.selectedButtonIndex = 0
+                    selectionList.selectedButtonIndex = 0
             }
         }
         
-        let selectedVenue = selectionList(venueSelectionList, titleForItemWithIndex: venueSelectionList.selectedButtonIndex)
-        let selectedMealtime = selectionList(mealtimeSelectionList, titleForItemWithIndex: mealtimeSelectionList.selectedButtonIndex)
-        let selectedMenu = selectionList(menuSelectionList, titleForItemWithIndex: menuSelectionList.selectedButtonIndex)
-        api.recipesForDate(self.date, venueKey: selectedVenue, mealName: selectedMealtime, menuName: selectedMenu, withCompletionHandler: {
+        // Update the recipes table view by fetching appropriate Recipes from local datastore or Parse cloud.
+        let selectedVenue = itemForSelectionList(venueSelectionList, withSelectedIndex: venueSelectionList.selectedButtonIndex)!
+        let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withSelectedIndex: mealtimeSelectionList.selectedButtonIndex)!
+        let selectedMenu = itemForSelectionList(menuSelectionList, withSelectedIndex: menuSelectionList.selectedButtonIndex)!
+        api.recipesFromCloudForDate(self.date, venueKey: selectedVenue.parseField, mealName: selectedMealtime.parseField, menuName: selectedMenu.parseField, withCompletionHandler: {
             (recipes: [Recipe]?) -> Void in
             
             dispatch_async(dispatch_get_main_queue()) {
                 if recipes != nil {
-                    self.recipes = recipes!
+                    self.displayedRecipes = recipes!
                 } else {
-                    self.recipes.removeAll()
+                    self.displayedRecipes.removeAll()
                 }
                 self.recipesTableView.reloadData()
             }
         })
     }
-
+    
     func setupViews() {
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
@@ -212,7 +134,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate {
         return self.date
     }
-
+    
     func leftArrowWasPressed(sender: UIButton) {
         if let dayBefore = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -1, toDate: self.date, options: []) {
             self.date = dayBefore
@@ -234,35 +156,41 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
     func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
-        let venue = Constants.Venues[venueSelectionList.selectedButtonIndex]
+        let venue = allVenues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {
         case venueSelectionList:
-            return Constants.Venues.count
+            return allVenues.count
         case mealtimeSelectionList:
-            return SelectionMappings.MealTimes[venue]!.count
+            return Mappings.MealTimesForVenue[venue]!.count
         case menuSelectionList:
-            return SelectionMappings.Menus[venue]!.count
+            return Mappings.MenusForVenue[venue]!.count
         default:
             return -1
         }
     }
     
     func selectionList(selectionList: HTHorizontalSelectionList!, titleForItemWithIndex index: Int) -> String! {
-        let venue = Constants.Venues[venueSelectionList.selectedButtonIndex]
-        switch selectionList {
-        case venueSelectionList:
-            return Constants.Venues[index]
-        case mealtimeSelectionList:
-            return SelectionMappings.MealTimes[venue]![index]
-        case menuSelectionList:
-            return SelectionMappings.Menus[venue]![index]
-        default:
-            return "Error"
-        }
+        return itemForSelectionList(selectionList, withSelectedIndex: index)!.displayString
     }
     
-    
+    // Helper function to return Venue, Mealtime, or Menu given a selection list and selection button index.
+    // Note that Venue, Mealtime, and Menu conform to ParseFieldCompatible protocol
+    func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withSelectedIndex selectedIndex: Int) -> ParseFieldCompatible? {
+        let venue = allVenues[venueSelectionList.selectedButtonIndex]
+        
+        switch selectionList {
+        case venueSelectionList:
+            return allVenues[selectedIndex]
+        case mealtimeSelectionList:
+            return Mappings.MealTimesForVenue[venue]![selectedIndex]
+        case menuSelectionList:
+            return Mappings.MenusForVenue[venue]![selectedIndex]
+        default:
+            print("Unhandled selection list.")
+            return nil
+        }
+    }
     
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
@@ -279,16 +207,14 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipes.count
+        return displayedRecipes.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = recipesTableView.dequeueReusableCellWithIdentifier("recipeCell", forIndexPath: indexPath)
-        
-        cell.textLabel!.text = recipes[indexPath.row].name
+        cell.textLabel!.text = displayedRecipes[indexPath.row].name
         return cell
     }
-    
     
     
     // MARK: - Miscellaneous
@@ -297,17 +223,16 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
     
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }

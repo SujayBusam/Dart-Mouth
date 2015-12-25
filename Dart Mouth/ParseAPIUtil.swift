@@ -15,7 +15,7 @@ class ParseAPIUtil {
     * Async function that retrieves Recipes for the given parameters.
     * Calls completion block with the retrieved Recipes.
     */
-    func recipesForDate(date: NSDate, venueKey: String, mealName: String, menuName: String, withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
+    func recipesFromCloudForDate(date: NSDate, venueKey: String, mealName: String, menuName: String, withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
         
         let components: NSDateComponents = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date)
         
