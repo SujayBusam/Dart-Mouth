@@ -14,25 +14,11 @@ enum Venue: ParseFieldCompatible {
     case Novack
     
     var parseField: String {
-        switch self {
-        case .Foco:
-            return Constants.VenueStrings.FocoParse
-        case .Hop:
-            return Constants.VenueStrings.HopParse
-        case .Novack:
-            return Constants.VenueStrings.NovackParse
-        }
+        return Mappings.StringsForVenue[self]!.first!
     }
     
     var displayString: String {
-        switch self {
-        case .Foco:
-            return Constants.VenueStrings.FocoDisplay
-        case .Hop:
-            return Constants.VenueStrings.HopDisplay
-        case .Novack:
-            return Constants.VenueStrings.NovackDisplay
-        }
+        return Mappings.StringsForVenue[self]!.last!
     }
     
     
@@ -47,33 +33,11 @@ enum MealTime: ParseFieldCompatible {
     case AllDay
     
     var parseField: String {
-        switch self {
-        case .Breakfast:
-            return Constants.MealTimeStrings.BreakfastParse
-        case .Lunch:
-            return Constants.MealTimeStrings.LunchParse
-        case .Dinner:
-            return Constants.MealTimeStrings.DinnerParse
-        case .LateNight:
-            return Constants.MealTimeStrings.LateNightParse
-        case .AllDay:
-            return Constants.MealTimeStrings.AllDayParse
-        }
+        return Mappings.StringsForMealTime[self]!.first!
     }
     
     var displayString: String {
-        switch self {
-        case .Breakfast:
-            return Constants.MealTimeStrings.BreakfastDisplay
-        case .Lunch:
-            return Constants.MealTimeStrings.LunchDisplay
-        case .Dinner:
-            return Constants.MealTimeStrings.DinnerDisplay
-        case .LateNight:
-            return Constants.MealTimeStrings.LateNightDisplay
-        case .AllDay:
-            return Constants.MealTimeStrings.AllDayDisplay
-        }
+        return Mappings.StringsForMealTime[self]!.last!
     }
 }
 
@@ -91,52 +55,10 @@ enum Menu: ParseFieldCompatible {
     case Snacks
     
     var parseField: String {
-        switch self {
-        case .Specials:
-            return Constants.MenuStrings.SpecialsParse
-        case .EverydayItems:
-            return Constants.MenuStrings.EverydayItemsParse
-        case .Beverage:
-            return Constants.MenuStrings.BeverageParse
-        case .Cereal:
-            return Constants.MenuStrings.CerealParse
-        case .Condiments:
-            return Constants.MenuStrings.CondimentsParse
-        case .GlutenFree:
-            return Constants.MenuStrings.GlutenFreeParse
-        case .Deli:
-            return Constants.MenuStrings.DeliParse
-        case .Grill:
-            return Constants.MenuStrings.GrillParse
-        case .GrabGo:
-            return Constants.MenuStrings.GrabGoParse
-        case .Snacks:
-            return Constants.MenuStrings.SnacksParse
-        }
+        return Mappings.StringsForMenu[self]!.first!
     }
     
     var displayString: String {
-        switch self {
-        case .Specials:
-            return Constants.MenuStrings.SpecialsDisplay
-        case .EverydayItems:
-            return Constants.MenuStrings.EverydayItemsDisplay
-        case .Beverage:
-            return Constants.MenuStrings.BeverageDisplay
-        case .Cereal:
-            return Constants.MenuStrings.CerealDisplay
-        case .Condiments:
-            return Constants.MenuStrings.CondimentsDisplay
-        case .GlutenFree:
-            return Constants.MenuStrings.GlutenFreeDisplay
-        case .Deli:
-            return Constants.MenuStrings.DeliDisplay
-        case .Grill:
-            return Constants.MenuStrings.GrillDisplay
-        case .GrabGo:
-            return Constants.MenuStrings.GrabGoDisplay
-        case .Snacks:
-            return Constants.MenuStrings.SnacksDisplay
-        }
+        return Mappings.StringsForMenu[self]!.last!
     }
 }

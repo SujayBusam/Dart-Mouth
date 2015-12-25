@@ -72,6 +72,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         return [venueSelectionList, mealtimeSelectionList, menuSelectionList]
     }
     
+
+    
     // MARK: - Controller / View Setup
     
     override func viewDidLoad() {
@@ -94,7 +96,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             }
         }
         
-        // Update the recipes table view by fetching appropriate Recipes from local datastore or Parse cloud.
+        // Update the recipes table view by fetching appropriate Recipes from Parse cloud.
         let selectedVenue = itemForSelectionList(venueSelectionList, withSelectedIndex: venueSelectionList.selectedButtonIndex)!
         let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withSelectedIndex: mealtimeSelectionList.selectedButtonIndex)!
         let selectedMenu = itemForSelectionList(menuSelectionList, withSelectedIndex: menuSelectionList.selectedButtonIndex)!
