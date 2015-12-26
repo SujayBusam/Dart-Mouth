@@ -8,20 +8,21 @@
 
 import Foundation
 
+let parse = Mappings.StringTypes.Parse
+let display = Mappings.StringTypes.Display
+
 enum Venue: ParseFieldCompatible {
     case Foco
     case Hop
     case Novack
     
     var parseField: String {
-        return Mappings.StringsForVenue[self]!.first!
+        return Mappings.StringsForVenue[self]![parse]!
     }
     
     var displayString: String {
-        return Mappings.StringsForVenue[self]!.last!
+        return Mappings.StringsForVenue[self]![display]!
     }
-    
-    
 }
 
 
@@ -33,11 +34,11 @@ enum MealTime: ParseFieldCompatible {
     case AllDay
     
     var parseField: String {
-        return Mappings.StringsForMealTime[self]!.first!
+        return Mappings.StringsForMealTime[self]![parse]!
     }
     
     var displayString: String {
-        return Mappings.StringsForMealTime[self]!.last!
+        return Mappings.StringsForMealTime[self]![display]!
     }
 }
 
@@ -55,10 +56,10 @@ enum Menu: ParseFieldCompatible {
     case Snacks
     
     var parseField: String {
-        return Mappings.StringsForMenu[self]!.first!
+        return Mappings.StringsForMenu[self]![parse]!
     }
     
     var displayString: String {
-        return Mappings.StringsForMenu[self]!.last!
+        return Mappings.StringsForMenu[self]![display]!
     }
 }

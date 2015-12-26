@@ -10,108 +10,107 @@ import Foundation
 
 struct Mappings {
     
-    // Maps Venue enum to display and Parse field strings
-    // For the values, the Parse string should always be first,
-    // and the display string second.
-    static let StringsForVenue: [Venue : [String]] = [
+    struct StringTypes {
+        static let Parse = "parse"
+        static let Display = "display"
+    }
+    
+    // Maps Venue enum to Parse field and display strings.
+    static let StringsForVenue: [Venue : [String : String]] = [
         Venue.Foco: [
-            Constants.VenueStrings.FocoParse,
-            Constants.VenueStrings.FocoDisplay
+            StringTypes.Parse : Constants.VenueStrings.FocoParse,
+            StringTypes.Display : Constants.VenueStrings.FocoDisplay,
         ],
         
         Venue.Hop: [
-            Constants.VenueStrings.HopParse,
-            Constants.VenueStrings.HopDisplay
+            StringTypes.Parse : Constants.VenueStrings.HopParse,
+            StringTypes.Display : Constants.VenueStrings.HopDisplay,
         ],
         
         Venue.Novack: [
-            Constants.VenueStrings.NovackParse,
-            Constants.VenueStrings.NovackDisplay
+            StringTypes.Parse : Constants.VenueStrings.NovackParse,
+            StringTypes.Display : Constants.VenueStrings.NovackDisplay,
         ]
     ]
     
-    // Maps MealTime enum to display and Parse field strings
-    // For the values, the Parse string should always be first,
-    // and the display string second.
-    static let StringsForMealTime: [MealTime : [String]] = [
+    // Maps MealTime enum to Parse field and display strings.
+    static let StringsForMealTime: [MealTime : [String : String]] = [
         MealTime.Breakfast: [
-            Constants.MealTimeStrings.BreakfastParse,
-            Constants.MealTimeStrings.BreakfastDisplay
+            StringTypes.Parse : Constants.MealTimeStrings.BreakfastParse,
+            StringTypes.Display : Constants.MealTimeStrings.BreakfastDisplay,
         ],
         
         MealTime.Lunch: [
-            Constants.MealTimeStrings.LunchParse,
-            Constants.MealTimeStrings.LunchDisplay
+            StringTypes.Parse : Constants.MealTimeStrings.LunchParse,
+            StringTypes.Display : Constants.MealTimeStrings.LunchDisplay,
         ],
         
         MealTime.Dinner: [
-            Constants.MealTimeStrings.DinnerParse,
-            Constants.MealTimeStrings.DinnerDisplay
+            StringTypes.Parse : Constants.MealTimeStrings.DinnerParse,
+            StringTypes.Display : Constants.MealTimeStrings.DinnerDisplay,
         ],
         
         MealTime.LateNight: [
-            Constants.MealTimeStrings.LateNightParse,
-            Constants.MealTimeStrings.LateNightDisplay
+            StringTypes.Parse : Constants.MealTimeStrings.LateNightParse,
+            StringTypes.Display : Constants.MealTimeStrings.LateNightDisplay,
         ],
         
         MealTime.AllDay: [
-            Constants.MealTimeStrings.AllDayParse,
-            Constants.MealTimeStrings.AllDayDisplay
+            StringTypes.Parse : Constants.MealTimeStrings.AllDayParse,
+            StringTypes.Display : Constants.MealTimeStrings.AllDayDisplay,
         ],
     ]
     
-    // Maps Menu enum to display and Parse field strings
-    // For the values, the Parse string should always be first,
-    // and the display string second.
-    static let StringsForMenu: [Menu : [String]] = [
+    // Maps Menu enum to Parse field and display strings.
+    static let StringsForMenu: [Menu : [String : String]] = [
         Menu.Specials: [
-            Constants.MenuStrings.SpecialsParse,
-            Constants.MenuStrings.SpecialsDisplay
+            StringTypes.Parse : Constants.MenuStrings.SpecialsParse,
+            StringTypes.Display : Constants.MenuStrings.SpecialsDisplay,
         ],
         
         Menu.EverydayItems: [
-            Constants.MenuStrings.EverydayItemsParse,
-            Constants.MenuStrings.EverydayItemsDisplay
+            StringTypes.Parse : Constants.MenuStrings.EverydayItemsParse,
+            StringTypes.Display : Constants.MenuStrings.EverydayItemsDisplay,
         ],
         
         Menu.Beverage: [
-            Constants.MenuStrings.BeverageParse,
-            Constants.MenuStrings.BeverageDisplay
+            StringTypes.Parse : Constants.MenuStrings.BeverageParse,
+            StringTypes.Display : Constants.MenuStrings.BeverageDisplay,
         ],
         
         Menu.Cereal: [
-            Constants.MenuStrings.CerealParse,
-            Constants.MenuStrings.CerealDisplay
+            StringTypes.Parse : Constants.MenuStrings.CerealParse,
+            StringTypes.Display : Constants.MenuStrings.CerealDisplay,
         ],
         
         Menu.Condiments: [
-            Constants.MenuStrings.CondimentsParse,
-            Constants.MenuStrings.CondimentsDisplay
+            StringTypes.Parse : Constants.MenuStrings.CondimentsParse,
+            StringTypes.Display : Constants.MenuStrings.CondimentsDisplay,
         ],
         
         Menu.GlutenFree: [
-            Constants.MenuStrings.GlutenFreeParse,
-            Constants.MenuStrings.GlutenFreeDisplay
+            StringTypes.Parse : Constants.MenuStrings.GlutenFreeParse,
+            StringTypes.Display : Constants.MenuStrings.GlutenFreeDisplay,
         ],
         
         Menu.Deli: [
-            Constants.MenuStrings.DeliParse,
-            Constants.MenuStrings.DeliDisplay
+            StringTypes.Parse : Constants.MenuStrings.DeliParse,
+            StringTypes.Display : Constants.MenuStrings.DeliDisplay,
         ],
         
         Menu.Grill: [
-            Constants.MenuStrings.GrillParse,
-            Constants.MenuStrings.GrillDisplay
+            StringTypes.Parse : Constants.MenuStrings.GrillParse,
+            StringTypes.Display : Constants.MenuStrings.GrillDisplay,
         ],
         
         Menu.GrabGo: [
-            Constants.MenuStrings.GrabGoParse,
-            Constants.MenuStrings.GrabGoDisplay
+            StringTypes.Parse : Constants.MenuStrings.GrabGoParse,
+            StringTypes.Display : Constants.MenuStrings.GrabGoDisplay,
         ],
         
         Menu.Snacks: [
-            Constants.MenuStrings.SnacksParse,
-            Constants.MenuStrings.SnacksDisplay
+            StringTypes.Parse : Constants.MenuStrings.SnacksParse,
+            StringTypes.Display : Constants.MenuStrings.SnacksDisplay,
         ],
     ]
     
