@@ -27,7 +27,7 @@ class ParseAPIUtil {
         offeringQuery.whereKey("mealName", equalTo: mealName)
         offeringQuery.whereKey("menuName", equalTo: menuName)
         
-        // Get Offering. There should only be one.
+        // Get Offering. There should only be one or zero.
         offeringQuery.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             

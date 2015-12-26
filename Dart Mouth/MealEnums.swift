@@ -23,6 +23,14 @@ enum Venue: ParseFieldCompatible {
     var displayString: String {
         return Mappings.StringsForVenue[self]![display]!
     }
+    
+    var mealTimes: [MealTime] {
+        return Mappings.MealTimesForVenue[self]!
+    }
+    
+    var menus: [Menu] {
+        return Mappings.MenusForVenue[self]!
+    }
 }
 
 

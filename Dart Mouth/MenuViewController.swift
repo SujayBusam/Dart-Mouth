@@ -97,9 +97,9 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
         
         // Update the recipes table view by fetching appropriate Recipes from Parse cloud.
-        let selectedVenue = itemForSelectionList(venueSelectionList, withSelectedIndex: venueSelectionList.selectedButtonIndex)!
-        let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withSelectedIndex: mealtimeSelectionList.selectedButtonIndex)!
-        let selectedMenu = itemForSelectionList(menuSelectionList, withSelectedIndex: menuSelectionList.selectedButtonIndex)!
+        let selectedVenue = itemForSelectionList(venueSelectionList, withIndex: venueSelectionList.selectedButtonIndex)!
+        let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withIndex: mealtimeSelectionList.selectedButtonIndex)!
+        let selectedMenu = itemForSelectionList(menuSelectionList, withIndex: menuSelectionList.selectedButtonIndex)!
         api.recipesFromCloudForDate(self.date, venueKey: selectedVenue.parseField, mealName: selectedMealtime.parseField, menuName: selectedMenu.parseField, withCompletionHandler: {
             (recipes: [Recipe]?) -> Void in
             
@@ -127,6 +127,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             selectionList.setTitleColor(Constants.Colors.appPrimaryColorDark, forState: .Selected)
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(13), forState: .Normal)
         }
+        
+        
     }
     
     
@@ -158,36 +160,36 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
     func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
-        let venue = allVenues[venueSelectionList.selectedButtonIndex]
+        let selectedVenue = allVenues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {
         case venueSelectionList:
             return allVenues.count
         case mealtimeSelectionList:
-            return Mappings.MealTimesForVenue[venue]!.count
+            return selectedVenue.mealTimes.count
         case menuSelectionList:
-            return Mappings.MenusForVenue[venue]!.count
+            return selectedVenue.menus.count
         default:
             return -1
         }
     }
     
     func selectionList(selectionList: HTHorizontalSelectionList!, titleForItemWithIndex index: Int) -> String! {
-        return itemForSelectionList(selectionList, withSelectedIndex: index)!.displayString
+        return itemForSelectionList(selectionList, withIndex: index)!.displayString
     }
     
-    // Helper function to return Venue, Mealtime, or Menu given a selection list and selection button index.
+    // Helper function to return Venue, Mealtime, or Menu enum given a selection list and selection button index.
     // Note that Venue, Mealtime, and Menu conform to ParseFieldCompatible protocol
-    private func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withSelectedIndex selectedIndex: Int) -> ParseFieldCompatible? {
-        let venue = allVenues[venueSelectionList.selectedButtonIndex]
+    private func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withIndex index: Int) -> ParseFieldCompatible? {
+        let selectedVenue = allVenues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {
         case venueSelectionList:
-            return allVenues[selectedIndex]
+            return allVenues[index]
         case mealtimeSelectionList:
-            return Mappings.MealTimesForVenue[venue]![selectedIndex]
+            return selectedVenue.mealTimes[index]
         case menuSelectionList:
-            return Mappings.MenusForVenue[venue]![selectedIndex]
+            return selectedVenue.menus[index]
         default:
             print("Unhandled selection list.")
             return nil
