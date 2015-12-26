@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+import ChameleonFramework
 
 struct Constants {
     
@@ -70,5 +70,10 @@ struct Constants {
         static let SnacksDisplay = "Snacks"
         static let SnacksParse = "Courtyard Snacks"
     }
-
+    
+    
+    struct Colors {
+        static let appPrimaryColor = FlatMint()
+        static let appPrimaryColorDark = FlatMintDark()
+    }
 }

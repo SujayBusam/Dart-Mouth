@@ -114,17 +114,17 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         })
     }
     
-    func setupViews() {
+    private func setupViews() {
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
             
             selectionList.centerAlignButtons = true
             selectionList.bottomTrimColor = FlatBlackDark()
             selectionList.selectionIndicatorAnimationMode = .HeavyBounce
-            selectionList.selectionIndicatorColor = ColorUtil.appPrimaryColorDark
+            selectionList.selectionIndicatorColor = Constants.Colors.appPrimaryColorDark
             
             selectionList.setTitleColor(FlatGrayDark(), forState: .Normal)
-            selectionList.setTitleColor(ColorUtil.appPrimaryColorDark, forState: .Selected)
+            selectionList.setTitleColor(Constants.Colors.appPrimaryColorDark, forState: .Selected)
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(13), forState: .Normal)
         }
     }
@@ -178,7 +178,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     // Helper function to return Venue, Mealtime, or Menu given a selection list and selection button index.
     // Note that Venue, Mealtime, and Menu conform to ParseFieldCompatible protocol
-    func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withSelectedIndex selectedIndex: Int) -> ParseFieldCompatible? {
+    private func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withSelectedIndex selectedIndex: Int) -> ParseFieldCompatible? {
         let venue = allVenues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {

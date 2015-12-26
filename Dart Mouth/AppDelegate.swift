@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
         
-        Chameleon.setGlobalThemeUsingPrimaryColor(FlatMintDark(), withSecondaryColor: FlatNavyBlueDark(), andContentStyle: .Light)
+        Chameleon.setGlobalThemeUsingPrimaryColor(Constants.Colors.appPrimaryColorDark, withSecondaryColor: FlatNavyBlueDark(), andContentStyle: .Light)
         
         return true
     }
