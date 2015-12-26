@@ -12,6 +12,12 @@ import HTHorizontalSelectionList
 
 class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    // Local dimension constants
+    private struct Dimensions {
+        static let NavBarItemHeight: CGFloat = 35
+        static let DateNavControlWidth: CGFloat = 190
+    }
+    
     // MARK: - Instance variables
     
     // The current menu date.
@@ -26,11 +32,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     let allVenues: [Venue] = [.Foco, .Hop, .Novack]
     
-    // MARK: - Outlets
-    
-    @IBOutlet weak var dateNavigationControl: DateNavigationControl! {
+    var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
     }
+    
+    // MARK: - Outlets
     
     // Selectors for venue, mealtime, and menu
     @IBOutlet
@@ -115,6 +121,10 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     private func setupViews() {
+        // Create and setup date navigation control
+        dateNavigationControl = DateNavigationControl(frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
+        self.navigationItem.titleView = dateNavigationControl
+        
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
             
@@ -127,8 +137,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             selectionList.setTitleColor(Constants.Colors.appPrimaryColorDark, forState: .Selected)
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(13), forState: .Normal)
         }
-        
-        
     }
     
     
