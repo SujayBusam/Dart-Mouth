@@ -75,5 +75,7 @@ struct Constants {
     struct Colors {
         static let appPrimaryColor = FlatMint()
         static let appPrimaryColorDark = FlatMintDark()
+        static let appSecondaryColor = FlatNavyBlue()
+        static let appSecondaryColorDark = FlatNavyBlueDark()
     }
 }

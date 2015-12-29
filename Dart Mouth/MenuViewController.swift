@@ -10,12 +10,14 @@ import UIKit
 import ChameleonFramework
 import HTHorizontalSelectionList
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate {
+class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     // Local dimension constants
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
         static let DateNavControlWidth: CGFloat = 190
+        static let SearchBarWidth: CGFloat = 200
+        static let HorizontalItemFontSize: CGFloat = 13
     }
     
     // MARK: - Instance variables
@@ -29,16 +31,22 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     var api = ParseAPIUtil()
     var displayedRecipes = [Recipe]()
-    
-    let allVenues: [Venue] = [.Foco, .Hop, .Novack]
+    var filteredRecipes = [Recipe]()
     
     var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
     }
     
+    var searchButton: UIBarButtonItem!
+    var cancelButton: UIBarButtonItem!
+    
+    var searchBar: UISearchBar! {
+        didSet { searchBar.delegate = self }
+    }
+    
     // MARK: - Outlets
     
-    // Selectors for venue, mealtime, and menu
+    // Selectors for venue, mealtime, and menu. These were created via storyboard
     @IBOutlet
     var venueSelectionList: HTHorizontalSelectionList! {
         didSet {
@@ -125,6 +133,21 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         dateNavigationControl = DateNavigationControl(frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
         self.navigationItem.titleView = dateNavigationControl
         
+        // Create and setup search bar button
+        let button = UIButton(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.NavBarItemHeight))
+        button.setImage(UIImage(named: "Search"), forState: .Normal)
+        button.addTarget(self, action: "searchButtonPressed:", forControlEvents: .TouchUpInside)
+        self.searchButton = UIBarButtonItem(customView: button)
+        self.navigationItem.rightBarButtonItem = self.searchButton
+    
+        // Create and setup search bar
+        searchBar = UISearchBar(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.SearchBarWidth))
+        searchBar.tintColor = Constants.Colors.appSecondaryColorDark
+        searchBar.backgroundColor = UIColor.clearColor()
+        
+        // Create cancel bar button
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelBarButtonPressed:")
+        
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
             
@@ -135,7 +158,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             
             selectionList.setTitleColor(FlatGrayDark(), forState: .Normal)
             selectionList.setTitleColor(Constants.Colors.appPrimaryColorDark, forState: .Selected)
-            selectionList.setTitleFont(UIFont.boldSystemFontOfSize(13), forState: .Normal)
+            selectionList.setTitleFont(UIFont.boldSystemFontOfSize(Dimensions.HorizontalItemFontSize), forState: .Normal)
         }
     }
     
@@ -165,14 +188,19 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     
     
+    // MARK: - UISearchBarDelegate protocol methods
+    
+    
+    
+    
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
     
     func numberOfItemsInSelectionList(selectionList: HTHorizontalSelectionList!) -> Int {
-        let selectedVenue = allVenues[venueSelectionList.selectedButtonIndex]
+        let selectedVenue = Venue.allVenues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {
         case venueSelectionList:
-            return allVenues.count
+            return Venue.allVenues.count
         case mealtimeSelectionList:
             return selectedVenue.mealTimes.count
         case menuSelectionList:
@@ -189,11 +217,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // Helper function to return Venue, Mealtime, or Menu enum given a selection list and selection button index.
     // Note that Venue, Mealtime, and Menu conform to ParseFieldCompatible protocol
     private func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withIndex index: Int) -> ParseFieldCompatible? {
-        let selectedVenue = allVenues[venueSelectionList.selectedButtonIndex]
+        let selectedVenue = Venue.allVenues[venueSelectionList.selectedButtonIndex]
         
         switch selectionList {
         case venueSelectionList:
-            return allVenues[index]
+            return Venue.allVenues[index]
         case mealtimeSelectionList:
             return selectedVenue.mealTimes[index]
         case menuSelectionList:
@@ -203,6 +231,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             return nil
         }
     }
+    
+    
     
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
@@ -229,12 +259,37 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
+    
+    // MARK: - Button action functions
+    
+    func searchButtonPressed(sender: UIButton) {
+        self.navigationItem.setRightBarButtonItem(cancelButton, animated: true)
+        self.navigationItem.titleView = searchBar
+        searchBar.alpha = 0
+        
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.searchBar.alpha = 1
+        }
+    }
+    
+    func cancelBarButtonPressed(sender: UIBarButtonItem) {
+        self.navigationItem.setRightBarButtonItem(searchButton, animated: true)
+        self.navigationItem.titleView = dateNavigationControl
+        dateNavigationControl.alpha = 0
+        
+        UIView.animateWithDuration(0.5) { () -> Void in
+            self.dateNavigationControl.alpha = 1
+        }
+    }
+    
+    
     // MARK: - Miscellaneous
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     
     /*

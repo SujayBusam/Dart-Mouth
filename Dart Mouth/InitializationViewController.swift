@@ -18,7 +18,7 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-//        testQuery3()
+//        testQuery2()
         self.performSegueWithIdentifier("Start After Initialization", sender: self)
     }
     
@@ -49,8 +49,8 @@ class InitializationViewController: UIViewController {
         offeringQuery.whereKey("day", equalTo: 24)
         offeringQuery.whereKey("year", equalTo: 2015)
         offeringQuery.whereKey("venueKey", equalTo: "CYC")
-        offeringQuery.whereKey("mealName", equalTo: "Lunch")
-        offeringQuery.whereKey("menuName", equalTo: "Everyday Items")
+//        offeringQuery.whereKey("mealName", equalTo: "Lunch")
+//        offeringQuery.whereKey("menuName", equalTo: "Everyday Items")
         
         print("Start fetching")
         

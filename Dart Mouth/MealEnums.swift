@@ -16,6 +16,8 @@ enum Venue: ParseFieldCompatible {
     case Hop
     case Novack
     
+    static let allVenues: [Venue] = [.Foco, .Hop, .Novack]
+    
     var parseField: String {
         return Mappings.StringsForVenue[self]![parse]!
     }
