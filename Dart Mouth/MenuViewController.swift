@@ -55,7 +55,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     var searchBar: UISearchBar! {
         didSet { searchBar.delegate = self }
     }
-    
+    var searchBarIsDisplayed = false
     
     
     // MARK: - Outlets
@@ -109,6 +109,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         
         setupViews()
         updateUI()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if searchBarIsDisplayed {
+            cancelButtonPressed(self.cancelButton)
+        }
     }
     
     func updateUI() {
@@ -303,9 +309,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         searchBar.alpha = 0
         searchBar.becomeFirstResponder()
         
-        UIView.animateWithDuration(0.5) { () -> Void in
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.searchBar.alpha = 1
-        }
+            }, completion: { (finished) -> Void in
+                self.searchBarIsDisplayed = true
+        })
     }
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
@@ -313,9 +321,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         self.navigationItem.titleView = dateNavigationControl
         dateNavigationControl.alpha = 0
         
-        UIView.animateWithDuration(0.5) { () -> Void in
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.dateNavigationControl.alpha = 1
-        }
+            }, completion: { (finished) -> Void in
+                self.searchBarIsDisplayed = false
+        })
     }
     
     
