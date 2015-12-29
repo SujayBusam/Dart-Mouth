@@ -30,7 +30,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     var api = ParseAPIUtil()
-    var displayedRecipes = [Recipe]()
+    var allRecipes = [Recipe]()
     var filteredRecipes = [Recipe]()
     
     var dateNavigationControl: DateNavigationControl! {
@@ -119,10 +119,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             
             dispatch_async(dispatch_get_main_queue()) {
                 if recipes != nil {
-                    self.displayedRecipes = recipes!
+                    self.allRecipes = recipes!
                 } else {
-                    self.displayedRecipes.removeAll()
+                    self.allRecipes.removeAll()
                 }
+                self.filteredRecipes = self.getFilteredRecipesFromAllRecipes(self.allRecipes, withSearchText: self.searchBar.text)
                 self.recipesTableView.reloadData()
             }
         })
@@ -150,7 +151,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
-            
             selectionList.centerAlignButtons = true
             selectionList.bottomTrimColor = FlatBlackDark()
             selectionList.selectionIndicatorAnimationMode = .HeavyBounce
@@ -190,7 +190,26 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     // MARK: - UISearchBarDelegate protocol methods
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredRecipes = getFilteredRecipesFromAllRecipes(allRecipes, withSearchText: searchText)
+        recipesTableView.reloadData()
+    }
     
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    // Helper function to return filtered array of Recipes given search text.
+    func getFilteredRecipesFromAllRecipes(recipes: [Recipe], withSearchText searchText: String?) -> [Recipe] {
+        if searchText != nil && !searchText!.isEmpty {
+            // TODO: Make this a String extension
+            let searchText = searchText!.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            return recipes.filter({ (recipe: Recipe) -> Bool in
+                return recipe.name.lowercaseString.containsString(searchText)
+            })
+        }
+        return recipes
+    }
     
     
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
@@ -238,6 +257,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
         updateUI()
+        print("Text: '\(searchBar.text!)'")
     }
     
     
@@ -249,12 +269,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return displayedRecipes.count
+        return filteredRecipes.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = recipesTableView.dequeueReusableCellWithIdentifier("recipeCell", forIndexPath: indexPath)
-        cell.textLabel!.text = displayedRecipes[indexPath.row].name
+        cell.textLabel!.text = filteredRecipes[indexPath.row].name
         return cell
     }
     
@@ -266,6 +286,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         self.navigationItem.setRightBarButtonItem(cancelButton, animated: true)
         self.navigationItem.titleView = searchBar
         searchBar.alpha = 0
+        searchBar.becomeFirstResponder()
         
         UIView.animateWithDuration(0.5) { () -> Void in
             self.searchBar.alpha = 1
