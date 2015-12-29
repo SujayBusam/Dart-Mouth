@@ -123,7 +123,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                 } else {
                     self.allRecipes.removeAll()
                 }
-                self.filteredRecipes = self.getFilteredRecipesFromAllRecipes(self.allRecipes, withSearchText: self.searchBar.text)
+                self.setFilteredRecipesWithSearchText(self.searchBar.text)
                 self.recipesTableView.reloadData()
             }
         })
@@ -147,7 +147,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         searchBar.backgroundColor = UIColor.clearColor()
         
         // Create cancel bar button
-        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelBarButtonPressed:")
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelButtonPressed:")
         
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
@@ -191,7 +191,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredRecipes = getFilteredRecipesFromAllRecipes(allRecipes, withSearchText: searchText)
+        setFilteredRecipesWithSearchText(searchText)
         recipesTableView.reloadData()
     }
     
@@ -199,16 +199,18 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         searchBar.resignFirstResponder()
     }
     
-    // Helper function to return filtered array of Recipes given search text.
-    func getFilteredRecipesFromAllRecipes(recipes: [Recipe], withSearchText searchText: String?) -> [Recipe] {
+    // Helper function to set filtered Recipes given search text.
+    // If the search text is nil or empty, no search occurred, so filtered Recipes are assigned all Recipes
+    func setFilteredRecipesWithSearchText(searchText: String?) {
         if searchText != nil && !searchText!.isEmpty {
             // TODO: Make this a String extension
             let searchText = searchText!.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            return recipes.filter({ (recipe: Recipe) -> Bool in
+            self.filteredRecipes = allRecipes.filter({ (recipe: Recipe) -> Bool in
                 return recipe.name.lowercaseString.containsString(searchText)
             })
+        } else {
+            self.filteredRecipes = allRecipes
         }
-        return recipes
     }
     
     
@@ -257,7 +259,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
         updateUI()
-        print("Text: '\(searchBar.text!)'")
     }
     
     
@@ -293,7 +294,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
     }
     
-    func cancelBarButtonPressed(sender: UIBarButtonItem) {
+    func cancelButtonPressed(sender: UIBarButtonItem) {
         self.navigationItem.setRightBarButtonItem(searchButton, animated: true)
         self.navigationItem.titleView = dateNavigationControl
         dateNavigationControl.alpha = 0
