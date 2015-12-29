@@ -55,7 +55,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     var searchBar: UISearchBar! {
         didSet { searchBar.delegate = self }
     }
-    var searchBarIsDisplayed = false
+    
     
     
     // MARK: - Outlets
@@ -112,9 +112,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     override func viewWillDisappear(animated: Bool) {
-        if searchBarIsDisplayed {
-            cancelButtonPressed(self.cancelButton)
-        }
+        displayDateNavigationAndSearchButton(animated: false)
     }
     
     func updateUI() {
@@ -255,24 +253,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         return itemForSelectionList(selectionList, withIndex: index)!.displayString
     }
     
-    // Helper function to return Venue, Mealtime, or Menu enum given a selection list and selection button index.
-    // Note that Venue, Mealtime, and Menu conform to ParseFieldCompatible protocol
-    private func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withIndex index: Int) -> ParseFieldCompatible? {
-        let selectedVenue = Venue.allVenues[venueSelectionList.selectedButtonIndex]
-        
-        switch selectionList {
-        case venueSelectionList:
-            return Venue.allVenues[index]
-        case mealtimeSelectionList:
-            return selectedVenue.mealTimes[index]
-        case menuSelectionList:
-            return selectedVenue.menus[index]
-        default:
-            print("Unhandled selection list.")
-            return nil
-        }
-    }
-    
     
     
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
@@ -304,29 +284,66 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - Button action functions
     
     func searchButtonPressed(sender: UIButton) {
-        self.navigationItem.setRightBarButtonItem(cancelButton, animated: true)
-        self.navigationItem.titleView = searchBar
-        searchBar.alpha = 0
-        searchBar.becomeFirstResponder()
-        
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.searchBar.alpha = 1
-            }, completion: { (finished) -> Void in
-                self.searchBarIsDisplayed = true
-        })
+        displaySearchBarAndCancelButton(animated: true)
     }
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
+        displayDateNavigationAndSearchButton(animated: true)
+    }
+    
+    
+    
+    // MARK: - Helper Functions
+    
+    // Helper function to replace whatever is in the navigation bar with
+    // the view controller's search bar and cancel button.
+    func displaySearchBarAndCancelButton(animated animated: Bool) {
+        self.navigationItem.setRightBarButtonItem(cancelButton, animated: true)
+        self.navigationItem.titleView = searchBar
+        searchBar.becomeFirstResponder()
+        
+        // Animation causes a "fade-in" effect
+        if animated {
+            searchBar.alpha = 0
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.searchBar.alpha = 1
+            })
+        }
+    }
+    
+    // Helper function to replace whatever is in the navigation bar with
+    // the view controller's date navigation control and search button.
+    func displayDateNavigationAndSearchButton(animated animated: Bool) {
         self.navigationItem.setRightBarButtonItem(searchButton, animated: true)
         self.navigationItem.titleView = dateNavigationControl
-        dateNavigationControl.alpha = 0
         
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.dateNavigationControl.alpha = 1
-            }, completion: { (finished) -> Void in
-                self.searchBarIsDisplayed = false
-        })
+        if animated {
+            dateNavigationControl.alpha = 0
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.dateNavigationControl.alpha = 1
+            })
+        }
     }
+    
+    // Helper function to return Venue, Mealtime, or Menu enum given a selection list
+    // and selection button index. Note that Venue, Mealtime, and Menu conform to
+    // ParseFieldCompatible protocol
+    private func itemForSelectionList(selectionList: HTHorizontalSelectionList!, withIndex index: Int) -> ParseFieldCompatible? {
+        let selectedVenue = Venue.allVenues[venueSelectionList.selectedButtonIndex]
+        
+        switch selectionList {
+        case venueSelectionList:
+            return Venue.allVenues[index]
+        case mealtimeSelectionList:
+            return selectedVenue.mealTimes[index]
+        case menuSelectionList:
+            return selectedVenue.menus[index]
+        default:
+            print("Unhandled selection list.")
+            return nil
+        }
+    }
+    
     
     
     // MARK: - Miscellaneous
