@@ -12,7 +12,8 @@ import HTHorizontalSelectionList
 
 class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
-    // Local dimension constants
+    // MARK: - Local Constants
+    
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
         static let DateNavControlWidth: CGFloat = 190
@@ -20,16 +21,27 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         static let HorizontalItemFontSize: CGFloat = 13
     }
     
+    private struct Identifiers {
+        static let searchButtonImage: String = "Search"
+        static let searchButtonPressed: String = "searchButtonPressed:"
+        static let cancelButtonPressed: String = "cancelButtonPressed:"
+        static let recipeCell: String = "recipeCell"
+        static let nutritionSegue: String = "showRecipeNutrition"
+    }
+    
+    
+    
     // MARK: - Instance variables
     
     // The current menu date.
-    var date: NSDate = NSDate() {
+    // TODO: change back to current date after testing is done
+    var date: NSDate = NSDate(dateString: "2015-11-24") {
         didSet {
             updateUI()
         }
     }
     
-    var api = ParseAPIUtil()
+    var api = ParseAPI()
     var allRecipes = [Recipe]()
     var filteredRecipes = [Recipe]()
     
@@ -43,6 +55,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     var searchBar: UISearchBar! {
         didSet { searchBar.delegate = self }
     }
+    
+    
     
     // MARK: - Outlets
     
@@ -136,8 +150,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         
         // Create and setup search bar button
         let button = UIButton(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.NavBarItemHeight))
-        button.setImage(UIImage(named: "Search"), forState: .Normal)
-        button.addTarget(self, action: "searchButtonPressed:", forControlEvents: .TouchUpInside)
+        button.setImage(UIImage(named: Identifiers.searchButtonImage), forState: .Normal)
+        button.addTarget(self, action: NSSelectorFromString(Identifiers.searchButtonPressed), forControlEvents: .TouchUpInside)
         self.searchButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = self.searchButton
     
@@ -147,7 +161,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         searchBar.backgroundColor = UIColor.clearColor()
         
         // Create cancel bar button
-        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelButtonPressed:")
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: NSSelectorFromString(Identifiers.cancelButtonPressed))
         
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
@@ -274,7 +288,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = recipesTableView.dequeueReusableCellWithIdentifier("recipeCell", forIndexPath: indexPath)
+        let cell = recipesTableView.dequeueReusableCellWithIdentifier(Identifiers.recipeCell, forIndexPath: indexPath)
         cell.textLabel!.text = filteredRecipes[indexPath.row].name
         return cell
     }
@@ -314,14 +328,20 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     
     
-    /*
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+        if let identifier = segue.identifier {
+            switch identifier {
+            case Identifiers.nutritionSegue:
+                if let targetViewController = segue.destinationViewController as? RecipeNutritionViewController {
+                    let recipeIndex = recipesTableView.indexPathForSelectedRow!.row
+                    targetViewController.recipe = self.filteredRecipes[recipeIndex]
+                    self.searchBar.resignFirstResponder()
+                }
+            default: break
+            }
+        }
     }
-    */
     
 }

@@ -20,12 +20,13 @@
 		237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */; };
 		238C8D491BF3F3CC00FF1E43 /* NutrientUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238C8D481BF3F3CC00FF1E43 /* NutrientUtil.swift */; };
 		238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C8E1C2A2077007720F8 /* Recipe.swift */; };
-		238F1C951C2B7D08007720F8 /* ParseAPIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C941C2B7D08007720F8 /* ParseAPIUtil.swift */; };
+		238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C941C2B7D08007720F8 /* ParseAPI.swift */; };
 		238F1C971C2B8190007720F8 /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C961C2B8190007720F8 /* Offering.swift */; };
 		238F1C991C2C6F22007720F8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C981C2C6F22007720F8 /* Constants.swift */; };
 		238F1C9B1C2C7867007720F8 /* Mappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C9A1C2C7867007720F8 /* Mappings.swift */; };
 		238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C9C1C2DE938007720F8 /* MealEnums.swift */; };
 		238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C9E1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift */; };
+		238F1CA11C332801007720F8 /* NSDate+ConvenienceInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1CA01C332801007720F8 /* NSDate+ConvenienceInit.swift */; };
 		239BFA761C190CA300617EE7 /* MenuViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */; };
 		239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA791C190CF200617EE7 /* MenuViewController.swift */; };
 		23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A08E121BF30B94002685A6 /* InitializationViewController.swift */; };
@@ -63,12 +64,13 @@
 		237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
 		238C8D481BF3F3CC00FF1E43 /* NutrientUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutrientUtil.swift; sourceTree = "<group>"; };
 		238F1C8E1C2A2077007720F8 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		238F1C941C2B7D08007720F8 /* ParseAPIUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPIUtil.swift; sourceTree = "<group>"; };
+		238F1C941C2B7D08007720F8 /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
 		238F1C961C2B8190007720F8 /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		238F1C981C2C6F22007720F8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		238F1C9A1C2C7867007720F8 /* Mappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappings.swift; sourceTree = "<group>"; };
 		238F1C9C1C2DE938007720F8 /* MealEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealEnums.swift; sourceTree = "<group>"; };
 		238F1C9E1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseFieldCompatibleProtocol.swift; sourceTree = "<group>"; };
+		238F1CA01C332801007720F8 /* NSDate+ConvenienceInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+ConvenienceInit.swift"; sourceTree = "<group>"; };
 		239BFA751C190CA300617EE7 /* MenuViewControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewControllerOld.swift; sourceTree = "<group>"; };
 		239BFA791C190CF200617EE7 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		23A08E121BF30B94002685A6 /* InitializationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializationViewController.swift; sourceTree = "<group>"; };
@@ -105,7 +107,6 @@
 			children = (
 				23073D7D1BF2D49000887F92 /* DateUtil.swift */,
 				238C8D481BF3F3CC00FF1E43 /* NutrientUtil.swift */,
-				238F1C941C2B7D08007720F8 /* ParseAPIUtil.swift */,
 				238F1C981C2C6F22007720F8 /* Constants.swift */,
 				238F1C9A1C2C7867007720F8 /* Mappings.swift */,
 			);
@@ -115,6 +116,7 @@
 		230B1A841BEAC825007E5576 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				238F1C941C2B7D08007720F8 /* ParseAPI.swift */,
 				230B1A851BEAC859007E5576 /* DartFoodAPI.swift */,
 			);
 			name = API;
@@ -209,6 +211,7 @@
 				238F1C961C2B8190007720F8 /* Offering.swift */,
 				238F1C9C1C2DE938007720F8 /* MealEnums.swift */,
 				238F1C9E1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift */,
+				238F1CA01C332801007720F8 /* NSDate+ConvenienceInit.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -456,7 +459,7 @@
 				2376308D1BEE94D8000A6C54 /* DiaryViewController.swift in Sources */,
 				238F1C991C2C6F22007720F8 /* Constants.swift in Sources */,
 				230B1A861BEAC859007E5576 /* DartFoodAPI.swift in Sources */,
-				238F1C951C2B7D08007720F8 /* ParseAPIUtil.swift in Sources */,
+				238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				237630811BEE9498000A6C54 /* MenuFilter.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
@@ -471,6 +474,7 @@
 				2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */,
 				233F94FF1C1930CA00C0D714 /* DateNavigationControl.swift in Sources */,
 				239BFA761C190CA300617EE7 /* MenuViewControllerOld.swift in Sources */,
+				238F1CA11C332801007720F8 /* NSDate+ConvenienceInit.swift in Sources */,
 				23073D7E1BF2D49000887F92 /* DateUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

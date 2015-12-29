@@ -14,7 +14,9 @@ class Recipe: PFObject, PFSubclassing {
     @NSManaged var dartmouthId: Int
     @NSManaged var name: String
     @NSManaged var rank: Int
-    @NSManaged var nutrients: PFObject
+    // Nutrients is a dictionary of dictionaries. Look at Parse data browser to see how the JSON is formatted.
+    // For the inner Dictionary, the value is of type AnyObject because it can be a string, nil, or an int.
+    @NSManaged var nutrients: Dictionary<String, Dictionary<String, AnyObject>>
     @NSManaged var uuid: String
     @NSManaged var category: String
     

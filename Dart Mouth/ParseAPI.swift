@@ -9,7 +9,10 @@
 import Foundation
 import Parse
 
-class ParseAPIUtil {
+/*
+* A class with some app-specific, useful wrapper functions around the Parse API
+*/
+class ParseAPI {
     
     /*
     * Async function that retrieves Recipes for the given parameters.
@@ -32,7 +35,7 @@ class ParseAPIUtil {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
-                let offerings = objects as! [Offering]
+                let offerings = objects as! [Offering] // TODO: potential crash here. Implement safeguard
                 if offerings.isEmpty {
                     completionHandler(nil)
                 } else {
