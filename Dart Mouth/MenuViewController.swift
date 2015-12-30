@@ -44,7 +44,9 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     var api = ParseAPI()
     var allRecipes = [Recipe]()
-    var filteredRecipes = [Recipe]()
+    var filteredRecipes = [Recipe]() {
+        didSet { recipesTableView.reloadData() }
+    }
     
     var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
@@ -147,7 +149,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                     self.allRecipes.removeAll()
                 }
                 self.setFilteredRecipesWithSearchText(self.searchBar.text)
-                self.recipesTableView.reloadData()
                 MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
             }
         })
@@ -216,26 +217,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         setFilteredRecipesWithSearchText(searchText)
-        recipesTableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
-    // Helper function to set filtered Recipes given search text.
-    // If the search text is nil or empty, no search occurred, so filtered Recipes are assigned all Recipes
-    func setFilteredRecipesWithSearchText(searchText: String?) {
-        if searchText != nil && !searchText!.isEmpty {
-            // TODO: Make this a String extension
-            let searchText = searchText!.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            self.filteredRecipes = allRecipes.filter({ (recipe: Recipe) -> Bool in
-                return recipe.name.lowercaseString.containsString(searchText)
-            })
-        } else {
-            self.filteredRecipes = allRecipes
-        }
-    }
     
     
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
@@ -294,6 +281,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
+        searchBar.text = ""
+        setFilteredRecipesWithSearchText("")
         displayDateNavigationAndSearchButton(animated: true)
     }
     
@@ -350,13 +339,18 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
     }
     
-    
-    
-    // MARK: - Miscellaneous
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // Helper function to set filtered Recipes given search text.
+    // If the search text is nil or empty, no search occurred, so filtered Recipes are assigned all Recipes
+    func setFilteredRecipesWithSearchText(searchText: String?) {
+        if searchText != nil && !searchText!.isEmpty {
+            // TODO: Make this a String extension
+            let searchText = searchText!.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            self.filteredRecipes = allRecipes.filter({ (recipe: Recipe) -> Bool in
+                return recipe.name.lowercaseString.containsString(searchText)
+            })
+        } else {
+            self.filteredRecipes = allRecipes
+        }
     }
     
     
@@ -374,6 +368,15 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             default: break
             }
         }
+    }
+    
+    
+    
+    // MARK: - Miscellaneous
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
 }
