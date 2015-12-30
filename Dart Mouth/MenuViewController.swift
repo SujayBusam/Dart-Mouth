@@ -112,7 +112,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     override func viewWillDisappear(animated: Bool) {
-        displayDateNavigationAndSearchButton(animated: false)
+        searchBar.resignFirstResponder()
     }
     
     func updateUI() {
@@ -366,7 +366,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                 if let targetViewController = segue.destinationViewController as? RecipeNutritionViewController {
                     let recipeIndex = recipesTableView.indexPathForSelectedRow!.row
                     targetViewController.recipe = self.filteredRecipes[recipeIndex]
-                    self.searchBar.resignFirstResponder()
                 }
             default: break
             }
