@@ -9,8 +9,9 @@
 import UIKit
 import ChameleonFramework
 import HTHorizontalSelectionList
+import MBProgressHUD
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, MBProgressHUDDelegate {
     
     // MARK: - Local Constants
     
@@ -129,6 +130,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
         
         // Update the recipes table view by fetching appropriate Recipes from Parse cloud.
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(recipesTableView, animated: true)
+        spinningActivity.userInteractionEnabled = false
         let selectedVenue = itemForSelectionList(venueSelectionList, withIndex: venueSelectionList.selectedButtonIndex)!
         let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withIndex: mealtimeSelectionList.selectedButtonIndex)!
         let selectedMenu = itemForSelectionList(menuSelectionList, withIndex: menuSelectionList.selectedButtonIndex)!
@@ -145,6 +148,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                 }
                 self.setFilteredRecipesWithSearchText(self.searchBar.text)
                 self.recipesTableView.reloadData()
+                MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
             }
         })
     }
