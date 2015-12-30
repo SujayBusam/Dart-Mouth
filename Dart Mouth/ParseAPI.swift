@@ -18,7 +18,9 @@ class ParseAPI {
     * Async function that retrieves Recipes for the given parameters.
     * Calls completion block with the retrieved Recipes.
     */
-    func recipesFromCloudForDate(date: NSDate, venueKey: String, mealName: String, menuName: String, withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
+    func recipesFromCloudForDate(date: NSDate, venueKey: String, mealName: String,
+        menuName: String, orderAlphabetically: Bool,
+        withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
         
         let components: NSDateComponents = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date)
         
@@ -43,6 +45,7 @@ class ParseAPI {
                     
                     let recipesQuery = offering.relationForKey("recipes").query()
                     recipesQuery.limit = 1000
+                    if orderAlphabetically { recipesQuery.orderByAscending("name") }
                     
                     // Get Recipes
                     recipesQuery.findObjectsInBackgroundWithBlock {

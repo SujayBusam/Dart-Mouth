@@ -132,7 +132,9 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         let selectedVenue = itemForSelectionList(venueSelectionList, withIndex: venueSelectionList.selectedButtonIndex)!
         let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withIndex: mealtimeSelectionList.selectedButtonIndex)!
         let selectedMenu = itemForSelectionList(menuSelectionList, withIndex: menuSelectionList.selectedButtonIndex)!
-        api.recipesFromCloudForDate(self.date, venueKey: selectedVenue.parseField, mealName: selectedMealtime.parseField, menuName: selectedMenu.parseField, withCompletionHandler: {
+        api.recipesFromCloudForDate(self.date, venueKey: selectedVenue.parseField,
+            mealName: selectedMealtime.parseField, menuName: selectedMenu.parseField,
+            orderAlphabetically: true, withCompletionHandler: {
             (recipes: [Recipe]?) -> Void in
             
             dispatch_async(dispatch_get_main_queue()) {
