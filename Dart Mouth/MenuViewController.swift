@@ -150,6 +150,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                     self.allRecipes.removeAll()
                 }
                 self.setFilteredRecipesWithSearchText(self.searchBar.text)
+                
+                // Every time UI updates, table view should reset to top, as long as it's not empty.
+                if !self.filteredRecipes.isEmpty {
+                    self.recipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+                }
                 MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
             }
         })
