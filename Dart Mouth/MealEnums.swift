@@ -18,12 +18,12 @@ enum Venue: ParseFieldCompatible {
     
     static let allVenues: [Venue] = [.Foco, .Hop, .Novack]
     
-    var parseField: String {
-        return Mappings.StringsForVenue[self]![parse]!
+    var parseField: String? {
+        return Mappings.StringsForVenue[self]![parse]
     }
     
-    var displayString: String {
-        return Mappings.StringsForVenue[self]![display]!
+    var displayString: String? {
+        return Mappings.StringsForVenue[self]![display]
     }
     
     var mealTimes: [MealTime] {
@@ -43,17 +43,18 @@ enum MealTime: ParseFieldCompatible {
     case LateNight
     case AllDay
     
-    var parseField: String {
-        return Mappings.StringsForMealTime[self]![parse]!
+    var parseField: String? {
+        return Mappings.StringsForMealTime[self]![parse]
     }
     
-    var displayString: String {
-        return Mappings.StringsForMealTime[self]![display]!
+    var displayString: String? {
+        return Mappings.StringsForMealTime[self]![display]
     }
 }
 
 
 enum Menu: ParseFieldCompatible {
+    case AllItems
     case Specials
     case EverydayItems
     case Beverage
@@ -65,11 +66,11 @@ enum Menu: ParseFieldCompatible {
     case GrabGo
     case Snacks
     
-    var parseField: String {
-        return Mappings.StringsForMenu[self]![parse]!
+    var parseField: String? {
+        return Mappings.StringsForMenu[self]![parse]
     }
     
-    var displayString: String {
-        return Mappings.StringsForMenu[self]![display]!
+    var displayString: String? {
+        return Mappings.StringsForMenu[self]![display]
     }
 }

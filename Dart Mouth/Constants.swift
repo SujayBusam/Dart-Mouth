@@ -40,6 +40,8 @@ struct Constants {
     }
     
     struct MenuStrings {
+        static let AllItemsDisplay = "All Items"
+        
         static let SpecialsDisplay = "Today's Specials"
         static let SpecialsParse = "Today's Specials"
         

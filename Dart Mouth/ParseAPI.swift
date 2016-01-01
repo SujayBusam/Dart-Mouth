@@ -18,8 +18,8 @@ class ParseAPI {
     * Async function that retrieves Recipes for the given parameters.
     * Calls completion block with the retrieved Recipes.
     */
-    func recipesFromCloudForDate(date: NSDate, venueKey: String, mealName: String,
-        menuName: String, orderAlphabetically: Bool,
+    func recipesFromCloudForDate(date: NSDate, venueKey: String?, mealName: String?,
+        menuName: String?, orderAlphabetically: Bool,
         withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
         
         let components: NSDateComponents = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date)
@@ -28,9 +28,9 @@ class ParseAPI {
         offeringQuery.whereKey("month", equalTo: components.month)
         offeringQuery.whereKey("day", equalTo: components.day)
         offeringQuery.whereKey("year", equalTo: components.year)
-        offeringQuery.whereKey("venueKey", equalTo: venueKey)
-        offeringQuery.whereKey("mealName", equalTo: mealName)
-        offeringQuery.whereKey("menuName", equalTo: menuName)
+        if venueKey != nil { offeringQuery.whereKey("venueKey", equalTo: venueKey!) }
+        if mealName != nil { offeringQuery.whereKey("mealName", equalTo: mealName!) }
+        if menuName != nil { offeringQuery.whereKey("menuName", equalTo: menuName!) }
         
         // Get Offering. There should only be one or zero.
         offeringQuery.findObjectsInBackgroundWithBlock {
@@ -41,18 +41,23 @@ class ParseAPI {
                 if offerings.isEmpty {
                     completionHandler(nil)
                 } else {
-                    let offering = offerings[0]
+                    // Get all Recipe relations for all Offerings queried above
+                    var relationQueries = [PFQuery]()
+                    for offering in offerings {
+                        relationQueries.append(offering.relationForKey("recipes").query())
+                    }
                     
-                    let recipesQuery = offering.relationForKey("recipes").query()
-                    recipesQuery.limit = 1000
+                    
+                    let recipesQuery = PFQuery.orQueryWithSubqueries(relationQueries)
                     if orderAlphabetically { recipesQuery.orderByAscending("name") }
+                    recipesQuery.limit = 1000
                     
                     // Get Recipes
                     recipesQuery.findObjectsInBackgroundWithBlock {
                         (objects: [PFObject]?, error: NSError?) -> Void in
                         
                         if error == nil {
-                            let recipes = objects as! [Recipe]
+                            let recipes = objects as! [Recipe] // TODO: potential crash here. Implement safeguard
                             completionHandler(recipes)
                         } else {
                             print("Error fetching Recipes for Offering.")

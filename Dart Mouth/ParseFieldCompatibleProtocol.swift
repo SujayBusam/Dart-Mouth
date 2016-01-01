@@ -9,6 +9,6 @@
 import Foundation
 
 protocol ParseFieldCompatible {
-    var parseField: String { get }
-    var displayString: String { get }
+    var parseField: String? { get }
+    var displayString: String? { get }
 }

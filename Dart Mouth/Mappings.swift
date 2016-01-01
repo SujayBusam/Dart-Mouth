@@ -63,6 +63,11 @@ struct Mappings {
     
     // Maps Menu enum to Parse field and display strings.
     static let StringsForMenu: [Menu : [String : String]] = [
+        Menu.AllItems: [
+            // No Parse string since All Items is purely for front end display
+            StringTypes.Display: Constants.MenuStrings.AllItemsDisplay
+        ],
+        
         Menu.Specials: [
             StringTypes.Parse : Constants.MenuStrings.SpecialsParse,
             StringTypes.Display : Constants.MenuStrings.SpecialsDisplay,
@@ -139,6 +144,7 @@ struct Mappings {
     // Maps Venue enum to Menu enums
     static let MenusForVenue: [Venue: [Menu]] = [
         Venue.Foco: [
+            Menu.AllItems,
             Menu.Specials,
             Menu.EverydayItems,
             Menu.GlutenFree,
@@ -147,6 +153,7 @@ struct Mappings {
         ],
         
         Venue.Hop: [
+            Menu.AllItems,
             Menu.Specials,
             Menu.EverydayItems,
             Menu.Deli,
@@ -159,6 +166,7 @@ struct Mappings {
         ],
         
         Venue.Novack: [
+            Menu.AllItems,
             Menu.Specials,
             Menu.EverydayItems,
         ]
