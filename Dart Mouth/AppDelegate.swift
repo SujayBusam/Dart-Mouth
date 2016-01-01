@@ -24,8 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Parse.
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
         
-        Chameleon.setGlobalThemeUsingPrimaryColor(Constants.Colors.appPrimaryColorDark, withSecondaryColor: Constants.Colors.appSecondaryColorDark, andContentStyle: .Light)
+        // Status bar will have white text app-wide
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         
+        // App-wide color of Navigation Bar
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = Constants.Colors.appPrimaryColorDark
         return true
     }
 

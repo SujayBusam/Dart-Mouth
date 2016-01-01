@@ -353,7 +353,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // If the search text is nil or empty, no search occurred, so filtered Recipes are assigned all Recipes
     func setFilteredRecipesWithSearchText(searchText: String?) {
         if searchText != nil && !searchText!.isEmpty {
-            // TODO: Make this a String extension
             let searchText = searchText!.lowercaseString.trim()
             self.filteredRecipes = allRecipes.filter({ (recipe: Recipe) -> Bool in
                 return recipe.name.lowercaseString.containsString(searchText)
