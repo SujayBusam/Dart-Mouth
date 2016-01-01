@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dart Mouth/RecipeNutritionViewController.swift"
-            timestampString = "473118391.59598"
+            timestampString = "473150918.070495"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "updateUI()"
             landmarkType = "5">
          </BreakpointContent>

@@ -69,12 +69,28 @@
                                 <rect key="frame" x="0.0" y="183" width="375" height="435"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeCell" id="tIT-KW-wme">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecipeCell" textLabel="jQc-do-TTE" detailTextLabel="Sts-5T-YQ3" style="IBUITableViewCellStyleSubtitle" id="tIT-KW-wme">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tIT-KW-wme" id="BWA-8O-i8V">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jQc-do-TTE">
+                                                    <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sts-5T-YQ3">
+                                                    <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="eao-ef-CKE" kind="show" identifier="showRecipeNutrition" id="isI-es-Kpj"/>
@@ -94,20 +110,27 @@
                             <constraint firstItem="e7d-2z-TXi" firstAttribute="top" secondItem="kC9-dz-moB" secondAttribute="bottom" constant="8" symbolic="YES" id="Qj1-ve-6MJ"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="leading" secondItem="3ae-nm-uEE" secondAttribute="leading" id="RhK-MS-AUt"/>
                             <constraint firstItem="kC9-dz-moB" firstAttribute="leading" secondItem="YVm-zM-oX9" secondAttribute="leading" id="S0O-Ud-jWB"/>
+                            <constraint firstItem="QXI-WP-nAZ" firstAttribute="top" secondItem="e7d-2z-TXi" secondAttribute="bottom" id="UE5-ZC-uSb"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="trailing" secondItem="kC9-dz-moB" secondAttribute="trailing" id="YOS-aS-NkB"/>
+                            <constraint firstItem="e7d-2z-TXi" firstAttribute="leading" secondItem="jU6-gf-RTg" secondAttribute="leading" id="Z2l-Qw-qDf"/>
                             <constraint firstItem="kC9-dz-moB" firstAttribute="top" secondItem="jU6-gf-RTg" secondAttribute="top" constant="148" id="f03-eA-x2X"/>
                             <constraint firstItem="kC9-dz-moB" firstAttribute="leading" secondItem="jU6-gf-RTg" secondAttribute="leading" id="fcK-hD-eXI"/>
                             <constraint firstItem="kC9-dz-moB" firstAttribute="top" secondItem="YVm-zM-oX9" secondAttribute="bottom" constant="8" symbolic="YES" id="hh7-S6-ASy"/>
+                            <constraint firstAttribute="trailing" secondItem="e7d-2z-TXi" secondAttribute="trailing" id="i8r-ma-ERR"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="leading" secondItem="Ela-Vs-fgK" secondAttribute="leading" id="pRY-nq-B7e"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="trailing" secondItem="3ae-nm-uEE" secondAttribute="trailing" id="qGA-ky-bVC"/>
                             <constraint firstItem="e7d-2z-TXi" firstAttribute="trailing" secondItem="kC9-dz-moB" secondAttribute="trailing" id="qbq-G1-Dt9"/>
                             <constraint firstItem="YVm-zM-oX9" firstAttribute="top" secondItem="jU6-gf-RTg" secondAttribute="top" constant="110" id="r19-ZQ-wCh"/>
                             <constraint firstItem="Ela-Vs-fgK" firstAttribute="top" secondItem="3ae-nm-uEE" secondAttribute="bottom" constant="8" id="w7S-KS-tz2"/>
+                            <constraint firstItem="e7d-2z-TXi" firstAttribute="top" secondItem="kC9-dz-moB" secondAttribute="bottom" constant="8" id="wnT-sK-Y1g"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="r19-ZQ-wCh"/>
                                 <exclude reference="f03-eA-x2X"/>
+                                <exclude reference="LXV-Dg-NJe"/>
+                                <exclude reference="qbq-G1-Dt9"/>
+                                <exclude reference="wnT-sK-Y1g"/>
                             </mask>
                         </variation>
                     </view>

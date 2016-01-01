@@ -26,7 +26,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         static let searchButtonImage: String = "Search"
         static let searchButtonPressed: String = "searchButtonPressed:"
         static let cancelButtonPressed: String = "cancelButtonPressed:"
-        static let recipeCell: String = "recipeCell"
+        static let recipeCell: String = "RecipeCell"
         static let nutritionSegue: String = "showRecipeNutrition"
     }
     
@@ -35,7 +35,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - Instance variables
     
     // The current menu date.
-    // TODO: change back to current date after testing is done
+    // TODO: initialize with current date after testing is done
+    // Using 11/24/15 for now because it has a lot of recipes
     var date: NSDate = NSDate(dateString: "2015-11-24") {
         didSet {
             updateUI()
@@ -268,7 +269,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = recipesTableView.dequeueReusableCellWithIdentifier(Identifiers.recipeCell, forIndexPath: indexPath)
-        cell.textLabel!.text = filteredRecipes[indexPath.row].name
+        let recipe = filteredRecipes[indexPath.row]
+        cell.textLabel?.text = recipe.name
+        if let calories = recipe.nutrients["result"]?["calories"] as? String {
+            cell.detailTextLabel?.text = "\(calories) cals"
+        }
         return cell
     }
     
@@ -365,7 +370,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
                     let recipeIndex = recipesTableView.indexPathForSelectedRow!.row
                     targetViewController.recipe = self.filteredRecipes[recipeIndex]
                 }
-            default: break
+            default:
+                break
             }
         }
     }

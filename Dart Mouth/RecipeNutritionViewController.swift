@@ -43,7 +43,7 @@ class RecipeNutritionViewController: UIViewController {
     // Method to call if any or all displayed nutrition values need updating.
     func updateUI() {
         if let nutrients = recipe.nutrients["result"] {
-        
+            
             // TODO(Sujay): Get rid of hardcoding and make these values calculated properties of Recipe
             recipeName?.text = recipe.name
             caloriesValue?.text = "\(nutrients["calories"]!)"
