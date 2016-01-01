@@ -25,12 +25,14 @@ class ParseAPI {
         let components: NSDateComponents = NSCalendar.currentCalendar().components([.Day, .Month, .Year], fromDate: date)
         
         let offeringQuery = Offering.query()!
+        offeringQuery.cachePolicy = .CacheElseNetwork
         offeringQuery.whereKey("month", equalTo: components.month)
         offeringQuery.whereKey("day", equalTo: components.day)
         offeringQuery.whereKey("year", equalTo: components.year)
         if venueKey != nil { offeringQuery.whereKey("venueKey", equalTo: venueKey!) }
         if mealName != nil { offeringQuery.whereKey("mealName", equalTo: mealName!) }
         if menuName != nil { offeringQuery.whereKey("menuName", equalTo: menuName!) }
+        print("Offerings Cache: \(offeringQuery.hasCachedResult())")
         
         // Get Offering. There should only be one or zero.
         offeringQuery.findObjectsInBackgroundWithBlock {
@@ -49,8 +51,10 @@ class ParseAPI {
                     
                     
                     let recipesQuery = PFQuery.orQueryWithSubqueries(relationQueries)
+                    recipesQuery.cachePolicy = .CacheElseNetwork
                     if orderAlphabetically { recipesQuery.orderByAscending("name") }
                     recipesQuery.limit = 1000
+                    print("Recipes Cache: \(recipesQuery.hasCachedResult())")
                     
                     // Get Recipes
                     recipesQuery.findObjectsInBackgroundWithBlock {

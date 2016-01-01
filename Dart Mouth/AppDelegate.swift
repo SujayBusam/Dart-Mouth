@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Recipe.registerSubclass()
         
         // Initialize Parse.
-        Parse.enableLocalDatastore()
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
         
         Chameleon.setGlobalThemeUsingPrimaryColor(Constants.Colors.appPrimaryColorDark, withSecondaryColor: Constants.Colors.appSecondaryColorDark, andContentStyle: .Light)
