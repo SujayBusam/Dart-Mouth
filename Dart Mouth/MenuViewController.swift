@@ -31,7 +31,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - Instance variables
     
     // The current menu date.
@@ -59,7 +58,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     var searchBar: UISearchBar! {
         didSet { searchBar.delegate = self }
     }
-    
     
     
     // MARK: - Outlets
@@ -97,14 +95,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - Computed properties
     
     var selectionLists: [HTHorizontalSelectionList] {
         return [venueSelectionList, mealtimeSelectionList, menuSelectionList]
     }
     
-
     
     // MARK: - Controller / View Setup
     
@@ -194,7 +190,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - DateNavigationControlDelegate protocol methods
     
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate {
@@ -218,7 +213,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -228,7 +222,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
     
     
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
@@ -253,13 +246,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - HTHorizontalSelectionListDelegate Protocol Methods
     
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
         updateUI()
     }
-    
     
     
     // MARK: - UITableViewDataSource Protocol Methods
@@ -283,7 +274,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - Button action functions
     
     func searchButtonPressed(sender: UIButton) {
@@ -295,7 +285,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         setFilteredRecipesWithSearchText("")
         displayDateNavigationAndSearchButton(animated: true)
     }
-    
     
     
     // MARK: - Helper Functions
@@ -363,7 +352,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     
-    
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -379,7 +367,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             }
         }
     }
-    
     
     
     // MARK: - Miscellaneous

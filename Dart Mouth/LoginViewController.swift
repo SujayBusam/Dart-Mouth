@@ -15,7 +15,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    
     // MARK: - Text field outlets
     
     @IBOutlet weak var emailTextField: UITextField! {
@@ -43,7 +42,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    
     // MARK: - UITextFieldDelegate protocol methods
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -52,8 +50,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    
-    // MARK: - Button actions
+    // MARK: - Butßton actions
     
     @IBAction func signupButtonPressed(sender: UIButton) {
         
@@ -62,7 +59,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func loginButtonPressed(sender: UIButton) {
         
     }
-    
     
     
     // MARK: - Gesture actions
