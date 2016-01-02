@@ -5,6 +5,7 @@
 //  Created by Sujay Busam on 12/23/15.
 //  Copyright © 2015 Sujay's Dev Center. All rights reserved.
 //
+
 import Parse
 
 class Offering: PFObject, PFSubclassing {

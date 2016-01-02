@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register subclasses.
         Offering.registerSubclass()
         Recipe.registerSubclass()
+        CustomUser.registerSubclass()
         
         // Initialize Parse.
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")

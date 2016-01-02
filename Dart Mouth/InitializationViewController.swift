@@ -18,8 +18,7 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-//        testQuery2()
-        self.performSegueWithIdentifier("Start After Initialization", sender: self)
+        
     }
     
     // Testing Parse

@@ -34,7 +34,7 @@ class ParseAPI {
         if menuName != nil { offeringQuery.whereKey("menuName", equalTo: menuName!) }
         print("Offerings Cache: \(offeringQuery.hasCachedResult())")
         
-        // Get Offering. There should only be one or zero.
+        // Get all Offerings for given date, venue, meal, and menu
         offeringQuery.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
