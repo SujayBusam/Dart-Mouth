@@ -456,10 +456,10 @@
             </objects>
             <point key="canvasLocation" x="-1522.5" y="-841.5"/>
         </scene>
-        <!--Login View Controller-->
+        <!--Signup View Controller-->
         <scene sceneID="eVP-xx-10c">
             <objects>
-                <viewController storyboardIdentifier="SignUp" id="BLl-LK-d8x" customClass="LoginViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUp" id="BLl-LK-d8x" customClass="SignupViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4pn-u9-4zc"/>
                         <viewControllerLayoutGuide type="bottom" id="lRj-G0-X1N"/>
