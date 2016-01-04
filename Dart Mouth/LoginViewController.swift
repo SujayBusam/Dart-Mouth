@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import MBProgressHUD
+import Parse
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     struct Identifiers {
         static let DismissKeyboard = "dismissKeyboard"
+        static let PostSignupSegue = "startAfterSignup"
     }
     
     struct Validation {
@@ -25,6 +28,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         static let InvalidPasswordMessage = "Please enter a password between \(MinimumPasswordLength) and \(MaximumPasswordLength) characters, inclusive."
         static let NoMatchPasswordsTitle = "Passwords Don't Match"
         static let NoMatchPasswordsMessage = "Please correctly confirm your password."
+        static let SignupErrorTitle = "Signup Error"
+        static let SignupErrorDefaultMessage = "Unknown error signing up."
         static let OkActionTitle = "OK"
     }
     
@@ -73,8 +78,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signupButtonPressed(sender: UIButton) {
         let allFieldsValid = !showAlertsForInvalidFields() // intentionally being explicit here
         if allFieldsValid {
-            // Sign up
-            print("Signup")
+            // Sign up using Parse
+            let user = CustomUser()
+            user.email = emailTextField.text!
+            user.username = emailTextField.text!
+            user.password = passwordTextField.text!
+            user.goalDailyCalories = 2000 // TODO: let user specify this in another screen.
+            
+            let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            spinningActivity.userInteractionEnabled = false
+            user.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                if let error = error {
+                    self.alertView.title = Validation.SignupErrorTitle
+                    if let errorString = error.userInfo["error"] as? String {
+                        self.alertView.message = errorString
+                    } else {
+                        self.alertView.message = Validation.SignupErrorDefaultMessage
+                    }
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                    self.presentViewController(self.alertView, animated: true, completion: nil)
+                } else {
+                    // No error. Proceed.
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                    self.performSegueWithIdentifier(Identifiers.PostSignupSegue, sender: self)
+                }
+            })
         }
     }
     
