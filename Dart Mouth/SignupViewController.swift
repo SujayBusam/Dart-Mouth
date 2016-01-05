@@ -53,7 +53,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true
+        return false
     }
     
     
@@ -88,10 +88,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 }
             })
         }
-    }
-    
-    @IBAction func loginButtonPressed(sender: UIButton) {
-        
     }
     
     

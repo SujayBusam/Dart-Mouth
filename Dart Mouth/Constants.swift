@@ -93,6 +93,8 @@ struct Constants {
         static let NoMatchPasswordsMessage = "Please correctly confirm your password."
         static let SignupErrorTitle = "Signup Error"
         static let SignupErrorDefaultMessage = "Unknown error signing up."
+        static let SigninErrorTitle = "Signin Error"
+        static let SigninErrorDefaultMessage = "Unknown error signing in."
         static let OkActionTitle = "OK"
     }
 }

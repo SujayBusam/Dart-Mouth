@@ -34,12 +34,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - Instance variables
     
     // The current menu date.
-    // TODO: initialize with current date after testing is done
-    // Using 11/24/15 for now because it has a lot of recipes
-    var date: NSDate = NSDate(dateString: "2015-11-24") {
-        didSet {
-            updateUI()
-        }
+    var date: NSDate = NSDate() {
+        didSet { updateUI() }
     }
     
     var api = ParseAPI()
