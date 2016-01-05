@@ -266,7 +266,14 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         if let calories = recipe.nutrients["result"]?["calories"] as? String {
             cell.detailTextLabel?.text = "\(calories) cals"
         }
+        
+        cell.accessoryType = .DetailButton
         return cell
+    }
+    
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        recipesTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        performSegueWithIdentifier(Identifiers.nutritionSegue, sender: self)
     }
     
     
