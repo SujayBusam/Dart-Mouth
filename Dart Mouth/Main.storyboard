@@ -416,10 +416,45 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="WvL-fN-x6s" kind="relationship" relationship="rootViewController" id="pPJ-in-Vte"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cw3-Yw-WAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-223.5" y="-841.5"/>
+        </scene>
+        <!--Diary View Controller-->
+        <scene sceneID="o1W-1f-Cii">
+            <objects>
+                <viewController id="WvL-fN-x6s" customClass="DiaryViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jTg-N5-igW"/>
+                        <viewControllerLayoutGuide type="bottom" id="aRr-XN-gOw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dep-RL-gSc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRc-D0-uSP">
+                                <rect key="frame" x="144" y="323" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IRc-D0-uSP" firstAttribute="centerY" secondItem="dep-RL-gSc" secondAttribute="centerY" id="S4Y-Vf-QrM"/>
+                            <constraint firstItem="IRc-D0-uSP" firstAttribute="top" secondItem="jTg-N5-igW" secondAttribute="bottom" constant="259" id="phv-az-c0r"/>
+                            <constraint firstItem="IRc-D0-uSP" firstAttribute="centerX" secondItem="dep-RL-gSc" secondAttribute="centerX" id="qQE-dR-6hw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="r1E-OW-yfD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ot6-2Q-zgD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-223.5" y="25.5"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="qW0-Uj-rbL">
@@ -432,6 +467,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1AC-Pa-W6a" kind="relationship" relationship="rootViewController" id="Pq0-ce-61z"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNn-ZJ-SBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -778,6 +816,50 @@
             </objects>
             <point key="canvasLocation" x="361.5" y="-2499.5"/>
         </scene>
+        <!--Preferences View Controller-->
+        <scene sceneID="HXg-NR-9ef">
+            <objects>
+                <viewController id="1AC-Pa-W6a" customClass="PreferencesViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ddL-M3-0db"/>
+                        <viewControllerLayoutGuide type="bottom" id="BA1-YK-iFw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IeA-dE-LzF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6e-dY-pgO">
+                                <rect key="frame" x="0.0" y="64" width="55" height="30"/>
+                                <state key="normal" title="Log Out"/>
+                                <connections>
+                                    <action selector="logoutButtonPressed:" destination="1AC-Pa-W6a" eventType="touchUpInside" id="xv7-pr-KyZ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="In Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="794-e0-hq9">
+                                <rect key="frame" x="256" y="323" width="86" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k6e-dY-pgO" firstAttribute="leading" secondItem="IeA-dE-LzF" secondAttribute="leading" id="9dq-Js-KI1"/>
+                            <constraint firstItem="794-e0-hq9" firstAttribute="centerX" secondItem="IeA-dE-LzF" secondAttribute="centerX" id="JBJ-02-xw6"/>
+                            <constraint firstItem="k6e-dY-pgO" firstAttribute="top" secondItem="ddL-M3-0db" secondAttribute="bottom" id="NFp-ZP-d13"/>
+                            <constraint firstItem="794-e0-hq9" firstAttribute="top" secondItem="ddL-M3-0db" secondAttribute="bottom" constant="259" id="oaM-i2-Qxr"/>
+                            <constraint firstItem="794-e0-hq9" firstAttribute="centerY" secondItem="IeA-dE-LzF" secondAttribute="centerY" id="xyt-Ok-BHS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="SHm-CA-MF1"/>
+                    <connections>
+                        <segue destination="BLl-LK-d8x" kind="showDetail" identifier="showSignupAfterLogout" id="VTl-ek-II4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ACZ-kl-hYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1192.5" y="25.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="DiaryIcon" width="32" height="32"/>
@@ -786,6 +868,7 @@
         <image name="PreferencesIcon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GWn-Gj-San"/>
+        <segue reference="ppV-Lf-6Se"/>
+        <segue reference="VTl-ek-II4"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,4 +13,10 @@ class PreferencesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    @IBAction func logoutButtonPressed(sender: UIButton) {
+        CustomUser.logOut()
+        performSegueWithIdentifier("showSignupAfterLogout", sender: self)
+    }
+    
 }
