@@ -17,24 +17,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         static let PostSignupSegue = "startAfterSignup"
     }
     
-    struct Validation {
-        static let MinimumPasswordLength = 6
-        static let MaximumPasswordLength = 25
-        static let EmailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
-        
-        static let InvalidEmailTitle = "Invalid Email"
-        static let InvalidEmailMessage = "Please sign up with a valid email."
-        static let InvalidPasswordTitle = "Invalid Password"
-        static let InvalidPasswordMessage = "Please enter a password between \(MinimumPasswordLength) and \(MaximumPasswordLength) characters, inclusive."
-        static let NoMatchPasswordsTitle = "Passwords Don't Match"
-        static let NoMatchPasswordsMessage = "Please correctly confirm your password."
-        static let SignupErrorTitle = "Signup Error"
-        static let SignupErrorDefaultMessage = "Unknown error signing up."
-        static let OkActionTitle = "OK"
-    }
-    
     var alertView = UIAlertController(title: nil, message: nil, preferredStyle: .Alert)
-    var alertAction = UIAlertAction(title: Validation.OkActionTitle, style: .Default, handler: nil)
+    var alertAction = UIAlertAction(title: Constants.Validation.OkActionTitle, style: .Default, handler: nil)
     
     // MARK: - Text field outlets
     
@@ -89,11 +73,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
             spinningActivity.userInteractionEnabled = false
             user.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                 if let error = error {
-                    self.alertView.title = Validation.SignupErrorTitle
+                    self.alertView.title = Constants.Validation.SignupErrorTitle
                     if let errorString = error.userInfo["error"] as? String {
                         self.alertView.message = errorString
                     } else {
-                        self.alertView.message = Validation.SignupErrorDefaultMessage
+                        self.alertView.message = Constants.Validation.SignupErrorDefaultMessage
                     }
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                     self.presentViewController(self.alertView, animated: true, completion: nil)
@@ -119,16 +103,16 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    // MARK: - Validation helper function
+    // MARK: - Validation helper functions
     
     func isValidEmail(email: String) -> Bool {
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", Validation.EmailRegex)
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", Constants.Validation.EmailRegex)
         return emailTest.evaluateWithObject(email)
     }
     
     func isValidPassword(password: String) -> Bool {
         let len = password.characters.count
-        return len >= Validation.MinimumPasswordLength && len <= Validation.MaximumPasswordLength
+        return len >= Constants.Validation.MinimumPasswordLength && len <= Constants.Validation.MaximumPasswordLength
     }
     
     /*
@@ -141,33 +125,33 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         let confirmPassword: String? = confirmPasswordTextField.text
         
         if email == nil || !isValidEmail(email!) {
-            alertView.title = Validation.InvalidEmailTitle
-            alertView.message = Validation.InvalidEmailMessage
+            alertView.title = Constants.Validation.InvalidEmailTitle
+            alertView.message = Constants.Validation.InvalidEmailMessage
             self.presentViewController(alertView, animated: true, completion: nil)
             return true
         }
         if password == nil || !isValidPassword(password!) {
-            alertView.title = Validation.InvalidPasswordTitle
-            alertView.message = Validation.InvalidPasswordMessage
+            alertView.title = Constants.Validation.InvalidPasswordTitle
+            alertView.message = Constants.Validation.InvalidPasswordMessage
             self.presentViewController(alertView, animated: true, completion: nil)
             return true
         }
         if confirmPassword == nil || password! != confirmPassword! {
-            alertView.title = Validation.NoMatchPasswordsTitle
-            alertView.message = Validation.NoMatchPasswordsMessage
+            alertView.title = Constants.Validation.NoMatchPasswordsTitle
+            alertView.message = Constants.Validation.NoMatchPasswordsMessage
             self.presentViewController(alertView, animated: true, completion: nil)
             return true
         }
         return false
     }
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
     
@@ -180,5 +164,5 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
 }

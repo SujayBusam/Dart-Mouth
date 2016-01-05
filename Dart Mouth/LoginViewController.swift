@@ -13,6 +13,14 @@ class LoginViewController: UIViewController {
     struct Identifiers {
         static let PostLoginSegue = "startAfterLogin"
     }
+    
+    var alertView = UIAlertController(title: nil, message: nil, preferredStyle: .Alert)
+    var alertAction = UIAlertAction(title: Constants.Validation.OkActionTitle, style: .Default, handler: nil)
+    
+    
+    // MARK: - Text field outlets
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
