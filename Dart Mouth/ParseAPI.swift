@@ -32,7 +32,6 @@ class ParseAPI {
         if venueKey != nil { offeringQuery.whereKey("venueKey", equalTo: venueKey!) }
         if mealName != nil { offeringQuery.whereKey("mealName", equalTo: mealName!) }
         if menuName != nil { offeringQuery.whereKey("menuName", equalTo: menuName!) }
-        print("Offerings Cache: \(offeringQuery.hasCachedResult())")
         
         // Get all Offerings for given date, venue, meal, and menu
         offeringQuery.findObjectsInBackgroundWithBlock {
@@ -48,13 +47,11 @@ class ParseAPI {
                     for offering in offerings {
                         relationQueries.append(offering.relationForKey("recipes").query())
                     }
-                    
-                    
+
                     let recipesQuery = PFQuery.orQueryWithSubqueries(relationQueries)
                     recipesQuery.cachePolicy = .CacheElseNetwork
                     if orderAlphabetically { recipesQuery.orderByAscending("name") }
                     recipesQuery.limit = 1000
-                    print("Recipes Cache: \(recipesQuery.hasCachedResult())")
                     
                     // Get Recipes
                     recipesQuery.findObjectsInBackgroundWithBlock {
@@ -64,13 +61,13 @@ class ParseAPI {
                             let recipes = objects as! [Recipe] // TODO: potential crash here. Implement safeguard
                             completionHandler(recipes)
                         } else {
-                            print("Error fetching Recipes for Offering.")
+                            print("Error fetching Recipes for Offerings.")
                         }
                     }
                 }
                 
             } else {
-                print("Error fetching Offering.")
+                print("Error fetching Offerings.")
             }
         }
     }

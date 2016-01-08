@@ -271,6 +271,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         return cell
     }
     
+    // Called when info button on right side of cell is pressed.
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         recipesTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
         performSegueWithIdentifier(Identifiers.nutritionSegue, sender: self)
