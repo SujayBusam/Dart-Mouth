@@ -7,6 +7,7 @@ target 'Dart Mouth' do
   pod 'PureLayout'
   pod 'HTHorizontalSelectionList', '~> 0.6.2'
   pod 'MBProgressHUD', '~> 0.9.2'
+  pod 'Charts'
 end
 
 target 'Dart MouthTests' do
@@ -15,4 +16,5 @@ target 'Dart MouthTests' do
   pod 'PureLayout'
   pod 'HTHorizontalSelectionList', '~> 0.6.2'
   pod 'MBProgressHUD', '~> 0.9.2'
+  pod 'Charts'
 end
