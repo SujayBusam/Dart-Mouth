@@ -14,11 +14,15 @@ import Parse
 */
 class ParseAPI {
     
+    struct Identifiers {
+        static let DDSUserID = "0yFDmfMifu"
+    }
+    
     /*
-    * Async function that retrieves Recipes for the given parameters.
+    * Async function that retrieves DDS specific Recipes for the given parameters.
     * Calls completion block with the retrieved Recipes.
     */
-    func recipesFromCloudForDate(date: NSDate, venueKey: String?, mealName: String?,
+    func ddsRecipesFromCloudForDate(date: NSDate, venueKey: String?, mealName: String?,
         menuName: String?, orderAlphabetically: Bool,
         withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
         
@@ -51,6 +55,8 @@ class ParseAPI {
                     let recipesQuery = PFQuery.orQueryWithSubqueries(relationQueries)
                     recipesQuery.cachePolicy = .CacheElseNetwork
                     if orderAlphabetically { recipesQuery.orderByAscending("name") }
+                    // Restrict to DDS Recipes
+                    recipesQuery.whereKey("createdBy", equalTo: PFObject(withoutDataWithClassName: "Recipe", objectId: Identifiers.DDSUserID))
                     recipesQuery.limit = 1000
                     
                     // Get Recipes

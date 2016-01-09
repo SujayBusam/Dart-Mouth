@@ -9,6 +9,7 @@ import Parse
 
 class Recipe: PFObject, PFSubclassing {
     
+    @NSManaged var createdBy: PFUser
     @NSManaged var dartmouthId: Int
     @NSManaged var name: String
     @NSManaged var rank: Int
