@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23113E9D1C41A2B700B07756 /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23113E9C1C41A2B700B07756 /* DiaryEntry.swift */; };
+		23113E9F1C41A44F00B07756 /* UserMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23113E9E1C41A44F00B07756 /* UserMeal.swift */; };
 		23300B561C36FBE200D2C166 /* String+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23300B551C36FBE200D2C166 /* String+Trim.swift */; };
 		23300B5D1C37128500D2C166 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23300B5C1C37128500D2C166 /* SignupViewController.swift */; };
 		23300B5F1C374B8D00D2C166 /* CustomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23300B5E1C374B8D00D2C166 /* CustomUser.swift */; };
@@ -45,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23113E9C1C41A2B700B07756 /* DiaryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
+		23113E9E1C41A44F00B07756 /* UserMeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMeal.swift; sourceTree = "<group>"; };
 		23300B551C36FBE200D2C166 /* String+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Trim.swift"; sourceTree = "<group>"; };
 		23300B5C1C37128500D2C166 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		23300B5E1C374B8D00D2C166 /* CustomUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUser.swift; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 				238F1C9C1C2DE938007720F8 /* MealEnums.swift */,
 				238F1C9E1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift */,
 				23300B5E1C374B8D00D2C166 /* CustomUser.swift */,
+				23113E9C1C41A2B700B07756 /* DiaryEntry.swift */,
+				23113E9E1C41A44F00B07756 /* UserMeal.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -475,10 +481,12 @@
 				238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
+				23113E9D1C41A2B700B07756 /* DiaryEntry.swift in Sources */,
 				239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */,
 				23300B5D1C37128500D2C166 /* SignupViewController.swift in Sources */,
 				238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */,
 				23300B611C3B3A2F00D2C166 /* LoginViewController.swift in Sources */,
+				23113E9F1C41A44F00B07756 /* UserMeal.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
 				238F1C971C2B8190007720F8 /* Offering.swift in Sources */,
 				237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */,
