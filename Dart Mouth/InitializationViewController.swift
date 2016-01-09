@@ -22,12 +22,12 @@ class InitializationViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-//        let currentUser = CustomUser.currentUser()
-//        if currentUser != nil {
-//            performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
-//        } else {
-//            performSegueWithIdentifier(Identifiers.SignupSegue, sender: self)
-//        }
+        let currentUser = CustomUser.currentUser()
+        if currentUser != nil {
+            performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
+        } else {
+            performSegueWithIdentifier(Identifiers.SignupSegue, sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
