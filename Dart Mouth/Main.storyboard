@@ -435,20 +435,7 @@
                     <view key="view" contentMode="scaleToFill" id="dep-RL-gSc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRc-D0-uSP">
-                                <rect key="frame" x="144" y="323" width="86" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="IRc-D0-uSP" firstAttribute="centerY" secondItem="dep-RL-gSc" secondAttribute="centerY" id="S4Y-Vf-QrM"/>
-                            <constraint firstItem="IRc-D0-uSP" firstAttribute="top" secondItem="jTg-N5-igW" secondAttribute="bottom" constant="259" id="phv-az-c0r"/>
-                            <constraint firstItem="IRc-D0-uSP" firstAttribute="centerX" secondItem="dep-RL-gSc" secondAttribute="centerX" id="qQE-dR-6hw"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="r1E-OW-yfD"/>
                 </viewController>
@@ -835,20 +822,11 @@
                                     <action selector="logoutButtonPressed:" destination="1AC-Pa-W6a" eventType="touchUpInside" id="xv7-pr-KyZ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="794-e0-hq9">
-                                <rect key="frame" x="144" y="323" width="86" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="k6e-dY-pgO" firstAttribute="leading" secondItem="IeA-dE-LzF" secondAttribute="leading" id="9dq-Js-KI1"/>
-                            <constraint firstItem="794-e0-hq9" firstAttribute="centerX" secondItem="IeA-dE-LzF" secondAttribute="centerX" id="JBJ-02-xw6"/>
                             <constraint firstItem="k6e-dY-pgO" firstAttribute="top" secondItem="ddL-M3-0db" secondAttribute="bottom" id="NFp-ZP-d13"/>
-                            <constraint firstItem="794-e0-hq9" firstAttribute="top" secondItem="ddL-M3-0db" secondAttribute="bottom" constant="259" id="oaM-i2-Qxr"/>
-                            <constraint firstItem="794-e0-hq9" firstAttribute="centerY" secondItem="IeA-dE-LzF" secondAttribute="centerY" id="xyt-Ok-BHS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SHm-CA-MF1"/>
