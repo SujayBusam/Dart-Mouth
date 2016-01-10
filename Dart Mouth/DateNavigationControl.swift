@@ -9,16 +9,16 @@
 import UIKit
 import PureLayout
 
-/*
-    This is a custom UIView that shows a date and left and right arrows.
-    Pressing the left arrow decrements the date, pressing the right arrow increments it.
-*/
-
 protocol DateNavigationControlDelegate: class {
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate
     func leftArrowWasPressed(sender: UIButton) -> Void
     func rightArrowWasPressed(sender: UIButton) -> Void
 }
+
+/*
+    This is a custom UIView that shows a date and left and right arrows.
+    Pressing the left arrow decrements the date, pressing the right arrow increments it.
+*/
 
 class DateNavigationControl: UIView {
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiaryViewController: UIViewController, DateNavigationControlDelegate {
+class DiaryViewController: UIViewController, DateNavigationControlDelegate, CalorieBudgetViewDelegate {
     
     // MARK: - Local Constants
     
@@ -20,7 +20,7 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate {
     
     // MARK: - Instance variables
     
-    // The current menu date.
+    // The current diary date.
     var date: NSDate = NSDate() {
         didSet { updateUI() }
     }
@@ -29,6 +29,20 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate {
         didSet { dateNavigationControl.delegate = self }
     }
     
+    var calorieBudget: Int = 0 {
+        didSet { calorieBudgetView.updateLabels() }
+    }
+    
+    var foodCalories: Int = 0 {
+        didSet { calorieBudgetView.updateLabels() }
+    }
+    
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var calorieBudgetView: CalorieBudgetView! {
+        didSet { calorieBudgetView.delegate = self }
+    }
     
     // MARK: - Controller / View Setup
     
@@ -47,6 +61,10 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate {
         // Create and setup date navigation control
         dateNavigationControl = DateNavigationControl(frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
         self.navigationItem.titleView = dateNavigationControl
+        
+        // Initialize calorie budget values
+        self.calorieBudget = CustomUser.currentUser()!.goalDailyCalories
+        self.foodCalories = 0
     }
     
     
@@ -70,5 +88,16 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate {
         } else {
             print("Date increment calculation failed")
         }
+    }
+    
+    
+    // MARK: - CalorieBudgetViewDelegate protocol methods
+    
+    func budgetValueForCalorieBudgetView(sender: CalorieBudgetView) -> Int {
+        return self.calorieBudget
+    }
+    
+    func foodValueForCalorieBudgetView(sender: CalorieBudgetView) -> Int {
+        return self.foodCalories
     }
 }

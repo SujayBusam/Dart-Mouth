@@ -435,9 +435,32 @@
                     <view key="view" contentMode="scaleToFill" id="dep-RL-gSc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTj-sE-7Ta" customClass="CalorieBudgetView" customModule="Dart_Mouth" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="42"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="y1O-af-Ac4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aRr-XN-gOw" firstAttribute="top" secondItem="LTj-sE-7Ta" secondAttribute="bottom" constant="512" id="FKA-La-A0t"/>
+                            <constraint firstAttribute="trailing" secondItem="LTj-sE-7Ta" secondAttribute="trailing" id="IhI-yB-SzI"/>
+                            <constraint firstItem="LTj-sE-7Ta" firstAttribute="leading" secondItem="dep-RL-gSc" secondAttribute="leading" id="RFs-xw-DPU"/>
+                            <constraint firstItem="LTj-sE-7Ta" firstAttribute="top" secondItem="jTg-N5-igW" secondAttribute="bottom" id="Yqx-aT-hqc"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FKA-La-A0t"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="r1E-OW-yfD"/>
+                    <connections>
+                        <outlet property="calorieBudgetView" destination="LTj-sE-7Ta" id="cNp-Od-dZR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ot6-2Q-zgD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -681,7 +704,7 @@
                                         <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dart Mouth" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gz-Mo-a2Z">
-                                        <rect key="frame" x="74" y="20" width="122" height="31.5"/>
+                                        <rect key="frame" x="74" y="20" width="122" height="32"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="23"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
