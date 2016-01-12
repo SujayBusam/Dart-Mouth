@@ -443,17 +443,83 @@
                                     <constraint firstAttribute="height" constant="42" id="y1O-af-Ac4"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9WJ-E8-Qbl">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9WJ-E8-Qbl">
                                 <rect key="frame" x="0.0" y="106" width="375" height="512"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DiaryEntryCell" id="c8A-fj-3mX" customClass="DiaryEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DiaryEntryCell" rowHeight="60" id="c8A-fj-3mX" customClass="DiaryEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c8A-fj-3mX" id="cc7-oH-7em">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe Title Which Could Be Long" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLw-D4-i3A">
+                                                    <rect key="frame" x="8" y="8" width="271" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="mFB-BO-kx8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Servings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCV-Hh-QOl">
+                                                    <rect key="frame" x="8" y="36" width="271" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="A1g-4Z-eac"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8,300 &gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-Pz-HcR">
+                                                    <rect key="frame" x="287" y="8" width="80" height="43"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="KFH-w0-Xpj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dLw-D4-i3A" firstAttribute="top" secondItem="cc7-oH-7em" secondAttribute="topMargin" id="0TK-ci-rIL"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="dLw-D4-i3A" secondAttribute="trailing" constant="8" id="0Xq-MZ-hww"/>
+                                                <constraint firstItem="dLw-D4-i3A" firstAttribute="leading" secondItem="FCV-Hh-QOl" secondAttribute="leading" id="0mg-k5-dLD"/>
+                                                <constraint firstItem="FCV-Hh-QOl" firstAttribute="top" secondItem="dLw-D4-i3A" secondAttribute="bottom" constant="13" id="1mq-iJ-h3M"/>
+                                                <constraint firstItem="FCV-Hh-QOl" firstAttribute="trailing" secondItem="f4i-Pz-HcR" secondAttribute="trailing" id="5gg-TD-n8a"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="FCV-Hh-QOl" secondAttribute="trailing" constant="8" id="6AD-3E-VPl"/>
+                                                <constraint firstAttribute="topMargin" secondItem="f4i-Pz-HcR" secondAttribute="top" id="6TG-sH-jaw"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="centerY" secondItem="cc7-oH-7em" secondAttribute="centerY" id="8FU-P7-4uQ"/>
+                                                <constraint firstItem="FCV-Hh-QOl" firstAttribute="leading" secondItem="cc7-oH-7em" secondAttribute="leadingMargin" id="BTh-M2-grx"/>
+                                                <constraint firstItem="dLw-D4-i3A" firstAttribute="height" secondItem="FCV-Hh-QOl" secondAttribute="height" id="D3i-yr-B8e"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="FCV-Hh-QOl" secondAttribute="trailing" constant="8" id="LlB-It-OtM"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="dLw-D4-i3A" secondAttribute="trailing" constant="8" id="PuV-9Q-5f9"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="f4i-Pz-HcR" secondAttribute="bottom" id="VWX-73-2sj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="f4i-Pz-HcR" secondAttribute="trailing" id="WA8-kf-XiO"/>
+                                                <constraint firstItem="FCV-Hh-QOl" firstAttribute="height" secondItem="dLw-D4-i3A" secondAttribute="height" id="Wk3-Y1-Op4"/>
+                                                <constraint firstItem="FCV-Hh-QOl" firstAttribute="bottom" secondItem="cc7-oH-7em" secondAttribute="bottomMargin" id="ZGb-So-Nz1"/>
+                                                <constraint firstItem="FCV-Hh-QOl" firstAttribute="width" secondItem="dLw-D4-i3A" secondAttribute="width" id="bni-JX-Mqq"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="dLw-D4-i3A" secondAttribute="leading" id="ro7-v1-4IG"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="dLw-D4-i3A" secondAttribute="trailing" constant="73" id="uIW-jO-W3w"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="D3i-yr-B8e"/>
+                                                    <exclude reference="uIW-jO-W3w"/>
+                                                    <exclude reference="1mq-iJ-h3M"/>
+                                                    <exclude reference="5gg-TD-n8a"/>
+                                                    <exclude reference="Wk3-Y1-Op4"/>
+                                                    <exclude reference="0Xq-MZ-hww"/>
+                                                    <exclude reference="6AD-3E-VPl"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="recipeNameLabel" destination="dLw-D4-i3A" id="AIb-Xo-dXj"/>
+                                            <outlet property="servingsLabel" destination="FCV-Hh-QOl" id="VH8-hw-5TL"/>
+                                            <outlet property="totalCaloriesLabel" destination="f4i-Pz-HcR" id="37T-yp-Wyp"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

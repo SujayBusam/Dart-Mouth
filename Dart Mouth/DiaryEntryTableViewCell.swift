@@ -9,7 +9,22 @@
 import UIKit
 
 class DiaryEntryTableViewCell: UITableViewCell {
-
+    
+    // MARK: - Outlets
+    // Al of these are for ONE diary entry
+    @IBOutlet weak var recipeNameLabel: UILabel!
+    @IBOutlet weak var servingsLabel: UILabel!
+    @IBOutlet weak var totalCaloriesLabel: UILabel!
+    
+    
+    // MARK: - Instance variables
+    var diaryEntry: DiaryEntry? {
+        didSet { updateUI() }
+    }
+    
+    
+    // MARK: - Default override functions
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +34,12 @@ class DiaryEntryTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    
+    // MARK: - UI Configuration
+    func updateUI() {
+        
     }
 
 }
