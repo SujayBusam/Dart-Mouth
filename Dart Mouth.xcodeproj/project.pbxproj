@@ -22,6 +22,7 @@
 		2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376308A1BEE94D8000A6C54 /* PreferencesViewController.swift */; };
 		2376308D1BEE94D8000A6C54 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */; };
 		237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */; };
+		237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */; };
 		238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C8E1C2A2077007720F8 /* Recipe.swift */; };
 		238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C941C2B7D08007720F8 /* ParseAPI.swift */; };
 		238F1C971C2B8190007720F8 /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C961C2B8190007720F8 /* Offering.swift */; };
@@ -68,6 +69,7 @@
 		2376308A1BEE94D8000A6C54 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
+		237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryTableViewCell.swift; sourceTree = "<group>"; };
 		238F1C8E1C2A2077007720F8 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		238F1C941C2B7D08007720F8 /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
 		238F1C961C2B8190007720F8 /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */,
 				23113EA01C41BCCD00B07756 /* CalorieBudgetView.swift */,
+				237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */,
 			);
 			name = DiaryView;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				238F1C991C2C6F22007720F8 /* Constants.swift in Sources */,
 				23300B561C36FBE200D2C166 /* String+Trim.swift in Sources */,
 				23113EA11C41BCCD00B07756 /* CalorieBudgetView.swift in Sources */,
+				237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */,
 				238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,

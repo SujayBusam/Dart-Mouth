@@ -37,6 +37,9 @@ struct Constants {
         
         static let AllDayDisplay = "All Day"
         static let AllDayParse = "Every Day"
+        
+        // Used just for Diary
+        static let SnacksDisplay = "Snacks"
     }
     
     struct MenuStrings {

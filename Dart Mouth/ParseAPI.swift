@@ -49,7 +49,7 @@ class ParseAPI {
                     // Get all Recipe relations for all Offerings queried above
                     var relationQueries = [PFQuery]()
                     for offering in offerings {
-                        relationQueries.append(offering.relationForKey("recipes").query())
+                        relationQueries.append(offering.recipes.query())
                     }
 
                     let recipesQuery = PFQuery.orQueryWithSubqueries(relationQueries)
