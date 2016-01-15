@@ -10,10 +10,20 @@ import UIKit
 import Charts
 import ChameleonFramework
 
-class StatsViewController: UIViewController {
+class StatsViewController: UIViewController, ChartViewDelegate {
 
     @IBOutlet weak var dayChart: PieChartView!
     @IBOutlet weak var weekChart: BarChartView!
+    
+    var selected : Int = 0;
+    var values : [Int] = []
+    var dates : [NSDate] = []
+    var goal : Int = 2000
+    var caloriesConsumed : Int {
+        get {
+            return values[selected]
+        }
+    }
     
     private struct DisplayOptions {
         static let barSpacing : CGFloat = 0.5
@@ -29,13 +39,27 @@ class StatsViewController: UIViewController {
         static let badSecondary = FlatRedDark()
         
         static let defaultColor = FlatWhite()
+        static let goalLineColor = FlatWhiteDark()
     
         static let warningRange = 200
+        
+        
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //FAKE DATA GENERATION
+        let numFakeDataPoints = 7
+        let secondsInDay = 24 * 60 * 60
+        
+        for i in 0..<numFakeDataPoints{
+            values.append(1600 + Int(arc4random_uniform(800)))
+            dates.append(NSDate(timeIntervalSinceNow: NSTimeInterval(i * secondsInDay)))
+        }
+        selected = values.count - 1;
+        // END - FAKE DATA GENERATION
+
         weekChart.xAxis.drawAxisLineEnabled = false
         weekChart.xAxis.drawGridLinesEnabled = false
         weekChart.xAxis.labelPosition = ChartXAxis.XAxisLabelPosition.Bottom
@@ -44,97 +68,115 @@ class StatsViewController: UIViewController {
         weekChart.leftAxis.enabled = false
         weekChart.leftAxis.drawGridLinesEnabled = false
         
+        let goalLine = ChartLimitLine(limit: Double(goal))
+        goalLine.lineColor = DisplayOptions.goalLineColor
+        goalLine.lineDashPhase = 20
+        weekChart.leftAxis.addLimitLine(goalLine)
+        weekChart.leftAxis.drawLimitLinesBehindDataEnabled = true
+        
         weekChart.rightAxis.enabled = false
         weekChart.rightAxis.drawGridLinesEnabled = false
         
+        weekChart.dragEnabled = true
         weekChart.backgroundColor = DisplayOptions.backgroundColor
         weekChart.drawBordersEnabled = false
         weekChart.drawGridBackgroundEnabled = false
         weekChart.legend.enabled = false
         weekChart.descriptionText = ""
+        weekChart.delegate = self
+        
         
         dayChart.backgroundColor = DisplayOptions.backgroundColor
         dayChart.legend.enabled = false
+        dayChart.descriptionText = ""
         
         setCalorieData()
     }
     
     func setCalorieData() {
-        
-        let dataPoints = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
-        let values = [1500.0, 2000.0, 1700.0, 1800.0, 1600.0, 2150.0, 1550.0]
-//        let goalCalories = 3000
-//        let dayDisplayed = 0
-        //let pieValues = [1000.0, 500.0]
-        
-        
-        
-        var barDataEntries: [BarChartDataEntry] = []
-        for i in 0..<dataPoints.count {
-            let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
-            barDataEntries.append(dataEntry)
-        }
-        let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
-        
-        barChartDataSet.barSpace = DisplayOptions.barSpacing
-        barChartDataSet.setColor(DisplayOptions.defaultColor)
-        barChartDataSet.highlightColor = DisplayOptions.goodPrimary
-        let barChartData = BarChartData(xVals: dataPoints, dataSet: barChartDataSet)
-        weekChart.data = barChartData
-        
-        //let dayDataEntries: [ChartDataEntry]
-//        let dayDataEntries = [ChartDataEntry(value: 1000, xIndex: 0),
-//                              ChartDataEntry(value: 500, xIndex: 1) ]
-//        let dayDataPoints = ["Calories", "Left"]
-//        
-//        
-//        let pieChartDataSet = PieChartDataSet(yVals: dayDataEntries, label: "Calories")
-//        pieChartDataSet.colors = [DisplayOptions.goodPrimary, DisplayOptions.defaultColor]
-//        let pieChartData = PieChartData(xVals: dayDataPoints, dataSet: pieChartDataSet)
-//        dayChart.data = pieChartData
-        
-        setDayCalorieChart(2400, dailyGoal : 2000)
+        print("in set calorie data")
+        print(values)
+
+        updateWeeklyCalorieChart()
+        updateDayCalorieChart()
         
     }
     
-    func setDayCalorieChart(caloriesConsumed : Int, dailyGoal : Int){
-        
+    func updateDayCalorieChart(){
         //if the user has consumed over their daily goal
-        let over = caloriesConsumed > dailyGoal
+        let over = caloriesConsumed > goal
         
-        var values : [Int]
+        var displayValues : [Int]
         var labels : [String]
-        var colors : [UIColor]
         
         if(over){
-            values = [dailyGoal, caloriesConsumed - dailyGoal]
+            displayValues = [goal, caloriesConsumed - goal]
             labels = ["Calories", "Over"]
-            
-            if(caloriesConsumed - dailyGoal > DisplayOptions.warningRange){
-                colors = [DisplayOptions.badPrimary, DisplayOptions.badSecondary]
-            } else {
-                colors = [DisplayOptions.warningPrimary, DisplayOptions.warningSecondary]
-            }
         } else {
-            values = [caloriesConsumed, dailyGoal - caloriesConsumed]
+            displayValues = [caloriesConsumed, goal - caloriesConsumed]
             labels = ["Calories", "Left"]
-            colors = [DisplayOptions.goodPrimary, DisplayOptions.goodSecondary]
         }
         
         var dayDataEntries: [ChartDataEntry] = []
         
-        for i in 0..<values.count {
-            dayDataEntries.append(ChartDataEntry(value: Double(values[i]), xIndex: i))
+        for i in 0..<displayValues.count {
+            dayDataEntries.append(ChartDataEntry(value: Double(displayValues[i]), xIndex: i))
         }
         
         let dayChartDataSet = PieChartDataSet(yVals: dayDataEntries, label: "Calories")
-        dayChartDataSet.colors = colors
+        dayChartDataSet.colors = [getPrimaryColor(), getSecondaryColor()]
         let dayChartData = PieChartData(xVals: labels, dataSet: dayChartDataSet)
         dayChart.data = dayChartData
     }
     
-    func setWeeklyCalorieChart(dates : [NSDate], values : [Int]){
+    func updateWeeklyCalorieChart(){
+        var barDataEntries: [BarChartDataEntry] = []
+        for i in 0..<values.count {
+            let dataEntry = BarChartDataEntry(value: Double(values[i]), xIndex: i)
+            barDataEntries.append(dataEntry)
+        }
+        let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
+        
+        let dateFormatter = NSDateFormatter()
+        //dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.dateFormat = "M/dd"
+        //dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        let dateStrings = dates.map { (date) -> String in
+            return dateFormatter.stringFromDate(date)
+        }
+        
+        barChartDataSet.barSpace = DisplayOptions.barSpacing
+        barChartDataSet.setColor(DisplayOptions.defaultColor)
+        barChartDataSet.highlightColor = getPrimaryColor()
+        let barChartData = BarChartData(xVals: dateStrings, dataSet: barChartDataSet)
+        weekChart.data = barChartData
+        weekChart.highlightValue(xIndex: selected, dataSetIndex: 0, callDelegate: false)
         
     }
     
+    func getPrimaryColor() -> UIColor {
+        if(caloriesConsumed <= goal){
+            return DisplayOptions.goodPrimary
+        } else if(caloriesConsumed < goal + DisplayOptions.warningRange){
+            return DisplayOptions.warningPrimary
+        } else {
+            return DisplayOptions.badPrimary
+        }
+    }
+    
+    func getSecondaryColor() -> UIColor {
+        if(caloriesConsumed <= goal){
+            return DisplayOptions.goodSecondary
+        } else if(caloriesConsumed < goal + DisplayOptions.warningRange){
+            return DisplayOptions.warningSecondary
+        } else {
+            return DisplayOptions.badSecondary
+        }
+    }
+    
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+        selected = entry.xIndex
+        updateDayCalorieChart()
+        updateWeeklyCalorieChart()
+    }
 }
