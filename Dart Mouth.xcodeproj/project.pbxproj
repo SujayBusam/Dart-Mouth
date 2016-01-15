@@ -23,6 +23,7 @@
 		2376308D1BEE94D8000A6C54 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */; };
 		237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */; };
 		237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */; };
+		237CC7B81C48BA3200205DC6 /* DiaryTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */; };
 		238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C8E1C2A2077007720F8 /* Recipe.swift */; };
 		238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C941C2B7D08007720F8 /* ParseAPI.swift */; };
 		238F1C971C2B8190007720F8 /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C961C2B8190007720F8 /* Offering.swift */; };
@@ -70,6 +71,7 @@
 		2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
 		237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryTableViewCell.swift; sourceTree = "<group>"; };
+		237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryTableHeaderView.swift; sourceTree = "<group>"; };
 		238F1C8E1C2A2077007720F8 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		238F1C941C2B7D08007720F8 /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
 		238F1C961C2B8190007720F8 /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */,
 				23113EA01C41BCCD00B07756 /* CalorieBudgetView.swift */,
 				237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */,
+				237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */,
 			);
 			name = DiaryView;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
 				23113E9D1C41A2B700B07756 /* DiaryEntry.swift in Sources */,
 				239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */,
+				237CC7B81C48BA3200205DC6 /* DiaryTableHeaderView.swift in Sources */,
 				23300B5D1C37128500D2C166 /* SignupViewController.swift in Sources */,
 				238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */,
 				23300B611C3B3A2F00D2C166 /* LoginViewController.swift in Sources */,

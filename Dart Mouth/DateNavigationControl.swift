@@ -75,11 +75,10 @@ class DateNavigationControl: UIView {
     
     // Use PureLayout to set up constraints for positioning the subviews.
     private func setupConstraints() {
-        let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Right)
+        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Right)
         leftButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
         
-        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
+        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Left)
         rightButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
 
         dateLabel.autoCenterInSuperview()

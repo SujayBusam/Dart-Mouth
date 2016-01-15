@@ -10,13 +10,14 @@ import UIKit
 import Parse
 
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
-    CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
+CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Local Constants
     
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
         static let DateNavControlWidth: CGFloat = 190
+        static let TableHeaderHeight: CGFloat = 40
     }
     
     private struct UserMealData {
@@ -31,11 +32,20 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     private struct Identifiers {
         static let DiaryEntryCell = "DiaryEntryCell"
     }
-
+    
     
     // MARK: - Instance variables
     
     var displayedUserMeals: [UserMeal?] = [nil, nil, nil, nil]
+    
+    var breakfastHeader: DiaryTableHeaderView!
+    var lunchHeader: DiaryTableHeaderView!
+    var dinnerHeader: DiaryTableHeaderView!
+    var snacksHeader: DiaryTableHeaderView!
+    
+    var allTableHeaders: [DiaryTableHeaderView] {
+        return [breakfastHeader, lunchHeader, dinnerHeader, snacksHeader]
+    }
     
     // The current diary date.
     var date: NSDate = NSDate() {
@@ -104,11 +114,9 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
                 
                 self.diaryTableView.reloadData()
                 self.calorieBudgetView.updateLabels()
-                
-                // TODO: set UserMeal cumulative calories here.
-                // Define helper function on UserMeal instance.
+                self.updateUserMealCumulativeCalories()
             }
-
+            
         }
     }
     
@@ -119,6 +127,21 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         
         // Initialize calorie budget values
         self.calorieBudget = CustomUser.currentUser()!.goalDailyCalories
+        
+        self.diaryTableView.separatorStyle = .None
+        
+        // Create table section headers
+        breakfastHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        breakfastHeader.title.text = Constants.MealTimeStrings.BreakfastDisplay + ":"
+        
+        lunchHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        lunchHeader.title.text = Constants.MealTimeStrings.LunchDisplay + ":"
+        
+        dinnerHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        dinnerHeader.title.text = Constants.MealTimeStrings.DinnerDisplay + ":"
+        
+        snacksHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        snacksHeader.title.text = Constants.MealTimeStrings.SnacksDisplay + ":"
     }
     
     
@@ -168,8 +191,12 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         return UserMealData.ValidCategories.count
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return UserMealData.ValidCategories[section]
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return allTableHeaders[section]
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return Dimensions.TableHeaderHeight
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -182,8 +209,17 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         // Configure the cell
         let diaryEntry = displayedUserMeals[indexPath.section]!.entries[indexPath.row]
         cell.diaryEntry = diaryEntry
-
+        
         return cell
     }
-
+    
+    
+    // MARK: - Helper functions
+    
+    func updateUserMealCumulativeCalories() {
+        for i in 0...(allTableHeaders.count - 1) {
+            allTableHeaders[i].caloriesLabel.text = "\(displayedUserMeals[i]?.getCumulativeCalories() ?? 0)"
+        }
+    }
+    
 }
