@@ -22,9 +22,9 @@ class DiaryEntry: PFObject, PFSubclassing {
     
     // MARK: - Helper functions
     
-    func getTotalCalories() -> Float? {
+    func getTotalCalories() -> Int? {
         if let recipeCals = recipe.getCalories() {
-            return Float(recipeCals) * servingsMultiplier
+            return Int(round(Float(recipeCals) * self.servingsMultiplier))
         }
         return nil
     }

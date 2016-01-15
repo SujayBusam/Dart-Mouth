@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -18,8 +19,8 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         static let DateNavControlWidth: CGFloat = 190
     }
     
-    private struct EntryData {
-        static let EntryCategories: [String] = [
+    private struct UserMealData {
+        static let ValidCategories: [String] = [
             Constants.MealTimeStrings.BreakfastDisplay,
             Constants.MealTimeStrings.LunchDisplay,
             Constants.MealTimeStrings.DinnerDisplay,
@@ -34,15 +35,7 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     
     // MARK: - Instance variables
     
-    // Data structure that holds data for table view.
-    // Maps strings to optional array of UserMeals
-    // Initialized with the 4 relevant keys and nil values.
-    var diaryEntries: [String : [DiaryEntry]?] = [
-        EntryData.EntryCategories[0]: nil,
-        EntryData.EntryCategories[1]: nil,
-        EntryData.EntryCategories[2]: nil,
-        EntryData.EntryCategories[3]: nil,
-    ]
+    var displayedUserMeals: [UserMeal?] = [nil, nil, nil, nil]
     
     // The current diary date.
     var date: NSDate = NSDate() {
@@ -54,10 +47,6 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     var calorieBudget: Int = 0 {
-        didSet { calorieBudgetView.updateLabels() }
-    }
-    
-    var foodCalories: Int = 0 {
         didSet { calorieBudgetView.updateLabels() }
     }
     
@@ -87,6 +76,40 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     
     func updateUI() {
         dateNavigationControl.updateDateLabel()
+        
+        // Get the UserMeals for the current date and populate view
+        self.displayedUserMeals = [nil, nil, nil, nil]
+        UserMeal.findObjectsInBackgroundWithBlock(userMealQueryCompletionHandler, forDate: self.date, forUser: CustomUser.currentUser()!)
+    }
+    
+    // Function that gets called after getting UserMeals for a certain date.
+    // Appropriately populates the view on the main queue.
+    func userMealQueryCompletionHandler(objects: [PFObject]?, error: NSError?) -> Void {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            if error == nil {
+                let userMeals = objects as! [UserMeal]
+                for userMeal in userMeals {
+                    // Make sure title (e.g. Breakfast, Lunch, Dinner, Snack) is valid
+                    guard UserMealData.ValidCategories.contains(userMeal.title) else {
+                        print("UserMeal does not have a proper title!: \(userMeal.title)")
+                        continue
+                    }
+                    
+                    if let index = UserMealData.ValidCategories.indexOf(userMeal.title) {
+                        self.displayedUserMeals[index] = userMeal
+                    } else {
+                        print("UserMeal does not have a proper title!: \(userMeal.title)")
+                    }
+                }
+                
+                self.diaryTableView.reloadData()
+                self.calorieBudgetView.updateLabels()
+                
+                // TODO: set UserMeal cumulative calories here.
+                // Define helper function on UserMeal instance.
+            }
+
+        }
     }
     
     private func setupViews() {
@@ -96,7 +119,6 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         
         // Initialize calorie budget values
         self.calorieBudget = CustomUser.currentUser()!.goalDailyCalories
-        self.foodCalories = 0
     }
     
     
@@ -130,33 +152,37 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     func foodValueForCalorieBudgetView(sender: CalorieBudgetView) -> Int {
-        return self.foodCalories
+        var foodValue = 0
+        for userMeal in self.displayedUserMeals {
+            if userMeal != nil {
+                foodValue += userMeal!.getCumulativeCalories()
+            }
+        }
+        return foodValue
     }
     
     
     // MARK: - UITableViewDataSource Protocol Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return EntryData.EntryCategories.count
+        return UserMealData.ValidCategories.count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return EntryData.EntryCategories[section]
+        return UserMealData.ValidCategories[section]
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section: String = EntryData.EntryCategories[section]
-        return self.diaryEntries[section]!?.count ?? 0
+        return self.displayedUserMeals[section]?.entries.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Identifiers.DiaryEntryCell) as! DiaryEntryTableViewCell
         
         // Configure the cell
-        let sectionTitle = EntryData.EntryCategories[indexPath.section]
-        let diaryEntry: DiaryEntry = self.diaryEntries[sectionTitle]!![indexPath.row]
+        let diaryEntry = displayedUserMeals[indexPath.section]!.entries[indexPath.row]
         cell.diaryEntry = diaryEntry
-        
+
         return cell
     }
 

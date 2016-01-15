@@ -140,8 +140,10 @@ class CalorieBudgetView: UIView {
         let calorieNet = calorieBudget - foodCalories
         if calorieNet > 0 {
             self.underOverLabel.text = Labels.Under
+            self.underOverValue.textColor = FlatGreen()
         } else {
             self.underOverLabel.text = Labels.Over
+            self.underOverValue.textColor = FlatRed()
         }
         self.underOverValue.text = formatValue(abs(calorieNet))
     }
