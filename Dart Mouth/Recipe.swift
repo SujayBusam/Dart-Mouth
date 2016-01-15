@@ -21,6 +21,7 @@ class Recipe: PFObject, PFSubclassing {
         static let Fiber = "fiberdtry"
         static let Sugars = "sugars"
         static let Protein = "protein"
+        static let ServingSizeGrams = "serving_size_grams"
         static let Bogus = "Bogus"
     }
     
@@ -125,6 +126,10 @@ class Recipe: PFObject, PFSubclassing {
     func getProtein() -> Float? {
         let proteinString = getAllNutrients()?[Fields.Protein] as? String
         return Recipe.extractFloatFromString(proteinString)
+    }
+    
+    func getServingSizeGrams() -> Int? {
+        return getAllNutrients()?[Fields.ServingSizeGrams] as? Int
     }
     
     // For testing

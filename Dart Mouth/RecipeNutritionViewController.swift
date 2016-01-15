@@ -27,6 +27,7 @@ class RecipeNutritionViewController: UIViewController {
     @IBOutlet weak var fiberValue: UILabel!
     @IBOutlet weak var sugarsValue: UILabel!
     @IBOutlet weak var proteinValue: UILabel!
+    @IBOutlet weak var servingSizeValue: UILabel!
     
     var recipe: Recipe! {
         didSet {
@@ -56,6 +57,7 @@ class RecipeNutritionViewController: UIViewController {
         fiberValue?.text = "\(recipe.getFiber()?.description ?? Strings.ErrorNutrientValue) g"
         sugarsValue?.text = "\(recipe.getFiber()?.description ?? Strings.ErrorNutrientValue) g"
         proteinValue?.text = "\(recipe.getProtein()?.description ?? Strings.ErrorNutrientValue) g"
+        servingSizeValue?.text = "\(recipe.getServingSizeGrams()?.description ?? Strings.ErrorNutrientValue) g"
 
     }
     
