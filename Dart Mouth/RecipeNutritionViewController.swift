@@ -11,7 +11,7 @@ import UIKit
 /*
 * UIViewController for a selected Recipe's nutritional information
 */
-class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
     
     struct Strings {
         static let ErrorNutrientValue = "N/A"
@@ -164,6 +164,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
         pickerView.reloadComponent(2)
     }
     
+    // Helper function to get the text for the third component in the picker view
     func getTextComponentForPickerView(pickerView: UIPickerView) -> String {
         let servingDigit = pickerView.selectedRowInComponent(0)
         let servingFraction = pickerView.selectedRowInComponent(1)
@@ -171,6 +172,37 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
             return PickerValues.ServingsStringSingular
         }
         return PickerValues.ServingsStringPlural
+    }
+    
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "showDiaryAdder":
+                if let diaryAdderVC = segue.destinationViewController as? DiaryAdderViewController {
+                    if let ppc = diaryAdderVC.popoverPresentationController {
+                        ppc.delegate = self
+                    }
+                    diaryAdderVC.sourceVC = self
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
+    func presentAddedToDiaryAlert() {
+        let alertView = UIAlertController(title: "Success",
+            message: "Item added to diary!", preferredStyle: .Alert)
+        let alertAction = UIAlertAction(title: Constants.Validation.OkActionTitle, style: .Default, handler: nil)
+        alertView.addAction(alertAction)
+        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
 }
