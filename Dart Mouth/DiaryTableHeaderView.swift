@@ -60,4 +60,5 @@ class DiaryTableHeaderView: UIView {
         caloriesLabel.autoPinEdgeToSuperviewMargin(.Top)
         caloriesLabel.autoPinEdgeToSuperviewMargin(.Bottom)
     }
+
 }

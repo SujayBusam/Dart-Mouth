@@ -186,6 +186,9 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
                         ppc.delegate = self
                     }
                     diaryAdderVC.sourceVC = self
+                    diaryAdderVC.recipe = self.recipe
+                    diaryAdderVC.servingsMultiplier = self.servingSizeMultiplier
+                    diaryAdderVC.date = NSDate()
                 }
             default:
                 break

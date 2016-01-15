@@ -77,6 +77,10 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Controller / View Setup
     
+    override func viewWillAppear(animated: Bool) {
+        updateUI()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,7 +94,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         
         // Get the UserMeals for the current date and populate view
         self.displayedUserMeals = [nil, nil, nil, nil]
-        UserMeal.findObjectsInBackgroundWithBlock(userMealQueryCompletionHandler, forDate: self.date, forUser: CustomUser.currentUser()!)
+        UserMeal.findObjectsInBackgroundWithBlock(self.userMealQueryCompletionHandler, forDate: self.date, forUser: CustomUser.currentUser()!)
     }
     
     // Function that gets called after getting UserMeals for a certain date.
