@@ -263,7 +263,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         let recipe = filteredRecipes[indexPath.row]
         cell.textLabel?.text = recipe.name
         cell.detailTextLabel?.text = "\(recipe.getCalories()?.description ?? "-") cals"
-        cell.accessoryType = .DetailButton
+        cell.accessoryType = .DisclosureIndicator
         return cell
     }
     
