@@ -38,7 +38,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         didSet { updateUI() }
     }
     
-    var api = ParseAPI()
     var allRecipes = [Recipe]()
     var filteredRecipes = [Recipe]() {
         didSet { recipesTableView.reloadData() }
@@ -130,7 +129,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         let selectedVenue = itemForSelectionList(venueSelectionList, withIndex: venueSelectionList.selectedButtonIndex)!
         let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withIndex: mealtimeSelectionList.selectedButtonIndex)!
         let selectedMenu = itemForSelectionList(menuSelectionList, withIndex: menuSelectionList.selectedButtonIndex)!
-        api.ddsRecipesFromCloudForDate(self.date, venueKey: selectedVenue.parseField,
+        Recipe.findDDSRecipesForDate(self.date, venueKey: selectedVenue.parseField,
             mealName: selectedMealtime.parseField, menuName: selectedMenu.parseField,
             orderAlphabetically: true, withCompletionHandler: {
             (recipes: [Recipe]?) -> Void in

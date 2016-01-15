@@ -100,4 +100,9 @@ struct Constants {
         static let SigninErrorDefaultMessage = "Unknown error signing in."
         static let OkActionTitle = "OK"
     }
+    
+    struct ParseIDS {
+        static let DDSUser = "95xfYTL7GG"
+    }
+    
 }
