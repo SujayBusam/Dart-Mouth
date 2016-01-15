@@ -30,7 +30,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
         static let PickerBackgroud = UIColor(hexString: "F7F7F7")
     }
     
-    let fractions: [(String, Float)] = [
+    let fractions: [(stringValue: String, floatValue: Float)] = [
         (PickerValues.ZeroIndicator, 0),
         ("\u{215B}", 1/8),
         ("\u{00BC}", 1/4),
@@ -150,7 +150,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
             if row == 0 { return PickerValues.ZeroIndicator }
             return "\(row)"
         case 1:
-            return fractions[row].0
+            return fractions[row].stringValue
         case 2:
             return getTextComponentForPickerView(pickerView)
         default:
@@ -160,7 +160,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.servingSizeMultiplier = Float(pickerView.selectedRowInComponent(0)) +
-            fractions[pickerView.selectedRowInComponent(1)].1
+            fractions[pickerView.selectedRowInComponent(1)].floatValue
         pickerView.reloadComponent(2)
     }
     
@@ -195,6 +195,8 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
             }
         }
     }
+    
+    // MARK: - Popover related functions
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
