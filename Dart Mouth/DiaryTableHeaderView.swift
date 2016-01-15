@@ -8,13 +8,19 @@
 
 import UIKit
 import PureLayout
+import ChameleonFramework
 
 class DiaryTableHeaderView: UIView {
     
     private struct Dimensions {
-        static let TitleFontSize: CGFloat = 18
-        static let CaloriesLabelFontSize: CGFloat = 18
-        static let CaloriesLabelOffset: CGFloat = 3
+        static let TitleFontSize: CGFloat = 20
+        static let CaloriesLabelFontSize: CGFloat = 20
+        static let CaloriesLabelOffset: CGFloat = 5
+    }
+    
+    private struct Colors {
+        static let TitleText: UIColor = FlatSkyBlue()
+        static let CaloriesLabelText: UIColor = FlatSkyBlue()
     }
 
     override init(frame: CGRect) {
@@ -35,11 +41,11 @@ class DiaryTableHeaderView: UIView {
         
         title = UILabel()
         title.font = UIFont(name: title.font!.fontName, size: Dimensions.TitleFontSize)
-        title.textColor = self.tintColor
+        title.textColor = Colors.TitleText
         
         caloriesLabel = UILabel()
         caloriesLabel.font = UIFont(name: caloriesLabel.font!.fontName, size: Dimensions.CaloriesLabelFontSize)
-        caloriesLabel.textColor = self.tintColor
+        caloriesLabel.textColor = Colors.CaloriesLabelText
         
         self.addSubview(title)
         self.addSubview(caloriesLabel)

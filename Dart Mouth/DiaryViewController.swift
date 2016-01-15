@@ -17,7 +17,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
         static let DateNavControlWidth: CGFloat = 190
-        static let TableHeaderHeight: CGFloat = 40
+        static let TableHeaderHeight: CGFloat = 55
     }
     
     private struct UserMealData {
@@ -86,6 +86,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     func updateUI() {
         dateNavigationControl.updateDateLabel()
+        updateUserMealCumulativeCalories()
         
         // Get the UserMeals for the current date and populate view
         self.displayedUserMeals = [nil, nil, nil, nil]
