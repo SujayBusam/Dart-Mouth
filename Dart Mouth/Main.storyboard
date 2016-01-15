@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -447,15 +449,15 @@
                                 <rect key="frame" x="0.0" y="106" width="375" height="512"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DiaryEntryCell" rowHeight="60" id="c8A-fj-3mX" customClass="DiaryEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DiaryEntryCell" rowHeight="60" id="c8A-fj-3mX" customClass="DiaryEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c8A-fj-3mX" id="cc7-oH-7em">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe Title Which Could Be Long" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLw-D4-i3A">
-                                                    <rect key="frame" x="8" y="8" width="271" height="20"/>
+                                                    <rect key="frame" x="8" y="8" width="270" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="mFB-BO-kx8"/>
                                                     </constraints>
@@ -464,7 +466,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Servings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCV-Hh-QOl">
-                                                    <rect key="frame" x="8" y="36" width="271" height="15"/>
+                                                    <rect key="frame" x="8" y="36" width="270" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="A1g-4Z-eac"/>
                                                     </constraints>
@@ -472,10 +474,10 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8,300 &gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-Pz-HcR">
-                                                    <rect key="frame" x="287" y="8" width="80" height="43"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8,300" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-Pz-HcR">
+                                                    <rect key="frame" x="285" y="8" width="50" height="43"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="KFH-w0-Xpj"/>
+                                                        <constraint firstAttribute="width" constant="50" id="ReW-Jp-eAv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -489,17 +491,17 @@
                                                 <constraint firstItem="FCV-Hh-QOl" firstAttribute="top" secondItem="dLw-D4-i3A" secondAttribute="bottom" constant="13" id="1mq-iJ-h3M"/>
                                                 <constraint firstItem="FCV-Hh-QOl" firstAttribute="trailing" secondItem="f4i-Pz-HcR" secondAttribute="trailing" id="5gg-TD-n8a"/>
                                                 <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="FCV-Hh-QOl" secondAttribute="trailing" constant="8" id="6AD-3E-VPl"/>
-                                                <constraint firstAttribute="topMargin" secondItem="f4i-Pz-HcR" secondAttribute="top" id="6TG-sH-jaw"/>
-                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="centerY" secondItem="cc7-oH-7em" secondAttribute="centerY" id="8FU-P7-4uQ"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="top" secondItem="dLw-D4-i3A" secondAttribute="top" id="6sB-mj-7IZ"/>
                                                 <constraint firstItem="FCV-Hh-QOl" firstAttribute="leading" secondItem="cc7-oH-7em" secondAttribute="leadingMargin" id="BTh-M2-grx"/>
                                                 <constraint firstItem="dLw-D4-i3A" firstAttribute="height" secondItem="FCV-Hh-QOl" secondAttribute="height" id="D3i-yr-B8e"/>
-                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="FCV-Hh-QOl" secondAttribute="trailing" constant="8" id="LlB-It-OtM"/>
-                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="dLw-D4-i3A" secondAttribute="trailing" constant="8" id="PuV-9Q-5f9"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="f4i-Pz-HcR" secondAttribute="bottom" id="VWX-73-2sj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="f4i-Pz-HcR" secondAttribute="trailing" constant="-2" id="Nul-1N-Lrb"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="dLw-D4-i3A" secondAttribute="trailing" constant="7" id="RFV-fO-eXm"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="f4i-Pz-HcR" secondAttribute="trailing" id="WA8-kf-XiO"/>
                                                 <constraint firstItem="FCV-Hh-QOl" firstAttribute="height" secondItem="dLw-D4-i3A" secondAttribute="height" id="Wk3-Y1-Op4"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="baseline" secondItem="FCV-Hh-QOl" secondAttribute="firstBaseline" id="X2J-qO-IYv"/>
                                                 <constraint firstItem="FCV-Hh-QOl" firstAttribute="bottom" secondItem="cc7-oH-7em" secondAttribute="bottomMargin" id="ZGb-So-Nz1"/>
                                                 <constraint firstItem="FCV-Hh-QOl" firstAttribute="width" secondItem="dLw-D4-i3A" secondAttribute="width" id="bni-JX-Mqq"/>
+                                                <constraint firstItem="f4i-Pz-HcR" firstAttribute="leading" secondItem="FCV-Hh-QOl" secondAttribute="trailing" constant="7" id="pJT-xm-12Q"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="dLw-D4-i3A" secondAttribute="leading" id="ro7-v1-4IG"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="dLw-D4-i3A" secondAttribute="trailing" constant="73" id="uIW-jO-W3w"/>
                                             </constraints>
@@ -512,9 +514,14 @@
                                                     <exclude reference="Wk3-Y1-Op4"/>
                                                     <exclude reference="0Xq-MZ-hww"/>
                                                     <exclude reference="6AD-3E-VPl"/>
+                                                    <exclude reference="Nul-1N-Lrb"/>
+                                                    <exclude reference="WA8-kf-XiO"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="f4i-Pz-HcR" secondAttribute="trailing" constant="40" id="moC-Sq-VVg"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="recipeNameLabel" destination="dLw-D4-i3A" id="AIb-Xo-dXj"/>
                                             <outlet property="servingsLabel" destination="FCV-Hh-QOl" id="VH8-hw-5TL"/>

@@ -263,10 +263,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         let cell = recipesTableView.dequeueReusableCellWithIdentifier(Identifiers.recipeCell, forIndexPath: indexPath)
         let recipe = filteredRecipes[indexPath.row]
         cell.textLabel?.text = recipe.name
-        if let calories = recipe.nutrients["result"]?["calories"] as? String {
-            cell.detailTextLabel?.text = "\(calories) cals"
-        }
-        
+        cell.detailTextLabel?.text = "\(recipe.getCalories()?.description ?? "-") cals"
         cell.accessoryType = .DetailButton
         return cell
     }

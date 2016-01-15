@@ -11,6 +11,8 @@ import Parse
 
 class InitializationViewController: UIViewController {
     
+    let DEBUG = false
+    
     struct Identifiers {
         static let StartSegue = "startAfterInitialization"
         static let SignupSegue = "showSignupFromInitialization"
@@ -18,15 +20,19 @@ class InitializationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if DEBUG {
+            // Test out code here
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
-        let currentUser = CustomUser.currentUser()
-        if currentUser != nil {
-            performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
-        } else {
-            performSegueWithIdentifier(Identifiers.SignupSegue, sender: self)
+        if !DEBUG {
+            let currentUser = CustomUser.currentUser()
+            if currentUser != nil {
+                performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
+            } else {
+                performSegueWithIdentifier(Identifiers.SignupSegue, sender: self)
+            }
         }
     }
 
@@ -38,8 +44,21 @@ class InitializationViewController: UIViewController {
     
     // MARK: - Some test functions for playing around with Parse models.
     // Assumes current user is logged in!
-    // THESE SHOULD NOT BE USED ANYMORE
     
+    private func testUserMealQuery() {
+        let date = NSDate(dateString: "2016-01-12")
+        
+        let query = UserMeal.query()!
+        query.whereKey("date", greaterThanOrEqualTo: date.startOfDay)
+        query.whereKey("date", lessThanOrEqualTo: date.endOfDay!)
+        
+        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
+            let userMeal = object as! UserMeal
+            print(userMeal.title)
+        }
+    }
+    
+    // THIS SHOULD BE USED WITH EXTREME CAUTION. CREATES DATA IN PARSE
     private func testEntryAndMealCreation() {
         Recipe.query()!.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
             if let recipe = object as? Recipe {
@@ -51,7 +70,7 @@ class InitializationViewController: UIViewController {
                 diaryEntry.servingsMultiplier = 1.125
                 
                 let userMeal = UserMeal()
-                userMeal.title = "TestSujay"
+                userMeal.title = "Breakfast Test"
                 userMeal.date = NSDate()
                 userMeal.user = CustomUser.currentUser()!
                 userMeal.entries = [diaryEntry]
@@ -65,6 +84,7 @@ class InitializationViewController: UIViewController {
         }
     }
     
+    // THIS SHOULD BE USED WITH EXTREME CAUTION. CREATES DATA IN PARSE
     private func testUserRelationCreation() {
         let currentUser = CustomUser.currentUser()!
         let recipeQuery = Recipe.query()!
@@ -76,8 +96,6 @@ class InitializationViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: - Navigation
     
 
 }

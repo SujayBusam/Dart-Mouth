@@ -13,6 +13,10 @@ import UIKit
 */
 class RecipeNutritionViewController: UIViewController {
     
+    struct Strings {
+        static let ErrorNutrientValue = "N/A"
+    }
+    
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var caloriesValue: UILabel!
     @IBOutlet weak var totalFatValue: UILabel!
@@ -42,20 +46,17 @@ class RecipeNutritionViewController: UIViewController {
     
     // Method to call if any or all displayed nutrition values need updating.
     func updateUI() {
-        if let nutrients = recipe.nutrients["result"] {
-            
-            // TODO(Sujay): Get rid of hardcoding and make these values calculated properties of Recipe
-            recipeName?.text = recipe.name
-            caloriesValue?.text = "\(nutrients["calories"]!)"
-            totalFatValue?.text = "\(nutrients["fat"]!)"
-            saturatedFatValue?.text = "\(nutrients["sfa"]!)"
-            cholesterolValue?.text = "\(nutrients["cholestrol"]!)"
-            sodiumValue?.text = "\(nutrients["sodium"]!)"
-            totalCarbsValue?.text = "\(nutrients["carbs"]!)"
-            fiberValue?.text = "\(nutrients["fiberdtry"]!)"
-            sugarsValue?.text = "\(nutrients["sugars"]!)"
-            proteinValue?.text = "\(nutrients["protein"]!)"
-        }
+        recipeName?.text = recipe.name
+        caloriesValue?.text = "\(recipe.getCalories()?.description ?? Strings.ErrorNutrientValue)"
+        totalFatValue?.text = "\(recipe.getTotalFat()?.description ?? Strings.ErrorNutrientValue) g"
+        saturatedFatValue?.text = "\(recipe.getSaturatedFat()?.description ?? Strings.ErrorNutrientValue) g"
+        cholesterolValue?.text = "\(recipe.getCholesterol()?.description ?? Strings.ErrorNutrientValue) mg"
+        sodiumValue?.text = "\(recipe.getSodium()?.description ?? Strings.ErrorNutrientValue) mg"
+        totalCarbsValue?.text = "\(recipe.getTotalCarbs()?.description ?? Strings.ErrorNutrientValue) g"
+        fiberValue?.text = "\(recipe.getFiber()?.description ?? Strings.ErrorNutrientValue) g"
+        sugarsValue?.text = "\(recipe.getFiber()?.description ?? Strings.ErrorNutrientValue) g"
+        proteinValue?.text = "\(recipe.getProtein()?.description ?? Strings.ErrorNutrientValue) g"
+
     }
     
     // MARK: - Miscellaneous

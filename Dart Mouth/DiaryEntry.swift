@@ -18,4 +18,14 @@ class DiaryEntry: PFObject, PFSubclassing {
     static func parseClassName() -> String {
         return "DiaryEntry"
     }
+    
+    
+    // MARK: - Helper functions
+    
+    func getTotalCalories() -> Float? {
+        if let recipeCals = recipe.getCalories() {
+            return Float(recipeCals) * servingsMultiplier
+        }
+        return nil
+    }
 }

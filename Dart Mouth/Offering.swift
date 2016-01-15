@@ -17,7 +17,9 @@ class Offering: PFObject, PFSubclassing {
     @NSManaged var venueKey: String
     @NSManaged var mealName: String
     @NSManaged var menuName: String
-    @NSManaged var recipes: PFRelation
+    var recipes: PFRelation! {
+        return relationForKey("recipes")
+    }
     
     static func parseClassName() -> String {
         return "Offering"

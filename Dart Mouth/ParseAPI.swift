@@ -56,7 +56,7 @@ class ParseAPI {
                     recipesQuery.cachePolicy = .CacheElseNetwork
                     if orderAlphabetically { recipesQuery.orderByAscending("name") }
                     // Restrict to DDS Recipes
-                    recipesQuery.whereKey("createdBy", equalTo: PFObject(withoutDataWithClassName: "Recipe", objectId: Identifiers.DDSUserID))
+//                    recipesQuery.whereKey("createdBy", equalTo: PFObject(withoutDataWithClassName: "Recipe", objectId: Identifiers.DDSUserID))
                     recipesQuery.limit = 1000
                     
                     // Get Recipes

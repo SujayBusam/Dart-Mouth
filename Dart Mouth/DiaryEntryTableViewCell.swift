@@ -11,13 +11,14 @@ import UIKit
 class DiaryEntryTableViewCell: UITableViewCell {
     
     // MARK: - Outlets
-    // Al of these are for ONE diary entry
+    // This is for ONE diary entry. The current cell.
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var servingsLabel: UILabel!
     @IBOutlet weak var totalCaloriesLabel: UILabel!
     
     
     // MARK: - Instance variables
+    
     var diaryEntry: DiaryEntry? {
         didSet { updateUI() }
     }
@@ -38,8 +39,15 @@ class DiaryEntryTableViewCell: UITableViewCell {
     
     
     // MARK: - UI Configuration
+    
     func updateUI() {
-        
+        // TODO: may have to reset any existing diary entry information here.
+        if let diaryEntry = self.diaryEntry {
+            let recipe = diaryEntry.recipe
+            recipeNameLabel?.text = recipe.name
+            servingsLabel?.text = "\(diaryEntry.servingsMultiplier) Servings"
+            totalCaloriesLabel?.text = "\(diaryEntry.getTotalCalories()!)"
+        }
     }
 
 }

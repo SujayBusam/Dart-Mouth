@@ -150,12 +150,12 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Identifiers.DiaryEntryCell)! as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(Identifiers.DiaryEntryCell) as! DiaryEntryTableViewCell
         
         // Configure the cell
         let sectionTitle = EntryData.EntryCategories[indexPath.section]
         let diaryEntry: DiaryEntry = self.diaryEntries[sectionTitle]!![indexPath.row]
-        // TODO: finish implementation
+        cell.diaryEntry = diaryEntry
         
         return cell
     }
