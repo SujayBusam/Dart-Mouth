@@ -9,10 +9,6 @@
 import UIKit
 
 class PreferencesViewController: UIViewController {
-    
-    struct Identifiers {
-        static let Signup = "SignupViewController"
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +18,7 @@ class PreferencesViewController: UIViewController {
         // TODO: error handling
         CustomUser.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
             let destinationVC = self.storyboard!
-                .instantiateViewControllerWithIdentifier(Identifiers.Signup)
+                .instantiateViewControllerWithIdentifier(Constants.ViewControllers.Signup)
             self.navigationController!.presentViewController(destinationVC, animated: true, completion: nil)
         }
     }

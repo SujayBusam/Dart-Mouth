@@ -94,9 +94,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="eao-ef-CKE" kind="show" identifier="showRecipeNutrition" id="8tl-VW-612"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -154,7 +151,7 @@
         <!--Recipe Nutrition View Controller-->
         <scene sceneID="2Ef-En-hdG">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="eao-ef-CKE" customClass="RecipeNutritionViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecipeNutritionViewController" hidesBottomBarWhenPushed="YES" id="eao-ef-CKE" customClass="RecipeNutritionViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="t8F-b5-uKe"/>
                         <viewControllerLayoutGuide type="bottom" id="AVa-82-v8x"/>

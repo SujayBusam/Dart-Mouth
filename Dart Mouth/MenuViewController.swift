@@ -30,7 +30,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         static let searchButtonPressed: String = "searchButtonPressed:"
         static let cancelButtonPressed: String = "cancelButtonPressed:"
         static let recipeCell: String = "RecipeCell"
-        static let nutritionSegue: String = "showRecipeNutrition"
     }
     
     
@@ -275,8 +274,11 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-        performSegueWithIdentifier(Identifiers.nutritionSegue, sender: self)
+        pushRecipeNutritionVCAfterSelectingIndexPath(indexPath)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        pushRecipeNutritionVCAfterSelectingIndexPath(indexPath)
     }
     
     
@@ -436,21 +438,15 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let identifier = segue.identifier {
-            switch identifier {
-            case Identifiers.nutritionSegue:
-                if let targetViewController = segue.destinationViewController as? RecipeNutritionViewController {
-                    if let indexPath = recipesTableView.indexPathForSelectedRow {
-                        let category = self.filteredCategories[indexPath.section]
-                        let recipe = self.filteredRecipes[category]![indexPath.row]
-                        targetViewController.recipe = recipe
-                    }
-                }
-            default:
-                break
-            }
-        }
+    func pushRecipeNutritionVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
+        let category = self.filteredCategories[indexPath.section]
+        let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
+        
+        let destinationVC = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutrition)
+            as! RecipeNutritionViewController
+        destinationVC.recipe = selectedRecipe
+        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     

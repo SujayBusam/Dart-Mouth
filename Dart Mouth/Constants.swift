@@ -105,4 +105,9 @@ struct Constants {
         static let DDSUser = "95xfYTL7GG"
     }
     
+    struct ViewControllers {
+        static let Signup = "SignupViewController"
+        static let RecipeNutrition = "RecipeNutritionViewController"
+    }
+    
 }
