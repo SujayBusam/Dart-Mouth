@@ -262,14 +262,13 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         cell.textLabel?.text = recipe.name
         cell.detailTextLabel?.text = "\(recipe.getCalories()?.description ?? "-") cals"
         cell.accessoryType = .DisclosureIndicator
+        cell.selectionStyle = .None
         return cell
     }
     
-    // Called when info button on right side of cell is pressed.
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        recipesTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-        performSegueWithIdentifier(Identifiers.nutritionSegue,
-            sender: self.recipesTableView.cellForRowAtIndexPath(indexPath))
+        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        performSegueWithIdentifier(Identifiers.nutritionSegue, sender: self)
     }
     
     
@@ -434,14 +433,10 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
             switch identifier {
             case Identifiers.nutritionSegue:
                 if let targetViewController = segue.destinationViewController as? RecipeNutritionViewController {
-                    if let cell = sender as? RecipeCell {
-                        if let indexPath = recipesTableView.indexPathForCell(cell) {
-                            let category = self.filteredCategories[indexPath.section]
-                            let recipe = self.filteredRecipes[category]![indexPath.row]
-                            targetViewController.recipe = recipe
-                        }
-                    } else {
-                        print("Sender of this segue is not a cell")
+                    if let indexPath = recipesTableView.indexPathForSelectedRow {
+                        let category = self.filteredCategories[indexPath.section]
+                        let recipe = self.filteredRecipes[category]![indexPath.row]
+                        targetViewController.recipe = recipe
                     }
                 }
             default:

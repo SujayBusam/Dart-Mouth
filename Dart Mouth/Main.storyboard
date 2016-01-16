@@ -95,7 +95,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="eao-ef-CKE" kind="show" identifier="showRecipeNutrition" id="isI-es-Kpj"/>
+                                            <segue destination="eao-ef-CKE" kind="show" identifier="showRecipeNutrition" id="8tl-VW-612"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
