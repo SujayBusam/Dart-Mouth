@@ -11,7 +11,10 @@ import ChameleonFramework
 import HTHorizontalSelectionList
 import MBProgressHUD
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, MBProgressHUDDelegate {
+class MenuViewController: UIViewController, DateNavigationControlDelegate,
+    HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate,
+    UITableViewDataSource, UITableViewDelegate,
+    UISearchBarDelegate, MBProgressHUDDelegate {
     
     // MARK: - Local Constants
     
@@ -38,10 +41,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         didSet { updateUI() }
     }
     
-    var allRecipes = [Recipe]()
-    var filteredRecipes = [Recipe]() {
-        didSet { recipesTableView.reloadData() }
-    }
+    var allCategories = [String]()
+    var filteredCategories = [String]()
+    
+    // Maps category names (e.g. Side Dish) to array of Recipes
+    var allRecipes = [String: [Recipe]]()
+    var filteredRecipes = [String: [Recipe]]()
     
     var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
@@ -131,24 +136,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         let selectedMenu = itemForSelectionList(menuSelectionList, withIndex: menuSelectionList.selectedButtonIndex)!
         Recipe.findDDSRecipesForDate(self.date, venueKey: selectedVenue.parseField,
             mealName: selectedMealtime.parseField, menuName: selectedMenu.parseField,
-            orderAlphabetically: true, withCompletionHandler: {
-            (recipes: [Recipe]?) -> Void in
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                if recipes != nil {
-                    self.allRecipes = recipes!
-                } else {
-                    self.allRecipes.removeAll()
-                }
-                self.setFilteredRecipesWithSearchText(self.searchBar.text)
-                
-                // Every time UI updates, table view should reset to top, as long as it's not empty.
-                if !self.filteredRecipes.isEmpty {
-                    self.recipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
-                }
-                MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
-            }
-        })
+            orderAlphabetically: true,
+            withCompletionHandler: self.getRecipesCompletionHandler)
     }
     
     private func setupViews() {
@@ -211,7 +200,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        setFilteredRecipesWithSearchText(searchText)
+        setFilteredRecipesAndCategoriesWithSearchText(searchText)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -251,16 +240,24 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // MARK: - UITableViewDataSource Protocol Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.filteredCategories.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredRecipes.count
+        let category = self.filteredCategories[section]
+        return filteredRecipes[category]!.count
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return filteredCategories[section]
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = recipesTableView.dequeueReusableCellWithIdentifier(Identifiers.recipeCell, forIndexPath: indexPath)
-        let recipe = filteredRecipes[indexPath.row]
+        
+        let category = filteredCategories[indexPath.section]
+        let recipe = filteredRecipes[category]![indexPath.row]
+        
         cell.textLabel?.text = recipe.name
         cell.detailTextLabel?.text = "\(recipe.getCalories()?.description ?? "-") cals"
         cell.accessoryType = .DisclosureIndicator
@@ -270,7 +267,8 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     // Called when info button on right side of cell is pressed.
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         recipesTableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-        performSegueWithIdentifier(Identifiers.nutritionSegue, sender: self)
+        performSegueWithIdentifier(Identifiers.nutritionSegue,
+            sender: self.recipesTableView.cellForRowAtIndexPath(indexPath))
     }
     
     
@@ -281,13 +279,81 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
     }
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
-        searchBar.text = ""
-        setFilteredRecipesWithSearchText("")
+        searchBar.text = nil
+        setFilteredRecipesAndCategoriesWithSearchText(nil)
         displayDateNavigationAndSearchButton(animated: true)
     }
     
     
     // MARK: - Helper Functions
+    
+    // Function that handles the Recipes after fetching them from Parse
+    func getRecipesCompletionHandler(recipes: [Recipe]?) -> Void {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.populateAllCategoriesAndRecipes(recipes)
+            self.setFilteredRecipesAndCategoriesWithSearchText(self.searchBar.text)
+            self.recipesTableView.reloadData()
+            
+            // Every time UI updates, table view should reset to top, as long as it's not empty.
+            if !self.filteredRecipes.isEmpty {
+                self.recipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+            }
+            MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
+        }
+
+    }
+    
+    // Populates passed Recipes into allRecipes dictionary that maps category name
+    // to Recipes. Also populates allCategories.
+    func populateAllCategoriesAndRecipes(recipes: [Recipe]?) {
+        // Clear the current data
+        self.allCategories.removeAll()
+        self.allRecipes.removeAll()
+        
+        guard recipes != nil else { return }
+        
+        // Repopulate
+        for recipe in recipes! {
+            let category = recipe.category
+            
+            // Populate all Recipes
+            if self.allRecipes[category] == nil {
+                self.allRecipes[category] = [recipe]
+            } else {
+                self.allRecipes[category]!.append(recipe)
+            }
+            
+            // Populate all categories
+            if !self.allCategories.contains(category) {
+                self.allCategories.append(category)
+            }
+        }
+    }
+    
+    // Populates passed Recipes into filteredRecipes dictionary that maps
+    // category name to Recipes. Also populates filteredCategories
+    func populateFilteredCategoriesAndRecipes(recipes: [Recipe]) {
+        // Clear the current data
+        self.filteredCategories.removeAll()
+        self.filteredRecipes.removeAll()
+        
+        // Repopulate
+        for recipe in recipes {
+            let category = recipe.category
+            
+            // Populate filtered Recipes
+            if self.filteredRecipes[category] == nil {
+                self.filteredRecipes[category] = [recipe]
+            } else {
+                self.filteredRecipes[category]!.append(recipe)
+            }
+            
+            // Populate filtered categories
+            if !self.filteredCategories.contains(category) {
+                self.filteredCategories.append(category)
+            }
+        }
+    }
     
     // Helper function to replace whatever is in the navigation bar with
     // the view controller's search bar and cancel button.
@@ -338,17 +404,24 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
         }
     }
     
-    // Helper function to set filtered Recipes given search text.
-    // If the search text is nil or empty, no search occurred, so filtered Recipes are assigned all Recipes
-    func setFilteredRecipesWithSearchText(searchText: String?) {
-        if searchText != nil && !searchText!.isEmpty {
-            let searchText = searchText!.lowercaseString.trim()
-            self.filteredRecipes = allRecipes.filter({ (recipe: Recipe) -> Bool in
-                return recipe.name.lowercaseString.containsString(searchText)
-            })
-        } else {
-            self.filteredRecipes = allRecipes
+    // Helper function to set filtered Recipes and filtered categories given
+    // search text. If the search text is nil or empty, no search occurred, so
+    // filtered Recipes are assigned all Recipes and filtered categories are
+    // assigned all categories
+    func setFilteredRecipesAndCategoriesWithSearchText(searchText: String?) {
+        guard searchText != nil && !searchText!.isEmpty else {
+            self.filteredRecipes = self.allRecipes
+            self.filteredCategories = self.allCategories
+            return
         }
+        
+        let searchText = searchText!.lowercaseString.trim()
+        let allRecipes: [Recipe] = Array(self.allRecipes.values).flatMap { $0 }
+        let filteredRecipes: [Recipe] = allRecipes.filter {
+            (recipe: Recipe) -> Bool in
+            return recipe.name.lowercaseString.containsString(searchText)
+        }
+        populateFilteredCategoriesAndRecipes(filteredRecipes)
     }
     
     
@@ -359,8 +432,15 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate, HTHor
             switch identifier {
             case Identifiers.nutritionSegue:
                 if let targetViewController = segue.destinationViewController as? RecipeNutritionViewController {
-                    let recipeIndex = recipesTableView.indexPathForSelectedRow!.row
-                    targetViewController.recipe = self.filteredRecipes[recipeIndex]
+                    if let cell = sender as? RecipeCell {
+                        if let indexPath = recipesTableView.indexPathForCell(cell) {
+                            let category = self.filteredCategories[indexPath.section]
+                            let recipe = self.filteredRecipes[category]![indexPath.row]
+                            targetViewController.recipe = recipe
+                        }
+                    } else {
+                        print("Sender of this segue is not a cell")
+                    }
                 }
             default:
                 break
