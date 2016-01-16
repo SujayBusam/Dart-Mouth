@@ -201,6 +201,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         setFilteredRecipesAndCategoriesWithSearchText(searchText)
+        self.recipesTableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -279,9 +280,10 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
-        searchBar.text = nil
+        self.searchBar.text = nil
         setFilteredRecipesAndCategoriesWithSearchText(nil)
         displayDateNavigationAndSearchButton(animated: true)
+        self.recipesTableView.reloadData()
     }
     
     
