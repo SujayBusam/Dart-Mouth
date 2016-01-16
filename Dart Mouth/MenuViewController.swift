@@ -111,6 +111,14 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         updateUI()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let indexPathForSelectedRow = self.recipesTableView.indexPathForSelectedRow {
+            self.recipesTableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
+        }
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         searchBar.resignFirstResponder()
     }
@@ -262,7 +270,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         cell.textLabel?.text = recipe.name
         cell.detailTextLabel?.text = "\(recipe.getCalories()?.description ?? "-") cals"
         cell.accessoryType = .DisclosureIndicator
-        cell.selectionStyle = .None
+        cell.selectionStyle = .Default
         return cell
     }
     
