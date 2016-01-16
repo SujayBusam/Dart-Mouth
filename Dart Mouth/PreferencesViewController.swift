@@ -9,14 +9,22 @@
 import UIKit
 
 class PreferencesViewController: UIViewController {
+    
+    struct Identifiers {
+        static let Signup = "SignupViewController"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func logoutButtonPressed(sender: UIButton) {
-        CustomUser.logOut()
-        performSegueWithIdentifier("showSignupAfterLogout", sender: self)
+        // TODO: error handling
+        CustomUser.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
+            let destinationVC = self.storyboard!
+                .instantiateViewControllerWithIdentifier(Identifiers.Signup)
+            self.navigationController!.presentViewController(destinationVC, animated: true, completion: nil)
+        }
     }
     
 }

@@ -587,7 +587,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe Title Which Could Be Long" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLw-D4-i3A">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLw-D4-i3A">
                                                     <rect key="frame" x="8" y="8" width="270" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="mFB-BO-kx8"/>
@@ -596,7 +596,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 Servings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCV-Hh-QOl">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Serving" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCV-Hh-QOl">
                                                     <rect key="frame" x="8" y="31" width="270" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="A1g-4Z-eac"/>
@@ -605,7 +605,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8,300" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-Pz-HcR">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4i-Pz-HcR">
                                                     <rect key="frame" x="285" y="8" width="50" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="ReW-Jp-eAv"/>
@@ -732,7 +732,7 @@
         <!--Signup View Controller-->
         <scene sceneID="eVP-xx-10c">
             <objects>
-                <viewController id="BLl-LK-d8x" customClass="SignupViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupViewController" id="BLl-LK-d8x" customClass="SignupViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4pn-u9-4zc"/>
                         <viewControllerLayoutGuide type="bottom" id="lRj-G0-X1N"/>
@@ -1078,9 +1078,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SHm-CA-MF1"/>
-                    <connections>
-                        <segue destination="BLl-LK-d8x" kind="showDetail" identifier="showSignupAfterLogout" id="VTl-ek-II4"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACZ-kl-hYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1095,6 +1092,5 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ppV-Lf-6Se"/>
-        <segue reference="VTl-ek-II4"/>
     </inferredMetricsTieBreakers>
 </document>
