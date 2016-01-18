@@ -30,6 +30,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         static let searchButtonPressed: String = "searchButtonPressed:"
         static let cancelButtonPressed: String = "cancelButtonPressed:"
         static let recipeCell: String = "RecipeCell"
+        static let Title = "Menus"
     }
     
     
@@ -106,6 +107,7 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = Identifiers.Title
         setupViews()
         updateUI()
     }
@@ -113,9 +115,13 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // If a Recipe was selected, the gray selection disappears with animation
+        // once navigation returns to this view controller.
         if let indexPathForSelectedRow = self.recipesTableView.indexPathForSelectedRow {
             self.recipesTableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
         }
+        
+        self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -179,7 +185,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(Dimensions.HorizontalItemFontSize), forState: .Normal)
         }
     }
-    
     
     // MARK: - DateNavigationControlDelegate protocol methods
     
@@ -442,11 +447,22 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         let category = self.filteredCategories[indexPath.section]
         let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
         
-        let destinationVC = self.storyboard!
+        let recipeNutritionVC = self.storyboard!
             .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutrition)
             as! RecipeNutritionViewController
-        destinationVC.recipe = selectedRecipe
-        self.navigationController?.pushViewController(destinationVC, animated: true)
+        
+        // Recipe nutrition VC setup here
+        recipeNutritionVC.recipe = selectedRecipe
+        
+        let addToDiaryButton = UIButton()
+        addToDiaryButton.setTitleColor(self.view.tintColor, forState: .Normal)
+        addToDiaryButton.setTitle("Add to Diary", forState: .Normal)
+        addToDiaryButton.sizeToFit()
+        addToDiaryButton.addTarget(recipeNutritionVC, action: "addToDiaryButtonPressed:", forControlEvents: .TouchUpInside)
+        recipeNutritionVC.toolbarButton = UIBarButtonItem(customView: addToDiaryButton)
+        
+        // Push onto navigation controller stack
+        self.navigationController?.pushViewController(recipeNutritionVC, animated: true)
     }
     
     

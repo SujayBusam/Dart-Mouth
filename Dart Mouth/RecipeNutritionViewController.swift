@@ -11,10 +11,15 @@ import UIKit
 /*
 * UIViewController for a selected Recipe's nutritional information
 */
-class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
+class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
+    UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
     
-    struct Strings {
+    struct Identifiers {
         static let ErrorNutrientValue = "N/A"
+    }
+    
+    private struct Dimensions {
+        static let NavBarItemHeight: CGFloat = 35
     }
     
     struct PickerValues {
@@ -67,6 +72,18 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
         didSet { updateUI() }
     }
     
+    var toolbarButton: UIBarButtonItem!
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setToolbarHidden(false, animated: false)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,9 +97,13 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
     }
     
     private func setupSubViews() {
+        // Setup serving size picker
         servingSizePicker.backgroundColor = Colors.PickerBackgroud
         servingSizePicker.alpha = PickerValues.AlphaValue
         servingSizePicker.selectRow(1, inComponent: 0, animated: false)
+        
+        // Add toolbar items
+        self.setToolbarItems([self.toolbarButton], animated: false)
     }
     
     // Method to call if any or all displayed nutrition values need updating.
@@ -90,16 +111,16 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
         guard servingSizePicker != nil else { return }
         
         recipeName?.text = recipe.name
-        caloriesValue?.text = "\(getMultipliedIntegerValue(recipe.getCalories()) ?? Strings.ErrorNutrientValue)"
-        totalFatValue?.text = "\(getMultipliedFloatValue(recipe.getTotalFat()) ?? Strings.ErrorNutrientValue) g"
-        saturatedFatValue?.text = "\(getMultipliedFloatValue(recipe.getSaturatedFat()) ?? Strings.ErrorNutrientValue) g"
-        cholesterolValue?.text = "\(getMultipliedFloatValue(recipe.getCholesterol()) ?? Strings.ErrorNutrientValue) mg"
-        sodiumValue?.text = "\(getMultipliedFloatValue(recipe.getSodium()) ?? Strings.ErrorNutrientValue) mg"
-        totalCarbsValue?.text = "\(getMultipliedFloatValue(recipe.getTotalCarbs()) ?? Strings.ErrorNutrientValue) g"
-        fiberValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Strings.ErrorNutrientValue) g"
-        sugarsValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Strings.ErrorNutrientValue) g"
-        proteinValue?.text = "\(getMultipliedFloatValue(recipe.getProtein()) ?? Strings.ErrorNutrientValue) g"
-        servingSizeValue?.text = "\(recipe.getServingSizeGrams()?.description ?? Strings.ErrorNutrientValue) g"
+        caloriesValue?.text = "\(getMultipliedIntegerValue(recipe.getCalories()) ?? Identifiers.ErrorNutrientValue)"
+        totalFatValue?.text = "\(getMultipliedFloatValue(recipe.getTotalFat()) ?? Identifiers.ErrorNutrientValue) g"
+        saturatedFatValue?.text = "\(getMultipliedFloatValue(recipe.getSaturatedFat()) ?? Identifiers.ErrorNutrientValue) g"
+        cholesterolValue?.text = "\(getMultipliedFloatValue(recipe.getCholesterol()) ?? Identifiers.ErrorNutrientValue) mg"
+        sodiumValue?.text = "\(getMultipliedFloatValue(recipe.getSodium()) ?? Identifiers.ErrorNutrientValue) mg"
+        totalCarbsValue?.text = "\(getMultipliedFloatValue(recipe.getTotalCarbs()) ?? Identifiers.ErrorNutrientValue) g"
+        fiberValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Identifiers.ErrorNutrientValue) g"
+        sugarsValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Identifiers.ErrorNutrientValue) g"
+        proteinValue?.text = "\(getMultipliedFloatValue(recipe.getProtein()) ?? Identifiers.ErrorNutrientValue) g"
+        servingSizeValue?.text = "\(recipe.getServingSizeGrams()?.description ?? Identifiers.ErrorNutrientValue) g"
         
     }
     
@@ -120,6 +141,18 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource, U
         
         let newValue: Float = self.servingSizeMultiplier * Float(value!)
         return String(Int(round(newValue)))
+    }
+    
+    // MARK: - Button actions
+    
+    // Action for pressing cancel button on the left of navigation bar
+    // Note - this isn't being used right now.
+    func cancelBarButtonPressed(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func addToDiaryButtonPressed(sender: UIBarButtonItem) {
+        print("pressed")
     }
     
     
