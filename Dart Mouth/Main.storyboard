@@ -382,16 +382,17 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CL3-Tm-H8R">
-                                <rect key="frame" x="0.0" y="399" width="375" height="150"/>
+                            <pickerView contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="CL3-Tm-H8R">
+                                <rect key="frame" x="0.0" y="399" width="375" height="216"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="EOU-9F-fEc"/>
+                                    <constraint firstAttribute="height" constant="224" id="EOU-9F-fEc"/>
                                     <constraint firstAttribute="height" constant="201" id="N2x-f9-xS9"/>
                                     <constraint firstAttribute="height" constant="209" id="TaE-n4-ubC"/>
                                     <constraint firstAttribute="height" constant="209" id="dqN-Da-7Fs"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="EOU-9F-fEc"/>
                                         <exclude reference="N2x-f9-xS9"/>
                                         <exclude reference="TaE-n4-ubC"/>
                                         <exclude reference="dqN-Da-7Fs"/>
@@ -405,6 +406,7 @@
                             <constraint firstItem="snU-ay-VQe" firstAttribute="top" secondItem="t8F-b5-uKe" secondAttribute="bottom" constant="8" id="4XR-UM-0Ba"/>
                             <constraint firstItem="CL3-Tm-H8R" firstAttribute="leading" secondItem="ctr-BW-bx9" secondAttribute="leading" id="5Kd-Dv-l54"/>
                             <constraint firstAttribute="trailingMargin" secondItem="snU-ay-VQe" secondAttribute="trailing" id="5kp-lG-oUv"/>
+                            <constraint firstItem="AVa-82-v8x" firstAttribute="top" secondItem="CL3-Tm-H8R" secondAttribute="bottom" constant="8" id="B62-Lg-mJt"/>
                             <constraint firstItem="9ed-Er-YrK" firstAttribute="leading" secondItem="ctr-BW-bx9" secondAttribute="leadingMargin" id="CbB-gg-RwV"/>
                             <constraint firstItem="CL3-Tm-H8R" firstAttribute="centerX" secondItem="snU-ay-VQe" secondAttribute="centerX" id="JWp-1b-y3m"/>
                             <constraint firstItem="VMW-Um-LJh" firstAttribute="top" secondItem="snU-ay-VQe" secondAttribute="bottom" constant="8" symbolic="YES" id="LxL-cD-BSw"/>
@@ -425,6 +427,7 @@
                                 <exclude reference="JWp-1b-y3m"/>
                                 <exclude reference="VX0-gD-ZmJ"/>
                                 <exclude reference="iJn-FN-svt"/>
+                                <exclude reference="B62-Lg-mJt"/>
                             </mask>
                         </variation>
                     </view>
