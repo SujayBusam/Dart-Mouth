@@ -27,10 +27,44 @@
             </objects>
             <point key="canvasLocation" x="-223.5" y="-1688.5"/>
         </scene>
+        <!--Menu Root View Controller-->
+        <scene sceneID="4fP-aI-2dr">
+            <objects>
+                <viewController storyboardIdentifier="MenuRootViewController" id="svr-7R-rtf" customClass="MenuRootViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kCc-Gl-pqW"/>
+                        <viewControllerLayoutGuide type="bottom" id="z04-55-8f5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="47V-O3-quL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6v-88-98U">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="e6v-88-98U" firstAttribute="leading" secondItem="47V-O3-quL" secondAttribute="leading" id="LQe-y1-5hQ"/>
+                            <constraint firstAttribute="trailing" secondItem="e6v-88-98U" secondAttribute="trailing" id="R7u-FQ-vPy"/>
+                            <constraint firstItem="e6v-88-98U" firstAttribute="top" secondItem="kCc-Gl-pqW" secondAttribute="bottom" id="dEs-LG-9Vc"/>
+                            <constraint firstItem="e6v-88-98U" firstAttribute="bottom" secondItem="z04-55-8f5" secondAttribute="top" id="pzq-UL-Jcm"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bhH-LO-dpq"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="containerView" destination="e6v-88-98U" id="G0q-wg-ljV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BTx-0L-86C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2145.5" y="17.5"/>
+        </scene>
         <!--Menu View Controller-->
         <scene sceneID="c7Q-eB-tLW">
             <objects>
-                <viewController id="VyP-je-KZH" customClass="MenuViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" id="VyP-je-KZH" customClass="MenuViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hhW-2e-54e"/>
                         <viewControllerLayoutGuide type="bottom" id="QXI-WP-nAZ"/>
@@ -40,35 +74,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ae-nm-uEE">
-                                <rect key="frame" x="0.0" y="60" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="16" width="375" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="wJL-gx-3nb"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ela-Vs-fgK" customClass="HTHorizontalSelectionList">
-                                <rect key="frame" x="0.0" y="69" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="25" width="375" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="MOT-NN-q39"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVm-zM-oX9" customClass="HTHorizontalSelectionList">
-                                <rect key="frame" x="0.0" y="107" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="63" width="375" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="73T-wt-roW"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kC9-dz-moB" customClass="HTHorizontalSelectionList">
-                                <rect key="frame" x="0.0" y="145" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="101" width="375" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="zYM-RM-r0e"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e7d-2z-TXi">
-                                <rect key="frame" x="0.0" y="183" width="375" height="435"/>
+                                <rect key="frame" x="0.0" y="139" width="375" height="528"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecipeCell" textLabel="jQc-do-TTE" detailTextLabel="Sts-5T-YQ3" style="IBUITableViewCellStyleSubtitle" id="tIT-KW-wme">
@@ -704,7 +738,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="VyP-je-KZH" kind="relationship" relationship="rootViewController" id="b8D-Mv-BhS"/>
+                        <segue destination="svr-7R-rtf" kind="relationship" relationship="rootViewController" id="xfx-Tx-xLi"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q8t-JW-2hQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

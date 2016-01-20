@@ -107,6 +107,8 @@ struct Constants {
     
     struct ViewControllers {
         static let Signup = "SignupViewController"
+        static let MenuRoot = "MenuRootViewController"
+        static let MenuView = "MenuViewController"
         static let RecipeNutrition = "RecipeNutritionViewController"
         static let DiaryAdder = "DiaryAdderViewController"
     }

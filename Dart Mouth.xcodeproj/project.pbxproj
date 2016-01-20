@@ -35,6 +35,7 @@
 		23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A08E121BF30B94002685A6 /* InitializationViewController.swift */; };
 		23A4F5C41C48F4DE006C7891 /* DiaryAdderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C31C48F4DE006C7891 /* DiaryAdderViewController.swift */; };
 		23A4F5C61C4A350F006C7891 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C51C4A350F006C7891 /* RecipeCell.swift */; };
+		23A4F5CA1C502965006C7891 /* MenuRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C91C502965006C7891 /* MenuRootViewController.swift */; };
 		23BF16BB1C0D319D00F2CD8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BF16BA1C0D319D00F2CD8E /* Main.storyboard */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
@@ -84,6 +85,7 @@
 		23A08E121BF30B94002685A6 /* InitializationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializationViewController.swift; sourceTree = "<group>"; };
 		23A4F5C31C48F4DE006C7891 /* DiaryAdderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryAdderViewController.swift; sourceTree = "<group>"; };
 		23A4F5C51C4A350F006C7891 /* RecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		23A4F5C91C502965006C7891 /* MenuRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuRootViewController.swift; sourceTree = "<group>"; };
 		23BF16BA1C0D319D00F2CD8E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +202,7 @@
 				233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */,
 				23A4F5C31C48F4DE006C7891 /* DiaryAdderViewController.swift */,
 				23A4F5C51C4A350F006C7891 /* RecipeCell.swift */,
+				23A4F5C91C502965006C7891 /* MenuRootViewController.swift */,
 			);
 			name = MenuView;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				238F1C991C2C6F22007720F8 /* Constants.swift in Sources */,
 				23300B561C36FBE200D2C166 /* String+Trim.swift in Sources */,
 				23113EA11C41BCCD00B07756 /* CalorieBudgetView.swift in Sources */,
+				23A4F5CA1C502965006C7891 /* MenuRootViewController.swift in Sources */,
 				237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
