@@ -11,14 +11,14 @@ import ChameleonFramework
 import HTHorizontalSelectionList
 import MBProgressHUD
 
-class MenuViewController: UIViewController, DateNavigationControlDelegate,
+class MenuViewController: UIViewController,
     HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate,
     UITableViewDataSource, UITableViewDelegate,
     UISearchBarDelegate, MBProgressHUDDelegate {
     
     // MARK: - Local Constants
     
-    private struct Dimensions {
+    private struct Dimensions { // TODO: cleanup
         static let NavBarItemHeight: CGFloat = 35
         static let DateNavControlWidth: CGFloat = 190
         static let SearchBarWidth: CGFloat = 200
@@ -47,10 +47,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     // Maps category names (e.g. Side Dish) to array of Recipes
     var allRecipes = [String: [Recipe]]()
     var filteredRecipes = [String: [Recipe]]()
-    
-    var dateNavigationControl: DateNavigationControl! {
-        didSet { dateNavigationControl.delegate = self }
-    }
     
     var searchButton: UIBarButtonItem!
     var cancelButton: UIBarButtonItem!
@@ -129,8 +125,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     func updateUI() {
-        dateNavigationControl.updateDateLabel()
-        
         // Update the horizonal selection lists
         for selectionList in selectionLists {
             selectionList.reloadData()
@@ -154,10 +148,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     private func setupViews() {
-        // Create and setup date navigation control
-        dateNavigationControl = DateNavigationControl(frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
-        self.navigationItem.titleView = dateNavigationControl
-        
         // Create and setup search bar button
         let button = UIButton(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.NavBarItemHeight))
         button.setImage(UIImage(named: Identifiers.searchButtonImage), forState: .Normal)
@@ -183,28 +173,6 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
             selectionList.setTitleColor(FlatGrayDark(), forState: .Normal)
             selectionList.setTitleColor(Constants.Colors.appPrimaryColorDark, forState: .Selected)
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(Dimensions.HorizontalItemFontSize), forState: .Normal)
-        }
-    }
-    
-    // MARK: - DateNavigationControlDelegate protocol methods
-    
-    func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate {
-        return self.date
-    }
-    
-    func leftArrowWasPressed(sender: UIButton) {
-        if let dayBefore = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: -1, toDate: self.date, options: []) {
-            self.date = dayBefore
-        } else {
-            print("Date decrement calculation failed")
-        }
-    }
-    
-    func rightArrowWasPressed(sender: UIButton) {
-        if let dayAfter = NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: 1, toDate: self.date, options: []) {
-            self.date = dayAfter
-        } else {
-            print("Date increment calculation failed")
         }
     }
     
@@ -293,12 +261,12 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
         displaySearchBarAndCancelButton(animated: true)
     }
     
-    func cancelButtonPressed(sender: UIBarButtonItem) {
-        self.searchBar.text = nil
-        setFilteredRecipesAndCategoriesWithSearchText(nil)
-        displayDateNavigationAndSearchButton(animated: true)
-        self.recipesTableView.reloadData()
-    }
+//    func cancelButtonPressed(sender: UIBarButtonItem) {
+//        self.searchBar.text = nil
+//        setFilteredRecipesAndCategoriesWithSearchText(nil)
+//        displayDateNavigationAndSearchButton(animated: true)
+//        self.recipesTableView.reloadData()
+//    }
     
     
     // MARK: - Helper Functions
@@ -389,17 +357,17 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
     
     // Helper function to replace whatever is in the navigation bar with
     // the view controller's date navigation control and search button.
-    func displayDateNavigationAndSearchButton(animated animated: Bool) {
-        self.navigationItem.setRightBarButtonItem(searchButton, animated: true)
-        self.navigationItem.titleView = dateNavigationControl
-        
-        if animated {
-            dateNavigationControl.alpha = 0
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.dateNavigationControl.alpha = 1
-            })
-        }
-    }
+//    func displayDateNavigationAndSearchButton(animated animated: Bool) {
+//        self.navigationItem.setRightBarButtonItem(searchButton, animated: true)
+//        self.navigationItem.titleView = dateNavigationControl
+//        
+//        if animated {
+//            dateNavigationControl.alpha = 0
+//            UIView.animateWithDuration(0.5, animations: { () -> Void in
+//                self.dateNavigationControl.alpha = 1
+//            })
+//        }
+//    }
     
     // Helper function to return Venue, Mealtime, or Menu enum given a selection list
     // and selection button index. Note that Venue, Mealtime, and Menu conform to
