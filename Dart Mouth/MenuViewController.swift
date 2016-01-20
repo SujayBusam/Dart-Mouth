@@ -11,26 +11,16 @@ import ChameleonFramework
 import HTHorizontalSelectionList
 import MBProgressHUD
 
-class MenuViewController: UIViewController,
-    HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate,
-    UITableViewDataSource, UITableViewDelegate,
-    UISearchBarDelegate, MBProgressHUDDelegate {
+class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate {
     
     // MARK: - Local Constants
     
-    private struct Dimensions { // TODO: cleanup
-        static let NavBarItemHeight: CGFloat = 35
-        static let DateNavControlWidth: CGFloat = 190
-        static let SearchBarWidth: CGFloat = 200
+    private struct Dimensions {
         static let HorizontalItemFontSize: CGFloat = 13
     }
     
     private struct Identifiers {
-        static let searchButtonImage: String = "Search"
-        static let searchButtonPressed: String = "searchButtonPressed:"
-        static let cancelButtonPressed: String = "cancelButtonPressed:"
         static let recipeCell: String = "RecipeCell"
-        static let Title = "Menus"
     }
     
     
@@ -41,19 +31,22 @@ class MenuViewController: UIViewController,
         didSet { updateUI() }
     }
     
+    var currentSearchText: String? {
+        didSet {
+            // NOTE: doesn't need to call updateUI() since other values such as
+            // current venue or date haven't changed. Therefore, API calls do not
+            // need to be made. We only update the filtered recipes and categories.
+            // This will not call the backend at all.
+            setFilteredRecipesAndCategoriesWithSearchText(currentSearchText)
+        }
+    }
+    
     var allCategories = [String]()
     var filteredCategories = [String]()
     
     // Maps category names (e.g. Side Dish) to array of Recipes
     var allRecipes = [String: [Recipe]]()
     var filteredRecipes = [String: [Recipe]]()
-    
-    var searchButton: UIBarButtonItem!
-    var cancelButton: UIBarButtonItem!
-    
-    var searchBar: UISearchBar! {
-        didSet { searchBar.delegate = self }
-    }
     
     
     // MARK: - Outlets
@@ -103,7 +96,6 @@ class MenuViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = Identifiers.Title
         setupViews()
         updateUI()
     }
@@ -118,10 +110,6 @@ class MenuViewController: UIViewController,
         }
         
         self.navigationController?.setToolbarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        searchBar.resignFirstResponder()
     }
     
     func updateUI() {
@@ -148,21 +136,6 @@ class MenuViewController: UIViewController,
     }
     
     private func setupViews() {
-        // Create and setup search bar button
-        let button = UIButton(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.NavBarItemHeight))
-        button.setImage(UIImage(named: Identifiers.searchButtonImage), forState: .Normal)
-        button.addTarget(self, action: NSSelectorFromString(Identifiers.searchButtonPressed), forControlEvents: .TouchUpInside)
-        self.searchButton = UIBarButtonItem(customView: button)
-        self.navigationItem.rightBarButtonItem = self.searchButton
-    
-        // Create and setup search bar
-        searchBar = UISearchBar(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.SearchBarWidth))
-        searchBar.tintColor = Constants.Colors.appSecondaryColorDark
-        searchBar.backgroundColor = UIColor.clearColor()
-        
-        // Create cancel bar button
-        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: NSSelectorFromString(Identifiers.cancelButtonPressed))
-        
         // Setup properties for the three HTHorizontalSelectionLists
         for selectionList in selectionLists {
             selectionList.centerAlignButtons = true
@@ -174,18 +147,6 @@ class MenuViewController: UIViewController,
             selectionList.setTitleColor(Constants.Colors.appPrimaryColorDark, forState: .Selected)
             selectionList.setTitleFont(UIFont.boldSystemFontOfSize(Dimensions.HorizontalItemFontSize), forState: .Normal)
         }
-    }
-    
-    
-    // MARK: - UISearchBarDelegate protocol methods
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        setFilteredRecipesAndCategoriesWithSearchText(searchText)
-        self.recipesTableView.reloadData()
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
     }
     
     
@@ -255,28 +216,13 @@ class MenuViewController: UIViewController,
     }
     
     
-    // MARK: - Button action functions
-    
-    func searchButtonPressed(sender: UIButton) {
-        displaySearchBarAndCancelButton(animated: true)
-    }
-    
-//    func cancelButtonPressed(sender: UIBarButtonItem) {
-//        self.searchBar.text = nil
-//        setFilteredRecipesAndCategoriesWithSearchText(nil)
-//        displayDateNavigationAndSearchButton(animated: true)
-//        self.recipesTableView.reloadData()
-//    }
-    
-    
     // MARK: - Helper Functions
     
     // Function that handles the Recipes after fetching them from Parse
     func getRecipesCompletionHandler(recipes: [Recipe]?) -> Void {
         dispatch_async(dispatch_get_main_queue()) {
             self.populateAllCategoriesAndRecipes(recipes)
-            self.setFilteredRecipesAndCategoriesWithSearchText(self.searchBar.text)
-            self.recipesTableView.reloadData()
+            self.setFilteredRecipesAndCategoriesWithSearchText(self.currentSearchText)
             
             // Every time UI updates, table view should reset to top, as long as it's not empty.
             if !self.filteredRecipes.isEmpty {
@@ -339,36 +285,6 @@ class MenuViewController: UIViewController,
         }
     }
     
-    // Helper function to replace whatever is in the navigation bar with
-    // the view controller's search bar and cancel button.
-    func displaySearchBarAndCancelButton(animated animated: Bool) {
-        self.navigationItem.setRightBarButtonItem(cancelButton, animated: true)
-        self.navigationItem.titleView = searchBar
-        searchBar.becomeFirstResponder()
-        
-        // Animation causes a "fade-in" effect
-        if animated {
-            searchBar.alpha = 0
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.searchBar.alpha = 1
-            })
-        }
-    }
-    
-    // Helper function to replace whatever is in the navigation bar with
-    // the view controller's date navigation control and search button.
-//    func displayDateNavigationAndSearchButton(animated animated: Bool) {
-//        self.navigationItem.setRightBarButtonItem(searchButton, animated: true)
-//        self.navigationItem.titleView = dateNavigationControl
-//        
-//        if animated {
-//            dateNavigationControl.alpha = 0
-//            UIView.animateWithDuration(0.5, animations: { () -> Void in
-//                self.dateNavigationControl.alpha = 1
-//            })
-//        }
-//    }
-    
     // Helper function to return Venue, Mealtime, or Menu enum given a selection list
     // and selection button index. Note that Venue, Mealtime, and Menu conform to
     // ParseFieldCompatible protocol
@@ -388,14 +304,20 @@ class MenuViewController: UIViewController,
         }
     }
     
-    // Helper function to set filtered Recipes and filtered categories given
-    // search text. If the search text is nil or empty, no search occurred, so
-    // filtered Recipes are assigned all Recipes and filtered categories are
-    // assigned all categories
+    /*
+    Helper function to set filtered Recipes and filtered categories given
+    search text. If the search text is nil or empty, no search occurred, so
+    filtered Recipes are assigned all Recipes and filtered categories are
+    assigned all categories.
+    
+    Also reloads the table view at the end. This is the only place where reloadData()
+    is called! Do not call reloadData() anywhere else.
+    */
     func setFilteredRecipesAndCategoriesWithSearchText(searchText: String?) {
         guard searchText != nil && !searchText!.isEmpty else {
             self.filteredRecipes = self.allRecipes
             self.filteredCategories = self.allCategories
+            self.recipesTableView.reloadData()
             return
         }
         
@@ -406,6 +328,7 @@ class MenuViewController: UIViewController,
             return recipe.name.lowercaseString.containsString(searchText)
         }
         populateFilteredCategoriesAndRecipes(filteredRecipes)
+        self.recipesTableView.reloadData()
     }
     
     
