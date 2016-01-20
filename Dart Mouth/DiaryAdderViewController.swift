@@ -9,6 +9,10 @@
 import UIKit
 import Parse
 
+protocol DiaryAdderViewControllerDelegate: class {
+    func presentAddedToDiaryAlertForDiaryAdder(sender: DiaryAdderViewController) -> Void
+}
+
 class DiaryAdderViewController: UIViewController {
 
     @IBOutlet weak var buttonStackView: UIStackView!
@@ -28,9 +32,7 @@ class DiaryAdderViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             if error == nil {
                 self.dismissViewControllerAnimated(true) { () -> Void in
-                    if let vc = self.sourceVC as? RecipeNutritionViewController {
-                        vc.presentAddedToDiaryAlert()
-                    }
+                    self.delegate.presentAddedToDiaryAlertForDiaryAdder(self)
                 }
             } else {
                 print("Error saving new UserMeal after trying to add to diary from RecipeNutritionVC.")
@@ -38,7 +40,7 @@ class DiaryAdderViewController: UIViewController {
         }
     }
     
-    var sourceVC: UIViewController!
+    weak var delegate: DiaryAdderViewControllerDelegate!
     var recipe: Recipe!
     var servingsMultiplier: Float!
     var date: NSDate!
@@ -68,13 +70,6 @@ class DiaryAdderViewController: UIViewController {
         }
         
         set { super.preferredContentSize = newValue }
-    }
-
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
     }
 
 }

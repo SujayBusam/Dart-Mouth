@@ -12,7 +12,10 @@ import UIKit
 * UIViewController for a selected Recipe's nutritional information
 */
 class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
-    UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
+    UIPickerViewDelegate, UIPopoverPresentationControllerDelegate,
+    DiaryAdderViewControllerDelegate {
+    
+    // MARK: - Local Constants
     
     struct Identifiers {
         static let ErrorNutrientValue = "N/A"
@@ -28,11 +31,11 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         static let MaxNumServings = 1000
         static let ServingsStringSingular = "Serving"
         static let ServingsStringPlural = "Servings"
-        static let AlphaValue: CGFloat = 0.8
+        static let AlphaValue: CGFloat = 1.0
     }
     
     struct Colors {
-        static let PickerBackgroud = UIColor(hexString: "F7F7F7")
+        static let PickerBackground = UIColor(hexString: "F7F7F7")
     }
     
     let fractions: [(stringValue: String, floatValue: Float)] = [
@@ -44,6 +47,9 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         ("\u{2154}", 2/3),
         ("\u{00BE}", 3/4),
     ]
+    
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var caloriesValue: UILabel!
@@ -64,6 +70,9 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         }
     }
     
+    
+    // MARK: - Instance Variables
+    
     var recipe: Recipe! {
         didSet { updateUI() }
     }
@@ -72,7 +81,20 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         didSet { updateUI() }
     }
     
-    var toolbarButton: UIBarButtonItem!
+    var addToDiaryBarButtonItem: UIBarButtonItem?
+    
+    var allBarButtonItems: [UIBarButtonItem] {
+        // Add more items here as needed.
+        
+        var items = [UIBarButtonItem]()
+        if self.addToDiaryBarButtonItem != nil {
+            items.append(self.addToDiaryBarButtonItem!)
+        }
+        
+        return items
+    }
+    
+    // MARK: - View Setup
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -98,12 +120,12 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     
     private func setupSubViews() {
         // Setup serving size picker
-        servingSizePicker.backgroundColor = Colors.PickerBackgroud
+        servingSizePicker.backgroundColor = Colors.PickerBackground
         servingSizePicker.alpha = PickerValues.AlphaValue
         servingSizePicker.selectRow(1, inComponent: 0, animated: false)
         
         // Add toolbar items
-        self.setToolbarItems([self.toolbarButton], animated: false)
+        self.setToolbarItems(self.allBarButtonItems, animated: false)
     }
     
     // Method to call if any or all displayed nutrition values need updating.
@@ -123,6 +145,9 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         servingSizeValue?.text = "\(recipe.getServingSizeGrams()?.description ?? Identifiers.ErrorNutrientValue) g"
         
     }
+    
+    
+    // MARK: - Helper functions
     
     // Helper function to apply the multiplier to a float value and return a formatted string
     // Rounds the value to 1 decimal place.
@@ -152,7 +177,22 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     }
     
     func addToDiaryButtonPressed(sender: UIBarButtonItem) {
-        print("pressed")
+        let popoverContentVC = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryAdder) as! DiaryAdderViewController
+        
+        // Configure the popover content VC (the diary adder)
+        popoverContentVC.delegate = self
+        popoverContentVC.recipe = self.recipe
+        popoverContentVC.servingsMultiplier = self.servingSizeMultiplier
+        popoverContentVC.date = NSDate() // Current date
+        popoverContentVC.modalPresentationStyle = .Popover
+        
+        // Configure popover presentation controller
+        let presentationController = popoverContentVC.popoverPresentationController!
+        presentationController.barButtonItem = self.addToDiaryBarButtonItem
+        presentationController.delegate = self
+        
+        self.presentViewController(popoverContentVC, animated: true, completion: nil)
     }
     
     
@@ -174,6 +214,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
             return -1
         }
     }
+    
     
     // MARK: - UIPickerViewDelegate protocol methods
     
@@ -208,34 +249,16 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     }
     
     
-    // MARK: - Navigation
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let identifier = segue.identifier {
-            switch identifier {
-            case "showDiaryAdder":
-                if let diaryAdderVC = segue.destinationViewController as? DiaryAdderViewController {
-                    if let ppc = diaryAdderVC.popoverPresentationController {
-                        ppc.delegate = self
-                    }
-                    diaryAdderVC.sourceVC = self
-                    diaryAdderVC.recipe = self.recipe
-                    diaryAdderVC.servingsMultiplier = self.servingSizeMultiplier
-                    diaryAdderVC.date = NSDate()
-                }
-            default:
-                break
-            }
-        }
-    }
-    
-    // MARK: - Popover related functions
+    // MARK: - UIPopoverPresentationControllerDelegate protocol methods
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
     }
     
-    func presentAddedToDiaryAlert() {
+    
+    // MARK: - DiaryAdderViewControllerDelegate protocol methods
+    
+    func presentAddedToDiaryAlertForDiaryAdder(sender: DiaryAdderViewController) {
         let alertView = UIAlertController(title: "Success",
             message: "Item added to diary!", preferredStyle: .Alert)
         let alertAction = UIAlertAction(title: Constants.Validation.OkActionTitle, style: .Default, handler: nil)

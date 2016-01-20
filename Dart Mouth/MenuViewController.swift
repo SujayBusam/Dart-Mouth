@@ -451,15 +451,15 @@ class MenuViewController: UIViewController, DateNavigationControlDelegate,
             .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutrition)
             as! RecipeNutritionViewController
         
-        // Recipe nutrition VC setup here
+        // Set the destination VC recipe
         recipeNutritionVC.recipe = selectedRecipe
-        
+        // Create and set the "Add To Diary" toolbar button for the destination VC.
         let addToDiaryButton = UIButton()
         addToDiaryButton.setTitleColor(self.view.tintColor, forState: .Normal)
         addToDiaryButton.setTitle("Add to Diary", forState: .Normal)
         addToDiaryButton.sizeToFit()
         addToDiaryButton.addTarget(recipeNutritionVC, action: "addToDiaryButtonPressed:", forControlEvents: .TouchUpInside)
-        recipeNutritionVC.toolbarButton = UIBarButtonItem(customView: addToDiaryButton)
+        recipeNutritionVC.addToDiaryBarButtonItem = UIBarButtonItem(customView: addToDiaryButton)
         
         // Push onto navigation controller stack
         self.navigationController?.pushViewController(recipeNutritionVC, animated: true)

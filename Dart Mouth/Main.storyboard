@@ -457,7 +457,7 @@
         <!--Diary Adder View Controller-->
         <scene sceneID="Bbd-1p-o3W">
             <objects>
-                <viewController id="j5V-Wr-I3r" customClass="DiaryAdderViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DiaryAdderViewController" id="j5V-Wr-I3r" customClass="DiaryAdderViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9C3-ET-8L0"/>
                         <viewControllerLayoutGuide type="bottom" id="ReV-9y-lY8"/>
