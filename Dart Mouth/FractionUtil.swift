@@ -18,7 +18,7 @@ class FractionUtil {
      :param: number The floating point number to convert.
      :returns: A tuple (String, Double): the string representation of the closest possible vulgar fraction and the value of that string
      */
-    class func vulgarFraction(number: Double) -> (String, Double) {
+    func vulgarFraction(number: Double) -> (String, Double) {
         let fractions: [(String, Double)] = [("", 1), ("\u{215E}", 7/8),
             ("\u{215A}", 5/6), ("\u{2158}", 4/5), ("\u{00BE}", 3/4), ("\u{2154}", 2/3),
             ("\u{215D}", 5/8), ("\u{2157}", 3/5), ("\u{00BD}", 1/2), ("\u{2156}", 2/5),
@@ -34,7 +34,11 @@ class FractionUtil {
                 if fractions[i - 1].1 == 1.0 {
                     return ("\(whole + sign)", Double(whole + sign))
                 } else {
-                    return ("\(fractions[i - 1].0)", Double(whole) + Double(sign) * fractions[i - 1].1)
+                    if whole == 0 {
+                        return ("\(fractions[i - 1].0)", Double(whole) + Double(sign) * fractions[i - 1].1)
+                    } else {
+                        return ("\(whole) \(fractions[i - 1].0)", Double(whole) + Double(sign) * fractions[i - 1].1)
+                    }
                 }
             }
         }

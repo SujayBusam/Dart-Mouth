@@ -28,7 +28,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     struct PickerValues {
         static let ZeroIndicator = "-"
         static let NumComponents = 3
-        static let MaxNumServings = 1000
+        static let MaxNumServings = 100
         static let ServingsStringSingular = "Serving"
         static let ServingsStringPlural = "Servings"
         static let AlphaValue: CGFloat = 1.0

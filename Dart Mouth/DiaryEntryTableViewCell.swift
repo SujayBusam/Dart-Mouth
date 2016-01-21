@@ -24,6 +24,7 @@ class DiaryEntryTableViewCell: UITableViewCell {
     }
     
     var numberFormatter: NSNumberFormatter = NSNumberFormatter()
+    var fracUtil = FractionUtil()
     
     // MARK: - Default override functions
     
@@ -55,7 +56,7 @@ class DiaryEntryTableViewCell: UITableViewCell {
             }
             
             recipeNameLabel?.text = recipe.name
-            servingsLabel?.text = "\(FractionUtil.vulgarFraction(Double(multiplier)).0) " + servingsText
+            servingsLabel?.text = "\(fracUtil.vulgarFraction(Double(multiplier)).0) " + servingsText
             totalCaloriesLabel?.text = self.numberFormatter.stringFromNumber(diaryEntry.getTotalCalories()!)
         }
     }
