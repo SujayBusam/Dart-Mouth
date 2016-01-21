@@ -78,6 +78,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Controller / View Setup
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setToolbarHidden(true, animated: false)
         updateUI()
     }
     
@@ -219,18 +220,27 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        // TODO: implement
+        pushDiaryEntryEditContainerVCAfterSelectingIndexPath(indexPath)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // TODO: implement
+        pushDiaryEntryEditContainerVCAfterSelectingIndexPath(indexPath)
     }
     
     
     // MARK: - Navigation
     
-    func pushRecipeNutritionVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
-        // TODO: implement
+    func pushDiaryEntryEditContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
+        let selectedDiaryEntry = displayedUserMeals[indexPath.section]!.entries[indexPath.row]
+        
+        let diaryEntryEditContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryEditContainer)
+            as! DiaryEntryEditContainerViewController
+        diaryEntryEditContainer.diaryEntry = selectedDiaryEntry
+        
+        // Push onto navigation controller stack
+        diaryEntryEditContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(diaryEntryEditContainer, animated: true)
     }
     
     

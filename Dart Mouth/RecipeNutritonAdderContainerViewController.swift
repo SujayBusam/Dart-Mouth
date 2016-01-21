@@ -30,6 +30,10 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
         static let cancelButtonPressed = "cancelBarButtonPressed"
     }
     
+    private struct InitialValues {
+        static let ServingSize: Float = 1.0
+    }
+    
     // MARK: - Outlets
     
     @IBOutlet weak var containerView: UIView!
@@ -88,6 +92,7 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     
     // MARK: - Button actions
     
+    // Not used currently
     func cancelBarButtonPressed(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -119,7 +124,7 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     }
     
     func initialServingSizeMultiplierForRecipeNutritionView(sender: RecipeNutritionViewController) -> Float {
-        return 1.0
+        return InitialValues.ServingSize
     }
     
     // MARK: - UIPopoverPresentationControllerDelegate protocol methods

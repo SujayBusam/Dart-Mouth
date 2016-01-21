@@ -21,12 +21,16 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     
     // MARK: - Local Constants
     
-    struct Identifiers {
+    private struct Identifiers {
         static let ErrorNutrientValue = "N/A"
     }
     
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
+    }
+    
+    private struct Fractions {
+        
     }
     
     struct PickerValues {
@@ -36,22 +40,21 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         static let ServingsStringSingular = "Serving"
         static let ServingsStringPlural = "Servings"
         static let AlphaValue: CGFloat = 1.0
+        static let VulgarFractions: [(stringValue: String, floatValue: Float)] = [
+            ("0", 0),
+            ("\u{215B}", 1/8),
+            ("\u{00BC}", 1/4),
+            ("\u{2153}", 1/3),
+            ("\u{00BD}", 1/2),
+            ("\u{2154}", 2/3),
+            ("\u{00BE}", 3/4),
+        ]
     }
     
     struct Colors {
         static let PickerBackground = UIColor(hexString: "F7F7F7")
     }
-    
-    let fractions: [(stringValue: String, floatValue: Float)] = [
-        (PickerValues.ZeroIndicator, 0),
-        ("\u{215B}", 1/8),
-        ("\u{00BC}", 1/4),
-        ("\u{2153}", 1/3),
-        ("\u{00BD}", 1/2),
-        ("\u{2154}", 2/3),
-        ("\u{00BE}", 3/4),
-    ]
-    
+
     
     // MARK: - Outlets
     
@@ -84,6 +87,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     }
     
     var numberFormatter: NSNumberFormatter = NSNumberFormatter()
+    var fracUtil = FractionUtil()
     
     // MARK: - View Setup
     
@@ -105,9 +109,9 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         servingSizePicker.alpha = PickerValues.AlphaValue
         
         // Set the initial serving size
-        // TODO: use delegate method
-        self.servingSizeMultiplier = 1
-        servingSizePicker.selectRow(1, inComponent: 0, animated: false)
+        let initialServingSize: Float = self.delegate.initialServingSizeMultiplierForRecipeNutritionView(self)
+        self.servingSizeMultiplier = initialServingSize
+        setServingSizePickerForValue(initialServingSize)
         
         // Configure number formatter
         self.numberFormatter.numberStyle = .DecimalStyle
@@ -144,7 +148,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         case 0:
             return PickerValues.MaxNumServings
         case 1:
-            return fractions.count
+            return PickerValues.VulgarFractions.count
         case 2:
             return 1
         default:
@@ -161,7 +165,8 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
             if row == 0 { return PickerValues.ZeroIndicator }
             return "\(row)"
         case 1:
-            return fractions[row].stringValue
+            if row == 0 { return PickerValues.ZeroIndicator }
+            return PickerValues.VulgarFractions[row].stringValue
         case 2:
             return getTextComponentForPickerView(pickerView)
         default:
@@ -171,7 +176,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.servingSizeMultiplier = Float(pickerView.selectedRowInComponent(0)) +
-            fractions[pickerView.selectedRowInComponent(1)].floatValue
+            PickerValues.VulgarFractions[pickerView.selectedRowInComponent(1)].floatValue
         pickerView.reloadComponent(2)
     }
     
@@ -207,6 +212,20 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
             return PickerValues.ServingsStringSingular
         }
         return PickerValues.ServingsStringPlural
+    }
+    
+    // Set the serving size picker (all 3 components) given a Float value
+    func setServingSizePickerForValue(value: Float) {
+        let wholeAndFraction = fracUtil.splitFloatIntoWholeAndFraction(value)
+        
+        let fractionComponentRowToSelect = PickerValues.VulgarFractions.indexOf {
+            (vulgarFraction: (stringValue: String, floatValue: Float)) -> Bool in
+            return vulgarFraction.stringValue == wholeAndFraction.1
+        }! // TODO: rethink this force unwrap
+        
+        servingSizePicker.selectRow(wholeAndFraction.0, inComponent: 0, animated: false)
+        servingSizePicker.selectRow(Int(fractionComponentRowToSelect), inComponent: 1, animated: false)
+        servingSizePicker.reloadComponent(2)
     }
     
 }

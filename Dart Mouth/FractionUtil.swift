@@ -42,4 +42,25 @@ class FractionUtil {
         }
         return ("\(whole)", Double(whole))
     }
+    
+    /* 
+        Given a Float value, returns a tuple that contains the whole number portion as an Int and the
+        decimal portion as a unicode fraction String.
+    
+        Examples:
+            -34.125 returns (-34, "1/8")
+            3.999 returns (4, "0")
+    */
+    func splitFloatIntoWholeAndFraction(number: Float) -> (Int, String) {
+        let wholePortion = Int(number)
+        let sign = wholePortion < 0 ? -1 : 1
+        let decimalPortion = number - Float(wholePortion)
+        let vulgarFrac = vulgarFraction(Double(decimalPortion))
+        
+        // Deal with case where decimal portion rounds to 1
+        if vulgarFrac.0 == "1" {
+            return (sign * (wholePortion + 1), "0")
+        }
+        return (sign * wholePortion, vulgarFrac.0)
+    }
 }
