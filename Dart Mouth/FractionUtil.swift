@@ -10,8 +10,6 @@ import Foundation
 
 class FractionUtil {
     
-    
-    
     /**
      Returns a tuple with the closest compound fraction possible with Unicode's built-in "vulgar fractions".
      See here: http://www.unicode.org/charts/PDF/U2150.pdf

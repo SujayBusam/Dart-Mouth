@@ -218,6 +218,21 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        // TODO: implement
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // TODO: implement
+    }
+    
+    
+    // MARK: - Navigation
+    
+    func pushRecipeNutritionVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
+        // TODO: implement
+    }
+    
     
     // MARK: - Helper functions
     

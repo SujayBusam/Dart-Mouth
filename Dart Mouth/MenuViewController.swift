@@ -11,7 +11,20 @@ import ChameleonFramework
 import HTHorizontalSelectionList
 import MBProgressHUD
 
-class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate {
+/*
+    This class is only responsible for displaying menu items and allowing the user
+    to select venue / mealtime / menu, as well as presenting recipe nutrition view
+    on selection of one of the tableview cells.
+
+    It does not itself contain the date selector, search bar, or toolbar. It is up
+    to the containing root view controller to setup those items and update this 
+    view controller's UI as necessary.
+
+    It is implemented this way so that this view controller is more generic and reusable.
+*/
+class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
+    HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate,
+    MBProgressHUDDelegate {
     
     // MARK: - Local Constants
     
@@ -214,7 +227,6 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         pushRecipeNutritionVCAfterSelectingIndexPath(indexPath)
     }
-    
     
     // MARK: - Helper Functions
     
