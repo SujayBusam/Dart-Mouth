@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // App-wide color of Navigation Bar, items, and title text
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [
-            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline),
+            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
         ]
         UINavigationBar.appearance().barTintColor = Constants.Colors.appPrimaryColorDark

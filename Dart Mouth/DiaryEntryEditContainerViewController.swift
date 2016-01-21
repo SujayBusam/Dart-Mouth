@@ -79,6 +79,8 @@ class DiaryEntryEditContainerViewController: UIViewController,
             forControlEvents: .TouchUpInside)
         self.cancelBarButton = UIBarButtonItem(customView: cancelButton)
         self.navigationItem.leftBarButtonItem = self.cancelBarButton
+        
+        // TODO: add a trash icon to toolbar to delete current entry
     }
     
     private func setupChildRecipeNutritionVC() {
@@ -102,7 +104,14 @@ class DiaryEntryEditContainerViewController: UIViewController,
     }
     
     func saveButtonPressed(sender: UIBarButtonItem) {
-        // TODO: implement
+        // Update the DiaryEntry with the new chosen serving size and navigate back
+        let newServingSize = getChildRecipeNutritionVC().servingSizeMultiplier
+        self.diaryEntry.servingsMultiplier = newServingSize
+        diaryEntry.saveInBackgroundWithBlock { (bool: Bool, error: NSError?) -> Void in
+            if error == nil {
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
     }
     
     
@@ -118,5 +127,10 @@ class DiaryEntryEditContainerViewController: UIViewController,
     
   
     // MARK: - Helper Functions
+    
+    func getChildRecipeNutritionVC() -> RecipeNutritionViewController {
+        // Assumes the RecipeNutritionViewController has been added as a child.
+        return self.childViewControllers.last as! RecipeNutritionViewController
+    }
     
 }
