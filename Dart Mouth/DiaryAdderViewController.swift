@@ -18,6 +18,7 @@ class DiaryAdderViewController: UIViewController {
     @IBOutlet weak var buttonStackView: UIStackView!
     
     @IBAction func mealtimeButtonClicked(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
         DiaryEntry.createInBackgroundWithBlock(
             self.completionBlock,
             withUserMealTitle: sender.currentTitle!,
@@ -31,9 +32,7 @@ class DiaryAdderViewController: UIViewController {
     func completionBlock(bool: Bool, error: NSError?) -> Void {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             if error == nil {
-                self.dismissViewControllerAnimated(true) { () -> Void in
-                    self.delegate.presentAddedToDiaryAlertForDiaryAdder(self)
-                }
+                self.delegate.presentAddedToDiaryAlertForDiaryAdder(self)
             } else {
                 print("Error saving new UserMeal after trying to add to diary from RecipeNutritionVC.")
             }

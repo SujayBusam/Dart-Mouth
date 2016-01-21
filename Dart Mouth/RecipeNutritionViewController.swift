@@ -94,6 +94,8 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         return items
     }
     
+    var numberFormatter: NSNumberFormatter = NSNumberFormatter()
+    
     // MARK: - View Setup
     
     override func viewDidAppear(animated: Bool) {
@@ -126,6 +128,9 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         
         // Add toolbar items
         self.setToolbarItems(self.allBarButtonItems, animated: false)
+        
+        // Configure number formatter
+        self.numberFormatter.numberStyle = .DecimalStyle
     }
     
     // Method to call if any or all displayed nutrition values need updating.
@@ -154,18 +159,20 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     func getMultipliedFloatValue(value: Float?) -> String? {
         guard value != nil else { return nil }
         
-        let newValue = self.servingSizeMultiplier * value!
-        let roundedValue = Float(round(newValue * 10) / 10)
-        return String(format: "%.1f", roundedValue)
+        let multipliedValue = self.servingSizeMultiplier * value!
+        let roundedValue = Float(round(multipliedValue * 10) / 10)
+        let formattedValue = Float(String(format: "%.1f", roundedValue))!
+        return self.numberFormatter.stringFromNumber(formattedValue)
     }
     
     // Helper function to apply the multiplier to an Integer value and return a formatted string
-    // Rounds the value to the nearest integer
+    // Rounds the value to the nearest integer.
     func getMultipliedIntegerValue(value: Int?) -> String? {
         guard value != nil else { return nil }
         
-        let newValue: Float = self.servingSizeMultiplier * Float(value!)
-        return String(Int(round(newValue)))
+        let multipliedValue: Float = self.servingSizeMultiplier * Float(value!)
+        let roundedValue = Int(round(multipliedValue))
+        return self.numberFormatter.stringFromNumber(roundedValue)
     }
     
     // MARK: - Button actions

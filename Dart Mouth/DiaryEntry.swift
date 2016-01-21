@@ -24,6 +24,7 @@ class DiaryEntry: PFObject, PFSubclassing {
     
     func getTotalCalories() -> Int? {
         if let recipeCals = recipe.getCalories() {
+            // Rounds to nearest integer.
             return Int(round(Float(recipeCals) * self.servingsMultiplier))
         }
         return nil
