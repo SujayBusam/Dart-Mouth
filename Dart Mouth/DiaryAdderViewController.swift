@@ -17,6 +17,7 @@ class DiaryAdderViewController: UIViewController {
 
     @IBOutlet weak var buttonStackView: UIStackView!
     
+    // TODO: make this action generic - should be a delegate method
     @IBAction func mealtimeButtonClicked(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
         DiaryEntry.createInBackgroundWithBlock(

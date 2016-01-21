@@ -1,5 +1,5 @@
 //
-//  MenuRootViewController.swift
+//  MenuContainerViewController.swift
 //  Dart Mouth
 //
 //  Created by Sujay Busam on 1/20/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuRootViewController: UIViewController, DateNavigationControlDelegate,
+class MenuContainerViewController: UIViewController, DateNavigationControlDelegate,
     UISearchBarDelegate {
     
     private struct Dimensions {
