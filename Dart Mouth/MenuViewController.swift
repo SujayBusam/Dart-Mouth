@@ -221,12 +221,30 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     }
     
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        pushRecipeNutritionVCAfterSelectingIndexPath(indexPath)
+        pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        pushRecipeNutritionVCAfterSelectingIndexPath(indexPath)
+        pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath)
     }
+    
+    
+    // MARK: - Navigation
+    
+    func pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
+        let category = self.filteredCategories[indexPath.section]
+        let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
+        
+        let recipeNutritionAdderContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutritionAdderContainer)
+            as! RecipeNutritonAdderContainerViewController
+        recipeNutritionAdderContainer.recipe = selectedRecipe
+        
+        // Push onto navigation controller stack
+        recipeNutritionAdderContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(recipeNutritionAdderContainer, animated: true)
+    }
+    
     
     // MARK: - Helper Functions
     
@@ -242,7 +260,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
             }
             MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
         }
-
+        
     }
     
     // Populates passed Recipes into allRecipes dictionary that maps category name
@@ -341,39 +359,6 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
         }
         populateFilteredCategoriesAndRecipes(filteredRecipes)
         self.recipesTableView.reloadData()
-    }
-    
-    
-    // MARK: - Navigation
-    
-    func pushRecipeNutritionVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
-        let category = self.filteredCategories[indexPath.section]
-        let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
-        
-        let recipeNutritionVC = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutrition)
-            as! RecipeNutritionViewController
-        
-        // Set the destination VC recipe
-        recipeNutritionVC.recipe = selectedRecipe
-        // Create and set the "Add To Diary" toolbar button for the destination VC.
-        let addToDiaryButton = UIButton()
-        addToDiaryButton.setTitleColor(self.view.tintColor, forState: .Normal)
-        addToDiaryButton.setTitle("Add to Diary", forState: .Normal)
-        addToDiaryButton.sizeToFit()
-        addToDiaryButton.addTarget(recipeNutritionVC, action: "addToDiaryButtonPressed:", forControlEvents: .TouchUpInside)
-        recipeNutritionVC.addToDiaryBarButtonItem = UIBarButtonItem(customView: addToDiaryButton)
-        
-        // Push onto navigation controller stack
-        self.navigationController?.pushViewController(recipeNutritionVC, animated: true)
-    }
-    
-    
-    // MARK: - Miscellaneous
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 }

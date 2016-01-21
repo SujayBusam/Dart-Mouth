@@ -8,12 +8,16 @@
 
 import UIKit
 
+protocol RecipeNutritionViewControllerDelegate: class {
+    func recipeForRecipeNutritionView(sender: RecipeNutritionViewController) -> Recipe
+    func initialServingSizeMultiplierForRecipeNutritionView(sender: RecipeNutritionViewController) -> Float
+}
+
 /*
 * UIViewController for a selected Recipe's nutritional information
 */
 class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
-    UIPickerViewDelegate, UIPopoverPresentationControllerDelegate,
-    DiaryAdderViewControllerDelegate {
+    UIPickerViewDelegate {
     
     // MARK: - Local Constants
     
@@ -73,25 +77,10 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     
     // MARK: - Instance Variables
     
-    var recipe: Recipe! {
+    weak var delegate: RecipeNutritionViewControllerDelegate!
+    
+    var servingSizeMultiplier: Float! {
         didSet { updateUI() }
-    }
-    
-    var servingSizeMultiplier: Float = 1 {
-        didSet { updateUI() }
-    }
-    
-    var addToDiaryBarButtonItem: UIBarButtonItem?
-    
-    var allBarButtonItems: [UIBarButtonItem] {
-        // Add more items here as needed.
-        
-        var items = [UIBarButtonItem]()
-        if self.addToDiaryBarButtonItem != nil {
-            items.append(self.addToDiaryBarButtonItem!)
-        }
-        
-        return items
     }
     
     var numberFormatter: NSNumberFormatter = NSNumberFormatter()
@@ -103,11 +92,6 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setToolbarHidden(false, animated: false)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,19 +99,15 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         updateUI()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     private func setupSubViews() {
         // Setup serving size picker
         servingSizePicker.backgroundColor = Colors.PickerBackground
         servingSizePicker.alpha = PickerValues.AlphaValue
-        servingSizePicker.selectRow(1, inComponent: 0, animated: false)
         
-        // Add toolbar items
-        self.setToolbarItems(self.allBarButtonItems, animated: false)
+        // Set the initial serving size
+        // TODO: use delegate method
+        self.servingSizeMultiplier = 1
+        servingSizePicker.selectRow(1, inComponent: 0, animated: false)
         
         // Configure number formatter
         self.numberFormatter.numberStyle = .DecimalStyle
@@ -137,6 +117,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     func updateUI() {
         guard servingSizePicker != nil else { return }
         
+        let recipe = self.delegate.recipeForRecipeNutritionView(self)
         recipeName?.text = recipe.name
         caloriesValue?.text = "\(getMultipliedIntegerValue(recipe.getCalories()) ?? Identifiers.ErrorNutrientValue)"
         totalFatValue?.text = "\(getMultipliedFloatValue(recipe.getTotalFat()) ?? Identifiers.ErrorNutrientValue) g"
@@ -149,57 +130,6 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         proteinValue?.text = "\(getMultipliedFloatValue(recipe.getProtein()) ?? Identifiers.ErrorNutrientValue) g"
         servingSizeValue?.text = "\(recipe.getServingSizeGrams()?.description ?? Identifiers.ErrorNutrientValue) g"
         
-    }
-    
-    
-    // MARK: - Helper functions
-    
-    // Helper function to apply the multiplier to a float value and return a formatted string
-    // Rounds the value to 1 decimal place.
-    func getMultipliedFloatValue(value: Float?) -> String? {
-        guard value != nil else { return nil }
-        
-        let multipliedValue = self.servingSizeMultiplier * value!
-        let roundedValue = Float(round(multipliedValue * 10) / 10)
-        let formattedValue = Float(String(format: "%.1f", roundedValue))!
-        return self.numberFormatter.stringFromNumber(formattedValue)
-    }
-    
-    // Helper function to apply the multiplier to an Integer value and return a formatted string
-    // Rounds the value to the nearest integer.
-    func getMultipliedIntegerValue(value: Int?) -> String? {
-        guard value != nil else { return nil }
-        
-        let multipliedValue: Float = self.servingSizeMultiplier * Float(value!)
-        let roundedValue = Int(round(multipliedValue))
-        return self.numberFormatter.stringFromNumber(roundedValue)
-    }
-    
-    // MARK: - Button actions
-    
-    // Action for pressing cancel button on the left of navigation bar
-    // Note - this isn't being used right now.
-    func cancelBarButtonPressed(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func addToDiaryButtonPressed(sender: UIBarButtonItem) {
-        let popoverContentVC = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryAdder) as! DiaryAdderViewController
-        
-        // Configure the popover content VC (the diary adder)
-        popoverContentVC.delegate = self
-        popoverContentVC.recipe = self.recipe
-        popoverContentVC.servingsMultiplier = self.servingSizeMultiplier
-        popoverContentVC.date = NSDate() // Current date
-        popoverContentVC.modalPresentationStyle = .Popover
-        
-        // Configure popover presentation controller
-        let presentationController = popoverContentVC.popoverPresentationController!
-        presentationController.barButtonItem = self.addToDiaryBarButtonItem
-        presentationController.delegate = self
-        
-        self.presentViewController(popoverContentVC, animated: true, completion: nil)
     }
     
     
@@ -245,6 +175,30 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         pickerView.reloadComponent(2)
     }
     
+    
+    // MARK: - Helper functions
+    
+    // Helper function to apply the multiplier to a float value and return a formatted string
+    // Rounds the value to 1 decimal place.
+    func getMultipliedFloatValue(value: Float?) -> String? {
+        guard value != nil else { return nil }
+        
+        let multipliedValue = self.servingSizeMultiplier * value!
+        let roundedValue = Float(round(multipliedValue * 10) / 10)
+        let formattedValue = Float(String(format: "%.1f", roundedValue))!
+        return self.numberFormatter.stringFromNumber(formattedValue)
+    }
+    
+    // Helper function to apply the multiplier to an Integer value and return a formatted string
+    // Rounds the value to the nearest integer.
+    func getMultipliedIntegerValue(value: Int?) -> String? {
+        guard value != nil else { return nil }
+        
+        let multipliedValue: Float = self.servingSizeMultiplier * Float(value!)
+        let roundedValue = Int(round(multipliedValue))
+        return self.numberFormatter.stringFromNumber(roundedValue)
+    }
+    
     // Helper function to get the text for the third component in the picker view
     func getTextComponentForPickerView(pickerView: UIPickerView) -> String {
         let servingDigit = pickerView.selectedRowInComponent(0)
@@ -253,24 +207,6 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
             return PickerValues.ServingsStringSingular
         }
         return PickerValues.ServingsStringPlural
-    }
-    
-    
-    // MARK: - UIPopoverPresentationControllerDelegate protocol methods
-    
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return UIModalPresentationStyle.None
-    }
-    
-    
-    // MARK: - DiaryAdderViewControllerDelegate protocol methods
-    
-    func presentAddedToDiaryAlertForDiaryAdder(sender: DiaryAdderViewController) {
-        let alertView = UIAlertController(title: "Success",
-            message: "Item added to diary!", preferredStyle: .Alert)
-        let alertAction = UIAlertAction(title: Constants.Validation.OkActionTitle, style: .Default, handler: nil)
-        alertView.addAction(alertAction)
-        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
 }

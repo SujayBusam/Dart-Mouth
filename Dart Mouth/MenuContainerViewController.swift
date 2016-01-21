@@ -8,8 +8,19 @@
 
 import UIKit
 
+/*
+    This is a container view container whose only child view controller is
+    a MenuViewController.
+
+    This VC contains the menu view and functionality for changing the date and
+    searching via a search bar.
+
+    See Apple documentation on container view controllers for more detail.
+*/
 class MenuContainerViewController: UIViewController, DateNavigationControlDelegate,
     UISearchBarDelegate {
+    
+    // MARK: - Local Constants
     
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
@@ -17,7 +28,7 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
         static let SearchBarWidth: CGFloat = 200
     }
     
-    struct Identifiers {
+    private struct Identifiers {
         static let searchButtonImage: String = "Search"
         static let searchButtonPressed: String = "searchButtonPressed:"
         static let cancelButtonPressed: String = "cancelButtonPressed:"
@@ -29,7 +40,7 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     @IBOutlet weak var containerView: UIView!
     
     
-    // Instance variables
+    // MARK: - Instance Variables
     
     var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
@@ -86,7 +97,7 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     }
     
     private func setupChildMenuVC() {
-        // Create and add MenuViewController into this VC's container view.
+        // Create and add MenuViewController to this VC's container view.
         let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView)
         self.addChildViewController(menuVC)
         menuVC.view.frame = self.containerView.bounds

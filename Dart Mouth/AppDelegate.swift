@@ -30,8 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Status bar will have white text app-wide
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
-        // App-wide color of Navigation Bar
+        // App-wide color of Navigation Bar, items, and title text
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline),
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+        ]
         UINavigationBar.appearance().barTintColor = Constants.Colors.appPrimaryColorDark
         return true
     }
