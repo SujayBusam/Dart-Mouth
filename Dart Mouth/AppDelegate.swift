@@ -37,6 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSForegroundColorAttributeName: UIColor.whiteColor(),
         ]
         UINavigationBar.appearance().barTintColor = Constants.Colors.appPrimaryColorDark
+        
+        // App-wide color of tab bar
+        UITabBar.appearance().tintColor = Constants.Colors.appPrimaryColorDark
+        
         return true
     }
 
