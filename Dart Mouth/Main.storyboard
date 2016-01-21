@@ -744,6 +744,38 @@
             </objects>
             <point key="canvasLocation" x="-223.5" y="25.5"/>
         </scene>
+        <!--Diary Entry Edit Container View Controller-->
+        <scene sceneID="62K-k6-TLR">
+            <objects>
+                <viewController storyboardIdentifier="DiaryEntryEditContainerViewController" id="vLO-hQ-wIv" customClass="DiaryEntryEditContainerViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YQH-Ra-XBv"/>
+                        <viewControllerLayoutGuide type="bottom" id="n3N-9A-vZF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FXq-cq-QUR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqQ-VJ-1mZ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fqQ-VJ-1mZ" firstAttribute="leading" secondItem="FXq-cq-QUR" secondAttribute="leading" id="1ww-Nb-9qx"/>
+                            <constraint firstAttribute="trailing" secondItem="fqQ-VJ-1mZ" secondAttribute="trailing" id="JlA-ak-hjh"/>
+                            <constraint firstItem="fqQ-VJ-1mZ" firstAttribute="bottom" secondItem="n3N-9A-vZF" secondAttribute="top" id="a3c-nf-zDt"/>
+                            <constraint firstItem="fqQ-VJ-1mZ" firstAttribute="top" secondItem="YQH-Ra-XBv" secondAttribute="bottom" id="iUL-nv-VQh"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bIF-DA-g2c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="361.5" y="25.5"/>
+        </scene>
         <!--Preferences-->
         <scene sceneID="qW0-Uj-rbL">
             <objects>

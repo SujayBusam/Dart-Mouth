@@ -38,6 +38,7 @@
 		23A4F5CA1C502965006C7891 /* MenuContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C91C502965006C7891 /* MenuContainerViewController.swift */; };
 		23A4F5CC1C5040BC006C7891 /* FractionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5CB1C5040BC006C7891 /* FractionUtil.swift */; };
 		23A4F5D01C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5CF1C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift */; };
+		23A4F5D21C509D0C006C7891 /* DiaryEntryEditContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5D11C509D0B006C7891 /* DiaryEntryEditContainerViewController.swift */; };
 		23BF16BB1C0D319D00F2CD8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BF16BA1C0D319D00F2CD8E /* Main.storyboard */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
@@ -90,6 +91,7 @@
 		23A4F5C91C502965006C7891 /* MenuContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContainerViewController.swift; sourceTree = "<group>"; };
 		23A4F5CB1C5040BC006C7891 /* FractionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FractionUtil.swift; sourceTree = "<group>"; };
 		23A4F5CF1C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritonAdderContainerViewController.swift; sourceTree = "<group>"; };
+		23A4F5D11C509D0B006C7891 /* DiaryEntryEditContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryEditContainerViewController.swift; sourceTree = "<group>"; };
 		23BF16BA1C0D319D00F2CD8E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +225,7 @@
 				2376308B1BEE94D8000A6C54 /* DiaryViewController.swift */,
 				237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */,
 				237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */,
+				23A4F5D11C509D0B006C7891 /* DiaryEntryEditContainerViewController.swift */,
 			);
 			name = DiaryView;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				23A4F5CC1C5040BC006C7891 /* FractionUtil.swift in Sources */,
 				237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
+				23A4F5D21C509D0C006C7891 /* DiaryEntryEditContainerViewController.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
 				23113E9D1C41A2B700B07756 /* DiaryEntry.swift in Sources */,
 				239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */,
