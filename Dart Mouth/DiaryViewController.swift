@@ -100,8 +100,9 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         self.navigationItem.titleView = dateNavigationControl
         
         // Create and setup add to diary button in navigation bar
-        self.addToDiaryBarButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self,
-            action: NSSelectorFromString(Identifiers.addToDiaryPressed))
+        self.addToDiaryBarButton = UIBarButtonItem(barButtonSystemItem: .Add,
+            target: self, action: NSSelectorFromString(Identifiers.addToDiaryPressed))
+        self.navigationItem.rightBarButtonItem = self.addToDiaryBarButton
         
         // Initialize calorie budget values
         self.calorieBudget = CustomUser.currentUser()!.goalDailyCalories

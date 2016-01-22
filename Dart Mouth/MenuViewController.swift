@@ -230,7 +230,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     
     
     // MARK: - Navigation
-    
+    // TODO: The push should be a delegate method
     func pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
         let category = self.filteredCategories[indexPath.section]
         let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
