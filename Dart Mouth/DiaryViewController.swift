@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import MBProgressHUD
 
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
 CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -90,6 +91,9 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     }
     
     func updateUI() {
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivity.userInteractionEnabled = false
+        
         dateNavigationControl.updateDateLabel()
         updateUserMealCumulativeCalories()
         
@@ -123,6 +127,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
                 self.diaryTableView.reloadData()
                 self.calorieBudgetView.updateLabels()
                 self.updateUserMealCumulativeCalories()
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             }
             
         }

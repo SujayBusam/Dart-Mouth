@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 protocol DiaryAdderViewControllerDelegate: class {
-    func presentAddedToDiaryAlertForDiaryAdder(sender: DiaryAdderViewController) -> Void
+    func diaryEntryWasAdded(sender: DiaryAdderViewController) -> Void
 }
 
 class DiaryAdderViewController: UIViewController {
@@ -33,7 +33,7 @@ class DiaryAdderViewController: UIViewController {
     func completionBlock(bool: Bool, error: NSError?) -> Void {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             if error == nil {
-                self.delegate.presentAddedToDiaryAlertForDiaryAdder(self)
+                self.delegate.diaryEntryWasAdded(self)
             } else {
                 print("Error saving new UserMeal after trying to add to diary from RecipeNutritionVC.")
             }

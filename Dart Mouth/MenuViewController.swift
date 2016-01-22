@@ -137,7 +137,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
         }
         
         // Update the recipes table view by fetching appropriate Recipes from Parse cloud.
-        let spinningActivity = MBProgressHUD.showHUDAddedTo(recipesTableView, animated: true)
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         spinningActivity.userInteractionEnabled = false
         let selectedVenue = itemForSelectionList(venueSelectionList, withIndex: venueSelectionList.selectedButtonIndex)!
         let selectedMealtime = itemForSelectionList(mealtimeSelectionList, withIndex: mealtimeSelectionList.selectedButtonIndex)!
@@ -258,7 +258,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
             if !self.filteredRecipes.isEmpty {
                 self.recipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
             }
-            MBProgressHUD.hideAllHUDsForView(self.recipesTableView, animated: true)
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
         }
         
     }

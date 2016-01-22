@@ -136,14 +136,10 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     
     // MARK: - DiaryAdderViewControllerDelegate protocol methods
     
-    func presentAddedToDiaryAlertForDiaryAdder(sender: DiaryAdderViewController) {
-        let alertView = UIAlertController(title: "Success",
-            message: "Item added to diary!", preferredStyle: .Alert)
-        let alertAction = UIAlertAction(title: Constants.Validation.OkActionTitle, style: .Default, handler: nil)
-        alertView.addAction(alertAction)
-        self.presentViewController(alertView, animated: true, completion: nil)
+    func diaryEntryWasAdded(sender: DiaryAdderViewController) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
-    
+
     
     // MARK: - Helper Functions
     
