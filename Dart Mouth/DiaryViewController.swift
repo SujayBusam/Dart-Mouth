@@ -185,7 +185,14 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     
     func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
         
-        // TODO: implement
+        let diaryEntryAddContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryAddContainer) as! DiaryEntryAddContainerViewController
+        
+        // TODO: configure diaryEntryAddContainer here
+        
+        // Push onto navigation controller stack
+        diaryEntryAddContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(diaryEntryAddContainer, animated: true)
     }
     
     
