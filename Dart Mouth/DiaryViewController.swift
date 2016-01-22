@@ -32,6 +32,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     private struct Identifiers {
         static let DiaryEntryCell = "DiaryEntryCell"
+        static let addToDiaryPressed = "addToDiaryPressed:"
     }
     
     
@@ -47,6 +48,8 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     var allTableHeaders: [DiaryTableHeaderView] {
         return [breakfastHeader, lunchHeader, dinnerHeader, snacksHeader]
     }
+    
+    var addToDiaryBarButton: UIBarButtonItem!
     
     // The current diary date.
     var date: NSDate = NSDate() {
@@ -90,53 +93,15 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         updateUI()
     }
     
-    func updateUI() {
-        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        spinningActivity.userInteractionEnabled = false
-        
-        dateNavigationControl.updateDateLabel()
-        updateUserMealCumulativeCalories()
-        
-        // Get the UserMeals for the current date and populate view
-        self.displayedUserMeals = [nil, nil, nil, nil]
-        UserMeal.findObjectsInBackgroundWithBlock(self.userMealQueryCompletionHandler, forDate: self.date, forUser: CustomUser.currentUser()!)
-    }
-    
-    // Function that gets called after getting UserMeals for a certain date.
-    // Appropriately populates the view on the main queue.
-    func userMealQueryCompletionHandler(objects: [PFObject]?, error: NSError?) -> Void {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            if error == nil {
-                let userMeals = objects as! [UserMeal]
-                var newDisplayedUserMeals: [UserMeal?] = [nil, nil, nil, nil]
-                for userMeal in userMeals {
-                    // Make sure title (e.g. Breakfast, Lunch, Dinner, Snack) is valid
-                    guard UserMealData.ValidCategories.contains(userMeal.title) else {
-                        print("UserMeal does not have a proper title!: \(userMeal.title)")
-                        continue
-                    }
-                    
-                    if let index = UserMealData.ValidCategories.indexOf(userMeal.title) {
-                        newDisplayedUserMeals[index] = userMeal
-                    } else {
-                        print("UserMeal does not have a proper title!: \(userMeal.title)")
-                    }
-                }
-                
-                self.displayedUserMeals = newDisplayedUserMeals
-                self.diaryTableView.reloadData()
-                self.calorieBudgetView.updateLabels()
-                self.updateUserMealCumulativeCalories()
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            }
-            
-        }
-    }
-    
     private func setupViews() {
         // Create and setup date navigation control
-        dateNavigationControl = DateNavigationControl(frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
+        dateNavigationControl = DateNavigationControl(
+            frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
         self.navigationItem.titleView = dateNavigationControl
+        
+        // Create and setup add to diary button in navigation bar
+        self.addToDiaryBarButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self,
+            action: NSSelectorFromString(Identifiers.addToDiaryPressed))
         
         // Initialize calorie budget values
         self.calorieBudget = CustomUser.currentUser()!.goalDailyCalories
@@ -155,6 +120,25 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         
         snacksHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
         snacksHeader.title.text = Constants.MealTimeStrings.SnacksDisplay + ":"
+    }
+    
+    func updateUI() {
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivity.userInteractionEnabled = false
+        
+        dateNavigationControl.updateDateLabel()
+        updateUserMealCumulativeCalories()
+        
+        // Get the UserMeals for the current date and populate view
+        self.displayedUserMeals = [nil, nil, nil, nil]
+        UserMeal.findObjectsInBackgroundWithBlock(self.userMealQueryCompletionHandler, forDate: self.date, forUser: CustomUser.currentUser()!)
+    }
+    
+    
+    // MARK: - Button actions
+    
+    func addToDiaryPressed(sender: UIBarButtonItem) {
+        // TODO: implement
     }
     
     
@@ -258,6 +242,37 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     func updateUserMealCumulativeCalories() {
         for i in 0...(allTableHeaders.count - 1) {
             allTableHeaders[i].caloriesLabel.text = "\(displayedUserMeals[i]?.getCumulativeCalories() ?? 0)"
+        }
+    }
+    
+    // Function that gets called after getting UserMeals for a certain date.
+    // Appropriately populates the view on the main queue.
+    func userMealQueryCompletionHandler(objects: [PFObject]?, error: NSError?) -> Void {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            if error == nil {
+                let userMeals = objects as! [UserMeal]
+                var newDisplayedUserMeals: [UserMeal?] = [nil, nil, nil, nil]
+                for userMeal in userMeals {
+                    // Make sure title (e.g. Breakfast, Lunch, Dinner, Snack) is valid
+                    guard UserMealData.ValidCategories.contains(userMeal.title) else {
+                        print("UserMeal does not have a proper title!: \(userMeal.title)")
+                        continue
+                    }
+                    
+                    if let index = UserMealData.ValidCategories.indexOf(userMeal.title) {
+                        newDisplayedUserMeals[index] = userMeal
+                    } else {
+                        print("UserMeal does not have a proper title!: \(userMeal.title)")
+                    }
+                }
+                
+                self.displayedUserMeals = newDisplayedUserMeals
+                self.diaryTableView.reloadData()
+                self.calorieBudgetView.updateLabels()
+                self.updateUserMealCumulativeCalories()
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            }
+            
         }
     }
     
