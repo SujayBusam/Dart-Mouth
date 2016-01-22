@@ -515,72 +515,6 @@
             </objects>
             <point key="canvasLocation" x="-958.5" y="25.5"/>
         </scene>
-        <!--Diary Adder View Controller-->
-        <scene sceneID="Bbd-1p-o3W">
-            <objects>
-                <viewController storyboardIdentifier="DiaryAdderViewController" id="j5V-Wr-I3r" customClass="DiaryAdderViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="9C3-ET-8L0"/>
-                        <viewControllerLayoutGuide type="bottom" id="ReV-9y-lY8"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Q5P-Wy-mcn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="eUi-Qt-JVb">
-                                <rect key="frame" x="16" y="20" width="343" height="156"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZx-De-zPq">
-                                        <rect key="frame" x="0.0" y="0.0" width="92" height="39"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="Breakfast"/>
-                                        <connections>
-                                            <action selector="mealtimeButtonClicked:" destination="j5V-Wr-I3r" eventType="touchUpInside" id="ZqY-pH-D6a"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ML0-2G-cnR">
-                                        <rect key="frame" x="0.0" y="39" width="61" height="39"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="Lunch"/>
-                                        <connections>
-                                            <action selector="mealtimeButtonClicked:" destination="j5V-Wr-I3r" eventType="touchUpInside" id="mn2-hn-h4v"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWp-Gp-OKS">
-                                        <rect key="frame" x="0.0" y="78" width="65" height="39"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="Dinner"/>
-                                        <connections>
-                                            <action selector="mealtimeButtonClicked:" destination="j5V-Wr-I3r" eventType="touchUpInside" id="jlK-C9-Knr"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XN-YG-cpk">
-                                        <rect key="frame" x="0.0" y="117" width="72" height="39"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="Snacks"/>
-                                        <connections>
-                                            <action selector="mealtimeButtonClicked:" destination="j5V-Wr-I3r" eventType="touchUpInside" id="KT0-tb-lv3"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="eUi-Qt-JVb" secondAttribute="leading" id="0BQ-UI-b69"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eUi-Qt-JVb" secondAttribute="trailing" id="BbA-EL-Arb"/>
-                            <constraint firstItem="eUi-Qt-JVb" firstAttribute="top" secondItem="9C3-ET-8L0" secondAttribute="bottom" id="hbN-U9-RPS"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="buttonStackView" destination="eUi-Qt-JVb" id="ReM-UA-ATV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IPh-9b-Hvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-958.5" y="1673.5"/>
-        </scene>
         <!--Diary-->
         <scene sceneID="fQy-A1-pVW">
             <objects>
@@ -781,9 +715,73 @@
                     <view key="view" contentMode="scaleToFill" id="GIY-el-qj8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add to Meal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gt8-bi-wrX">
+                                <rect key="frame" x="16" y="28" width="343" height="33"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" red="0.15101002156734467" green="0.56891876459121704" blue="0.43715286254882812" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="99L-cn-jo3">
+                                <rect key="frame" x="16" y="69" width="343" height="156"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGa-d1-moC">
+                                        <rect key="frame" x="0.0" y="0.0" width="92" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Breakfast"/>
+                                        <connections>
+                                            <action selector="mealButtonPressed:" destination="8KO-QX-NYg" eventType="touchUpInside" id="IN4-bX-fqs"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2k-7V-jjz">
+                                        <rect key="frame" x="0.0" y="39" width="61" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Lunch"/>
+                                        <connections>
+                                            <action selector="mealButtonPressed:" destination="8KO-QX-NYg" eventType="touchUpInside" id="SC7-QS-njN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mn-AQ-X8V">
+                                        <rect key="frame" x="0.0" y="78" width="65" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Dinner"/>
+                                        <connections>
+                                            <action selector="mealButtonPressed:" destination="8KO-QX-NYg" eventType="touchUpInside" id="ucb-ka-yHw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xe-QJ-MI7">
+                                        <rect key="frame" x="0.0" y="117" width="72" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Snacks"/>
+                                        <connections>
+                                            <action selector="mealButtonPressed:" destination="8KO-QX-NYg" eventType="touchUpInside" id="KHm-Jt-wH0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="99L-cn-jo3" firstAttribute="top" secondItem="gt8-bi-wrX" secondAttribute="bottom" constant="8" id="EWI-7Q-KqK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="99L-cn-jo3" secondAttribute="trailing" id="G89-Vq-Gbd"/>
+                            <constraint firstItem="gt8-bi-wrX" firstAttribute="leading" secondItem="GIY-el-qj8" secondAttribute="leadingMargin" constant="4" id="WNS-44-U4Z"/>
+                            <constraint firstItem="99L-cn-jo3" firstAttribute="leading" secondItem="GIY-el-qj8" secondAttribute="leadingMargin" id="ap1-XE-4D7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gt8-bi-wrX" secondAttribute="trailing" id="htX-co-iWq"/>
+                            <constraint firstItem="gt8-bi-wrX" firstAttribute="centerX" secondItem="GIY-el-qj8" secondAttribute="centerX" id="nJl-oD-BTv"/>
+                            <constraint firstItem="gt8-bi-wrX" firstAttribute="top" secondItem="AMB-Sx-KPm" secondAttribute="bottom" constant="8" symbolic="YES" id="rlF-yO-S3f"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="gt8-bi-wrX" secondAttribute="leading" id="v88-Im-wyE"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="WNS-44-U4Z"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="buttonStackView" destination="99L-cn-jo3" id="sa0-pO-6Ec"/>
+                        <outlet property="titleLabel" destination="gt8-bi-wrX" id="6hj-kY-pP8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kH5-lb-djy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

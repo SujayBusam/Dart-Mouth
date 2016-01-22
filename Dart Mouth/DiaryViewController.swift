@@ -11,7 +11,9 @@ import Parse
 import MBProgressHUD
 
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
-CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
+    CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate,
+    UIPopoverPresentationControllerDelegate,
+    DiaryEntryMealPickerViewControllerDelegate {
     
     // MARK: - Local Constants
     
@@ -139,7 +141,20 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Button actions
     
     func addToDiaryPressed(sender: UIBarButtonItem) {
-        // TODO: implement
+        let popoverContentVC = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryMealPicker) as! DiaryEntryMealPickerViewController
+        
+        // Configure the popover content VC (the diary entry meal picker)
+        popoverContentVC.delegate = self
+        popoverContentVC.modalPresentationStyle = .Popover
+        
+        // Configure the popover presentation controller. This is different from
+        // configuring the actual content VC. See docs.
+        let presentationController = popoverContentVC.popoverPresentationController!
+        presentationController.barButtonItem = self.addToDiaryBarButton
+        presentationController.delegate = self
+        
+        self.presentViewController(popoverContentVC, animated: true, completion: nil)
     }
     
     
@@ -163,6 +178,21 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         } else {
             print("Date increment calculation failed")
         }
+    }
+    
+    
+    // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
+    
+    func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
+        
+        // TODO: implement
+    }
+    
+    
+    // MARK: - UIPopoverPresentationControllerDelegate protocol methods
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
     }
     
     

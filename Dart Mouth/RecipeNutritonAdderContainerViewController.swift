@@ -18,7 +18,7 @@ import UIKit
     See Apple documentation on container view controllers for more detail.
 */
 class RecipeNutritonAdderContainerViewController: UIViewController,
-    UIPopoverPresentationControllerDelegate, DiaryAdderViewControllerDelegate,
+    UIPopoverPresentationControllerDelegate, DiaryEntryMealPickerViewControllerDelegate,
     RecipeNutritionViewControllerDelegate {
     
     // MARK: - Local Constants
@@ -72,8 +72,6 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
             forControlEvents: .TouchUpInside)
         self.addToDiaryBarButton = UIBarButtonItem(customView: addToDiaryButton)
         self.setToolbarItems([self.addToDiaryBarButton], animated: true)
-        
-        // TODO: create and add the cancel button
     }
     
     private func setupChildRecipeNutritionVC() {
@@ -99,13 +97,10 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     
     func addToDiaryButtonPressed(sender: UIBarButtonItem) {
         let popoverContentVC = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryAdder) as! DiaryAdderViewController
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryMealPicker) as! DiaryEntryMealPickerViewController
         
         // Configure the popover content VC (the diary adder)
         popoverContentVC.delegate = self
-        popoverContentVC.recipe = self.recipe
-        popoverContentVC.servingsMultiplier = getChildRecipeNutritionVC().servingSizeMultiplier
-        popoverContentVC.date = NSDate() // Current date
         popoverContentVC.modalPresentationStyle = .Popover
         
         // Configure popover presentation controller
@@ -127,6 +122,7 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
         return InitialValues.ServingSize
     }
     
+    
     // MARK: - UIPopoverPresentationControllerDelegate protocol methods
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -134,10 +130,17 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     }
     
     
-    // MARK: - DiaryAdderViewControllerDelegate protocol methods
+    // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
     
-    func diaryEntryWasAdded(sender: DiaryAdderViewController) {
-        self.navigationController?.popViewControllerAnimated(true)
+    func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
+        
+        DiaryEntry.createInBackgroundWithBlock({
+            (success: Bool, error: NSError?) -> Void in
+            if success {
+                print("DiaryEntry created")
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            }, withUserMealTitle: meal, withDate: NSDate(), withUser: CustomUser.currentUser()!, withRecipe: self.recipe, withServingsMultiplier: self.getChildRecipeNutritionVC().servingSizeMultiplier)
     }
 
     

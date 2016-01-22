@@ -33,7 +33,6 @@
 		238F1CA11C332801007720F8 /* NSDate+ConvenienceInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1CA01C332801007720F8 /* NSDate+ConvenienceInit.swift */; };
 		239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BFA791C190CF200617EE7 /* MenuViewController.swift */; };
 		23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A08E121BF30B94002685A6 /* InitializationViewController.swift */; };
-		23A4F5C41C48F4DE006C7891 /* DiaryAdderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C31C48F4DE006C7891 /* DiaryAdderViewController.swift */; };
 		23A4F5C61C4A350F006C7891 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C51C4A350F006C7891 /* RecipeCell.swift */; };
 		23A4F5CA1C502965006C7891 /* MenuContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5C91C502965006C7891 /* MenuContainerViewController.swift */; };
 		23A4F5CC1C5040BC006C7891 /* FractionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5CB1C5040BC006C7891 /* FractionUtil.swift */; };
@@ -88,7 +87,6 @@
 		238F1CA01C332801007720F8 /* NSDate+ConvenienceInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+ConvenienceInit.swift"; sourceTree = "<group>"; };
 		239BFA791C190CF200617EE7 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		23A08E121BF30B94002685A6 /* InitializationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializationViewController.swift; sourceTree = "<group>"; };
-		23A4F5C31C48F4DE006C7891 /* DiaryAdderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryAdderViewController.swift; sourceTree = "<group>"; };
 		23A4F5C51C4A350F006C7891 /* RecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		23A4F5C91C502965006C7891 /* MenuContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContainerViewController.swift; sourceTree = "<group>"; };
 		23A4F5CB1C5040BC006C7891 /* FractionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FractionUtil.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 				237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */,
 				237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */,
 				23A4F5D11C509D0B006C7891 /* DiaryEntryEditContainerViewController.swift */,
-				23C1741B1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift */,
 				23C1741D1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift */,
 			);
 			name = DiaryView;
@@ -277,7 +274,7 @@
 			children = (
 				239BFA791C190CF200617EE7 /* MenuViewController.swift */,
 				237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */,
-				23A4F5C31C48F4DE006C7891 /* DiaryAdderViewController.swift */,
+				23C1741B1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift */,
 			);
 			name = "Reusable View Controllers";
 			sourceTree = "<group>";
@@ -535,7 +532,6 @@
 				23C1741C1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
 				238F1C971C2B8190007720F8 /* Offering.swift in Sources */,
-				23A4F5C41C48F4DE006C7891 /* DiaryAdderViewController.swift in Sources */,
 				237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */,
 				238F1C9B1C2C7867007720F8 /* Mappings.swift in Sources */,
 				238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */,
