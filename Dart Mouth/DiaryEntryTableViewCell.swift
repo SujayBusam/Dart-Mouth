@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class DiaryEntryTableViewCell: UITableViewCell {
     
@@ -33,6 +34,8 @@ class DiaryEntryTableViewCell: UITableViewCell {
         
         // Initialization code
         self.numberFormatter.numberStyle = .DecimalStyle
+        self.totalCaloriesLabel.textColor = FlatNavyBlue()
+        self.servingsLabel.textColor = FlatGrayDark()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
