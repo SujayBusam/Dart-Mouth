@@ -50,12 +50,12 @@ class DateNavigationControl: UIView {
         
         // Setup left button
         leftButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
-        leftButton.setImage(UIImage(named: "LeftArrowWhite"), forState: UIControlState.Normal)
+        leftButton.setImage(UIImage(named: Constants.Images.LeftArrowWhite), forState: UIControlState.Normal)
         leftButton.addTarget(self, action: "leftArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup right button
         rightButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
-        rightButton.setImage(UIImage(named: "RightArrowWhite"), forState: UIControlState.Normal)
+        rightButton.setImage(UIImage(named: Constants.Images.RightArrowWhite), forState: UIControlState.Normal)
         rightButton.addTarget(self, action: "rightArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup date label

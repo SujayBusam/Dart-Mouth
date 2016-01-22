@@ -104,6 +104,7 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             if error == nil {
                 let userMeals = objects as! [UserMeal]
+                var newDisplayedUserMeals: [UserMeal?] = [nil, nil, nil, nil]
                 for userMeal in userMeals {
                     // Make sure title (e.g. Breakfast, Lunch, Dinner, Snack) is valid
                     guard UserMealData.ValidCategories.contains(userMeal.title) else {
@@ -112,12 +113,13 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     if let index = UserMealData.ValidCategories.indexOf(userMeal.title) {
-                        self.displayedUserMeals[index] = userMeal
+                        newDisplayedUserMeals[index] = userMeal
                     } else {
                         print("UserMeal does not have a proper title!: \(userMeal.title)")
                     }
                 }
                 
+                self.displayedUserMeals = newDisplayedUserMeals
                 self.diaryTableView.reloadData()
                 self.calorieBudgetView.updateLabels()
                 self.updateUserMealCumulativeCalories()
@@ -231,11 +233,13 @@ CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Navigation
     
     func pushDiaryEntryEditContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
-        let selectedDiaryEntry = displayedUserMeals[indexPath.section]!.entries[indexPath.row]
+        let selectedUserMeal = displayedUserMeals[indexPath.section]!
+        let selectedDiaryEntry = selectedUserMeal.entries[indexPath.row]
         
         let diaryEntryEditContainer = self.storyboard!
             .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryEditContainer)
             as! DiaryEntryEditContainerViewController
+        diaryEntryEditContainer.userMeal = selectedUserMeal
         diaryEntryEditContainer.diaryEntry = selectedDiaryEntry
         
         // Push onto navigation controller stack

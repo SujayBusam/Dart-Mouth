@@ -28,6 +28,7 @@ class DiaryEntryEditContainerViewController: UIViewController,
         static let saveButtonPressed = "saveButtonPressed:"
         static let CancelButtonTitle = "Cancel"
         static let cancelButtonPressed = "cancelButtonPressed:"
+        static let trashButtonPressed = "trashButtonPressed:"
     }
     
     // MARK: - Outlets
@@ -37,10 +38,11 @@ class DiaryEntryEditContainerViewController: UIViewController,
     
     // MARK: - Instance Variables
 
+    var userMeal: UserMeal!
     var diaryEntry: DiaryEntry!
     var cancelBarButton: UIBarButtonItem!
     var saveBarButton: UIBarButtonItem!
-    
+    var trashBarButton: UIBarButtonItem!
     
     // MARK: - View Setup
     
@@ -80,7 +82,13 @@ class DiaryEntryEditContainerViewController: UIViewController,
         self.cancelBarButton = UIBarButtonItem(customView: cancelButton)
         self.navigationItem.leftBarButtonItem = self.cancelBarButton
         
-        // TODO: add a trash icon to toolbar to delete current entry
+        // Add trash button
+        let trashButton = UIButton()
+        trashButton.setImage(UIImage(named: Constants.Images.TrashGreen), forState: .Normal)
+        trashButton.sizeToFit()
+        trashButton.addTarget(self, action: NSSelectorFromString(Identifiers.trashButtonPressed), forControlEvents: .TouchUpInside)
+        self.trashBarButton = UIBarButtonItem(customView: trashButton)
+        self.toolbarItems = [self.trashBarButton]
     }
     
     private func setupChildRecipeNutritionVC() {
@@ -99,17 +107,29 @@ class DiaryEntryEditContainerViewController: UIViewController,
     
     // MARK: - Button actions
     
-    func cancelButtonPressed(sender: UIBarButtonItem) {
+    func cancelButtonPressed(sender: UIButton) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func saveButtonPressed(sender: UIBarButtonItem) {
+    func saveButtonPressed(sender: UIButton) {
         // Update the DiaryEntry with the new chosen serving size and navigate back
         let newServingSize = getChildRecipeNutritionVC().servingSizeMultiplier
         self.diaryEntry.servingsMultiplier = newServingSize
         diaryEntry.saveInBackgroundWithBlock { (bool: Bool, error: NSError?) -> Void in
             if error == nil {
                 self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
+    }
+    
+    func trashButtonPressed(sender: UIButton) {
+        self.diaryEntry.deleteInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if success {
+                print("Deleted DiaryEntry")
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                print("Error deleting DiaryEntry")
             }
         }
     }

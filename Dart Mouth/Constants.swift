@@ -115,4 +115,10 @@ struct Constants {
         static let DiaryAdder = "DiaryAdderViewController"
     }
     
+    struct Images {
+        static let LeftArrowWhite = "LeftArrowWhite"
+        static let RightArrowWhite = "RightArrowWhite"
+        static let SearchIcon = "Search"
+        static let TrashGreen = "TrashGreen"
+    }
 }

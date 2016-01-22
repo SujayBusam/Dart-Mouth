@@ -34,13 +34,13 @@ class DiaryEntry: PFObject, PFSubclassing {
     // MARK: - Parse helper functions
     
     /*
-    Creates a DiaryEntry in the background given these parameters. Executes
-    block on succesful completion.
-    
-    Note that this will create a UserMeal if one does not exist for the passed
-    in date and UserMeal title.
-    
-    TODO: failure handler
+        Creates a DiaryEntry in the background given these parameters. Executes
+        block on succesful completion.
+        
+        Note that this will create a UserMeal if one does not exist for the passed
+        in date and UserMeal title.
+        
+        TODO: failure handler
     */
     class func createInBackgroundWithBlock(block: PFBooleanResultBlock,
         withUserMealTitle userMealTitle: String, withDate date: NSDate,
@@ -88,4 +88,56 @@ class DiaryEntry: PFObject, PFSubclassing {
             }
         }
     }
+    
+    /*
+        Delete DiaryEntry in background with success block. If the UserMeal contains this
+        DiaryEntry contains ONLY this DiaryEntry, then that UserMeal is also deleted. 
+        Otherwise, the UserMeal is just updated so that the DiaryEntry is removed.
+    */
+    override func deleteInBackgroundWithBlock(block: PFBooleanResultBlock?) {
+        let userMealQuery = UserMeal.query()!
+        userMealQuery.whereKey("entries", equalTo: self)
+        
+        // Get the associated UserMeal
+        userMealQuery.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if objects == nil || objects!.count != 1 {
+                    print("Bad return on getting associated UserMeal when trying to delete DiaryEntry")
+                    return
+                }
+                
+                let userMeal = objects!.first! as! UserMeal
+                
+                // Remove the DiaryEntry from its UserMeal
+                let indexOfEntryToDelete =  userMeal.entries.indexOf { (diaryEntry: DiaryEntry) -> Bool in
+                    return diaryEntry.objectId! == self.objectId
+                }
+                userMeal.entries.removeAtIndex(indexOfEntryToDelete!)
+                
+                // Delete or update the associated UserMeal as necessary
+                if userMeal.entries.isEmpty {
+                    userMeal.deleteInBackgroundWithBlock({
+                        (success: Bool, error: NSError?) -> Void in
+                        if success {
+                            print("Deleted UserMeal.")
+                            super.deleteInBackgroundWithBlock(block)
+                        }
+                    })
+                } else {
+                    userMeal.saveInBackgroundWithBlock({
+                        (success: Bool, error: NSError?) -> Void in
+                        if success {
+                            print("Updating UserMeal")
+                            super.deleteInBackgroundWithBlock(block)
+                        }
+                    })
+                }
+            
+            } else {
+                print("Error getting associated UserMeal when trying to delete DiaryEntry")
+            }
+        }
+    }
+    
 }
