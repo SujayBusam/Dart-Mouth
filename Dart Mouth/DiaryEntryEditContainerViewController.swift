@@ -123,15 +123,27 @@ class DiaryEntryEditContainerViewController: UIViewController,
     }
     
     func trashButtonPressed(sender: UIButton) {
-        self.diaryEntry.deleteInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if success {
-                print("Deleted DiaryEntry")
-                self.navigationController?.popViewControllerAnimated(true)
-            } else {
-                print("Error deleting DiaryEntry")
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Remove Food", style: .Destructive) {
+            (deleteAction: UIAlertAction) -> Void in
+            
+            self.diaryEntry.deleteInBackgroundWithBlock {
+                (success: Bool, error: NSError?) -> Void in
+                if success {
+                    print("Deleted DiaryEntry")
+                    self.navigationController?.popViewControllerAnimated(true)
+                } else {
+                    print("Error deleting DiaryEntry")
+                }
             }
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
