@@ -42,6 +42,7 @@
 		23C1741C1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1741B1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift */; };
 		23C1741E1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1741D1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift */; };
 		23C174201C5413E400602A04 /* DiaryEntryNutritionAdderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1741F1C5413E400602A04 /* DiaryEntryNutritionAdderContainerViewController.swift */; };
+		23C174221C5421A300602A04 /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174211C5421A300602A04 /* AppProtocols.swift */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
 /* End PBXBuildFile section */
@@ -97,6 +98,7 @@
 		23C1741B1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryMealPickerViewController.swift; sourceTree = "<group>"; };
 		23C1741D1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryAddContainerViewController.swift; sourceTree = "<group>"; };
 		23C1741F1C5413E400602A04 /* DiaryEntryNutritionAdderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryNutritionAdderContainerViewController.swift; sourceTree = "<group>"; };
+		23C174211C5421A300602A04 /* AppProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppProtocols.swift; sourceTree = "<group>"; };
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A186857541FACAF86F6959 /* Pods-Dart Mouth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.debug.xcconfig"; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				239BFA7B1C190DCB00617EE7 /* Views */,
 				2397926D1BE5521100B969AC /* Models */,
 				2375D5F71BDC09D40065AC14 /* Supporting Files */,
+				23C174211C5421A300602A04 /* AppProtocols.swift */,
 			);
 			path = "Dart Mouth";
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 				238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */,
 				23300B611C3B3A2F00D2C166 /* LoginViewController.swift in Sources */,
 				23113E9F1C41A44F00B07756 /* UserMeal.swift in Sources */,
+				23C174221C5421A300602A04 /* AppProtocols.swift in Sources */,
 				23C1741C1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift in Sources */,
 				23C174201C5413E400602A04 /* DiaryEntryNutritionAdderContainerViewController.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,

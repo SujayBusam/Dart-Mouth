@@ -156,7 +156,7 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        getChildMenuVC().currentSearchText = searchText
+        getChildMenuVC().setSearchText(searchText)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -172,7 +172,7 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
         self.searchBar.text = nil
-        getChildMenuVC().currentSearchText = nil
+        getChildMenuVC().setSearchText(nil)
         displayDateNavigationAndSearchButton(animated: true)
     }
     

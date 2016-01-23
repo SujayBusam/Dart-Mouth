@@ -28,7 +28,7 @@ protocol MenuViewControllerDelegate: class {
 */
 class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate,
-    MBProgressHUDDelegate {
+    MBProgressHUDDelegate, SearchableViewController {
     
     // MARK: - Local Constants
     
@@ -234,6 +234,13 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath)
+    }
+    
+    
+    // MARK: - SearchableViewController Protocol Methods
+    
+    func setSearchText(searchText: String?) {
+        self.currentSearchText = searchText
     }
     
     

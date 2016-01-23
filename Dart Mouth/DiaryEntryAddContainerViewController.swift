@@ -61,6 +61,8 @@ class DiaryEntryAddContainerViewController: UIViewController,
         didSet { searchBar.delegate = self }
     }
     
+    var currentDisplayedVC: SearchableViewController!
+    
     
     // MARK: - View Setup
     
@@ -107,7 +109,19 @@ class DiaryEntryAddContainerViewController: UIViewController,
         menuVC.view.frame = self.containerView.bounds
         self.containerView.addSubview(menuVC.view)
         menuVC.didMoveToParentViewController(self)
+        self.currentDisplayedVC = menuVC
 
+    }
+    
+    
+    // MARK: - UISearchBarDelegate protocol methods
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.currentDisplayedVC.setSearchText(searchText)
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
     
@@ -137,7 +151,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
         self.searchBar.text = nil
-        // getChildMenuVC().currentSearchText = nil
+        self.currentDisplayedVC.setSearchText(nil)
         displayTitleAndSearchButtonAnimated(true)
     }
     
