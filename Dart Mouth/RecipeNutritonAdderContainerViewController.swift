@@ -42,6 +42,7 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     // MARK: - Instance Variables
     
     var recipe: Recipe!
+    var date: NSDate!
     var cancelBarButton: UIBarButtonItem!
     var addToDiaryBarButton: UIBarButtonItem!
 
@@ -133,13 +134,13 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
     
     func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
+        self.navigationController?.popViewControllerAnimated(true)
         DiaryEntry.createInBackgroundWithBlock({
             (success: Bool, error: NSError?) -> Void in
             if success {
                 print("DiaryEntry created")
-                self.navigationController?.popViewControllerAnimated(true)
             }
-            }, withUserMealTitle: meal, withDate: NSDate(), withUser: CustomUser.currentUser()!, withRecipe: self.recipe, withServingsMultiplier: self.getChildRecipeNutritionVC().servingSizeMultiplier)
+            }, withUserMealTitle: meal, withDate: self.date, withUser: CustomUser.currentUser()!, withRecipe: self.recipe, withServingsMultiplier: self.getChildRecipeNutritionVC().servingSizeMultiplier)
     }
 
     

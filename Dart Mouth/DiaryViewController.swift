@@ -191,7 +191,9 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         let diaryEntryAddContainer = self.storyboard!
             .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryAddContainer) as! DiaryEntryAddContainerViewController
         
-        // TODO: configure diaryEntryAddContainer here
+        // TODO: additional diaryEntryAddContainer configuration here
+        diaryEntryAddContainer.date = self.date
+        diaryEntryAddContainer.mealTime = meal
         
         // Push onto navigation controller stack
         diaryEntryAddContainer.hidesBottomBarWhenPushed = true

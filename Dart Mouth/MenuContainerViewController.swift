@@ -119,7 +119,10 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
         let recipeNutritionAdderContainer = self.storyboard!
             .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutritionAdderContainer)
             as! RecipeNutritonAdderContainerViewController
+        
+        // Setup the adder container
         recipeNutritionAdderContainer.recipe = recipe
+        recipeNutritionAdderContainer.date = self.date
         
         // Push onto navigation controller stack
         recipeNutritionAdderContainer.hidesBottomBarWhenPushed = true

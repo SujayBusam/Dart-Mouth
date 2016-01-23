@@ -785,7 +785,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kH5-lb-djy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-223.5" y="831.5"/>
+            <point key="canvasLocation" x="-958.5" y="1691.5"/>
         </scene>
         <!--Diary Entry Add Container View Controller-->
         <scene sceneID="9gY-Te-wQP">
@@ -838,6 +838,41 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uop-Qc-5wT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-223.5" y="831.5"/>
+        </scene>
+        <!--Diary Entry Nutrition Adder Container View Controller-->
+        <scene sceneID="Gcx-Z3-qgF">
+            <objects>
+                <viewController storyboardIdentifier="DiaryEntryNutritionAdderContainerViewController" id="6yM-6z-5DI" customClass="DiaryEntryNutritionAdderContainerViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qTn-UT-NLy"/>
+                        <viewControllerLayoutGuide type="bottom" id="8kL-4E-pPS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b4y-He-cJp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Qh-Lz-I5C">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="7Qh-Lz-I5C" secondAttribute="trailing" id="FX9-Nt-hf5"/>
+                            <constraint firstItem="7Qh-Lz-I5C" firstAttribute="top" secondItem="qTn-UT-NLy" secondAttribute="bottom" id="VNh-0z-s98"/>
+                            <constraint firstItem="7Qh-Lz-I5C" firstAttribute="leading" secondItem="b4y-He-cJp" secondAttribute="leading" id="YaK-DM-K6x"/>
+                            <constraint firstItem="7Qh-Lz-I5C" firstAttribute="bottom" secondItem="8kL-4E-pPS" secondAttribute="top" id="xB9-tS-xXg"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="containerView" destination="7Qh-Lz-I5C" id="obY-Nb-4Ug"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oaS-Zc-5U6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="361.5" y="831.5"/>
         </scene>

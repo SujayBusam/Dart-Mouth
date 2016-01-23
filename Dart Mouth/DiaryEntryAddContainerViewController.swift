@@ -19,7 +19,7 @@ import MBProgressHUD
     navigation to other view controllers.
 */
 class DiaryEntryAddContainerViewController: UIViewController,
-    UISearchBarDelegate {
+    UISearchBarDelegate, MenuViewControllerDelegate {
     
     // MARK: - Local Constants
     
@@ -49,12 +49,14 @@ class DiaryEntryAddContainerViewController: UIViewController,
     @IBOutlet var foodTypePicker: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     
+    
     // MARK: - Instance Variables
     
     var date: NSDate!
+    var mealTime: String!
+    
     var searchButton: UIBarButtonItem!
     var cancelButton: UIBarButtonItem!
-    
     var searchBar: UISearchBar! {
         didSet { searchBar.delegate = self }
     }
@@ -98,15 +100,34 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     // Add / setup the child view controllers that correspond to each segment in foodTypePicker
     private func setupChildViewControllers() {
-        // Create and add MenuViewController
-        let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView)
+        // Create, add, and add view of MenuViewController
+        let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView) as! MenuViewController
+        menuVC.delegate = self
         self.addChildViewController(menuVC)
         menuVC.view.frame = self.containerView.bounds
         self.containerView.addSubview(menuVC.view)
         menuVC.didMoveToParentViewController(self)
 
-
     }
+    
+    
+    // MARK: - MenuViewControllerDelegate protocol methods
+    
+    func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) {
+        let diaryEntryNutritionAdderContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryNutritionAdderContainer)
+            as! DiaryEntryNutritionAdderContainerViewController
+        
+        // Setup the adder container
+        diaryEntryNutritionAdderContainer.mealTime = self.mealTime
+        diaryEntryNutritionAdderContainer.recipe = recipe
+        diaryEntryNutritionAdderContainer.date = self.date
+        
+        // Push onto navigation controller stack
+        diaryEntryNutritionAdderContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(diaryEntryNutritionAdderContainer, animated: true)
+    }
+    
     
     // MARK: - Button action functions
     
@@ -116,7 +137,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
         self.searchBar.text = nil
-//        getChildMenuVC().currentSearchText = nil
+        // getChildMenuVC().currentSearchText = nil
         displayTitleAndSearchButtonAnimated(true)
     }
     

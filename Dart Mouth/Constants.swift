@@ -114,6 +114,7 @@ struct Constants {
         static let DiaryEntryEditContainer = "DiaryEntryEditContainerViewController"
         static let DiaryEntryMealPicker = "DiaryEntryMealPickerViewController"
         static let DiaryEntryAddContainer = "DiaryEntryAddContainerViewController"
+        static let DiaryEntryNutritionAdderContainer = "DiaryEntryNutritionAdderContainerViewController"
     }
     
     struct Images {
