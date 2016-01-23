@@ -229,11 +229,11 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     }
     
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath)
+        recipeWasSelectedAtIndexPath(indexPath)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath)
+        recipeWasSelectedAtIndexPath(indexPath)
     }
     
     
@@ -245,8 +245,8 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     
     
     // MARK: - Navigation
-    // TODO: The push should be a delegate method
-    func pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
+
+    func recipeWasSelectedAtIndexPath(indexPath: NSIndexPath) {
         let category = self.filteredCategories[indexPath.section]
         let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
         delegate.didSelectRecipeForMenuView(selectedRecipe, sender: self)

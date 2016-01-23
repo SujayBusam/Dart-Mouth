@@ -19,7 +19,7 @@ import MBProgressHUD
     navigation to other view controllers.
 */
 class DiaryEntryAddContainerViewController: UIViewController,
-    UISearchBarDelegate, MenuViewControllerDelegate {
+    UISearchBarDelegate, MenuViewControllerDelegate, PreviousRecipesViewControllerDelegate {
     
     // MARK: - Local Constants
     
@@ -33,6 +33,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         static let searchButtonImage: String = "Search"
         static let searchButtonPressed: String = "searchButtonPressed:"
         static let cancelButtonPressed: String = "cancelButtonPressed:"
+        static let foodPickerValueDidChange: String = "foodPickerValueDidChange:"
         static let Title = "Add Food"
     }
     
@@ -60,6 +61,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     var searchBar: UISearchBar! {
         didSet { searchBar.delegate = self }
     }
+    var currentSelectedIndex: Int = 0
     
     var currentDisplayedVC: SearchableViewController!
     
@@ -98,11 +100,12 @@ class DiaryEntryAddContainerViewController: UIViewController,
             self.foodTypePicker.setTitle(Identifiers.ValidFoodSections[index], forSegmentAtIndex: index)
         }
         self.foodTypePicker.tintColor = Constants.Colors.appPrimaryColorDark
+        self.foodTypePicker.addTarget(self, action: NSSelectorFromString(Identifiers.foodPickerValueDidChange), forControlEvents: .ValueChanged)
     }
     
     // Add / setup the child view controllers that correspond to each segment in foodTypePicker
     private func setupChildViewControllers() {
-        // Create, add, and add view of MenuViewController
+        // Create, add, and add view of MenuVC
         let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView) as! MenuViewController
         menuVC.delegate = self
         self.addChildViewController(menuVC)
@@ -110,6 +113,14 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.containerView.addSubview(menuVC.view)
         menuVC.didMoveToParentViewController(self)
         self.currentDisplayedVC = menuVC
+        
+        
+        // Create and add PreviousRecipesVC
+        let previousRecipesVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.PreviousRecipes) as! PreviousRecipesViewController
+        previousRecipesVC.delegate = self
+        self.addChildViewController(previousRecipesVC)
+        previousRecipesVC.view.frame = self.containerView.bounds
+        
 
     }
     
@@ -128,18 +139,14 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - MenuViewControllerDelegate protocol methods
     
     func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) {
-        let diaryEntryNutritionAdderContainer = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryNutritionAdderContainer)
-            as! DiaryEntryNutritionAdderContainerViewController
-        
-        // Setup the adder container
-        diaryEntryNutritionAdderContainer.mealTime = self.mealTime
-        diaryEntryNutritionAdderContainer.recipe = recipe
-        diaryEntryNutritionAdderContainer.date = self.date
-        
-        // Push onto navigation controller stack
-        diaryEntryNutritionAdderContainer.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(diaryEntryNutritionAdderContainer, animated: true)
+        showDiaryEntryNutritionAdderForRecipe(recipe)
+    }
+    
+    
+    // MARK: - PreviousRecipesViewControllerDelegate protocol methods
+    
+    func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) {
+        showDiaryEntryNutritionAdderForRecipe(recipe)
     }
     
     
@@ -155,6 +162,18 @@ class DiaryEntryAddContainerViewController: UIViewController,
         displayTitleAndSearchButtonAnimated(true)
     }
     
+    func foodPickerValueDidChange(sender: UISegmentedControl) {
+        let newSelectedIndex = sender.selectedSegmentIndex
+        let viewControllerToHide = self.childViewControllers[self.currentSelectedIndex]
+        let viewControllerToDisplay = self.childViewControllers[newSelectedIndex]
+        
+        viewControllerToHide.view.removeFromSuperview()
+        self.containerView.addSubview(viewControllerToDisplay.view)
+        viewControllerToDisplay.viewDidAppear(true)
+        
+        self.currentSelectedIndex = newSelectedIndex
+    }
+
     
     // MARK: - Helper Functions
     
@@ -191,6 +210,21 @@ class DiaryEntryAddContainerViewController: UIViewController,
             self.navigationItem.titleView = nil
             self.navigationItem.title = Identifiers.Title
         }
+    }
+    
+    func showDiaryEntryNutritionAdderForRecipe(recipe: Recipe) {
+        let diaryEntryNutritionAdderContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryNutritionAdderContainer)
+            as! DiaryEntryNutritionAdderContainerViewController
+        
+        // Setup the adder container
+        diaryEntryNutritionAdderContainer.mealTime = self.mealTime
+        diaryEntryNutritionAdderContainer.recipe = recipe
+        diaryEntryNutritionAdderContainer.date = self.date
+        
+        // Push onto navigation controller stack
+        diaryEntryNutritionAdderContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(diaryEntryNutritionAdderContainer, animated: true)
     }
 
 }

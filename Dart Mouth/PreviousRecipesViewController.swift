@@ -11,9 +11,12 @@ import ChameleonFramework
 import MBProgressHUD
 import Parse
 
+protocol PreviousRecipesViewControllerDelegate: class {
+    func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) -> Void
+}
 
 class PreviousRecipesViewController: UIViewController,
-    UITableViewDataSource, UITableViewDelegate {
+    UITableViewDataSource, UITableViewDelegate, SearchableViewController {
     
     // MARK: - Local Constants
     
@@ -37,6 +40,8 @@ class PreviousRecipesViewController: UIViewController,
         }
     }
     
+    weak var delegate: PreviousRecipesViewControllerDelegate!
+    
     
     // MARK: - Outlets
     
@@ -50,8 +55,14 @@ class PreviousRecipesViewController: UIViewController,
     // MARK: - View Setup
     
     override func viewDidLoad() {
+        print("PreviousRecipesVC did load.")
         super.viewDidLoad()
-
+        updateUI()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        print("PreviousRecipesVC will appear.")
+        super.viewWillAppear(animated)
         updateUI()
     }
     
@@ -83,6 +94,28 @@ class PreviousRecipesViewController: UIViewController,
         cell.selectionStyle = .Default
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        recipeWasSelectedAtIndexPath(indexPath)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        recipeWasSelectedAtIndexPath(indexPath)
+    }
+    
+    // SearchableViewController Protocol Methods
+    
+    func setSearchText(searchText: String?) {
+        self.currentSearchText = searchText
+    }
+    
+    
+    // MARK: - Navigation
+    
+    func recipeWasSelectedAtIndexPath(indexPath: NSIndexPath) {
+        let selectedRecipe = self.filteredRecipes[indexPath.row]
+        delegate.didSelectRecipeForPreviousRecipesView(selectedRecipe, sender: self)
     }
     
     
