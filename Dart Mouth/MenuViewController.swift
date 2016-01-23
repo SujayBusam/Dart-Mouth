@@ -115,7 +115,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         // If a Recipe was selected, the gray selection disappears with animation
         // once navigation returns to this view controller.
         if let indexPathForSelectedRow = self.recipesTableView.indexPathForSelectedRow {

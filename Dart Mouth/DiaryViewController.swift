@@ -35,6 +35,7 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     private struct Identifiers {
         static let DiaryEntryCell = "DiaryEntryCell"
         static let addToDiaryPressed = "addToDiaryPressed:"
+        static let Title = "Diary"
     }
     
     
@@ -96,6 +97,8 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     private func setupViews() {
+        self.title = Identifiers.Title
+        
         // Create and setup date navigation control
         dateNavigationControl = DateNavigationControl(
             frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))

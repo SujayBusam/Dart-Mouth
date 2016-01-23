@@ -62,9 +62,9 @@ class DiaryEntry: PFObject, PFSubclassing {
                 newDiaryEntry.user = user
                 newDiaryEntry.recipe = recipe
                 newDiaryEntry.servingsMultiplier = servingsMultiplier
-                
-                newDiaryEntry.saveInBackgroundWithBlock({ (bool: Bool, error: NSError?) -> Void in
-                    if error == nil {
+
+                newDiaryEntry.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                    if success {
                         let userMeals = objects as! [UserMeal]
                         if !userMeals.isEmpty {
                             let userMeal = userMeals.first!
@@ -79,12 +79,16 @@ class DiaryEntry: PFObject, PFSubclassing {
                             newUserMeal.entries = [newDiaryEntry]
                             newUserMeal.saveInBackgroundWithBlock(block)
                         }
+                        
+                        // The user's past recipes need to be updated
+                        user.pastRecipes.addObject(recipe)
+                        user.saveEventually()
                     } else {
-                        print("Error saving DiaryEntry after trying to add to diary from RecipeNutritionVC.")
+                        print("Error saving DiaryEntry after trying to add to diary from RecipeNutritionVC: \(error)")
                     }
                 })
             } else {
-                print("Error getting UserMeal after trying to add to diary from RecipeNutritionVC.")
+                print("Error getting UserMeal after trying to add to diary from RecipeNutritionVC: \(error)")
             }
         }
     }

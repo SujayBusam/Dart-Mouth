@@ -133,7 +133,6 @@ class RecipeNutritonAdderContainerViewController: UIViewController,
     // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
     
     func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
-        
         DiaryEntry.createInBackgroundWithBlock({
             (success: Bool, error: NSError?) -> Void in
             if success {

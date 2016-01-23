@@ -66,6 +66,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         super.viewDidLoad()
 
         setupViews()
+        setupChildViewControllers()
     }
     
     private func setupViews() {
@@ -95,6 +96,9 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.foodTypePicker.tintColor = Constants.Colors.appPrimaryColorDark
     }
     
+    private func setupChildViewControllers() {
+        
+    }
     
     // MARK: - Button action functions
     
