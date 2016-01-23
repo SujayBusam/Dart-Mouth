@@ -847,6 +847,44 @@
             </objects>
             <point key="canvasLocation" x="-223.5" y="1691.5"/>
         </scene>
+        <!--Custom Recipes View Controller-->
+        <scene sceneID="NdE-qn-0l8">
+            <objects>
+                <viewController storyboardIdentifier="CustomRecipesViewController" id="14i-CV-zyh" customClass="CustomRecipesViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Va6-2L-1EC"/>
+                        <viewControllerLayoutGuide type="bottom" id="5nH-cU-MbN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TsV-mw-lSC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vlV-xj-2U9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="361.5" y="1691.5"/>
+        </scene>
+        <!--Database Recipes View Controller-->
+        <scene sceneID="edu-Pe-Jgc">
+            <objects>
+                <viewController storyboardIdentifier="DatabaseRecipesViewController" id="SMf-uX-Afr" customClass="DatabaseRecipesViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oxm-cG-b8b"/>
+                        <viewControllerLayoutGuide type="bottom" id="bPS-fm-Aw9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="U1B-1l-JOr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tlH-ri-OlX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="825.5" y="1691.5"/>
+        </scene>
         <!--Diary Entry Add Container View Controller-->
         <scene sceneID="9gY-Te-wQP">
             <objects>

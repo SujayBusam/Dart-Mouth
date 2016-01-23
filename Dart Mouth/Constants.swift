@@ -116,6 +116,8 @@ struct Constants {
         static let DiaryEntryAddContainer = "DiaryEntryAddContainerViewController"
         static let DiaryEntryNutritionAdderContainer = "DiaryEntryNutritionAdderContainerViewController"
         static let PreviousRecipes = "PreviousRecipesViewController"
+        static let CustomRecipes = "CustomRecipesViewController"
+        static let DatabaseRecipes = "DatabaseRecipesViewController"
     }
     
     struct Images {

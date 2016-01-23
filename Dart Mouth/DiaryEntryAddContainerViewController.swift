@@ -63,8 +63,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     }
     var currentSelectedIndex: Int = 0
     
-    var currentDisplayedVC: SearchableViewController!
-    
+    var currentDisplayedVC: UIViewController! // TODO: this should be a subclass of UIVC
     
     // MARK: - View Setup
     
@@ -121,14 +120,25 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.addChildViewController(previousRecipesVC)
         previousRecipesVC.view.frame = self.containerView.bounds
         
-
+        // Create and add CustomRecipesVC
+        let customRecipesVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.CustomRecipes) as! CustomRecipesViewController
+        self.addChildViewController(customRecipesVC)
+        customRecipesVC.didMoveToParentViewController(self)
+        customRecipesVC.view.frame = self.containerView.bounds
+        
+        // Create and add DatabaseRecipesVC
+        let databaseRecipesVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.DatabaseRecipes) as! DatabaseRecipesViewController
+        self.addChildViewController(databaseRecipesVC)
+        databaseRecipesVC.didMoveToParentViewController(self)
+        databaseRecipesVC.view.frame = self.containerView.bounds
     }
     
     
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.currentDisplayedVC.setSearchText(searchText)
+        let vc = self.currentDisplayedVC as! SearchableViewController
+        vc.setSearchText(searchText)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -158,7 +168,8 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func cancelButtonPressed(sender: UIBarButtonItem) {
         self.searchBar.text = nil
-        self.currentDisplayedVC.setSearchText(nil)
+        let vc = self.currentDisplayedVC as! SearchableViewController
+        vc.setSearchText(nil)
         displayTitleAndSearchButtonAnimated(true)
     }
     
@@ -171,6 +182,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.containerView.addSubview(viewControllerToDisplay.view)
         viewControllerToDisplay.viewDidAppear(true)
         
+        self.currentDisplayedVC = viewControllerToDisplay
         self.currentSelectedIndex = newSelectedIndex
     }
 
