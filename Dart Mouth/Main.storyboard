@@ -800,7 +800,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="56e-4c-uSQ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="62" width="375" height="605"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PastRecipeCell" textLabel="yjT-In-Ded" detailTextLabel="dXk-k0-Hjx" style="IBUITableViewCellStyleSubtitle" id="xqL-L9-HCN">
@@ -829,14 +829,29 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Previous Foods" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8y-ax-Rds">
+                                <rect key="frame" x="16" y="28" width="343" height="26"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="b8y-ax-Rds" secondAttribute="leading" id="BA7-jm-O8q"/>
+                            <constraint firstItem="b8y-ax-Rds" firstAttribute="top" secondItem="Tan-1P-8a0" secondAttribute="bottom" constant="8" symbolic="YES" id="Dod-8C-hZQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="b8y-ax-Rds" secondAttribute="trailing" id="UiB-sU-UcB"/>
                             <constraint firstItem="56e-4c-uSQ" firstAttribute="leading" secondItem="cWR-jc-jtT" secondAttribute="leading" id="i6N-4a-bNc"/>
                             <constraint firstItem="56e-4c-uSQ" firstAttribute="top" secondItem="cWR-jc-jtT" secondAttribute="top" id="nHG-6R-5lF"/>
+                            <constraint firstItem="56e-4c-uSQ" firstAttribute="top" secondItem="b8y-ax-Rds" secondAttribute="bottom" constant="8" symbolic="YES" id="p2H-Zo-j3H"/>
                             <constraint firstAttribute="trailing" secondItem="56e-4c-uSQ" secondAttribute="trailing" id="pLW-OE-52O"/>
                             <constraint firstItem="56e-4c-uSQ" firstAttribute="bottom" secondItem="PCP-4J-m43" secondAttribute="top" id="vyy-sJ-ryP"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="nHG-6R-5lF"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
