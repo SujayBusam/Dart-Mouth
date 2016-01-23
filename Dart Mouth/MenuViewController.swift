@@ -200,7 +200,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     }
     
     
-    // MARK: - UITableViewDataSource Protocol Methods
+    // MARK: - UITableViewDataSource / Delegate Protocol Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.filteredCategories.count

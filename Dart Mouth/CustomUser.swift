@@ -16,4 +16,24 @@ class CustomUser: PFUser {
     var pastRecipes: PFRelation! {
         return relationForKey("pastRecipes")
     }
+    
+    
+    // MARK: - Useful Parse instance methods
+    
+    func findAllPreviousRecipesWithCompletionHandler(completionHandler: ([Recipe]?) -> Void) {
+        let query = self.pastRecipes.query()
+        query.orderByAscending("name")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                let recipes = objects as! [Recipe]
+                if recipes.isEmpty {
+                    completionHandler(nil)
+                } else {
+                    completionHandler(recipes)
+                }
+            } else {
+                print("Error gettign previous recipes for current user.")
+            }
+        }
+    }
 }
