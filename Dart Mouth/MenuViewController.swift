@@ -11,6 +11,10 @@ import ChameleonFramework
 import HTHorizontalSelectionList
 import MBProgressHUD
 
+protocol MenuViewControllerDelegate: class {
+    func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) -> Void
+}
+
 /*
     This class is only responsible for displaying menu items and allowing the user
     to select venue / mealtime / menu, as well as presenting recipe nutrition view
@@ -38,6 +42,8 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     
     
     // MARK: - Instance variables
+    
+    weak var delegate: MenuViewControllerDelegate!
     
     // The current menu date.
     var date: NSDate = NSDate() {
@@ -107,6 +113,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     // MARK: - Controller / View Setup
     
     override func viewDidLoad() {
+        print("MenuVC view did load.")
         super.viewDidLoad()
         
         setupViews()
@@ -114,6 +121,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("MenuVC view will appear.")
         super.viewWillAppear(animated)
 
         // If a Recipe was selected, the gray selection disappears with animation
@@ -234,15 +242,7 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     func pushRecipeNutritionAdderContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
         let category = self.filteredCategories[indexPath.section]
         let selectedRecipe = self.filteredRecipes[category]![indexPath.row]
-        
-        let recipeNutritionAdderContainer = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutritionAdderContainer)
-            as! RecipeNutritonAdderContainerViewController
-        recipeNutritionAdderContainer.recipe = selectedRecipe
-        
-        // Push onto navigation controller stack
-        recipeNutritionAdderContainer.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(recipeNutritionAdderContainer, animated: true)
+        delegate.didSelectRecipeForMenuView(selectedRecipe, sender: self)
     }
     
     

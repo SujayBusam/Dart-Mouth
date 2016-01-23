@@ -833,6 +833,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="containerView" destination="cWA-Pm-cyM" id="uQ3-H2-cCu"/>
                         <outlet property="foodTypePicker" destination="HGM-6P-qGv" id="vAj-MQ-llU"/>
                     </connections>
                 </viewController>

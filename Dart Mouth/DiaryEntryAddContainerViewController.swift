@@ -47,7 +47,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - Outlets
     
     @IBOutlet var foodTypePicker: UISegmentedControl!
-    
+    @IBOutlet weak var containerView: UIView!
     
     // MARK: - Instance Variables
     
@@ -96,8 +96,16 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.foodTypePicker.tintColor = Constants.Colors.appPrimaryColorDark
     }
     
+    // Add / setup the child view controllers that correspond to each segment in foodTypePicker
     private func setupChildViewControllers() {
-        
+        // Create and add MenuViewController
+        let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView)
+        self.addChildViewController(menuVC)
+        menuVC.view.frame = self.containerView.bounds
+        self.containerView.addSubview(menuVC.view)
+        menuVC.didMoveToParentViewController(self)
+
+
     }
     
     // MARK: - Button action functions

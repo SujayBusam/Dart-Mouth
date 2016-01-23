@@ -18,7 +18,7 @@ import UIKit
     See Apple documentation on container view controllers for more detail.
 */
 class MenuContainerViewController: UIViewController, DateNavigationControlDelegate,
-    UISearchBarDelegate {
+    UISearchBarDelegate, MenuViewControllerDelegate {
     
     // MARK: - Local Constants
     
@@ -98,7 +98,8 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     
     private func setupChildMenuVC() {
         // Create and add MenuViewController to this VC's container view.
-        let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView)
+        let menuVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.MenuView) as! MenuViewController
+        menuVC.delegate = self
         self.addChildViewController(menuVC)
         menuVC.view.frame = self.containerView.bounds
         self.containerView.addSubview(menuVC.view)
@@ -109,6 +110,20 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     func updateUI() {
         dateNavigationControl.updateDateLabel()
         getChildMenuVC().date = self.date
+    }
+    
+    
+    // MARK: - MenuViewControllerDelegate protocol methods
+    
+    func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) {
+        let recipeNutritionAdderContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.RecipeNutritionAdderContainer)
+            as! RecipeNutritonAdderContainerViewController
+        recipeNutritionAdderContainer.recipe = recipe
+        
+        // Push onto navigation controller stack
+        recipeNutritionAdderContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(recipeNutritionAdderContainer, animated: true)
     }
     
     
