@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 /*
     This is container view controller whose only child view controller is
@@ -64,7 +65,7 @@ class DiaryEntryEditContainerViewController: UIViewController,
         // them to the navigation bar
         let saveButton = UIButton()
         saveButton.setTitle(Identifiers.SaveButtonTitle, forState: .Normal)
-        saveButton.setTitleColor(UIColor.blueColor(), forState: .Highlighted)
+        saveButton.setTitleColor(FlatGrayDark(), forState: .Highlighted)
         saveButton.sizeToFit()
         saveButton.addTarget(self,
             action: NSSelectorFromString(Identifiers.saveButtonPressed),
@@ -74,7 +75,7 @@ class DiaryEntryEditContainerViewController: UIViewController,
         
         let cancelButton = UIButton()
         cancelButton.setTitle(Identifiers.CancelButtonTitle, forState: .Normal)
-        cancelButton.setTitleColor(UIColor.blueColor(), forState: .Highlighted)
+        cancelButton.setTitleColor(FlatGrayDark(), forState: .Highlighted)
         cancelButton.sizeToFit()
         cancelButton.addTarget(self,
             action: NSSelectorFromString(Identifiers.cancelButtonPressed),
