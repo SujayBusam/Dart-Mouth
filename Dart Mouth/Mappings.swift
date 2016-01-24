@@ -134,7 +134,6 @@ struct Mappings {
         ],
         
         Venue.Hop: [
-            MealTime.Breakfast,
             MealTime.Lunch,
             MealTime.Dinner,
             MealTime.LateNight,
@@ -171,8 +170,6 @@ struct Mappings {
         
         Venue.Novack: [
             Menu.AllItems,
-            Menu.Specials,
-            Menu.EverydayItems,
         ]
     ]
 }
