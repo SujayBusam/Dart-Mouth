@@ -1403,10 +1403,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="DiaryIcon" width="32" height="32"/>
+        <image name="DiaryIcon" width="44" height="44"/>
         <image name="MainLogo" width="302" height="396"/>
-        <image name="MenuIcon" width="32" height="32"/>
-        <image name="PreferencesIcon" width="32" height="32"/>
+        <image name="MenuIcon" width="44" height="44"/>
+        <image name="PreferencesIcon" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Mui-st-Fba"/>

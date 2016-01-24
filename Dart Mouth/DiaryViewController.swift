@@ -86,6 +86,8 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     // MARK: - Controller / View Setup
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.navigationController?.setToolbarHidden(true, animated: false)
         updateUI()
     }

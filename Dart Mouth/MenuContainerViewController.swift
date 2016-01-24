@@ -66,8 +66,9 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
         setupChildMenuVC()
         updateUI()
     }
-    
+
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         searchBar.resignFirstResponder()
     }
     
