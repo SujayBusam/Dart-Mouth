@@ -26,9 +26,9 @@ protocol MenuViewControllerDelegate: class {
 
     It is implemented this way so that this view controller is more generic and reusable.
 */
-class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
+class MenuViewController: SearchableViewController, HTHorizontalSelectionListDataSource,
     HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate,
-    MBProgressHUDDelegate, SearchableViewController {
+    MBProgressHUDDelegate {
     
     // MARK: - Local Constants
     
@@ -237,13 +237,6 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
     }
     
     
-    // MARK: - SearchableViewController Protocol Methods
-    
-    func setSearchText(searchText: String?) {
-        self.currentSearchText = searchText
-    }
-    
-    
     // MARK: - Navigation
 
     func recipeWasSelectedAtIndexPath(indexPath: NSIndexPath) {
@@ -368,4 +361,10 @@ class MenuViewController: UIViewController, HTHorizontalSelectionListDataSource,
         self.recipesTableView.reloadData()
     }
     
+    
+    // MARK: - Other Overrides
+    
+    override func setSearchText(searchText: String?) {
+        self.currentSearchText = searchText
+    }
 }

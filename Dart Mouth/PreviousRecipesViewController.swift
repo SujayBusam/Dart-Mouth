@@ -15,8 +15,8 @@ protocol PreviousRecipesViewControllerDelegate: class {
     func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) -> Void
 }
 
-class PreviousRecipesViewController: UIViewController,
-    UITableViewDataSource, UITableViewDelegate, SearchableViewController {
+class PreviousRecipesViewController: SearchableViewController,
+    UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Local Constants
     
@@ -104,12 +104,6 @@ class PreviousRecipesViewController: UIViewController,
         recipeWasSelectedAtIndexPath(indexPath)
     }
     
-    // SearchableViewController Protocol Methods
-    
-    func setSearchText(searchText: String?) {
-        self.currentSearchText = searchText
-    }
-    
     
     // MARK: - Navigation
     
@@ -169,6 +163,13 @@ class PreviousRecipesViewController: UIViewController,
         
         populateFilteredRecipes(filteredRecipes)
         self.previousRecipesTableView.reloadData()
+    }
+    
+    
+    // MARK: - Other Overrides
+    
+    override func setSearchText(searchText: String?) {
+        self.currentSearchText = searchText
     }
     
 }

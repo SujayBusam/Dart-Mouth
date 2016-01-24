@@ -26,7 +26,8 @@ class DiaryEntryAddContainerViewController: UIViewController,
     struct Identifiers {
         static let ValidFoodSections: [String] = [
             "DDS",
-            "My Foods",
+            "Recents",
+            "My Food",
             "My Meals",
             "Database"
         ]
@@ -63,7 +64,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     }
     var currentSelectedIndex: Int = 0
     
-    var currentDisplayedVC: UIViewController! // TODO: this should be a subclass of UIVC
+    var currentDisplayedVC: SearchableViewController!
     
     // MARK: - View Setup
     
@@ -134,8 +135,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        let vc = self.currentDisplayedVC as! SearchableViewController
-        vc.setSearchText(searchText)
+        self.currentDisplayedVC.setSearchText(searchText)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -165,8 +165,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func cancelButtonPressed(sender: UIBarButtonItem?) {
         self.searchBar.text = nil
-        let vc = self.currentDisplayedVC as! SearchableViewController
-        vc.setSearchText(nil)
+        self.currentDisplayedVC.setSearchText(nil)
         displayTitleAndSearchButtonAnimated(true)
     }
     
@@ -179,7 +178,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.containerView.addSubview(viewControllerToDisplay.view)
         viewControllerToDisplay.viewDidAppear(true)
         
-        self.currentDisplayedVC = viewControllerToDisplay
+        self.currentDisplayedVC = viewControllerToDisplay as! SearchableViewController
         self.currentSelectedIndex = newSelectedIndex
         cancelButtonPressed(nil)
     }

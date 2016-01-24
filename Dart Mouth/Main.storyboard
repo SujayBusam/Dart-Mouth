@@ -922,6 +922,7 @@
                                     <segment title="Second"/>
                                     <segment title="Third"/>
                                     <segment title="Fourth"/>
+                                    <segment title="Fifth"/>
                                 </segments>
                             </segmentedControl>
                         </subviews>

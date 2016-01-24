@@ -7,7 +7,3 @@
 //
 
 import Foundation
-
-protocol SearchableViewController: class {
-    func setSearchText(searchText: String?)
-}
