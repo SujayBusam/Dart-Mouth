@@ -111,7 +111,6 @@ class DiaryEntryAddContainerViewController: UIViewController,
         menuVC.didMoveToParentViewController(self)
         self.currentDisplayedVC = menuVC
         
-        
         // Create and add PreviousRecipesVC
         let previousRecipesVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.PreviousRecipes) as! PreviousRecipesViewController
         previousRecipesVC.delegate = self
@@ -123,6 +122,12 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.addChildViewController(customRecipesVC)
         customRecipesVC.didMoveToParentViewController(self)
         customRecipesVC.view.frame = self.containerView.bounds
+        
+        // Create and PreviousMealsVC
+        let previousMealsVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.PreviousMeals) as! PreviousMealsViewController
+        self.addChildViewController(previousMealsVC)
+        previousMealsVC.didMoveToParentViewController(self)
+        previousMealsVC.view.frame = self.containerView.bounds
         
         // Create and add DatabaseRecipesVC
         let databaseRecipesVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.DatabaseRecipes) as! DatabaseRecipesViewController

@@ -1,14 +1,14 @@
 //
-//  DatabaseRecipesViewController.swift
+//  PreviousMealsViewController.swift
 //  Dart Mouth
 //
-//  Created by Sujay Busam on 1/23/16.
+//  Created by Sujay Busam on 1/24/16.
 //  Copyright © 2016 Sujay's Dev Center. All rights reserved.
 //
 
 import UIKit
 
-class DatabaseRecipesViewController: SearchableViewController {
+class PreviousMealsViewController: SearchableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,5 +27,4 @@ class DatabaseRecipesViewController: SearchableViewController {
     override func setSearchText(searchText: String?) {
         // TODO: implement
     }
-
 }

@@ -47,6 +47,7 @@
 		23C174261C543D6000602A04 /* CustomRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174251C543D6000602A04 /* CustomRecipesViewController.swift */; };
 		23C174281C543D9000602A04 /* DatabaseRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174271C543D9000602A04 /* DatabaseRecipesViewController.swift */; };
 		23C1742A1C54A0E700602A04 /* SearchableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174291C54A0E700602A04 /* SearchableViewController.swift */; };
+		23C1742C1C54A2B800602A04 /* PreviousMealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1742B1C54A2B800602A04 /* PreviousMealsViewController.swift */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
 /* End PBXBuildFile section */
@@ -107,6 +108,7 @@
 		23C174251C543D6000602A04 /* CustomRecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRecipesViewController.swift; sourceTree = "<group>"; };
 		23C174271C543D9000602A04 /* DatabaseRecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRecipesViewController.swift; sourceTree = "<group>"; };
 		23C174291C54A0E700602A04 /* SearchableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableViewController.swift; sourceTree = "<group>"; };
+		23C1742B1C54A2B800602A04 /* PreviousMealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousMealsViewController.swift; sourceTree = "<group>"; };
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A186857541FACAF86F6959 /* Pods-Dart Mouth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.debug.xcconfig"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				23C174231C5425D900602A04 /* PreviousRecipesViewController.swift */,
 				23C174251C543D6000602A04 /* CustomRecipesViewController.swift */,
 				23C174271C543D9000602A04 /* DatabaseRecipesViewController.swift */,
+				23C1742B1C54A2B800602A04 /* PreviousMealsViewController.swift */,
 			);
 			name = DiaryView;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				23113E9D1C41A2B700B07756 /* DiaryEntry.swift in Sources */,
 				239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */,
 				237CC7B81C48BA3200205DC6 /* DiaryTableHeaderView.swift in Sources */,
+				23C1742C1C54A2B800602A04 /* PreviousMealsViewController.swift in Sources */,
 				23300B5D1C37128500D2C166 /* SignupViewController.swift in Sources */,
 				238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */,
 				23300B611C3B3A2F00D2C166 /* LoginViewController.swift in Sources */,

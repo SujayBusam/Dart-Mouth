@@ -881,6 +881,25 @@
             </objects>
             <point key="canvasLocation" x="361.5" y="1691.5"/>
         </scene>
+        <!--Previous Meals View Controller-->
+        <scene sceneID="CCy-j0-m67">
+            <objects>
+                <viewController storyboardIdentifier="PreviousMealsViewController" id="8ML-Ke-iuT" customClass="PreviousMealsViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="G5u-U5-DTx"/>
+                        <viewControllerLayoutGuide type="bottom" id="a16-HP-NB9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ygf-t0-ea1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2zs-mJ-wM9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-223.5" y="2507.5"/>
+        </scene>
         <!--Database Recipes View Controller-->
         <scene sceneID="edu-Pe-Jgc">
             <objects>
@@ -898,7 +917,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tlH-ri-OlX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="825.5" y="1691.5"/>
+            <point key="canvasLocation" x="361.5" y="2507.5"/>
         </scene>
         <!--Diary Entry Add Container View Controller-->
         <scene sceneID="9gY-Te-wQP">
