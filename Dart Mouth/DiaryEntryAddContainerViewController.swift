@@ -166,7 +166,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         displaySearchBarAndCancelButtonAnimated(true)
     }
     
-    func cancelButtonPressed(sender: UIBarButtonItem) {
+    func cancelButtonPressed(sender: UIBarButtonItem?) {
         self.searchBar.text = nil
         let vc = self.currentDisplayedVC as! SearchableViewController
         vc.setSearchText(nil)
@@ -184,6 +184,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         
         self.currentDisplayedVC = viewControllerToDisplay
         self.currentSelectedIndex = newSelectedIndex
+        cancelButtonPressed(nil)
     }
 
     

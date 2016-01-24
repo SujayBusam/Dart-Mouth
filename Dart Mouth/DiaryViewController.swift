@@ -115,16 +115,16 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         self.diaryTableView.separatorStyle = .None
         
         // Create table section headers
-        breakfastHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        breakfastHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
         breakfastHeader.title.text = Constants.MealTimeStrings.BreakfastDisplay + ":"
         
-        lunchHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        lunchHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
         lunchHeader.title.text = Constants.MealTimeStrings.LunchDisplay + ":"
         
-        dinnerHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        dinnerHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
         dinnerHeader.title.text = Constants.MealTimeStrings.DinnerDisplay + ":"
         
-        snacksHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, 0))
+        snacksHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
         snacksHeader.title.text = Constants.MealTimeStrings.SnacksDisplay + ":"
     }
     

@@ -16,11 +16,17 @@ class DiaryTableHeaderView: UIView {
         static let TitleFontSize: CGFloat = 20
         static let CaloriesLabelFontSize: CGFloat = 20
         static let CaloriesLabelOffset: CGFloat = 5
+        static let BorderHeight: CGFloat = 1
     }
     
     private struct Colors {
         static let TitleText: UIColor = FlatSkyBlue()
         static let CaloriesLabelText: UIColor = FlatSkyBlue()
+    }
+    
+    private struct Identifiers {
+        static let PlusButton = "PlusGray"
+        static let plusButtonPressed = "plusButtonPressed:"
     }
 
     override init(frame: CGRect) {
@@ -33,11 +39,17 @@ class DiaryTableHeaderView: UIView {
         setupSubviews()
     }
     
+    var borderLine: UIView!
     var title: UILabel!
     var caloriesLabel: UILabel!
+    var plusButton: UIButton!
 
     private func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
+        
+        // Add a small border on top
+        borderLine = UIView()
+        borderLine.backgroundColor = FlatMintDark()
         
         title = UILabel()
         title.font = UIFont(name: title.font!.fontName, size: Dimensions.TitleFontSize)
@@ -47,18 +59,34 @@ class DiaryTableHeaderView: UIView {
         caloriesLabel.font = UIFont(name: caloriesLabel.font!.fontName, size: Dimensions.CaloriesLabelFontSize)
         caloriesLabel.textColor = Colors.CaloriesLabelText
         
+        plusButton = UIButton(frame: CGRectMake(0, 0, self.bounds.height, self.bounds.height))
+        plusButton.setImage(UIImage(named: Identifiers.PlusButton), forState: .Normal)
+        plusButton.addTarget(self, action: NSSelectorFromString(Identifiers.plusButtonPressed), forControlEvents: .TouchUpInside)
+        
+        self.addSubview(borderLine)
         self.addSubview(title)
         self.addSubview(caloriesLabel)
+        self.addSubview(plusButton)
         
         setupConstraints()
     }
     
     private func setupConstraints() {
+        borderLine.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Bottom)
+        borderLine.autoSetDimensionsToSize(CGSizeMake(self.bounds.width, Dimensions.BorderHeight))
+        
         title.autoPinEdgesToSuperviewMarginsExcludingEdge(.Right)
         
         caloriesLabel.autoPinEdge(.Left, toEdge: .Right, ofView: title, withOffset: Dimensions.CaloriesLabelOffset)
         caloriesLabel.autoPinEdgeToSuperviewMargin(.Top)
         caloriesLabel.autoPinEdgeToSuperviewMargin(.Bottom)
+        
+        plusButton.autoSetDimensionsToSize(CGSizeMake(self.bounds.height, self.bounds.height))
+        plusButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Left)
+    }
+    
+    func plusButtonPressed(sender: UIButton) {
+        
     }
 
 }
