@@ -80,10 +80,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.navigationItem.title = Identifiers.Title
         
         // Create and setup search bar button
-        let button = UIButton(frame: CGRectMake(0, 0, Dimensions.NavBarItemHeight, Dimensions.NavBarItemHeight))
-        button.setImage(UIImage(named: Identifiers.searchButtonImage), forState: .Normal)
-        button.addTarget(self, action: NSSelectorFromString(Identifiers.searchButtonPressed), forControlEvents: .TouchUpInside)
-        self.searchButton = UIBarButtonItem(customView: button)
+        self.searchButton = UIBarButtonItem(image: UIImage(named: Identifiers.searchButtonImage), style: .Plain, target: self, action: NSSelectorFromString(Identifiers.searchButtonPressed))
         self.navigationItem.rightBarButtonItem = self.searchButton
         
         // Create and setup search bar
