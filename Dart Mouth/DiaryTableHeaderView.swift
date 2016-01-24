@@ -10,6 +10,10 @@ import UIKit
 import PureLayout
 import ChameleonFramework
 
+protocol DiaryTableHeaderViewDelegate: class {
+    func addButtonPressedForDiaryTableHeader(sender: DiaryTableHeaderView)
+}
+
 class DiaryTableHeaderView: UIView {
     
     private struct Dimensions {
@@ -38,6 +42,8 @@ class DiaryTableHeaderView: UIView {
         super.init(coder: aDecoder)
         setupSubviews()
     }
+    
+    var delegate: DiaryTableHeaderViewDelegate!
     
     var borderLine: UIView!
     var title: UILabel!
@@ -86,7 +92,7 @@ class DiaryTableHeaderView: UIView {
     }
     
     func plusButtonPressed(sender: UIButton) {
-        
+        delegate.addButtonPressedForDiaryTableHeader(self)
     }
 
 }

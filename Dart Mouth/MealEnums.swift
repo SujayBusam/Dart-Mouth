@@ -42,6 +42,7 @@ enum MealTime: ParseFieldCompatible {
     case Dinner
     case LateNight
     case AllDay
+    case Snacks
     
     var parseField: String? {
         return Mappings.StringsForMealTime[self]![parse]

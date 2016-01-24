@@ -59,6 +59,10 @@ struct Mappings {
             StringTypes.Parse : Constants.MealTimeStrings.AllDayParse,
             StringTypes.Display : Constants.MealTimeStrings.AllDayDisplay,
         ],
+        
+        MealTime.Snacks: [
+            StringTypes.Display : Constants.MealTimeStrings.SnacksDisplay,
+        ],
     ]
     
     // Maps Menu enum to Parse field and display strings.

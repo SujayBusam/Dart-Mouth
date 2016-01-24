@@ -13,7 +13,7 @@ import MBProgressHUD
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate,
     UIPopoverPresentationControllerDelegate,
-    DiaryEntryMealPickerViewControllerDelegate {
+    DiaryEntryMealPickerViewControllerDelegate, DiaryTableHeaderViewDelegate {
     
     // MARK: - Local Constants
     
@@ -116,16 +116,20 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         
         // Create table section headers
         breakfastHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
-        breakfastHeader.title.text = Constants.MealTimeStrings.BreakfastDisplay + ":"
+        breakfastHeader.delegate = self
+        breakfastHeader.title.text = MealTime.Breakfast.displayString! + ":"
         
         lunchHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
-        lunchHeader.title.text = Constants.MealTimeStrings.LunchDisplay + ":"
+        lunchHeader.delegate = self
+        lunchHeader.title.text = MealTime.Lunch.displayString! + ":"
         
         dinnerHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
-        dinnerHeader.title.text = Constants.MealTimeStrings.DinnerDisplay + ":"
+        dinnerHeader.delegate = self
+        dinnerHeader.title.text = MealTime.Dinner.displayString! + ":"
         
         snacksHeader = DiaryTableHeaderView(frame: CGRectMake(0, 0, diaryTableView.frame.width, Dimensions.TableHeaderHeight))
-        snacksHeader.title.text = Constants.MealTimeStrings.SnacksDisplay + ":"
+        snacksHeader.delegate = self
+        snacksHeader.title.text = MealTime.Snacks.displayString! + ":"
     }
     
     func updateUI() {
@@ -187,17 +191,7 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
     
     func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
-        
-        let diaryEntryAddContainer = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryAddContainer) as! DiaryEntryAddContainerViewController
-        
-        // TODO: additional diaryEntryAddContainer configuration here
-        diaryEntryAddContainer.date = self.date
-        diaryEntryAddContainer.mealTime = meal
-        
-        // Push onto navigation controller stack
-        diaryEntryAddContainer.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(diaryEntryAddContainer, animated: true)
+        pushDiaryEntryAddContainerVCAfterSelectingUserMeal(meal)
     }
     
     
@@ -262,6 +256,28 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     
+    // MARK: - DiaryTableHeaderViewDelegate protocol methods
+    
+    func addButtonPressedForDiaryTableHeader(sender: DiaryTableHeaderView) {
+        switch sender {
+        case self.breakfastHeader:
+            pushDiaryEntryAddContainerVCAfterSelectingUserMeal(MealTime.Breakfast.displayString!)
+            break
+        case self.lunchHeader:
+            pushDiaryEntryAddContainerVCAfterSelectingUserMeal(MealTime.Lunch.displayString!)
+            break
+        case self.dinnerHeader:
+            pushDiaryEntryAddContainerVCAfterSelectingUserMeal(MealTime.Dinner.displayString!)
+            break
+        case self.snacksHeader:
+            pushDiaryEntryAddContainerVCAfterSelectingUserMeal(MealTime.Snacks.displayString!)
+            break
+        default:
+            break
+        }
+    }
+    
+    
     // MARK: - Navigation
     
     func pushDiaryEntryEditContainerVCAfterSelectingIndexPath(indexPath: NSIndexPath) {
@@ -277,6 +293,19 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         // Push onto navigation controller stack
         diaryEntryEditContainer.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(diaryEntryEditContainer, animated: true)
+    }
+    
+    func pushDiaryEntryAddContainerVCAfterSelectingUserMeal(userMeal: String) {
+        let diaryEntryAddContainer = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryAddContainer) as! DiaryEntryAddContainerViewController
+        
+        // TODO: additional diaryEntryAddContainer configuration here
+        diaryEntryAddContainer.date = self.date
+        diaryEntryAddContainer.mealTime = userMeal
+        
+        // Push onto navigation controller stack
+        diaryEntryAddContainer.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(diaryEntryAddContainer, animated: true)
     }
     
     
