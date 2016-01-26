@@ -9,16 +9,16 @@
 import UIKit
 import PureLayout
 
-/*
-    This is a custom UIView that shows a date and left and right arrows.
-    Pressing the left arrow decrements the date, pressing the right arrow increments it.
-*/
-
 protocol DateNavigationControlDelegate: class {
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate
     func leftArrowWasPressed(sender: UIButton) -> Void
     func rightArrowWasPressed(sender: UIButton) -> Void
 }
+
+/*
+    This is a custom UIView that shows a date and left and right arrows.
+    Pressing the left arrow decrements the date, pressing the right arrow increments it.
+*/
 
 class DateNavigationControl: UIView {
     
@@ -50,12 +50,12 @@ class DateNavigationControl: UIView {
         
         // Setup left button
         leftButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
-        leftButton.setImage(UIImage(named: "LeftArrowWhite"), forState: UIControlState.Normal)
+        leftButton.setImage(UIImage(named: Constants.Images.LeftArrowWhite), forState: UIControlState.Normal)
         leftButton.addTarget(self, action: "leftArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup right button
         rightButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
-        rightButton.setImage(UIImage(named: "RightArrowWhite"), forState: UIControlState.Normal)
+        rightButton.setImage(UIImage(named: Constants.Images.RightArrowWhite), forState: UIControlState.Normal)
         rightButton.addTarget(self, action: "rightArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup date label
@@ -75,11 +75,10 @@ class DateNavigationControl: UIView {
     
     // Use PureLayout to set up constraints for positioning the subviews.
     private func setupConstraints() {
-        let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Right)
+        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Right)
         leftButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
         
-        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
+        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Left)
         rightButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
 
         dateLabel.autoCenterInSuperview()

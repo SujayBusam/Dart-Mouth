@@ -37,6 +37,9 @@ struct Constants {
         
         static let AllDayDisplay = "All Day"
         static let AllDayParse = "Every Day"
+        
+        // Used just for Diary
+        static let SnacksDisplay = "Snacks"
     }
     
     struct MenuStrings {
@@ -96,5 +99,32 @@ struct Constants {
         static let SigninErrorTitle = "Signin Error"
         static let SigninErrorDefaultMessage = "Unknown error signing in."
         static let OkActionTitle = "OK"
+    }
+    
+    struct ParseIDS {
+        static let DDSUser = "95xfYTL7GG"
+    }
+    
+    struct ViewControllers {
+        static let Signup = "SignupViewController"
+        static let MenuContainer = "MenuContainerViewController"
+        static let MenuView = "MenuViewController"
+        static let RecipeNutritionAdderContainer = "RecipeNutritonAdderContainerViewController"
+        static let RecipeNutrition = "RecipeNutritionViewController"
+        static let DiaryEntryEditContainer = "DiaryEntryEditContainerViewController"
+        static let DiaryEntryMealPicker = "DiaryEntryMealPickerViewController"
+        static let DiaryEntryAddContainer = "DiaryEntryAddContainerViewController"
+        static let DiaryEntryNutritionAdderContainer = "DiaryEntryNutritionAdderContainerViewController"
+        static let PreviousRecipes = "PreviousRecipesViewController"
+        static let CustomRecipes = "CustomRecipesViewController"
+        static let PreviousMeals = "PreviousMealsViewController"
+        static let DatabaseRecipes = "DatabaseRecipesViewController"
+    }
+    
+    struct Images {
+        static let LeftArrowWhite = "LeftArrowWhite"
+        static let RightArrowWhite = "RightArrowWhite"
+        static let SearchIcon = "Search"
+        static let TrashGreen = "TrashGreen"
     }
 }

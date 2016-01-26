@@ -97,7 +97,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         spinningActivity.userInteractionEnabled = false
         
-        CustomUser.logInWithUsernameInBackground(emailTextField.text!, password: passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
+        CustomUser.logInWithUsernameInBackground(emailTextField.text!.lowercaseString, password: passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 self.performSegueWithIdentifier(Identifiers.PostLoginSegue, sender: self)

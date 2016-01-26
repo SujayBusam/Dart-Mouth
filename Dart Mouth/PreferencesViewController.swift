@@ -15,8 +15,12 @@ class PreferencesViewController: UIViewController {
     }
     
     @IBAction func logoutButtonPressed(sender: UIButton) {
-        CustomUser.logOut()
-        performSegueWithIdentifier("showSignupAfterLogout", sender: self)
+        // TODO: error handling
+        CustomUser.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
+            let destinationVC = self.storyboard!
+                .instantiateViewControllerWithIdentifier(Constants.ViewControllers.Signup)
+            self.navigationController!.presentViewController(destinationVC, animated: true, completion: nil)
+        }
     }
     
 }

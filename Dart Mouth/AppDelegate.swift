@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Offering.registerSubclass()
         Recipe.registerSubclass()
         CustomUser.registerSubclass()
+        UserMeal.registerSubclass()
+        DiaryEntry.registerSubclass()
         
         // Initialize Parse.
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
@@ -28,9 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Status bar will have white text app-wide
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
-        // App-wide color of Navigation Bar
+        // App-wide color of Navigation Bar, items, and title text
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3),
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+        ]
         UINavigationBar.appearance().barTintColor = Constants.Colors.appPrimaryColorDark
+        
+        // App-wide color of tab bar
+        UITabBar.appearance().tintColor = Constants.Colors.appPrimaryColorDark
+        
         return true
     }
 
