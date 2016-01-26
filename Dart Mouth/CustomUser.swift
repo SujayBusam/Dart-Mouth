@@ -22,6 +22,7 @@ class CustomUser: PFUser {
     
     func findAllPreviousRecipesWithCompletionHandler(completionHandler: ([Recipe]?) -> Void) {
         let query = self.pastRecipes.query()
+        query.limit = 1000
         query.orderByAscending("name")
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
@@ -36,4 +37,5 @@ class CustomUser: PFUser {
             }
         }
     }
+
 }
