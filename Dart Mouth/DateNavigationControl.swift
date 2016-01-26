@@ -9,6 +9,11 @@
 import UIKit
 import PureLayout
 
+enum DateNavigationColorTheme {
+    case White
+    case Black
+}
+
 protocol DateNavigationControlDelegate: class {
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate
     func leftArrowWasPressed(sender: UIButton) -> Void
@@ -98,13 +103,22 @@ class DateNavigationControl: UIView {
     
     func leftArrowWasPressed(sender: UIButton) { delegate?.leftArrowWasPressed(sender) }
     func rightArrowWasPressed(sender: UIButton) { delegate?.rightArrowWasPressed(sender) }
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    
+    // Default theme is white.
+    func changeTheme(theme: DateNavigationColorTheme) {
+        switch theme {
+        case .Black:
+            dateLabel.textColor = UIColor.blackColor()
+            leftButton.setImage(UIImage(named: Constants.Images.LeftArrowBlack), forState: .Normal)
+            rightButton.setImage(UIImage(named: Constants.Images.RightArrowBlack), forState: .Normal)
+            break
+        case .White:
+            dateLabel.textColor = UIColor.whiteColor()
+            leftButton.setImage(UIImage(named: Constants.Images.LeftArrowWhite), forState: .Normal)
+            rightButton.setImage(UIImage(named: Constants.Images.RightArrowWhite), forState: .Normal)
+            break
+        }
+        
     }
-    */
 
 }

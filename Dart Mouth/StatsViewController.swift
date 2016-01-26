@@ -259,7 +259,8 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         let swipeRec = UISwipeGestureRecognizer()
         swipeRec.addTarget(self, action: "swipedView")
         weekChart.addGestureRecognizer(swipeRec)
-
+        
+        weekNavigator.changeTheme(.Black)
     }
     
     func swipedView(){

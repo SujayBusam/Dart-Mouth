@@ -124,6 +124,8 @@ struct Constants {
     struct Images {
         static let LeftArrowWhite = "LeftArrowWhite"
         static let RightArrowWhite = "RightArrowWhite"
+        static let LeftArrowBlack = "LeftArrowBlack"
+        static let RightArrowBlack = "RightArrowBlack"
         static let SearchIcon = "Search"
         static let TrashGreen = "TrashGreen"
     }
