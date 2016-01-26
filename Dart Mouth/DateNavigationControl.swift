@@ -46,7 +46,7 @@ class DateNavigationControl: UIView {
     
     // Setup left arrow, right arrow, and date label.
     private func setupSubviews() {
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.grayColor()
         
         // Setup left button
         leftButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))

@@ -32,6 +32,9 @@
 		23BF16BB1C0D319D00F2CD8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BF16BA1C0D319D00F2CD8E /* Main.storyboard */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		657C1E491C417C750075A56D /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C1E481C417C750075A56D /* StatsViewController.swift */; };
+		65C8FFF01C4DD0C900DDB5EF /* WeekNavigationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C8FFEF1C4DD0C900DDB5EF /* WeekNavigationControl.swift */; };
+		65FB7DF91C54148B006336D4 /* ProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB7DF81C54148B006336D4 /* ProgressDisplay.swift */; };
+		65FB7DFB1C5417DA006336D4 /* ArrowLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB7DFA1C5417DA006336D4 /* ArrowLabel.swift */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +81,9 @@
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A186857541FACAF86F6959 /* Pods-Dart Mouth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.debug.xcconfig"; sourceTree = "<group>"; };
 		657C1E481C417C750075A56D /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		65C8FFEF1C4DD0C900DDB5EF /* WeekNavigationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekNavigationControl.swift; sourceTree = "<group>"; };
+		65FB7DF81C54148B006336D4 /* ProgressDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressDisplay.swift; sourceTree = "<group>"; };
+		65FB7DFA1C5417DA006336D4 /* ArrowLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowLabel.swift; sourceTree = "<group>"; };
 		C571A500316D791E1742F8BE /* Pods-Dart MouthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart MouthTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart MouthTests/Pods-Dart MouthTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D386822DE229CD5314C72369 /* Pods-Dart Mouth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,6 +260,9 @@
 			isa = PBXGroup;
 			children = (
 				657C1E481C417C750075A56D /* StatsViewController.swift */,
+				65C8FFEF1C4DD0C900DDB5EF /* WeekNavigationControl.swift */,
+				65FB7DF81C54148B006336D4 /* ProgressDisplay.swift */,
+				65FB7DFA1C5417DA006336D4 /* ArrowLabel.swift */,
 			);
 			name = StatsView;
 			sourceTree = "<group>";
@@ -486,6 +495,7 @@
 				238F1C951C2B7D08007720F8 /* ParseAPI.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
+				65FB7DF91C54148B006336D4 /* ProgressDisplay.swift in Sources */,
 				239BFA7A1C190CF200617EE7 /* MenuViewController.swift in Sources */,
 				23300B5D1C37128500D2C166 /* SignupViewController.swift in Sources */,
 				238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */,
@@ -496,7 +506,9 @@
 				238F1C9B1C2C7867007720F8 /* Mappings.swift in Sources */,
 				238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */,
 				2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */,
+				65FB7DFB1C5417DA006336D4 /* ArrowLabel.swift in Sources */,
 				233F94FF1C1930CA00C0D714 /* DateNavigationControl.swift in Sources */,
+				65C8FFF01C4DD0C900DDB5EF /* WeekNavigationControl.swift in Sources */,
 				238F1CA11C332801007720F8 /* NSDate+ConvenienceInit.swift in Sources */,
 				657C1E491C417C750075A56D /* StatsViewController.swift in Sources */,
 				23300B5F1C374B8D00D2C166 /* CustomUser.swift in Sources */,
