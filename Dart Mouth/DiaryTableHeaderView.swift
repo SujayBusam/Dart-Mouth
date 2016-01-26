@@ -78,8 +78,8 @@ class DiaryTableHeaderView: UIView {
     }
     
     private func setupConstraints() {
-        borderLine.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Bottom)
         borderLine.autoSetDimensionsToSize(CGSizeMake(self.bounds.width, Dimensions.BorderHeight))
+        borderLine.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Bottom)
         
         title.autoPinEdgesToSuperviewMarginsExcludingEdge(.Right)
         

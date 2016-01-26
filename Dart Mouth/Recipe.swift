@@ -22,7 +22,7 @@ class Recipe: PFObject, PFSubclassing {
         static let Sugars = "sugars"
         static let Protein = "protein"
         static let ServingSizeGrams = "serving_size_grams"
-        static let Bogus = "Bogus"
+        static let ServingSizeText = "serving_size_text"
     }
     
     @NSManaged var createdBy: PFUser
@@ -132,12 +132,10 @@ class Recipe: PFObject, PFSubclassing {
         return getAllNutrients()?[Fields.ServingSizeGrams] as? Int
     }
     
-    // For testing
-    // TODO: remove
-    func getBogus() -> Float? {
-        let bogusString = getAllNutrients()?[Fields.Bogus] as? String
-        return Recipe.extractFloatFromString(bogusString)
+    func getServingSizeText() -> String? {
+        return getAllNutrients()?[Fields.ServingSizeText] as? String
     }
+    
     
     static func parseClassName() -> String {
         return "Recipe"
