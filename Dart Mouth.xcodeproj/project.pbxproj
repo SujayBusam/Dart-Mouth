@@ -192,7 +192,6 @@
 				239BFA7B1C190DCB00617EE7 /* Views */,
 				2397926D1BE5521100B969AC /* Models */,
 				2375D5F71BDC09D40065AC14 /* Supporting Files */,
-				23C174211C5421A300602A04 /* AppProtocols.swift */,
 			);
 			path = "Dart Mouth";
 			sourceTree = "<group>";
@@ -256,6 +255,7 @@
 		2397926D1BE5521100B969AC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				23C174211C5421A300602A04 /* AppProtocols.swift */,
 				23300B541C36FBB400D2C166 /* Extensions */,
 				238F1C8E1C2A2077007720F8 /* Recipe.swift */,
 				238F1C961C2B8190007720F8 /* Offering.swift */,
