@@ -48,6 +48,10 @@
 		23C174281C543D9000602A04 /* DatabaseRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174271C543D9000602A04 /* DatabaseRecipesViewController.swift */; };
 		23C1742A1C54A0E700602A04 /* SearchableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174291C54A0E700602A04 /* SearchableViewController.swift */; };
 		23C1742C1C54A2B800602A04 /* PreviousMealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1742B1C54A2B800602A04 /* PreviousMealsViewController.swift */; };
+		23C174321C57059100602A04 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1742E1C57059100602A04 /* StatsViewController.swift */; };
+		23C174331C57059100602A04 /* WeekNavigationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1742F1C57059100602A04 /* WeekNavigationControl.swift */; };
+		23C174341C57059100602A04 /* ProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174301C57059100602A04 /* ProgressDisplay.swift */; };
+		23C174351C57059100602A04 /* ArrowLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174311C57059100602A04 /* ArrowLabel.swift */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
 /* End PBXBuildFile section */
@@ -109,6 +113,10 @@
 		23C174271C543D9000602A04 /* DatabaseRecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseRecipesViewController.swift; sourceTree = "<group>"; };
 		23C174291C54A0E700602A04 /* SearchableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableViewController.swift; sourceTree = "<group>"; };
 		23C1742B1C54A2B800602A04 /* PreviousMealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousMealsViewController.swift; sourceTree = "<group>"; };
+		23C1742E1C57059100602A04 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		23C1742F1C57059100602A04 /* WeekNavigationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekNavigationControl.swift; sourceTree = "<group>"; };
+		23C174301C57059100602A04 /* ProgressDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressDisplay.swift; sourceTree = "<group>"; };
+		23C174311C57059100602A04 /* ArrowLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowLabel.swift; sourceTree = "<group>"; };
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A186857541FACAF86F6959 /* Pods-Dart Mouth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.debug.xcconfig"; sourceTree = "<group>"; };
@@ -272,6 +280,7 @@
 		239BFA7B1C190DCB00617EE7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				23C1742D1C57057B00602A04 /* StatsView */,
 				2376308E1BEE94E0000A6C54 /* PreferencesView */,
 				23A4F5CE1C506FA9006C7891 /* Reusable Views */,
 				23A4F5CD1C506F37006C7891 /* Reusable View Controllers */,
@@ -307,6 +316,17 @@
 				23113EA01C41BCCD00B07756 /* CalorieBudgetView.swift */,
 			);
 			name = "Reusable Views";
+			sourceTree = "<group>";
+		};
+		23C1742D1C57057B00602A04 /* StatsView */ = {
+			isa = PBXGroup;
+			children = (
+				23C1742E1C57059100602A04 /* StatsViewController.swift */,
+				23C1742F1C57059100602A04 /* WeekNavigationControl.swift */,
+				23C174301C57059100602A04 /* ProgressDisplay.swift */,
+				23C174311C57059100602A04 /* ArrowLabel.swift */,
+			);
+			name = StatsView;
 			sourceTree = "<group>";
 		};
 		7B5246E95283A196AAAF038B /* Frameworks */ = {
@@ -550,6 +570,8 @@
 				23C1742C1C54A2B800602A04 /* PreviousMealsViewController.swift in Sources */,
 				23300B5D1C37128500D2C166 /* SignupViewController.swift in Sources */,
 				238F1C9F1C2DE95F007720F8 /* ParseFieldCompatibleProtocol.swift in Sources */,
+				23C174351C57059100602A04 /* ArrowLabel.swift in Sources */,
+				23C174341C57059100602A04 /* ProgressDisplay.swift in Sources */,
 				23300B611C3B3A2F00D2C166 /* LoginViewController.swift in Sources */,
 				23113E9F1C41A44F00B07756 /* UserMeal.swift in Sources */,
 				23C174221C5421A300602A04 /* AppProtocols.swift in Sources */,
@@ -557,6 +579,7 @@
 				23C1742A1C54A0E700602A04 /* SearchableViewController.swift in Sources */,
 				23C174241C5425D900602A04 /* PreviousRecipesViewController.swift in Sources */,
 				23C1741C1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift in Sources */,
+				23C174321C57059100602A04 /* StatsViewController.swift in Sources */,
 				23C174201C5413E400602A04 /* DiaryEntryNutritionAdderContainerViewController.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
 				238F1C971C2B8190007720F8 /* Offering.swift in Sources */,
@@ -565,6 +588,7 @@
 				238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */,
 				23A4F5D01C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift in Sources */,
 				2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */,
+				23C174331C57059100602A04 /* WeekNavigationControl.swift in Sources */,
 				233F94FF1C1930CA00C0D714 /* DateNavigationControl.swift in Sources */,
 				238F1CA11C332801007720F8 /* NSDate+ConvenienceInit.swift in Sources */,
 				23300B5F1C374B8D00D2C166 /* CustomUser.swift in Sources */,
