@@ -8,61 +8,87 @@
 
 import UIKit
 import PureLayout
+import ChameleonFramework
 
 /*
 This is a custom UIView that shows an arrow that will point up or down 
 and animate */
 
-protocol ArrowLabelDataSource: class {
-    func colorForArrowLabel(sender: ArrowLabel) -> UIColor
-    func valueForArrowLabel(sender: ArrowLabel) -> Int
-    func unitForArrowLabel(sender: ArrowLabel) -> String
-    //func descriptionText(sender: ArrowView) -> String
+
+private struct DisplayOptions {
+    static let ValueFontNormal = UIFont.systemFontOfSize(8.0)
+    static let ValueFontCompact = UIFont.systemFontOfSize(10.0)
+    
+    static let ArrowSizeNormal : CGFloat = 25.0
+    static let ArrowSizeCompact : CGFloat = 15.0
+    
+    static let ValueLabelHeightNormal : CGFloat = 15.0
+    static let ValueLabelHeightCompact : CGFloat = 8.0
+    
+    static let DescriptionWidthRatio : CGFloat = 0.7
 }
 
 class ArrowLabel: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //setupSubviews()
+        setupSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //setupSubviews()
+        setupSubviews()
     }
     
     // Subviews
+    var descriptionLabel : UILabel!
     var valueLabel: UILabel!
     var arrow: ArrowDisplay!
     
-    weak var dataSource: ArrowLabelDataSource?
-    
-    var arrowHeightRatio : CGFloat = 0.7
-    
     // Calculated dimensions
-    var arrowSize: CGFloat { return CGFloat(min(frame.height * arrowHeightRatio, frame.width)) }
-    var valueLabelHeight: CGFloat { return CGFloat(frame.height * (1.0 - arrowHeightRatio)) }
+
     
-    var valueLabelWidth: CGFloat { return CGFloat(frame.width)}
+    //var valueLabelWidth: CGFloat { return CGFloat(frame.width)}
+
     
     // Setup arrow and value
     private func setupSubviews() {
-        self.backgroundColor = UIColor.randomFlatColor()
+        //self.gkgroundColor = UIColor.randomFlatColor()
+        
+        let descriptionLabelWidth = frame.width * DisplayOptions.DescriptionWidthRatio - 4.0
+        let descriptionLabelHeight = DisplayOptions.ArrowSizeNormal
+        
+        print(descriptionLabelWidth)
+        print(descriptionLabelHeight)
+        descriptionLabel = UILabel(frame: CGRectMake(0, 0, descriptionLabelWidth, descriptionLabelHeight))
         
         // Setup arrow
-        arrow = ArrowDisplay(frame: CGRectMake(0, 0, arrowSize, arrowSize))
+        arrow = ArrowDisplay(frame: CGRectMake(descriptionLabelWidth + 4.0, 0, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal))
+        
+        valueLabel = UILabel(frame: CGRectMake(descriptionLabelWidth + 4.0, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal, DisplayOptions.ValueLabelHeightNormal))
+        valueLabel.text = ""
+        valueLabel.font = DisplayOptions.ValueFontNormal
+        valueLabel.textAlignment = .Center
+
+        descriptionLabel.text = ""
+        descriptionLabel.font = UIFont.systemFontOfSize(12.0)
+        descriptionLabel.textAlignment = .Right
+        //descriptionLabel.adjustsFontSizeToFitWidth = true
+        
+        //valueLabel.adjustsFontSizeToFitWidth = true
         //arrow = ArrowDisplay(frame: CGRectMake(0, 0, 30, 30))
         
         // Setup Label
-        valueLabel = UILabel(frame: CGRectMake(0, 0, valueLabelWidth, valueLabelHeight))
-        valueLabel.textAlignment = NSTextAlignment.Center
-        valueLabel.textColor = UIColor.blackColor()
-        valueLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
-        valueLabel.adjustsFontSizeToFitWidth = true
-            
+//        valueLabel = UILabel(frame: CGRectMake(0, 0, valueLabelWidth, valueLabelHeight))
+//        valueLabel.textAlignment = NSTextAlignment.Center
+//        valueLabel.textColor = UIColor.blackColor()
+//        valueLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
+//        valueLabel.adjustsFontSizeToFitWidth = true
+//            
         self.addSubview(arrow)
         self.addSubview(valueLabel)
+        self.addSubview(descriptionLabel)
+
         
         setupConstraints()
     }
@@ -74,25 +100,129 @@ class ArrowLabel: UIView {
 //        path.fill()
     }
     
-    private func updateValueLabel(){
-        if let value = dataSource?.valueForArrowLabel(self) {
-            var suffix = ""
-            if let unit = dataSource?.unitForArrowLabel(self){
-                suffix = unit
-            }
-            valueLabel.text = String(value) + suffix
-        } else {
-            valueLabel.text = ""
-        }
+    
+    func updateDescription(description : String){
+        descriptionLabel.text = description
     }
+    func updateAttributedDescription(description : NSAttributedString){
+        descriptionLabel.attributedText = description
+    }
+    
+    func updateValue(value : Int, unit : String, valence : Bool){
+        let direction : ArrowDisplay.Direction = (value >= 0) ? .Positive : .Negative
+        valueLabel.text = String(value) + unit
+        arrow.update(direction, valence: valence)
+    }
+
+    
+    
+
     
     internal class ArrowDisplay : UIView {
         
-        override func drawRect(rect: CGRect) {
-            let path = UIBezierPath(ovalInRect: rect)
-            UIColor.blueColor().setFill()
-            path.fill()
+        private struct DisplayOptions {
+            static let ArrowThickness : CGFloat = 3.0
+            static let ArrowLengthRatio : CGFloat = 0.7
+            static let ArrowArmRatio : CGFloat = 0.3
+            
+            static let AnimationDuration : NSTimeInterval = 0.8
         }
+
+        var direction : Direction = .Neutral
+        var hasValence = true
+        
+        enum Direction : CGFloat {
+            case Positive = -89.0, Neutral = 0, Negative = 89.0
+        }
+        
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            setUpLayer()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+            setUpLayer()
+        }
+        func update(newDirection : Direction, valence : Bool){
+//            let degreeChange : CGFloat = CGFloat(direction.rawValue - newDirection.rawValue) * CGFloat(90.0)
+//            let degreeChange : CGFloat = CGFloat(90.0)
+//            print(degreeChange)
+            
+            UIView.animateWithDuration(DisplayOptions.AnimationDuration, animations: {
+                self.hasValence = valence
+                self.transform = CGAffineTransformMakeRotation((newDirection.rawValue * CGFloat(M_PI)) / 180.0)
+            })
+        }
+        
+        func setUpLayer(){
+            layer.backgroundColor = UIColor.greenColor().CGColor
+            layer.frame = self.frame
+            
+        }
+        
+        func updateLayer(){
+            var fillColor = UIColor.whiteColor()
+            var arrowColor = UIColor.blackColor()
+            if(hasValence){
+                switch direction {
+                case .Positive:
+                    fillColor = FlatRed()
+                    arrowColor = UIColor.whiteColor()
+                case .Negative:
+                    fillColor = FlatGreen()
+                    arrowColor = UIColor.whiteColor()
+                default: break
+                }
+            }
+            
+            let fillPath = UIBezierPath(ovalInRect: layer.frame)
+            fillColor.setFill()
+            fillPath.fill()
+
+        }
+
+//        override func drawRect(rect: CGRect) {
+//            self.backgroundColor = UIColor.clearColor()
+//            var fillColor = UIColor.whiteColor()
+//            var arrowColor = UIColor.blackColor()
+//            if(hasValence){
+//                switch direction {
+//                case .Positive:
+//                    fillColor = FlatRed()
+//                    arrowColor = UIColor.whiteColor()
+//                case .Negative:
+//                    fillColor = FlatGreen()
+//                    arrowColor = UIColor.whiteColor()
+//                default: break
+//                }
+//            }
+//            
+//            let fillPath = UIBezierPath(ovalInRect: rect)
+//            fillColor.setFill()
+//            fillPath.fill()
+//            
+//            let arrowTail = CGPoint(x: rect.midX - CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
+//            let arrowHead = CGPoint(x: rect.midX + CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
+//            let arrowLeftArmEnd = CGPoint(x: rect.midX + CGFloat(rect.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: rect.midY + rect.height * DisplayOptions.ArrowArmRatio)
+//            let arrowRightArmEnd = CGPoint(x: rect.midX + CGFloat(rect.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: rect.midY - rect.height * DisplayOptions.ArrowArmRatio)
+////            let arrowTail = CGPoint(x: 0 , y: 0)
+////            let arrowHead = CGPoint(x: 10, y: 10)
+//
+//            let arrowPath = UIBezierPath()
+//            arrowPath.lineWidth = DisplayOptions.ArrowThickness
+//            arrowPath.lineCapStyle = .Round
+//            arrowPath.moveToPoint(arrowTail)
+//            arrowPath.addLineToPoint(arrowHead)
+//            arrowPath.moveToPoint(arrowLeftArmEnd)
+//            arrowPath.addLineToPoint(arrowHead)
+//            arrowPath.moveToPoint(arrowRightArmEnd)
+//            arrowPath.addLineToPoint(arrowHead)
+//            
+//            arrowColor.setStroke()
+//            arrowPath.stroke()
+//        }
     }
     
     
@@ -108,6 +238,8 @@ class ArrowLabel: UIView {
 //        
 //        dateLabel.autoCenterInSuperview()
 //        dateLabel.autoSetDimensionsToSize(CGSizeMake(dateLabelWidth, dateLabelHeight))
+          //arrow.autoPinEdge(.Top, toEdge: .Top, ofView: self)
+          //valueLabel.autoPinEdge(.Bottom, toEdge: .Bottom, ofView: self)
     }
     
     
