@@ -15,14 +15,16 @@ Pressing the left arrow decrements the date, pressing the right arrow increments
 */
 
 protocol ProgressDisplayDataSource: class {
-    func getNumItems(sender: ProgressDisplay) -> Int
-    func valueForItem(sender : ProgressDisplay) -> Int
-    func textForItem(sender: ProgressDisplay, index: Int) -> String
-    func colorForArrow(sender : ProgressDisplay, index: Int) -> UIColor
-    func progressUnit(sender : ProgressDisplay) -> String
+    func getWeeklyCalorieChange(sender: ProgressDisplay) -> Int
+    func getWeeklyCarbChange(sender: ProgressDisplay) -> Int
+    func getWeeklyProteinChange(sender : ProgressDisplay) -> Int
+    func getWeeklyFatChange(sender: ProgressDisplay) -> Int
+    //func colorForArrow(sender : ProgressDisplay, index: Int) -> UIColor
+    //func progressUnit(sender : ProgressDisplay) -> String
 }
 
-class ProgressDisplay: UIStackView, ArrowLabelDataSource {
+class ProgressDisplay: UIView {
+    
     
     
     override init(frame: CGRect) {
@@ -35,78 +37,133 @@ class ProgressDisplay: UIStackView, ArrowLabelDataSource {
         setup()
     }
     
-    
+    private struct DisplayOptions {
+        static let AnimateDuration = 0.3
+        static let SideOffSetRatio : CGFloat = 0.3
+        
+        static let ArrowLabelWidthNormal : CGFloat = 80.0
+        static let ArrowLabelHeightNormal : CGFloat = 40.0
+        
+    }
+
     weak var dataSource: ProgressDisplayDataSource?
-    var displays : [UIView] = []
+    
+    var leftDisplay: ArrowLabel!
+    var centerDisplay: ArrowLabel!
+    var rightDisplay: ArrowLabel!
+    
+    
     
     // Calculated Dimensions
-    var numItems : Int {
-        if let items = dataSource?.getNumItems(self) {
-            return items
-        }
-        return 0
+    var displayLeftX: CGFloat {
+        return self.center.x - frame.width * DisplayOptions.SideOffSetRatio
     }
-    var itemWidth: CGFloat {
-        if numItems > 0 {
-            return frame.width / CGFloat(numItems)
-        }
-        return CGFloat(0)
-    }
-    var itemHeight : CGFloat { return frame.height - 8.0}
     
+    var displayCenterX : CGFloat {
+        return self.center.x 
+    }
+    
+    var displayRightX : CGFloat {
+        return self.center.x + frame.width * DisplayOptions.SideOffSetRatio
+    }
 
 
     // Setup left arrow, right arrow, and date label.
     private func setup() {
-        self.backgroundColor = UIColor.brownColor()
-        self.axis = .Horizontal
-        //self.alignment = .Fill
+        self.backgroundColor = UIColor.clearColor()
+        self.needsUpdateConstraints()
 
+        leftDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
+        self.addSubview(leftDisplay)
         
-//        // Setup left button
-//        leftButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
-//        leftButton.setImage(UIImage(named: "LeftArrowWhite"), forState: UIControlState.Normal)
-//        leftButton.addTarget(self, action: "leftArrowWasPressed:", forControlEvents: .TouchUpInside)
-//        
-//        // Setup right button
-//        rightButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
-//        rightButton.setImage(UIImage(named: "RightArrowWhite"), forState: UIControlState.Normal)
-//        rightButton.addTarget(self, action: "rightArrowWasPressed:", forControlEvents: .TouchUpInside)
-//        
-//        // Setup date label
-//        dateLabel = UILabel(frame: CGRectMake(0, 0, dateLabelWidth, dateLabelHeight))
-//        dateLabel.textAlignment = NSTextAlignment.Center
-//        dateLabel.textColor = UIColor.whiteColor()
-//        dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
-//        dateLabel.adjustsFontSizeToFitWidth = true
-//        updateDateLabel()
-//        
-//        self.addSubview(leftButton)
-//        self.addSubview(rightButton)
-//        self.addSubview(dateLabel)
+        rightDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
+        self.addSubview(rightDisplay)
         
-        setupConstraints()
-        updateDisplays()
+        centerDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
+        self.addSubview(centerDisplay)
+
+        leftDisplay.center.x = displayCenterX
+        centerDisplay.center.x = displayCenterX
+        rightDisplay.center.x = displayCenterX
+
     }
     
-    func updateDisplays(){
-        self.subviews.forEach({ $0.removeFromSuperview() }) // clear items
+    func updateCalorieDisplay(calories: Int){
+        centerDisplay.updateValue(calories, unit: "", valence: true)
+        centerDisplay.updateDescription("Calories")
+        //centerDisplay.updateValue(String(calories))
+        animateSingleDisplay()
+    }
+    
+    func updateMacroDisplay(carbs: Int, protein: Int, fat: Int){
+//        let proteinDescription = String("Protein")
+//        proteinDescription.color
         
-        for i in 0..<numItems {
-            //let display = ArrowLabel(frame: CGRectMake(0, 0, 40, 40))
+        leftDisplay.updateValue(protein, unit: "g", valence: false)
+        let proteinDescription = "Protein"
+        let proteinAttributedDescription = NSMutableAttributedString(string: proteinDescription)
+        proteinAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "189090"), range: NSMakeRange(0, proteinDescription.characters.count))
+        leftDisplay.updateAttributedDescription(proteinAttributedDescription)
+        
+        centerDisplay.updateValue(carbs, unit: "g", valence: false)
+        let carbDescription = "Carbs"
+        let carbAttributedDescription = NSMutableAttributedString(string: carbDescription)
+        carbAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "F0B428"), range: NSMakeRange(0, carbDescription.characters.count))
+        centerDisplay.updateAttributedDescription(carbAttributedDescription)
 
-            let display = ArrowLabel(frame: CGRectMake(0, 0, itemWidth, itemHeight))
-            //let display = ArrowLabel()
-            display.dataSource = self
-            displays.append(display)
-            self.addArrangedSubview(display)
-            print("Added subview")
+        rightDisplay.updateValue(fat, unit: "g", valence: false)
+        let fatDescription = "Fat"
+        let fatAttributedDescription = NSMutableAttributedString(string: fatDescription)
+        fatAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "E42640"), range: NSMakeRange(0, fatDescription.characters.count))
+        rightDisplay.updateAttributedDescription(fatAttributedDescription)
+        
+        
+
+        
+        //UIColor(hexString: "189090")
+        animateFullDisplay()
+    }
+    
+
+    
+    func animateSingleDisplay(){
+        UIView.animateWithDuration(DisplayOptions.AnimateDuration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.leftDisplay.center.x = self.displayCenterX
+            self.leftDisplay.alpha = 0
+            self.rightDisplay.center.x = self.displayCenterX
+            self.rightDisplay.alpha = 0
+        }, completion: nil)
+        
+//        UIView.animateWithDuration(DisplayOptions.AnimateDuration, delay: 0,
+//            options: UIViewAnimationOptions.CurveEaseOut, animations: )
+    }
+    
+    func animateFullDisplay(){
+        UIView.animateWithDuration(DisplayOptions.AnimateDuration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.leftDisplay.center.x = self.displayLeftX
+            self.rightDisplay.center.x = self.displayRightX
+            self.leftDisplay.alpha = 1.0
+            self.rightDisplay.alpha = 1.0
+            }, completion: nil)
+    }
+    
+
+    func updateDisplays(){
+        
+        
+            //let display = ArrowLabel(frame: CGRectMake(0, 0, 30, 30))
+//            let display = UILabel()
+//            display.text = "Text"
+            //let display = ArrowLabel(frame: CGRectMake(0, 0, itemWidth, itemHeight))
+//            let display = ArrowLabel()
+//            display.dataSource = self
+            //displays.append(display)
             //self.addSubview(display)
             
             
 
             //add constraints
-            if(i == 0){
+            //if(i == 0){
 //                display.addConstraint(NSLayoutConstraint(item: display, attribute: NSLayoutAttribute.RightMargin, relatedBy: NSLayoutRelation.Equal, toItem: display.superview, attribute: NSLayoutAttribute.RightMargin, multiplier: 1, constant: 0))
                 //let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 //display.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
@@ -124,52 +181,16 @@ class ProgressDisplay: UIStackView, ArrowLabelDataSource {
                 //NSLayoutConstraint.activateConstraints([horizontalConstraint])
 
 
-            } else {
-                
-            }
+//            } else {
+//                
+//            }
 //            self.append(display)
-        }
+//        }
         //self.updateConstraintsIfNeeded()
 //        self.arrangedSubviews
-        setupConstraints()
-        updateValues()
     }
     
-    func updateValues(){
-        
-    }
-    
-    // Use PureLayout to set up constraints for positioning the subviews.
-    private func setupConstraints() {
-//        if displays.count == 0 {
-//            return
-//        }
-        //displays[0].addConstraint(NSLayoutConstraint(item: displays[0], attribute: NSLayoutAttribute.RightMargin, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.RightMargin, multiplier: 1, constant: 0))
-       // let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Right)
-//        leftButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
-//        
-//        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
-//        rightButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
-//        
-//        dateLabel.autoCenterInSuperview()
-//        dateLabel.autoSetDimensionsToSize(CGSizeMake(dateLabelWidth, dateLabelHeight))
-    }
-    
-    
-    // MARK: - ArrowLabelDataSource protocol methods
 
     
-    func colorForArrowLabel(sender: ArrowLabel) -> UIColor {
-        return UIColor.blueColor()
-    }
-    
-    func valueForArrowLabel(sender: ArrowLabel) -> Int {
-        return 200
-    }
-    
-    func unitForArrowLabel(sender: ArrowLabel) -> String {
-        return ""
-    }
     
 }

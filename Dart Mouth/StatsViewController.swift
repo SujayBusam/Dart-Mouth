@@ -25,11 +25,13 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             weekNavigator.delegate = self
         }
     }
+    
     @IBOutlet weak var weekProgressDisplay: ProgressDisplay!{
         didSet{
             weekProgressDisplay.dataSource = self
         }
     }
+    
     @IBOutlet weak var dayChart: PieChartView! {
         didSet {
             dayChart.delegate = self
@@ -356,7 +358,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
-        weekProgressDisplay.updateDisplays()
+        weekProgressDisplay.updateCalorieDisplay(Int(arc4random_uniform(3000)) - 1500)
     }
     
     
@@ -414,7 +416,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
-        weekProgressDisplay.updateDisplays()
+        weekProgressDisplay.updateMacroDisplay(Int(arc4random_uniform(200)) - 100,
+            protein: Int(arc4random_uniform(200)) - 100,
+            fat: Int(arc4random_uniform(200)) - 100)
     }
     
     // MARK: - Week Shifting Methods
@@ -475,25 +479,22 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     // MARK: -  ProgressDisplayDataSource Protocol Methods
 
-    func getNumItems(sender: ProgressDisplay) -> Int{
-        return 3
-    }
-    
-    func valueForItem(sender : ProgressDisplay) -> Int {
+    func getWeeklyCalorieChange(sender: ProgressDisplay) -> Int{
         return 200
     }
     
-    func textForItem(sender: ProgressDisplay, index: Int) -> String {
-        return "Item"
+    func getWeeklyCarbChange(sender: ProgressDisplay) -> Int{
+        return 100
     }
     
-    func colorForArrow(sender : ProgressDisplay, index: Int) -> UIColor {
-        return UIColor.greenColor()
+    func getWeeklyProteinChange(sender : ProgressDisplay) -> Int{
+        return 20
     }
     
-    func progressUnit(sender : ProgressDisplay) -> String {
-        return ""
+    func getWeeklyFatChange(sender: ProgressDisplay) -> Int {
+        return 30
     }
+
 
     
 
