@@ -21,8 +21,6 @@ class SearchableViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    func setSearchText(searchText: String?) {
-        
-    }
+    func searchTextChanged(newSearchText: String?) {}
+    func searchRequested() {}
 }

@@ -366,7 +366,13 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
     
     // MARK: - Other Overrides
     
-    override func setSearchText(searchText: String?) {
-        self.currentSearchText = searchText
+    override func searchTextChanged(newSearchText: String?) {
+        super.searchTextChanged(newSearchText)
+        self.currentSearchText = newSearchText
+    }
+    
+    override func searchRequested() {
+        super.searchRequested()
+        self.updateUI()
     }
 }

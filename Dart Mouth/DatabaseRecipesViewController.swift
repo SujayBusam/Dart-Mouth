@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol DatabaseRecipesViewControllerDelegate: class {
     func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController)
@@ -25,12 +26,7 @@ class DatabaseRecipesViewController: SearchableViewController,
     
     // MARK: - Instance variables
     
-    var currentSearchText: String? {
-        didSet {
-            updateUI()
-        }
-    }
-    
+    var currentSearchText: String?
     var currentRecipes: [Recipe] = [Recipe]()
     var delegate: DatabaseRecipesViewControllerDelegate!
     
@@ -61,16 +57,37 @@ class DatabaseRecipesViewController: SearchableViewController,
 
     
     func updateUI() {
-       
+        guard self.currentSearchText != nil else { return }
+        
+        let parameters: [String : String] = [
+            "api_key" : Constants.FoodDatabase.ApiKey,
+            "q" : self.currentSearchText!,
+            "sort" : "r",
+            "max" : "50",
+            "offset" : "0",
+            "format" : "JSON"
+        ]
+        
+        Alamofire.request(.GET, Constants.FoodDatabase.BaseUrl, parameters: parameters)
+            .responseJSON { (response: Response<AnyObject, NSError>) -> Void in
+                if let JSON = response.result.value {
+                    print("JSON: \(JSON)")
+                }
+        }
     }
     
 
     // MARK: - Other Overrides
     
-    override func setSearchText(searchText: String?) {
-        // TODO: implement
+    override func searchTextChanged(newSearchText: String?) {
+        super.searchTextChanged(newSearchText)
+        self.currentSearchText = newSearchText
     }
     
+    override func searchRequested() {
+        super.searchRequested()
+        self.updateUI()
+    }
     
     // MARK: - UITableViewDataSource / Delegate Protocol Methods
     
@@ -94,5 +111,3 @@ class DatabaseRecipesViewController: SearchableViewController,
         return cell
     }
 }
-
-

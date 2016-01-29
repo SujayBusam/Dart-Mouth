@@ -146,12 +146,13 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - UISearchBarDelegate protocol methods
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.currentDisplayedVC.setSearchText(searchText)
+        self.currentDisplayedVC.searchTextChanged(searchText)
     }
     
     // When the Search button on the keyboard is pressed
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        self.currentDisplayedVC.searchRequested()
     }
     
     
@@ -186,7 +187,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func cancelButtonPressed(sender: UIBarButtonItem?) {
         self.searchBar.text = nil
-        self.currentDisplayedVC.setSearchText(nil)
+        self.currentDisplayedVC.searchTextChanged(nil)
         self.searchBar.resignFirstResponder()
         displayTitleAndSearchButtonAnimated(true)
     }

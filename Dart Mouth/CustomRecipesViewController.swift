@@ -24,7 +24,11 @@ class CustomRecipesViewController: SearchableViewController {
 
     // MARK: - Other Overrides
     
-    override func setSearchText(searchText: String?) {
+    override func searchTextChanged(newSearchText: String?) {
+        // TODO: implement
+    }
+    
+    override func searchRequested() {
         // TODO: implement
     }
 
