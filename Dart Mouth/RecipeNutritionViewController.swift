@@ -69,6 +69,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
     @IBOutlet weak var sugarsValue: UILabel!
     @IBOutlet weak var proteinValue: UILabel!
     @IBOutlet weak var servingSizeValue: UILabel!
+    @IBOutlet weak var servingSizeText: UILabel!
     
     @IBOutlet weak var servingSizePicker: UIPickerView! {
         didSet {
@@ -132,8 +133,8 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         fiberValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Identifiers.ErrorNutrientValue) g"
         sugarsValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Identifiers.ErrorNutrientValue) g"
         proteinValue?.text = "\(getMultipliedFloatValue(recipe.getProtein()) ?? Identifiers.ErrorNutrientValue) g"
-        servingSizeValue?.text = "\(recipe.getServingSizeGrams()?.description ?? Identifiers.ErrorNutrientValue) g"
-        
+        servingSizeValue?.text = "\(getMultipliedIntegerValue(recipe.getServingSizeGrams()) ?? Identifiers.ErrorNutrientValue) g"
+        servingSizeText?.text = recipe.getServingSizeText()
     }
     
     

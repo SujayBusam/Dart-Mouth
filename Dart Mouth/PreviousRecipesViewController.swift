@@ -70,6 +70,7 @@ class PreviousRecipesViewController: SearchableViewController,
         let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         spinningActivity.userInteractionEnabled = false
         
+        // TODO: need to restrict this to something like the past 2 weeks
         CustomUser.currentUser()!.findAllPreviousRecipesWithCompletionHandler(self.getPreviousRecipesCompletionHandler)
     }
     
