@@ -405,7 +405,7 @@
 				TargetAttributes = {
 					2375D5D31BDC09B70065AC14 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = T26DUXEP39;
+						DevelopmentTeam = 4KDF53QYYU;
 					};
 					2375D5E71BDC09B70065AC14 = {
 						CreatedOnToolsVersion = 7.1;
@@ -713,9 +713,11 @@
 			baseConfigurationReference = 58A186857541FACAF86F6959 /* Pods-Dart Mouth.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Dart Mouth/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.d33811e.Dart-Mouth";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.Dart-Mouth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
@@ -726,9 +728,11 @@
 			baseConfigurationReference = D386822DE229CD5314C72369 /* Pods-Dart Mouth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Dart Mouth/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.d33811e.Dart-Mouth";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.Dart-Mouth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
