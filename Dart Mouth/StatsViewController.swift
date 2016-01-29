@@ -358,7 +358,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
-        weekProgressDisplay.updateCalorieDisplay(200)
+        weekProgressDisplay.updateCalorieDisplay(Int(arc4random_uniform(3000)) - 1500)
     }
     
     
@@ -416,7 +416,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
-        weekProgressDisplay.updateMacroDisplay(0, protein: 0, fat: 0)
+        weekProgressDisplay.updateMacroDisplay(Int(arc4random_uniform(200)) - 100,
+            protein: Int(arc4random_uniform(200)) - 100,
+            fat: Int(arc4random_uniform(200)) - 100)
     }
     
     // MARK: - Week Shifting Methods
@@ -477,19 +479,19 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     // MARK: -  ProgressDisplayDataSource Protocol Methods
 
-    func getWeeklyCalories(sender: ProgressDisplay) -> Int{
+    func getWeeklyCalorieChange(sender: ProgressDisplay) -> Int{
         return 200
     }
     
-    func getWeeklyCarbs(sender: ProgressDisplay) -> Int{
+    func getWeeklyCarbChange(sender: ProgressDisplay) -> Int{
         return 100
     }
     
-    func getWeeklyProtein(sender : ProgressDisplay) -> Int{
+    func getWeeklyProteinChange(sender : ProgressDisplay) -> Int{
         return 20
     }
     
-    func getWeeklyFat(sender: ProgressDisplay) -> Int {
+    func getWeeklyFatChange(sender: ProgressDisplay) -> Int {
         return 30
     }
 

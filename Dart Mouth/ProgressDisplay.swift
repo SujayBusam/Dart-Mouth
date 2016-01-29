@@ -15,15 +15,15 @@ Pressing the left arrow decrements the date, pressing the right arrow increments
 */
 
 protocol ProgressDisplayDataSource: class {
-    func getWeeklyCalories(sender: ProgressDisplay) -> Int
-    func getWeeklyCarbs(sender: ProgressDisplay) -> Int
-    func getWeeklyProtein(sender : ProgressDisplay) -> Int
-    func getWeeklyFat(sender: ProgressDisplay) -> Int
+    func getWeeklyCalorieChange(sender: ProgressDisplay) -> Int
+    func getWeeklyCarbChange(sender: ProgressDisplay) -> Int
+    func getWeeklyProteinChange(sender : ProgressDisplay) -> Int
+    func getWeeklyFatChange(sender: ProgressDisplay) -> Int
     //func colorForArrow(sender : ProgressDisplay, index: Int) -> UIColor
     //func progressUnit(sender : ProgressDisplay) -> String
 }
 
-class ProgressDisplay: UIView, ArrowLabelDataSource {
+class ProgressDisplay: UIView {
     
     
     
@@ -39,8 +39,11 @@ class ProgressDisplay: UIView, ArrowLabelDataSource {
     
     private struct DisplayOptions {
         static let AnimateDuration = 0.3
-        
         static let SideOffSetRatio : CGFloat = 0.3
+        
+        static let ArrowLabelWidthNormal : CGFloat = 80.0
+        static let ArrowLabelHeightNormal : CGFloat = 40.0
+        
     }
 
     weak var dataSource: ProgressDisplayDataSource?
@@ -67,16 +70,16 @@ class ProgressDisplay: UIView, ArrowLabelDataSource {
 
     // Setup left arrow, right arrow, and date label.
     private func setup() {
-        self.backgroundColor = UIColor.brownColor()
+        self.backgroundColor = UIColor.clearColor()
         self.needsUpdateConstraints()
 
-        leftDisplay = ArrowLabel()
+        leftDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
         self.addSubview(leftDisplay)
         
-        rightDisplay = ArrowLabel()
+        rightDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
         self.addSubview(rightDisplay)
         
-        centerDisplay = ArrowLabel()
+        centerDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
         self.addSubview(centerDisplay)
 
         leftDisplay.center.x = displayCenterX
@@ -86,10 +89,37 @@ class ProgressDisplay: UIView, ArrowLabelDataSource {
     }
     
     func updateCalorieDisplay(calories: Int){
+        centerDisplay.updateDescription("Calories")
+        //centerDisplay.updateValue(String(calories))
         animateSingleDisplay()
     }
     
     func updateMacroDisplay(carbs: Int, protein: Int, fat: Int){
+//        let proteinDescription = String("Protein")
+//        proteinDescription.color
+        
+        leftDisplay.updateValue(protein, unit: "g", valence: false)
+        let proteinDescription = "Protein"
+        let proteinAttributedDescription = NSMutableAttributedString(string: proteinDescription)
+        proteinAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "189090"), range: NSMakeRange(0, proteinDescription.characters.count))
+        leftDisplay.updateAttributedDescription(proteinAttributedDescription)
+        
+        leftDisplay.updateValue(carbs, unit: "g", valence: false)
+        let carbDescription = "Carbs"
+        let carbAttributedDescription = NSMutableAttributedString(string: carbDescription)
+        carbAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "F0B428"), range: NSMakeRange(0, carbDescription.characters.count))
+        centerDisplay.updateAttributedDescription(carbAttributedDescription)
+
+        leftDisplay.updateValue(fat, unit: "g", valence: false)
+        let fatDescription = "Fat"
+        let fatAttributedDescription = NSMutableAttributedString(string: fatDescription)
+        fatAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "E42640"), range: NSMakeRange(0, fatDescription.characters.count))
+        rightDisplay.updateAttributedDescription(fatAttributedDescription)
+        
+        
+
+        
+        //UIColor(hexString: "189090")
         animateFullDisplay()
     }
     
@@ -161,20 +191,5 @@ class ProgressDisplay: UIView, ArrowLabelDataSource {
     
 
     
-    
-    // MARK: - ArrowLabelDataSource protocol methods
-
-    
-    func colorForArrowLabel(sender: ArrowLabel) -> UIColor {
-        return UIColor.blueColor()
-    }
-    
-    func valueForArrowLabel(sender: ArrowLabel) -> Int {
-        return 200
-    }
-    
-    func unitForArrowLabel(sender: ArrowLabel) -> String {
-        return ""
-    }
     
 }
