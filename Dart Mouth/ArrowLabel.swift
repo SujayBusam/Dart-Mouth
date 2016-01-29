@@ -20,16 +20,24 @@ protocol ArrowLabelDataSource: class {
     //func descriptionText(sender: ArrowView) -> String
 }
 
+private struct DisplayOptions {
+    static let DescriptorFont = UIFont.systemFontOfSize(15.0)
+    static let FontCompact = UIFont.systemFontOfSize(10.0)
+    
+    static let ArrowSizeNormal : CGFloat = 30.0
+    static let ArrowSizeCompact : CGFloat = 20.0
+}
+
 class ArrowLabel: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //setupSubviews()
+        setupSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //setupSubviews()
+        setupSubviews()
     }
     
     // Subviews
@@ -41,28 +49,29 @@ class ArrowLabel: UIView {
     var arrowHeightRatio : CGFloat = 0.7
     
     // Calculated dimensions
-    var arrowSize: CGFloat { return CGFloat(min(frame.height * arrowHeightRatio, frame.width)) }
-    var valueLabelHeight: CGFloat { return CGFloat(frame.height * (1.0 - arrowHeightRatio)) }
+    //var valueLabelHeight: CGFloat { return CGFloat(frame.height * (1.0 - arrowHeightRatio)) }
+
     
-    var valueLabelWidth: CGFloat { return CGFloat(frame.width)}
+    //var valueLabelWidth: CGFloat { return CGFloat(frame.width)}
+
     
     // Setup arrow and value
     private func setupSubviews() {
         self.backgroundColor = UIColor.randomFlatColor()
         
         // Setup arrow
-        arrow = ArrowDisplay(frame: CGRectMake(0, 0, arrowSize, arrowSize))
+        arrow = ArrowDisplay(frame: CGRectMake(0, 0, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal))
         //arrow = ArrowDisplay(frame: CGRectMake(0, 0, 30, 30))
         
         // Setup Label
-        valueLabel = UILabel(frame: CGRectMake(0, 0, valueLabelWidth, valueLabelHeight))
-        valueLabel.textAlignment = NSTextAlignment.Center
-        valueLabel.textColor = UIColor.blackColor()
-        valueLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
-        valueLabel.adjustsFontSizeToFitWidth = true
-            
+//        valueLabel = UILabel(frame: CGRectMake(0, 0, valueLabelWidth, valueLabelHeight))
+//        valueLabel.textAlignment = NSTextAlignment.Center
+//        valueLabel.textColor = UIColor.blackColor()
+//        valueLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
+//        valueLabel.adjustsFontSizeToFitWidth = true
+//            
         self.addSubview(arrow)
-        self.addSubview(valueLabel)
+        //self.addSubview(valueLabel)
         
         setupConstraints()
     }
