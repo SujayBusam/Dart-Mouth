@@ -19,7 +19,7 @@ import MBProgressHUD
     navigation to other view controllers.
 */
 class DiaryEntryAddContainerViewController: UIViewController,
-    UISearchBarDelegate, MenuViewControllerDelegate, PreviousRecipesViewControllerDelegate {
+    UISearchBarDelegate, MenuViewControllerDelegate, PreviousRecipesViewControllerDelegate, DatabaseRecipesViewControllerDelegate {
     
     // MARK: - Local Constants
     
@@ -67,6 +67,11 @@ class DiaryEntryAddContainerViewController: UIViewController,
     var currentDisplayedVC: SearchableViewController!
     
     // MARK: - View Setup
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setToolbarHidden(true, animated: false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +136,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         
         // Create and add DatabaseRecipesVC
         let databaseRecipesVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.DatabaseRecipes) as! DatabaseRecipesViewController
+        databaseRecipesVC.delegate = self
         self.addChildViewController(databaseRecipesVC)
         databaseRecipesVC.didMoveToParentViewController(self)
         databaseRecipesVC.view.frame = self.containerView.bounds
@@ -165,6 +171,13 @@ class DiaryEntryAddContainerViewController: UIViewController,
     }
     
     
+    // MARK: - DatabaseRecipesViewControllerDelegate protocol methods
+    
+    func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController) {
+        displaySearchBarAndCancelButtonAnimated(true)
+    }
+    
+    
     // MARK: - Button action functions
     
     func searchButtonPressed(sender: UIButton) {
@@ -179,6 +192,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     }
     
     func foodPickerValueDidChange(sender: UISegmentedControl) {
+        displayTitleAndSearchButtonAnimated(false)
         let newSelectedIndex = sender.selectedSegmentIndex
         let viewControllerToHide = self.childViewControllers[self.currentSelectedIndex]
         let viewControllerToDisplay = self.childViewControllers[newSelectedIndex]
@@ -189,7 +203,6 @@ class DiaryEntryAddContainerViewController: UIViewController,
         
         self.currentDisplayedVC = viewControllerToDisplay as! SearchableViewController
         self.currentSelectedIndex = newSelectedIndex
-        cancelButtonPressed(nil)
     }
 
     
