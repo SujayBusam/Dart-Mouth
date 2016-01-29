@@ -20,8 +20,8 @@
                     <connections>
                         <segue destination="JQW-Ec-HKP" kind="relationship" relationship="viewControllers" id="jOL-M7-33D"/>
                         <segue destination="geJ-sP-z8e" kind="relationship" relationship="viewControllers" id="M6a-y3-lyP"/>
-                        <segue destination="jTj-AP-g5i" kind="relationship" relationship="viewControllers" id="8aK-Nk-cbO"/>
-                        <segue destination="jGe-NQ-MOE" kind="relationship" relationship="viewControllers" id="ebL-rJ-QDF"/>
+                        <segue destination="jGe-NQ-MOE" kind="relationship" relationship="viewControllers" id="XSn-SH-wAK"/>
+                        <segue destination="jTj-AP-g5i" kind="relationship" relationship="viewControllers" id="wEW-oX-YFk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6C4-Xr-knS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1540,11 +1540,11 @@
             </objects>
             <point key="canvasLocation" x="960.5" y="99.5"/>
         </scene>
-        <!--Item-->
+        <!--Stats-->
         <scene sceneID="47a-XB-VkL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jGe-NQ-MOE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="NdF-6b-6zA"/>
+                <navigationController title="Stats" automaticallyAdjustsScrollViewInsets="NO" id="jGe-NQ-MOE" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Stats" image="Stats" id="NdF-6b-6zA"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -1568,6 +1568,7 @@
         <image name="MainLogo" width="302" height="396"/>
         <image name="MenuIcon" width="44" height="44"/>
         <image name="PreferencesIcon" width="44" height="44"/>
+        <image name="Stats" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Mui-st-Fba"/>

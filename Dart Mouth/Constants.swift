@@ -129,4 +129,8 @@ struct Constants {
         static let SearchIcon = "Search"
         static let TrashGreen = "TrashGreen"
     }
+    
+    struct FoodDatabase {
+        static let ApiKey = "2eB2uYJaVyEVZuhLy6WR6s7TdXSouIKjnybrvcQe"
+    }
 }

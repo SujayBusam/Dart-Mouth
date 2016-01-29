@@ -251,6 +251,8 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
     // Function that handles the Recipes after fetching them from Parse
     func getRecipesCompletionHandler(recipes: [Recipe]?) -> Void {
         dispatch_async(dispatch_get_main_queue()) {
+            // If 
+            
             self.populateAllCategoriesAndRecipes(recipes)
             self.setFilteredRecipesAndCategoriesWithSearchText(self.currentSearchText)
             
