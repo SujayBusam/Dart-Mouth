@@ -109,8 +109,9 @@ class ArrowLabel: UIView {
     }
     
     func updateValue(value : Int, unit : String, valence : Bool){
-        //let direction : ArrowDisplay.Direction = (value >= 0) ? .Positive : .Negative
-        valueLabel.text = String(value)
+        let direction : ArrowDisplay.Direction = (value >= 0) ? .Positive : .Negative
+        valueLabel.text = String(value) + unit
+        arrow.update(direction, valence: valence)
     }
 
     
@@ -122,20 +123,46 @@ class ArrowLabel: UIView {
         private struct DisplayOptions {
             static let ArrowThickness : CGFloat = 3.0
             static let ArrowLengthRatio : CGFloat = 0.7
+            static let ArrowArmRatio : CGFloat = 0.3
+            
+            static let AnimationDuration : NSTimeInterval = 0.8
         }
 
         var direction : Direction = .Neutral
-        var hasValence = false
+        var hasValence = true
         
-        enum Direction {
-            case Positive, Neutral, Negative
+        enum Direction : CGFloat {
+            case Positive = -89.0, Neutral = 0, Negative = 89.0
         }
         
-        func update(direction : Direction, valence : Bool){
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            setUpLayer()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+            setUpLayer()
+        }
+        func update(newDirection : Direction, valence : Bool){
+//            let degreeChange : CGFloat = CGFloat(direction.rawValue - newDirection.rawValue) * CGFloat(90.0)
+//            let degreeChange : CGFloat = CGFloat(90.0)
+//            print(degreeChange)
+            
+            UIView.animateWithDuration(DisplayOptions.AnimationDuration, animations: {
+                self.hasValence = valence
+                self.transform = CGAffineTransformMakeRotation((newDirection.rawValue * CGFloat(M_PI)) / 180.0)
+            })
+        }
+        
+        func setUpLayer(){
+            layer.backgroundColor = UIColor.greenColor().CGColor
+            layer.frame = self.frame
             
         }
-
-        override func drawRect(rect: CGRect) {
+        
+        func updateLayer(){
             var fillColor = UIColor.whiteColor()
             var arrowColor = UIColor.blackColor()
             if(hasValence){
@@ -150,24 +177,52 @@ class ArrowLabel: UIView {
                 }
             }
             
-            let fillPath = UIBezierPath(ovalInRect: rect)
+            let fillPath = UIBezierPath(ovalInRect: layer.frame)
             fillColor.setFill()
             fillPath.fill()
-            
-            let arrowTail = CGPoint(x: rect.midX - CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
-            let arrowHead = CGPoint(x: rect.midX + CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
 
-//            let arrowTail = CGPoint(x: 0 , y: 0)
-//            let arrowHead = CGPoint(x: 10, y: 10)
-
-            let arrowPath = UIBezierPath()
-            arrowPath.lineWidth = DisplayOptions.ArrowThickness
-            arrowPath.moveToPoint(arrowTail)
-            arrowPath.addLineToPoint(arrowHead)
-            
-            arrowColor.setStroke()
-            arrowPath.stroke()
         }
+
+//        override func drawRect(rect: CGRect) {
+//            self.backgroundColor = UIColor.clearColor()
+//            var fillColor = UIColor.whiteColor()
+//            var arrowColor = UIColor.blackColor()
+//            if(hasValence){
+//                switch direction {
+//                case .Positive:
+//                    fillColor = FlatRed()
+//                    arrowColor = UIColor.whiteColor()
+//                case .Negative:
+//                    fillColor = FlatGreen()
+//                    arrowColor = UIColor.whiteColor()
+//                default: break
+//                }
+//            }
+//            
+//            let fillPath = UIBezierPath(ovalInRect: rect)
+//            fillColor.setFill()
+//            fillPath.fill()
+//            
+//            let arrowTail = CGPoint(x: rect.midX - CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
+//            let arrowHead = CGPoint(x: rect.midX + CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
+//            let arrowLeftArmEnd = CGPoint(x: rect.midX + CGFloat(rect.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: rect.midY + rect.height * DisplayOptions.ArrowArmRatio)
+//            let arrowRightArmEnd = CGPoint(x: rect.midX + CGFloat(rect.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: rect.midY - rect.height * DisplayOptions.ArrowArmRatio)
+////            let arrowTail = CGPoint(x: 0 , y: 0)
+////            let arrowHead = CGPoint(x: 10, y: 10)
+//
+//            let arrowPath = UIBezierPath()
+//            arrowPath.lineWidth = DisplayOptions.ArrowThickness
+//            arrowPath.lineCapStyle = .Round
+//            arrowPath.moveToPoint(arrowTail)
+//            arrowPath.addLineToPoint(arrowHead)
+//            arrowPath.moveToPoint(arrowLeftArmEnd)
+//            arrowPath.addLineToPoint(arrowHead)
+//            arrowPath.moveToPoint(arrowRightArmEnd)
+//            arrowPath.addLineToPoint(arrowHead)
+//            
+//            arrowColor.setStroke()
+//            arrowPath.stroke()
+//        }
     }
     
     

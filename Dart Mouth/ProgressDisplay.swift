@@ -89,6 +89,7 @@ class ProgressDisplay: UIView {
     }
     
     func updateCalorieDisplay(calories: Int){
+        centerDisplay.updateValue(calories, unit: "", valence: true)
         centerDisplay.updateDescription("Calories")
         //centerDisplay.updateValue(String(calories))
         animateSingleDisplay()
@@ -104,13 +105,13 @@ class ProgressDisplay: UIView {
         proteinAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "189090"), range: NSMakeRange(0, proteinDescription.characters.count))
         leftDisplay.updateAttributedDescription(proteinAttributedDescription)
         
-        leftDisplay.updateValue(carbs, unit: "g", valence: false)
+        centerDisplay.updateValue(carbs, unit: "g", valence: false)
         let carbDescription = "Carbs"
         let carbAttributedDescription = NSMutableAttributedString(string: carbDescription)
         carbAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "F0B428"), range: NSMakeRange(0, carbDescription.characters.count))
         centerDisplay.updateAttributedDescription(carbAttributedDescription)
 
-        leftDisplay.updateValue(fat, unit: "g", valence: false)
+        rightDisplay.updateValue(fat, unit: "g", valence: false)
         let fatDescription = "Fat"
         let fatAttributedDescription = NSMutableAttributedString(string: fatDescription)
         fatAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "E42640"), range: NSMakeRange(0, fatDescription.characters.count))
