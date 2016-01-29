@@ -143,6 +143,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.currentDisplayedVC.setSearchText(searchText)
     }
     
+    // When the Search button on the keyboard is pressed
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
@@ -151,6 +152,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - MenuViewControllerDelegate protocol methods
     
     func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) {
+        self.searchBar.resignFirstResponder()
         showDiaryEntryNutritionAdderForRecipe(recipe)
     }
     
@@ -158,6 +160,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - PreviousRecipesViewControllerDelegate protocol methods
     
     func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) {
+        self.searchBar.resignFirstResponder()
         showDiaryEntryNutritionAdderForRecipe(recipe)
     }
     
@@ -171,6 +174,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
     func cancelButtonPressed(sender: UIBarButtonItem?) {
         self.searchBar.text = nil
         self.currentDisplayedVC.setSearchText(nil)
+        self.searchBar.resignFirstResponder()
         displayTitleAndSearchButtonAnimated(true)
     }
     
