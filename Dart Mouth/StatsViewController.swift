@@ -107,6 +107,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         static let totalDays = 7
         static let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         static let DayLabels : [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        static let goalLineBuffer = 300 //minimum y value shown on chart to include goal
         
         //DIMENSION VARIABLES
         static let SelectorHeight : CGFloat = 100.0
@@ -149,11 +150,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     }
     
     func loadWeekData(){
-//        loadFakeData()
-        print("loading data")
         
-        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        spinningActivity.userInteractionEnabled = false
+//        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        spinningActivity.userInteractionEnabled = false
     
         UserMeal.findObjectsInBackgroundWithBlockWithinRange(self.userMealQueryCompletionHandler, startDate: startOfWeek, endDate: endOfWeek, forUser: CustomUser.currentUser()!)
     }
@@ -174,7 +173,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
                     self.carbs[i] += userMeal.getCumulativeCarbs()
                 }
             }
-            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            //MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             self.updateUI()
             self.showCharts()
         }
@@ -287,9 +286,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.xAxis.setLabelsToSkip(0)
         weekChart.setVisibleXRange(minXRange: 0, maxXRange: 7.0)
         
-        let goalLine = ChartLimitLine(limit: Double(goalCalories))
-        goalLine.lineColor = DisplayOptions.GoalLineColor
-        weekChart.leftAxis.addLimitLine(goalLine)
         weekChart.leftAxis.drawLimitLinesBehindDataEnabled = true
         weekChart.leftAxis.enabled = false
         weekChart.leftAxis.drawGridLinesEnabled = false
@@ -392,6 +388,11 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
         
+        weekChart.leftAxis.removeAllLimitLines()
+        let goalLine = ChartLimitLine(limit: Double(goalCalories))
+        goalLine.lineColor = DisplayOptions.GoalLineColor
+        weekChart.leftAxis.addLimitLine(goalLine)
+        
         //update week progress bar
         weekProgressDisplay.updateCalorieDisplay(Int(weekCumulativeCalories - goalCalories * 7))
     }
@@ -442,7 +443,11 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             weekCumulativeProtein += protein[i]
             weekCumulativeCarbs += carbs[i]
             weekCumulativeFat += fat[i]
-            let dataEntry = BarChartDataEntry(values: [Double(carbs[i]), Double(protein[i]), Double(fat[i])] , xIndex: i)
+            
+            let proteinCalories = Double(protein[i] * Constants.NutritionalConstants.ProteinCaloriesToGram)
+            let carbCalories = Double(carbs[i] * Constants.NutritionalConstants.CarbsCaloriesToGram)
+            let fatCalories = Double(carbs[i] * Constants.NutritionalConstants.FatCaloriesToGram)
+            let dataEntry = BarChartDataEntry(values: [carbCalories, proteinCalories, fatCalories] , xIndex: i)
             barDataEntries.append(dataEntry)
         }
         let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
@@ -451,6 +456,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         barChartDataSet.colors = [DisplayOptions.ProteinColor, DisplayOptions.CarbColor, DisplayOptions.FatColor]
         barChartDataSet.drawValuesEnabled = false
         let barChartData = BarChartData(xVals: dateStrings, dataSet: barChartDataSet)
+        weekChart.leftAxis.removeAllLimitLines()
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
