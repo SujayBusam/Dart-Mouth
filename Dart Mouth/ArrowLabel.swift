@@ -26,6 +26,9 @@ private struct DisplayOptions {
     static let ValueLabelHeightCompact : CGFloat = 8.0
     
     static let DescriptionWidthRatio : CGFloat = 0.7
+    
+    static let AnimationDuration : NSTimeInterval = 0.8
+    static let FadeDuration : NSTimeInterval = 0.3
 }
 
 class ArrowLabel: UIView {
@@ -108,10 +111,25 @@ class ArrowLabel: UIView {
         descriptionLabel.attributedText = description
     }
     
-    func updateValue(value : Int, unit : String, valence : Bool){
+    func updateValue(value : Int, unit : String, type : ArrowDisplay.DisplayType){
         let direction : ArrowDisplay.Direction = (value >= 0) ? .Positive : .Negative
         valueLabel.text = String(value) + unit
-        arrow.update(direction, valence: valence)
+        
+        if(type == .Hidden){
+            //hide labels early
+            UIView.animateWithDuration(DisplayOptions.FadeDuration, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                self.descriptionLabel.alpha = 0.0
+                self.valueLabel.alpha = 0.0
+                }, completion: nil)
+        } else {
+            //labels appear later into animation
+            UIView.animateWithDuration(DisplayOptions.FadeDuration, delay: DisplayOptions.AnimationDuration, options: UIViewAnimationOptions.CurveLinear, animations: {
+                self.descriptionLabel.alpha = 1.0
+                self.valueLabel.alpha = 1.0
+                }, completion: nil)
+        }
+        
+        arrow.update(type, newDirection: direction)
     }
 
     
@@ -126,103 +144,119 @@ class ArrowLabel: UIView {
             static let ArrowArmRatio : CGFloat = 0.3
             
             static let AnimationDuration : NSTimeInterval = 0.8
+            
+            static let ProteinColor = UIColor(hexString: "189090")
+            static let CarbColor = UIColor(hexString: "F0B428")
+            static let FatColor = UIColor(hexString: "E42640")
         }
 
-        var direction : Direction = .Neutral
-        var hasValence = true
+        let arrowLayer = CAShapeLayer()
+        
+        let circleLayer = CAShapeLayer()
+        
+        var type = DisplayType.Hidden
+        var direction : Direction = .Positive
+        var hasValence = false
         
         enum Direction : CGFloat {
-            case Positive = -89.0, Neutral = 0, Negative = 89.0
+            case Positive = -89.0, Negative = 89.0
+        }
+        
+        enum DisplayType {
+            case Calorie, Carb, Protein, Fat, Hidden
         }
         
         
         override init(frame: CGRect) {
             super.init(frame: frame)
-            setUpLayer()
+            setUpLayers()
         }
         
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
-            setUpLayer()
+            setUpLayers()
         }
-        func update(newDirection : Direction, valence : Bool){
-//            let degreeChange : CGFloat = CGFloat(direction.rawValue - newDirection.rawValue) * CGFloat(90.0)
-//            let degreeChange : CGFloat = CGFloat(90.0)
-//            print(degreeChange)
-            
+        func update(newType : DisplayType, newDirection : Direction){
             UIView.animateWithDuration(DisplayOptions.AnimationDuration, animations: {
-                self.hasValence = valence
                 self.transform = CGAffineTransformMakeRotation((newDirection.rawValue * CGFloat(M_PI)) / 180.0)
             })
+            
+            circleLayer.fillColor = getCircleColor(newType, direction: newDirection).CGColor
+            let circleColorAnimation = CABasicAnimation(keyPath: "fillColor")
+            circleColorAnimation.duration = 0.8
+            circleColorAnimation.fromValue = getCircleColor(type, direction: direction).CGColor
+            direction = newDirection
+            circleColorAnimation.toValue = getCircleColor(newType, direction: newDirection).CGColor
+            circleColorAnimation.autoreverses = false
+            circleLayer.addAnimation(circleColorAnimation, forKey: "fillColor")
+            
+            getArrowColor(newType).CGColor
+            arrowLayer.strokeColor = getArrowColor(newType).CGColor
+            let arrowColorAnimation = CABasicAnimation(keyPath: "strokeColor")
+            arrowColorAnimation.duration = 0.8
+            arrowColorAnimation.fromValue = getArrowColor(type).CGColor
+            arrowColorAnimation.toValue = getArrowColor(newType).CGColor
+            arrowColorAnimation.autoreverses = false
+            arrowLayer.addAnimation(arrowColorAnimation, forKey: "strokeColor")
+            
+            direction = newDirection
+            type = newType
         }
         
-        func setUpLayer(){
-            layer.backgroundColor = UIColor.greenColor().CGColor
+        func setUpLayers(){
+            layer.backgroundColor = UIColor.clearColor().CGColor
             layer.frame = self.frame
             
+            let circlePath = UIBezierPath(ovalInRect: self.bounds)
+            circleLayer.fillColor = UIColor.clearColor().CGColor
+            circleLayer.path = circlePath.CGPath
+            circleLayer.frame = self.bounds
+            
+            let arrowTail = CGPoint(x: bounds.midX - CGFloat(bounds.width * DisplayOptions.ArrowLengthRatio / 2.0), y: bounds.midY)
+            let arrowHead = CGPoint(x: bounds.midX + CGFloat(bounds.width * DisplayOptions.ArrowLengthRatio / 2.0), y: bounds.midY)
+            let arrowLeftArmEnd = CGPoint(x: bounds.midX + CGFloat(bounds.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: bounds.midY + bounds.height * DisplayOptions.ArrowArmRatio)
+            let arrowRightArmEnd = CGPoint(x: bounds.midX + CGFloat(bounds.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: bounds.midY - bounds.height * DisplayOptions.ArrowArmRatio)
+            
+            let arrowPath = UIBezierPath()
+            arrowPath.lineWidth = DisplayOptions.ArrowThickness
+            arrowPath.lineCapStyle = .Round
+            arrowPath.moveToPoint(arrowTail)
+            arrowPath.addLineToPoint(arrowHead)
+            arrowPath.moveToPoint(arrowLeftArmEnd)
+            arrowPath.addLineToPoint(arrowHead)
+            arrowPath.moveToPoint(arrowRightArmEnd)
+            arrowPath.addLineToPoint(arrowHead)
+            
+            arrowLayer.path = arrowPath.CGPath
+            arrowLayer.lineCap = kCALineCapRound
+            arrowLayer.lineWidth = DisplayOptions.ArrowThickness
+            arrowLayer.strokeColor = getArrowColor(type).CGColor
+            arrowLayer.frame = self.bounds
+            
+            layer.addSublayer(circleLayer)
+            layer.addSublayer(arrowLayer)
         }
         
-        func updateLayer(){
-            var fillColor = UIColor.whiteColor()
-            var arrowColor = UIColor.blackColor()
-            if(hasValence){
+        
+        private func getCircleColor(type : DisplayType, direction : Direction) -> UIColor{
+            if(type == .Calorie){
                 switch direction {
-                case .Positive:
-                    fillColor = FlatRed()
-                    arrowColor = UIColor.whiteColor()
-                case .Negative:
-                    fillColor = FlatGreen()
-                    arrowColor = UIColor.whiteColor()
-                default: break
+                case .Positive: return FlatRed()
+                case .Negative: return FlatGreen()
                 }
             }
-            
-            let fillPath = UIBezierPath(ovalInRect: layer.frame)
-            fillColor.setFill()
-            fillPath.fill()
-
+            return UIColor.clearColor()
         }
-
-//        override func drawRect(rect: CGRect) {
-//            self.backgroundColor = UIColor.clearColor()
-//            var fillColor = UIColor.whiteColor()
-//            var arrowColor = UIColor.blackColor()
-//            if(hasValence){
-//                switch direction {
-//                case .Positive:
-//                    fillColor = FlatRed()
-//                    arrowColor = UIColor.whiteColor()
-//                case .Negative:
-//                    fillColor = FlatGreen()
-//                    arrowColor = UIColor.whiteColor()
-//                default: break
-//                }
-//            }
-//            
-//            let fillPath = UIBezierPath(ovalInRect: rect)
-//            fillColor.setFill()
-//            fillPath.fill()
-//            
-//            let arrowTail = CGPoint(x: rect.midX - CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
-//            let arrowHead = CGPoint(x: rect.midX + CGFloat(rect.width * DisplayOptions.ArrowLengthRatio / 2.0), y: rect.midY)
-//            let arrowLeftArmEnd = CGPoint(x: rect.midX + CGFloat(rect.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: rect.midY + rect.height * DisplayOptions.ArrowArmRatio)
-//            let arrowRightArmEnd = CGPoint(x: rect.midX + CGFloat(rect.width * ((DisplayOptions.ArrowLengthRatio / 2.0) - DisplayOptions.ArrowArmRatio)), y: rect.midY - rect.height * DisplayOptions.ArrowArmRatio)
-////            let arrowTail = CGPoint(x: 0 , y: 0)
-////            let arrowHead = CGPoint(x: 10, y: 10)
-//
-//            let arrowPath = UIBezierPath()
-//            arrowPath.lineWidth = DisplayOptions.ArrowThickness
-//            arrowPath.lineCapStyle = .Round
-//            arrowPath.moveToPoint(arrowTail)
-//            arrowPath.addLineToPoint(arrowHead)
-//            arrowPath.moveToPoint(arrowLeftArmEnd)
-//            arrowPath.addLineToPoint(arrowHead)
-//            arrowPath.moveToPoint(arrowRightArmEnd)
-//            arrowPath.addLineToPoint(arrowHead)
-//            
-//            arrowColor.setStroke()
-//            arrowPath.stroke()
-//        }
+        
+        private func getArrowColor(type : DisplayType) -> UIColor{
+            switch type {
+            case .Calorie: return UIColor.whiteColor()
+            case .Carb : return DisplayOptions.CarbColor
+            case .Protein : return DisplayOptions.ProteinColor
+            case .Fat : return DisplayOptions.FatColor
+            case .Hidden : return UIColor.whiteColor()
+            }
+        }
     }
     
     

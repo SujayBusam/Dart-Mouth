@@ -38,7 +38,7 @@ class ProgressDisplay: UIView {
     }
     
     private struct DisplayOptions {
-        static let AnimateDuration = 0.3
+        static let AnimateDuration = 0.8
         static let SideOffSetRatio : CGFloat = 0.3
         
         static let ArrowLabelWidthNormal : CGFloat = 80.0
@@ -73,14 +73,15 @@ class ProgressDisplay: UIView {
         self.backgroundColor = UIColor.clearColor()
         self.needsUpdateConstraints()
 
+        centerDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
+        self.addSubview(centerDisplay)
+
         leftDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
         self.addSubview(leftDisplay)
         
         rightDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
         self.addSubview(rightDisplay)
         
-        centerDisplay = ArrowLabel(frame: CGRectMake(0, 0, DisplayOptions.ArrowLabelWidthNormal, DisplayOptions.ArrowLabelHeightNormal))
-        self.addSubview(centerDisplay)
 
         leftDisplay.center.x = displayCenterX
         centerDisplay.center.x = displayCenterX
@@ -89,9 +90,11 @@ class ProgressDisplay: UIView {
     }
     
     func updateCalorieDisplay(calories: Int){
-        centerDisplay.updateValue(calories, unit: "", valence: true)
+        leftDisplay.updateValue(calories, unit: "", type: .Hidden)
+        rightDisplay.updateValue(calories, unit: "", type: .Hidden)
+        
+        centerDisplay.updateValue(calories, unit: "", type: .Calorie)
         centerDisplay.updateDescription("Calories")
-        //centerDisplay.updateValue(String(calories))
         animateSingleDisplay()
     }
     
@@ -99,28 +102,24 @@ class ProgressDisplay: UIView {
 //        let proteinDescription = String("Protein")
 //        proteinDescription.color
         
-        leftDisplay.updateValue(protein, unit: "g", valence: false)
+        leftDisplay.updateValue(protein, unit: "g", type: .Protein)
         let proteinDescription = "Protein"
         let proteinAttributedDescription = NSMutableAttributedString(string: proteinDescription)
         proteinAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "189090"), range: NSMakeRange(0, proteinDescription.characters.count))
         leftDisplay.updateAttributedDescription(proteinAttributedDescription)
         
-        centerDisplay.updateValue(carbs, unit: "g", valence: false)
+        centerDisplay.updateValue(carbs, unit: "g", type: .Carb)
         let carbDescription = "Carbs"
         let carbAttributedDescription = NSMutableAttributedString(string: carbDescription)
         carbAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "F0B428"), range: NSMakeRange(0, carbDescription.characters.count))
         centerDisplay.updateAttributedDescription(carbAttributedDescription)
 
-        rightDisplay.updateValue(fat, unit: "g", valence: false)
+        rightDisplay.updateValue(fat, unit: "g", type: .Fat)
         let fatDescription = "Fat"
         let fatAttributedDescription = NSMutableAttributedString(string: fatDescription)
         fatAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "E42640"), range: NSMakeRange(0, fatDescription.characters.count))
         rightDisplay.updateAttributedDescription(fatAttributedDescription)
-        
-        
 
-        
-        //UIColor(hexString: "189090")
         animateFullDisplay()
     }
     
@@ -129,9 +128,9 @@ class ProgressDisplay: UIView {
     func animateSingleDisplay(){
         UIView.animateWithDuration(DisplayOptions.AnimateDuration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.leftDisplay.center.x = self.displayCenterX
-            self.leftDisplay.alpha = 0
+            //self.leftDisplay.alpha = 0
             self.rightDisplay.center.x = self.displayCenterX
-            self.rightDisplay.alpha = 0
+            //self.rightDisplay.alpha = 0
         }, completion: nil)
         
 //        UIView.animateWithDuration(DisplayOptions.AnimateDuration, delay: 0,
