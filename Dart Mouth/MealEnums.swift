@@ -13,10 +13,11 @@ let display = Mappings.StringTypes.Display
 
 enum Venue: ParseFieldCompatible {
     case Foco
+    case Collis
     case Hop
     case Novack
     
-    static let allVenues: [Venue] = [.Foco, .Hop, .Novack]
+    static let allVenues: [Venue] = [.Foco, .Collis, .Hop, .Novack]
     
     var parseField: String? {
         return Mappings.StringsForVenue[self]![parse]

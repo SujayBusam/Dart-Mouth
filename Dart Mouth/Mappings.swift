@@ -22,6 +22,11 @@ struct Mappings {
             StringTypes.Display : Constants.VenueStrings.FocoDisplay,
         ],
         
+        Venue.Collis: [
+            StringTypes.Parse : Constants.VenueStrings.CollisParse,
+            StringTypes.Display : Constants.VenueStrings.CollisDisplay
+        ],
+        
         Venue.Hop: [
             StringTypes.Parse : Constants.VenueStrings.HopParse,
             StringTypes.Display : Constants.VenueStrings.HopDisplay,
@@ -133,6 +138,12 @@ struct Mappings {
             MealTime.Dinner,
         ],
         
+        Venue.Collis: [
+            MealTime.Breakfast,
+            MealTime.Lunch,
+            MealTime.Dinner,
+        ],
+        
         Venue.Hop: [
             MealTime.Lunch,
             MealTime.Dinner,
@@ -153,6 +164,10 @@ struct Mappings {
             Menu.GlutenFree,
             Menu.Beverage,
             Menu.Condiments,
+        ],
+        
+        Venue.Collis: [
+            Menu.EverydayItems
         ],
         
         Venue.Hop: [

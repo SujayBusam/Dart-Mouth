@@ -27,7 +27,7 @@ class DatabaseRecipesViewController: SearchableViewController,
     // MARK: - Instance variables
     
     var currentSearchText: String?
-    var currentRecipes: [Recipe] = [Recipe]()
+    var currentRecipes: [DatabaseRecipe] = [DatabaseRecipe]()
     var delegate: DatabaseRecipesViewControllerDelegate!
     
     
@@ -103,8 +103,6 @@ class DatabaseRecipesViewController: SearchableViewController,
         let cell = recipesTableView.dequeueReusableCellWithIdentifier(Identifiers.recipeCell, forIndexPath: indexPath)
         
         let recipe = currentRecipes[indexPath.row]
-        cell.textLabel?.text = recipe.name
-        cell.detailTextLabel?.text = "\(recipe.getCalories()?.description ?? "-") cals"
         cell.accessoryType = .DisclosureIndicator
         cell.selectionStyle = .Default
         

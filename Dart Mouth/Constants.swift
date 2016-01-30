@@ -15,6 +15,9 @@ struct Constants {
         static let FocoDisplay = "Foco"
         static let FocoParse = "DDS"
         
+        static let CollisDisplay = "Collis"
+        static let CollisParse = "COLLIS"
+        
         static let HopDisplay = "Hop"
         static let HopParse = "CYC"
         
