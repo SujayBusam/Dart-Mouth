@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 protocol DatabaseRecipesViewControllerDelegate: class {
     func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController)
@@ -52,12 +53,18 @@ class DatabaseRecipesViewController: SearchableViewController,
         super.viewDidLoad()
         print("DB Recipes VC did load.")
 
-        updateUI()
+        updateSearchData()
     }
 
     
-    func updateUI() {
-        guard self.currentSearchText != nil else { return }
+    func updateSearchData() {
+        guard self.currentSearchText != nil && !self.currentSearchText!.isEmpty else {
+            self.currentRecipes.removeAll()
+            self.recipesTableView.reloadData()
+            return
+        }
+        
+        self.currentRecipes.removeAll()
         
         let parameters: [String : String] = [
             "api_key" : Constants.FoodDatabase.ApiKey,
@@ -70,9 +77,34 @@ class DatabaseRecipesViewController: SearchableViewController,
         
         Alamofire.request(.GET, Constants.FoodDatabase.BaseUrl, parameters: parameters)
             .responseJSON { (response: Response<AnyObject, NSError>) -> Void in
-                if let JSON = response.result.value {
-                    print("JSON: \(JSON)")
-                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    guard response.result.error == nil else {
+                        // Error in making the request
+                        print("Error searching food database for \(self.currentSearchText!)")
+                        print(response.result.error!)
+                        return
+                    }
+                    
+                    if let responseValue = response.result.value {
+                        let responseJSON = JSON(responseValue)
+                        print("JSON: \(responseJSON)")
+                        
+                        if let dbRecipes = responseJSON["list"]["item"].array {
+                            for dbRecipe in dbRecipes {
+                                guard DatabaseRecipe.isValidJSON(dbRecipe) else {
+                                    print("This item: \(dbRecipe) does not have valid fields. Skipping.")
+                                    continue
+                                }
+                                
+                                self.currentRecipes.append(DatabaseRecipe(group: dbRecipe["group"].stringValue,
+                                    name: dbRecipe["name"].stringValue, ndbno: dbRecipe["ndbno"].stringValue))
+                            }
+                        } else {
+                            print("Item not found.")
+                        }
+                    }
+                    self.recipesTableView.reloadData()
+                })
         }
     }
     
@@ -82,11 +114,14 @@ class DatabaseRecipesViewController: SearchableViewController,
     override func searchTextChanged(newSearchText: String?) {
         super.searchTextChanged(newSearchText)
         self.currentSearchText = newSearchText
+        if newSearchText == nil || newSearchText!.isEmpty {
+            self.updateSearchData()
+        }
     }
     
     override func searchRequested() {
         super.searchRequested()
-        self.updateUI()
+        self.updateSearchData()
     }
     
     // MARK: - UITableViewDataSource / Delegate Protocol Methods
@@ -103,6 +138,7 @@ class DatabaseRecipesViewController: SearchableViewController,
         let cell = recipesTableView.dequeueReusableCellWithIdentifier(Identifiers.recipeCell, forIndexPath: indexPath)
         
         let recipe = currentRecipes[indexPath.row]
+        cell.textLabel?.text = recipe.name
         cell.accessoryType = .DisclosureIndicator
         cell.selectionStyle = .Default
         

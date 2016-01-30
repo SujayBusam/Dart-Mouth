@@ -9,6 +9,7 @@ target 'Dart Mouth' do
   pod 'MBProgressHUD', '~> 0.9.2'
   pod 'Charts'
   pod 'Alamofire', '~> 3.0'
+  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 end
 
 target 'Dart MouthTests' do
@@ -19,4 +20,5 @@ target 'Dart MouthTests' do
   pod 'MBProgressHUD', '~> 0.9.2'
   pod 'Charts'
   pod 'Alamofire', '~> 3.0'
+  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 end

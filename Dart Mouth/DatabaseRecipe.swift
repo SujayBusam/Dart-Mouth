@@ -14,6 +14,7 @@
     used to query for nutrition info.
 **/
 import Foundation
+import SwiftyJSON
 
 class DatabaseRecipe {
     
@@ -26,4 +27,13 @@ class DatabaseRecipe {
         self.name = name
         self.ndbno = ndbno
     }
+    
+    
+    // MARK: - Useful class helper functions
+    
+    class func isValidJSON(recipeJSON: JSON) -> Bool {
+        return recipeJSON["group"].isExists() && recipeJSON["name"].isExists()
+            && recipeJSON["ndbno"].isExists()
+    }
+    
 }
