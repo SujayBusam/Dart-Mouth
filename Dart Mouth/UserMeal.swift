@@ -36,6 +36,22 @@ class UserMeal: PFObject, PFSubclassing {
         query.findObjectsInBackgroundWithBlock(block)
     }
     
+    class func findObjectsInBackgroundWithBlockWithinRange(block: PFQueryArrayResultBlock,
+        startDate: NSDate, endDate: NSDate, forUser user: CustomUser) -> Void {
+            let query = UserMeal.query()!
+            query.includeKey("entries.recipe")
+            query.includeKey("entries.user")
+            
+            // Restrict query based on parameters
+            query.whereKey("user", equalTo: user)
+            query.whereKey("date", greaterThanOrEqualTo: startDate.startOfDay)
+            query.whereKey("date", lessThanOrEqualTo: endDate.endOfDay!)
+            
+            query.findObjectsInBackgroundWithBlock(block)
+    }
+    
+    
+    
     // MARK: - Useful instance helper functions
     
     func getCumulativeCalories() -> Int {
@@ -43,6 +59,36 @@ class UserMeal: PFObject, PFSubclassing {
         for entry in self.entries {
             if let cals = entry.getTotalCalories() {
                 total += cals
+            }
+        }
+        return total
+    }
+    
+    func getCumulativeProtein() -> Float {
+        var total: Float = 0
+        for entry in self.entries {
+            if let protein = entry.getTotalProtein() {
+                total += protein
+            }
+        }
+        return total
+    }
+    
+    func getCumulativeCarbs() -> Float {
+        var total: Float = 0
+        for entry in self.entries {
+            if let carbs = entry.getTotalCarbs() {
+                total += carbs
+            }
+        }
+        return total
+    }
+    
+    func getCumulativeFat() -> Float {
+        var total: Float = 0
+        for entry in self.entries {
+            if let fat = entry.getTotalFat() {
+                total += fat
             }
         }
         return total

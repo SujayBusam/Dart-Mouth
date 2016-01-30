@@ -14,20 +14,24 @@ import ChameleonFramework
 This is a custom UIView that shows an arrow that will point up or down 
 and animate */
 
-
 private struct DisplayOptions {
-    static let ValueFontNormal = UIFont.systemFontOfSize(8.0)
-    static let ValueFontCompact = UIFont.systemFontOfSize(10.0)
+    static let ValueFontNormal = UIFont.systemFontOfSize(11.0)
+    static let ValueFontCompact = UIFont.systemFontOfSize(8.0)
     
-    static let ArrowSizeNormal : CGFloat = 25.0
-    static let ArrowSizeCompact : CGFloat = 15.0
+    static let DescriptionFontNormal = UIFont.systemFontOfSize(13.0)
+    static let DescriptionFontCompact = UIFont.systemFontOfSize(10.0)
+
     
-    static let ValueLabelHeightNormal : CGFloat = 15.0
-    static let ValueLabelHeightCompact : CGFloat = 8.0
+    static let ArrowSizeNormal : CGFloat = 30.0
+    static let ArrowSizeCompact : CGFloat = 20.0
     
+    static let ValueLabelHeightNormal : CGFloat = 20.0
+    static let ValueLabelHeightCompact : CGFloat = 15.0
+    
+    static let DescriptionPadding : CGFloat = 4.0
     static let DescriptionWidthRatio : CGFloat = 0.7
     
-    static let AnimationDuration : NSTimeInterval = 0.8
+    static let AnimationDuration : NSTimeInterval = 0.6
     static let FadeDuration : NSTimeInterval = 0.3
 }
 
@@ -48,61 +52,28 @@ class ArrowLabel: UIView {
     var valueLabel: UILabel!
     var arrow: ArrowDisplay!
     
-    // Calculated dimensions
-
-    
-    //var valueLabelWidth: CGFloat { return CGFloat(frame.width)}
-
-    
-    // Setup arrow and value
     private func setupSubviews() {
-        //self.gkgroundColor = UIColor.randomFlatColor()
-        
-        let descriptionLabelWidth = frame.width * DisplayOptions.DescriptionWidthRatio - 4.0
+        let descriptionLabelWidth = frame.width * DisplayOptions.DescriptionWidthRatio - DisplayOptions.DescriptionPadding
         let descriptionLabelHeight = DisplayOptions.ArrowSizeNormal
         
-        print(descriptionLabelWidth)
-        print(descriptionLabelHeight)
         descriptionLabel = UILabel(frame: CGRectMake(0, 0, descriptionLabelWidth, descriptionLabelHeight))
         
-        // Setup arrow
-        arrow = ArrowDisplay(frame: CGRectMake(descriptionLabelWidth + 4.0, 0, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal))
+        arrow = ArrowDisplay(frame: CGRectMake(descriptionLabelWidth + DisplayOptions.DescriptionPadding, 0, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal))
         
-        valueLabel = UILabel(frame: CGRectMake(descriptionLabelWidth + 4.0, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal, DisplayOptions.ValueLabelHeightNormal))
+        valueLabel = UILabel(frame: CGRectMake(descriptionLabelWidth + DisplayOptions.DescriptionPadding, DisplayOptions.ArrowSizeNormal, DisplayOptions.ArrowSizeNormal, DisplayOptions.ValueLabelHeightNormal))
         valueLabel.text = ""
-        valueLabel.font = DisplayOptions.ValueFontNormal
+        //valueLabel.font = DisplayOptions.ValueFontNormal
+        valueLabel.adjustsFontSizeToFitWidth = true
         valueLabel.textAlignment = .Center
 
         descriptionLabel.text = ""
-        descriptionLabel.font = UIFont.systemFontOfSize(12.0)
+        descriptionLabel.font = DisplayOptions.DescriptionFontNormal
         descriptionLabel.textAlignment = .Right
-        //descriptionLabel.adjustsFontSizeToFitWidth = true
-        
-        //valueLabel.adjustsFontSizeToFitWidth = true
-        //arrow = ArrowDisplay(frame: CGRectMake(0, 0, 30, 30))
-        
-        // Setup Label
-//        valueLabel = UILabel(frame: CGRectMake(0, 0, valueLabelWidth, valueLabelHeight))
-//        valueLabel.textAlignment = NSTextAlignment.Center
-//        valueLabel.textColor = UIColor.blackColor()
-//        valueLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
-//        valueLabel.adjustsFontSizeToFitWidth = true
-//            
         self.addSubview(arrow)
         self.addSubview(valueLabel)
         self.addSubview(descriptionLabel)
 
-        
-        setupConstraints()
     }
-    
-    private func drawArrow(){
-        //draw circle
-//        var path = UIBezierPath(ovalInRect: CGRectMake(0, 0, arrowSize, arrowSize))
-//        dataSource?.colorForArrowView(self).setFill()
-//        path.fill()
-    }
-    
     
     func updateDescription(description : String){
         descriptionLabel.text = description
@@ -113,7 +84,7 @@ class ArrowLabel: UIView {
     
     func updateValue(value : Int, unit : String, type : ArrowDisplay.DisplayType){
         let direction : ArrowDisplay.Direction = (value >= 0) ? .Positive : .Negative
-        valueLabel.text = String(value) + unit
+        valueLabel.text = String(abs(value)) + unit
         
         if(type == .Hidden){
             //hide labels early
@@ -131,10 +102,6 @@ class ArrowLabel: UIView {
         
         arrow.update(type, newDirection: direction)
     }
-
-    
-    
-
     
     internal class ArrowDisplay : UIView {
         
@@ -143,7 +110,7 @@ class ArrowLabel: UIView {
             static let ArrowLengthRatio : CGFloat = 0.7
             static let ArrowArmRatio : CGFloat = 0.3
             
-            static let AnimationDuration : NSTimeInterval = 0.8
+            static let AnimationDuration : NSTimeInterval = 0.6
             
             static let ProteinColor = UIColor(hexString: "189090")
             static let CarbColor = UIColor(hexString: "F0B428")
@@ -250,7 +217,7 @@ class ArrowLabel: UIView {
         
         private func getArrowColor(type : DisplayType) -> UIColor{
             switch type {
-            case .Calorie: return UIColor.whiteColor()
+            case .Calorie: return UIColor.clearColor()
             case .Carb : return DisplayOptions.CarbColor
             case .Protein : return DisplayOptions.ProteinColor
             case .Fat : return DisplayOptions.FatColor
@@ -258,30 +225,4 @@ class ArrowLabel: UIView {
             }
         }
     }
-    
-    
-    
-    // Use PureLayout to set up constraints for positioning the subviews.
-    private func setupConstraints() {
-//        let zeroInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        leftButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Right)
-//        leftButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
-//        
-//        rightButton.autoPinEdgesToSuperviewEdgesWithInsets(zeroInset, excludingEdge: .Left)
-//        rightButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
-//        
-//        dateLabel.autoCenterInSuperview()
-//        dateLabel.autoSetDimensionsToSize(CGSizeMake(dateLabelWidth, dateLabelHeight))
-          //arrow.autoPinEdge(.Top, toEdge: .Top, ofView: self)
-          //valueLabel.autoPinEdge(.Bottom, toEdge: .Bottom, ofView: self)
-    }
-    
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-    // Drawing code
-    }
-    */
 }

@@ -8,10 +8,12 @@
 
 import UIKit
 import Charts
+import Parse
+import MBProgressHUD
 import ChameleonFramework
 import HTHorizontalSelectionList
 
-class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource, DateNavigationControlDelegate, ProgressDisplayDataSource {
+class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource, DateNavigationControlDelegate {
     
     @IBOutlet weak var statsSelector: HTHorizontalSelectionList!{
         didSet {
@@ -26,11 +28,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         }
     }
     
-    @IBOutlet weak var weekProgressDisplay: ProgressDisplay!{
-        didSet{
-            weekProgressDisplay.dataSource = self
-        }
-    }
+    @IBOutlet weak var weekProgressDisplay: ProgressDisplay!
     
     @IBOutlet weak var dayChart: PieChartView! {
         didSet {
@@ -47,27 +45,33 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         case Calorie = 0, Macro = 1
     }
     
-    
-    //TEMP FAKE DATA VARS
-    var values : [Int] = [Int](count: DisplayOptions.totalDays, repeatedValue: 0)
+    var calories : [Int] = [Int](count: DisplayOptions.totalDays, repeatedValue: 0)
     var dates : [NSDate] = [NSDate](count: DisplayOptions.totalDays, repeatedValue: NSDate())
-    var protein : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0.0)
-    var fat : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0.0)
-    var carbs : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0.0)
-    //TEMP FAKE DATA VARS
+    var protein : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
+    var fat : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
+    var carbs : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
+    
+    var goalCalories : Int = 2000
+    var goalProtein : Float = 0.25
+    var goalCarbs : Float = 0.5
+    var goalFat : Float = 0.25
     
     var weeksBack : Int = 0
     var startOfWeek : NSDate = NSDate()
-    
-    var display : StatDisplay = .Calorie
-    var barSelection : Int = 0
-    var goal : Int = 2000
-    var caloriesConsumed : Int {
+    var endOfWeek : NSDate {
         get {
-            return values[barSelection]
+            return NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 6, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
         }
     }
     
+    var display : StatDisplay = .Calorie
+    var barSelection : Int = 0
+    var caloriesConsumed : Int {
+        get {
+            return calories[barSelection]
+        }
+    }
+
     //chart fonts -- default to small, but change to bigger on larger devices
     var selectorTextFont = DisplayOptions.SelectorTextFontNormal
     var calorieCenterTextFont = DisplayOptions.CalorieCenterTextFontNormal
@@ -76,7 +80,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     private struct DisplayOptions {
         //ANIMATION VARIABLES
-        static let AnimateDuration : NSTimeInterval = 0.8
+        static let AnimateDuration : NSTimeInterval = 0.6
         static let AnimateStyle : ChartEasingOption = ChartEasingOption.EaseOutQuint
         
         
@@ -125,31 +129,65 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     override func viewDidLoad() {
         super.viewDidLoad()
         startOfWeek = getMostRecentMonday()
-        barSelection = getDayIndex()
+        barSelection = getDayIndex(NSDate()) //defaults to current weekday
         
-        //LOAD FAKE DATA
-        loadWeekData()
         //setup charts and selector
         dayChartSetup()
         weekChartSetup()
         selectorSetup()
         
-        //update chart data
-        updateUI()
+        //hide charts until data is loaded
+        hideCharts()
+        
+        //request data to be loaded on charts
+        loadWeekData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        loadWeekData()
     }
     
     func loadWeekData(){
-        loadFakeData()
+//        loadFakeData()
+        print("loading data")
+        
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivity.userInteractionEnabled = false
+    
+        UserMeal.findObjectsInBackgroundWithBlockWithinRange(self.userMealQueryCompletionHandler, startDate: startOfWeek, endDate: endOfWeek, forUser: CustomUser.currentUser()!)
+    }
+    
+    // Function that gets called after getting UserMeals this week.
+    func userMealQueryCompletionHandler(objects: [PFObject]?, error: NSError?) -> Void {
+        clearData()
+        goalCalories = CustomUser.currentUser()!.goalDailyCalories
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            if error == nil {
+                let userMeals = objects as! [UserMeal]
+                for userMeal in userMeals {
+                    let i = self.getDayIndex(userMeal.date)
+                    
+                    self.calories[i] += userMeal.getCumulativeCalories()
+                    self.protein[i] += userMeal.getCumulativeProtein()
+                    self.fat[i] += userMeal.getCumulativeFat()
+                    self.carbs[i] += userMeal.getCumulativeCarbs()
+                }
+            }
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            self.updateUI()
+            self.showCharts()
+        }
     }
     
     func loadFakeData(){
         for i in 0..<7 {
-            values[i] = 1600 + Int(arc4random_uniform(800))
+            calories[i] = 1600 + Int(arc4random_uniform(800))
             dates[i] = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: i, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
             
-            var p = 0.2 + Float(arc4random_uniform(20)) * 0.01
-            var f = 0.2 + Float(arc4random_uniform(10)) * 0.01
-            var c = 0.3 + Float(arc4random_uniform(30)) * 0.01
+            var p = Float(0.2 + Float(arc4random_uniform(20)) * 0.01)
+            var f = Float(0.2 + Float(arc4random_uniform(10)) * 0.01)
+            var c = Float(0.3 + Float(arc4random_uniform(30)) * 0.01)
 
 
             //make future dates have no data
@@ -157,7 +195,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
                 p = 0
                 f = 0
                 c = 0
-                self.values[i] = 0
+                self.calories[i] = 0
             }
             
             protein[i] = p
@@ -166,9 +204,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         }
     }
     
-    func loadEmptyData(){
+    func clearData(){
         for i in 0..<7 {
-            values[i] = 0
+            calories[i] = 0
             dates[i] = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: i, toDate: NSDate(), options: NSCalendarOptions.MatchNextTime)!
             
             protein[i] = 0
@@ -176,7 +214,17 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             carbs[i] = 0
         }
     }
+    
+    private func hideCharts(){
+        dayChart.alpha = 0
+        weekChart.alpha = 0
+    }
 
+    private func showCharts(){
+        dayChart.alpha = 1
+        weekChart.alpha = 1
+    }
+    
     
     func updateUI(){
         updateDayChart()
@@ -215,8 +263,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         }
     }
     func selectorSetup(){
-        //statsSelector.selectionIndicatorStyle = HTHorizontalSelectionIndicatorStyle.BottomBar
-        //statsSelector.selectionIndicatorHeight = DisplayOptions.SelectorHeight
         statsSelector.setTitleFont(UIFont.systemFontOfSize(15.0), forState: UIControlState.Normal)
         statsSelector.bottomTrimHidden = true
         statsSelector.centerAlignButtons = true
@@ -231,7 +277,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         dayChart.holeRadiusPercent = DisplayOptions.HoleRadiusPercent
         dayChart.drawSliceTextEnabled = false
         dayChart.legend.position = ChartLegend.ChartLegendPosition.BelowChartRight
-        
+        dayChart.userInteractionEnabled = false
     }
     
     func weekChartSetup() {
@@ -241,7 +287,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.xAxis.setLabelsToSkip(0)
         weekChart.setVisibleXRange(minXRange: 0, maxXRange: 7.0)
         
-        let goalLine = ChartLimitLine(limit: Double(goal))
+        let goalLine = ChartLimitLine(limit: Double(goalCalories))
         goalLine.lineColor = DisplayOptions.GoalLineColor
         weekChart.leftAxis.addLimitLine(goalLine)
         weekChart.leftAxis.drawLimitLinesBehindDataEnabled = true
@@ -258,26 +304,20 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.legend.enabled = false
         weekChart.descriptionText = ""
         
-        let swipeRec = UISwipeGestureRecognizer()
-        swipeRec.addTarget(self, action: "swipedView")
-        weekChart.addGestureRecognizer(swipeRec)
+        weekChart.dragDecelerationEnabled = false
+        weekChart.highlightPerTapEnabled = false
+        weekChart.multipleTouchEnabled = false
+        weekChart.highlightPerTapEnabled = true
+        weekChart.doubleTapToZoomEnabled = false
         
         weekNavigator.changeTheme(.Black)
     }
     
-    func swipedView(){
-        print("SWIPED")
-    }
-    
-    
     // MARK: - Calorie Data Update functions
     
     func updateDayCalorieChart(){
-        //calorie specific settings
-        dayChart.legend.enabled = false
-        
         //if the user has consumed over their daily goal
-        let over = caloriesConsumed > goal
+        let over = caloriesConsumed > goalCalories
         
         var displayValues : [Int]
         var labels : [String]
@@ -285,14 +325,14 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         var calorieDescriptor : String
         
         if(over){
-            displayValues = [goal, caloriesConsumed - goal]
+            displayValues = [goalCalories, caloriesConsumed - goalCalories]
             labels = ["Calories", "Over"]
-            calorieString = String(caloriesConsumed - goal)
+            calorieString = String(caloriesConsumed - goalCalories)
             calorieDescriptor = String("\nCALORIES\nOVER BUDGET")
         } else {
-            displayValues = [caloriesConsumed, goal - caloriesConsumed]
+            displayValues = [caloriesConsumed, goalCalories - caloriesConsumed]
             labels = ["Calories", "Left"]
-            calorieString = String(goal - caloriesConsumed)
+            calorieString = String(goalCalories - caloriesConsumed)
             calorieDescriptor = String("\nCALORIES\nUNDER BUDGET")
         }
         let textParagraphStyle : NSMutableParagraphStyle = NSMutableParagraphStyle()
@@ -314,7 +354,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         centerText.addAttributes(attributesCalorieDescriptor, range: NSMakeRange(calorieString.characters.count, calorieDescriptor.characters.count))
         
         dayChart.centerAttributedText = centerText
-        dayChart.descriptionText = String(caloriesConsumed) + " / " + String(goal)
+        dayChart.descriptionText = String(caloriesConsumed) + " / " + String(goalCalories)
         
         var dayDataEntries: [ChartDataEntry] = []
         
@@ -332,35 +372,30 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     func updateWeeklyCalorieChart(){
         var barDataEntries: [BarChartDataEntry] = []
         let dateStrings : [String] = DisplayOptions.DayLabels
-        for i in 0..<values.count {
-            if(values[i] <= goal){
-                barDataEntries.append(BarChartDataEntry(values: [Double(values[i]), 0], xIndex: i))
+        var weekCumulativeCalories  = 0
+        for i in 0..<calories.count {
+            weekCumulativeCalories += calories[i]
+            if(calories[i] <= goalCalories){
+                barDataEntries.append(BarChartDataEntry(values: [Double(calories[i]), 0], xIndex: i))
             } else {
-                barDataEntries.append(BarChartDataEntry(values: [Double(goal), Double(values[i] - goal)], xIndex: i))
+                barDataEntries.append(BarChartDataEntry(values: [Double(goalCalories), Double(calories[i] - goalCalories)], xIndex: i))
             }
         }
         let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
         
-        //let dateFormatter = NSDateFormatter()
-        //dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        //dateFormatter.dateFormat = "M/dd"
-        //dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
-//        let dateStrings = dates.map { (date) -> String in
-//            return dateFormatter.stringFromDate(date)
-//        }
         barChartDataSet.barSpace = DisplayOptions.BarSpacing
         barChartDataSet.colors = [DisplayOptions.GoodColor, DisplayOptions.BadColor]
         barChartDataSet.drawValuesEnabled = false
-        //barChartDataSet.setColors(DisplayOptions.DefaultColor)
-        //barChartDataSet.highlightColor = getPrimaryColor()
         
         let barChartData = BarChartData(xVals: dateStrings, dataSet: barChartDataSet)
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
-        weekProgressDisplay.updateCalorieDisplay(Int(arc4random_uniform(3000)) - 1500)
+        
+        //update week progress bar
+        weekProgressDisplay.updateCalorieDisplay(Int(weekCumulativeCalories - goalCalories * 7))
     }
-    
+
     
     // MARK: - Macro Data Update functions
     
@@ -368,13 +403,17 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         //Macro specific pie chart settings
         dayChart.descriptionText = ""
         dayChart.centerText = ""
-        dayChart.legend.enabled = true
         
         
+        let proteinCalories = protein[barSelection] * Constants.NutritionalConstants.ProteinCaloriesToGram
+        let carbCalories = carbs[barSelection] * Constants.NutritionalConstants.CarbsCaloriesToGram
+        let fatCalories = fat[barSelection] * Constants.NutritionalConstants.FatCaloriesToGram
+        let totalMacroCalories = proteinCalories + carbCalories + fatCalories
+                
         let dayDataEntries: [ChartDataEntry] = [
-            ChartDataEntry(value: Double(protein[barSelection]), xIndex: 0),
-            ChartDataEntry(value: Double(carbs[barSelection]), xIndex: 1),
-            ChartDataEntry(value: Double(fat[barSelection]), xIndex: 2)
+            ChartDataEntry(value: Double(proteinCalories / totalMacroCalories), xIndex: 0),
+            ChartDataEntry(value: Double(carbCalories / totalMacroCalories), xIndex: 1),
+            ChartDataEntry(value: Double(fatCalories / totalMacroCalories), xIndex: 2)
         ]
         
         let labels = ["Protein", "Carbs", "Fat"]
@@ -395,19 +434,18 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         var barDataEntries: [BarChartDataEntry] = []
         let dateStrings : [String] = DisplayOptions.DayLabels
         
+        var weekCumulativeProtein : Float = 0.0
+        var weekCumulativeCarbs : Float = 0.0
+        var weekCumulativeFat : Float = 0.0
+
         for i in 0..<protein.count {
+            weekCumulativeProtein += protein[i]
+            weekCumulativeCarbs += carbs[i]
+            weekCumulativeFat += fat[i]
             let dataEntry = BarChartDataEntry(values: [Double(carbs[i]), Double(protein[i]), Double(fat[i])] , xIndex: i)
             barDataEntries.append(dataEntry)
         }
         let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
-        
-//        let dateFormatter = NSDateFormatter()
-        //dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-//        dateFormatter.dateFormat = "M/dd"
-        //dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
-//        let dateStrings = dates.map { (date) -> String in
-//            return dateFormatter.stringFromDate(date)
-//        }
         
         barChartDataSet.barSpace = DisplayOptions.BarSpacing
         barChartDataSet.colors = [DisplayOptions.ProteinColor, DisplayOptions.CarbColor, DisplayOptions.FatColor]
@@ -416,9 +454,15 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.data = barChartData
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         weekNavigator.updateDateLabel()
-        weekProgressDisplay.updateMacroDisplay(Int(arc4random_uniform(200)) - 100,
-            protein: Int(arc4random_uniform(200)) - 100,
-            fat: Int(arc4random_uniform(200)) - 100)
+        
+        
+        //update Week ProgressBar
+        let targetProtein = Float(7) * Float(goalCalories) * goalProtein / Constants.NutritionalConstants.ProteinCaloriesToGram
+        let targetCarbs = Float(7) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.CarbsCaloriesToGram
+        let targetFat = Float(7) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.FatCaloriesToGram
+        weekProgressDisplay.updateMacroDisplay(Int(roundf(weekCumulativeCarbs - targetCarbs)),
+            protein: Int(roundf(weekCumulativeProtein - targetProtein)),
+            fat: Int(roundf(weekCumulativeFat - targetFat)))
     }
     
     // MARK: - Week Shifting Methods
@@ -427,7 +471,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         startOfWeek = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: -7, toDate: startOfWeek, options: NSCalendarOptions.MatchPreviousTimePreservingSmallerUnits)!
         weeksBack++
         loadWeekData()
-        updateUI()
     }
     
     func shiftWeekNext(){
@@ -437,7 +480,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         startOfWeek = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 7, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
         weeksBack--
         loadWeekData()
-        updateUI()
     }
 
     
@@ -477,29 +519,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         shiftWeekNext()
     }
     
-    // MARK: -  ProgressDisplayDataSource Protocol Methods
-
-    func getWeeklyCalorieChange(sender: ProgressDisplay) -> Int{
-        return 200
-    }
-    
-    func getWeeklyCarbChange(sender: ProgressDisplay) -> Int{
-        return 100
-    }
-    
-    func getWeeklyProteinChange(sender : ProgressDisplay) -> Int{
-        return 20
-    }
-    
-    func getWeeklyFatChange(sender: ProgressDisplay) -> Int {
-        return 30
-    }
-
-
-    
-
-    
-    
     // MARK: - Chart Protocol Methods
     
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
@@ -507,7 +526,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         //highlight the whole bar, not just the segment that was actually clicked on
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
         updateDayChart()
-        print(entry.xIndex)
     }
     
     // MARK: - Date Range Utility Methods
@@ -537,24 +555,21 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     }
     
     //translates the current day into chart value index
-    func getDayIndex() -> Int {
-        let component = NSCalendar.currentCalendar().component(.Weekday, fromDate: NSDate())
+    func getDayIndex(date : NSDate) -> Int {
+        let component = NSCalendar.currentCalendar().component(.Weekday, fromDate: date)
         //Days range from 0-7, and Monday is 2
         return (component + 5) % 7
     }
     
-    
-    
     func getLabelColor() -> UIColor {
-        if(caloriesConsumed <= goal){
+        if(caloriesConsumed <= goalCalories){
             return DisplayOptions.GoodSecondary
         } else {
             return DisplayOptions.BadPrimary
         }
     }
-    
     func getPrimaryColor() -> UIColor {
-        if(caloriesConsumed <= goal){
+        if(caloriesConsumed <= goalCalories){
             return DisplayOptions.GoodPrimary
         } else {
             return DisplayOptions.BadPrimary

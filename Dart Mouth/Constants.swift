@@ -76,6 +76,12 @@ struct Constants {
         static let SnacksParse = "Courtyard Snacks"
     }
     
+    struct NutritionalConstants {
+        static let ProteinCaloriesToGram : Float = 4.0
+        static let CarbsCaloriesToGram : Float = 4.0
+        static let FatCaloriesToGram : Float = 9.0
+    }
+    
     struct Colors {
         static let appPrimaryColor = FlatMint()
         static let appPrimaryColorDark = FlatMintDark()

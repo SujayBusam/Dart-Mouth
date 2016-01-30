@@ -1436,17 +1436,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfm-fJ-Hus" customClass="WeekNavigationControl" customModule="Dart_Mouth" customModuleProvider="target">
-                                <rect key="frame" x="16" y="333.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="328.5" width="343" height="30"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Vs0-f3-Itw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pdI-zo-vaG" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="419.5" width="379" height="195.5"/>
+                                <rect key="frame" x="0.0" y="424.5" width="379" height="190.5"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBi-9D-1wp" customClass="PieChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="130" width="343" height="195.5"/>
+                                <rect key="frame" x="16" y="130" width="343" height="190.5"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43R-ew-PJs" customClass="HTHorizontalSelectionList">
                                 <rect key="frame" x="16" y="72" width="343" height="50"/>
@@ -1456,10 +1456,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="pIA-sH-jjj" customClass="ProgressDisplay" customModule="Dart_Mouth" customModuleProvider="target">
-                                <rect key="frame" x="16" y="371.5" width="343" height="40"/>
+                                <rect key="frame" x="16" y="366.5" width="343" height="50"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="FdC-IZ-nmQ"/>
+                                    <constraint firstAttribute="height" constant="50" id="FdC-IZ-nmQ"/>
                                 </constraints>
                             </view>
                         </subviews>
