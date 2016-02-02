@@ -80,7 +80,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     private struct DisplayOptions {
         // TITLE
-        static let Title = "Nutrition Stats"
+        static let Title = "Stats"
         
         //ANIMATION VARIABLES
         static let AnimateDuration : NSTimeInterval = 0.6
