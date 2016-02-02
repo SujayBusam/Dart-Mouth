@@ -42,6 +42,17 @@ class DatabaseRecipe {
         static let ReportStats = "s"
     }
     
+    private struct ReportNutrients {
+        static let Calories = "Energy"
+        static let TotalFat = "Total lipid (fat)"
+        static let SaturatedFat = "Fatty acids, total saturated"
+        static let Cholesterol = "Cholesterol"
+        static let Sodium = "Sodium, Na"
+        static let TotalCarbs = "Carbohydrate, by difference"
+        static let Fiber = "Fiber, total dietary"
+        static let Protein = "Protein"
+    }
+    
     var group: String
     var name: String
     var ndbno: String
@@ -130,8 +141,16 @@ class DatabaseRecipe {
         var topLevelDict = [String : [ String : NSObject]]()
         var nutrientsDict = [String : NSObject]()
         
-        // TODO: Create the inner nutrients dictionary
-        
+        // Create the inner nutrients dictionary
+        for dbNutrientJSON in dbNutrientsJSONArray {
+            if let nutrientName = dbNutrientJSON["name"].string {
+                switch nutrientName {
+                // TODO: implement
+                default:
+                    break
+                }
+            }
+        }
         
         return topLevelDict
     }
