@@ -12,6 +12,7 @@ import SwiftyJSON
 
 protocol DatabaseRecipesViewControllerDelegate: class {
     func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController)
+    func didSelectDBRecipeForDBRecipesView(dbRecipe: DatabaseRecipe, sender: DatabaseRecipesViewController)
 }
 
 class DatabaseRecipesViewController: SearchableViewController,
@@ -66,46 +67,22 @@ class DatabaseRecipesViewController: SearchableViewController,
         
         self.currentRecipes.removeAll()
         
-        let parameters: [String : String] = [
-            "api_key" : Constants.FoodDatabase.ApiKey,
-            "q" : self.currentSearchText!,
-            "sort" : "r",
-            "max" : "50",
-            "offset" : "0",
-            "format" : "JSON"
-        ]
-        
-        Alamofire.request(.GET, Constants.FoodDatabase.BaseUrl, parameters: parameters)
-            .responseJSON { (response: Response<AnyObject, NSError>) -> Void in
+        DatabaseRecipe.findDatabaseRecipesWithSearchText(self.currentSearchText!,
+            withSuccesBlock: { (dbRecipes: [DatabaseRecipe]) -> Void in
+                // The success handler. On UI thread.
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    guard response.result.error == nil else {
-                        // Error in making the request
-                        print("Error searching food database for \(self.currentSearchText!)")
-                        print(response.result.error!)
-                        return
-                    }
-                    
-                    if let responseValue = response.result.value {
-                        let responseJSON = JSON(responseValue)
-                        print("JSON: \(responseJSON)")
-                        
-                        if let dbRecipes = responseJSON["list"]["item"].array {
-                            for dbRecipe in dbRecipes {
-                                guard DatabaseRecipe.isValidJSON(dbRecipe) else {
-                                    print("This item: \(dbRecipe) does not have valid fields. Skipping.")
-                                    continue
-                                }
-                                
-                                self.currentRecipes.append(DatabaseRecipe(group: dbRecipe["group"].stringValue,
-                                    name: dbRecipe["name"].stringValue, ndbno: dbRecipe["ndbno"].stringValue))
-                            }
-                        } else {
-                            print("Item not found.")
-                        }
-                    }
+                    self.currentRecipes = dbRecipes
                     self.recipesTableView.reloadData()
                 })
-        }
+            },
+            withFailureBlock: { (errorMessage: String) -> Void in
+                // The failure handler. On UI thread.
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    // TODO: implement better error display. Use an AlertView.
+                    // Just print for internal debugging purposes for now.
+                    print(errorMessage)
+                })
+            })
     }
     
 
@@ -143,5 +120,9 @@ class DatabaseRecipesViewController: SearchableViewController,
         cell.selectionStyle = .Default
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        delegate.didSelectDBRecipeForDBRecipesView(self.currentRecipes[indexPath.row], sender: self)
     }
 }

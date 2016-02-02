@@ -135,6 +135,7 @@ struct Constants {
     
     struct FoodDatabase {
         static let ApiKey = "2eB2uYJaVyEVZuhLy6WR6s7TdXSouIKjnybrvcQe"
-        static let BaseUrl = "http://api.nal.usda.gov/ndb/search"
+        static let SearchBaseUrl = "http://api.nal.usda.gov/ndb/search"
+        static let ReportsBaseUrl = "http://api.nal.usda.gov/ndb/reports"
     }
 }

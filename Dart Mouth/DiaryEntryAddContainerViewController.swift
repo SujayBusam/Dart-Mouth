@@ -73,6 +73,11 @@ class DiaryEntryAddContainerViewController: UIViewController,
         self.navigationController?.setToolbarHidden(true, animated: false)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.searchBar.resignFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -159,7 +164,6 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - MenuViewControllerDelegate protocol methods
     
     func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) {
-        self.searchBar.resignFirstResponder()
         showDiaryEntryNutritionAdderForRecipe(recipe)
     }
     
@@ -167,7 +171,6 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - PreviousRecipesViewControllerDelegate protocol methods
     
     func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) {
-        self.searchBar.resignFirstResponder()
         showDiaryEntryNutritionAdderForRecipe(recipe)
     }
     
@@ -176,6 +179,24 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController) {
         displaySearchBarAndCancelButtonAnimated(true)
+    }
+    
+    func didSelectDBRecipeForDBRecipesView(dbRecipe: DatabaseRecipe, sender: DatabaseRecipesViewController) {
+        
+        // Create the recipe and transition to diary nutrition adder container
+        dbRecipe.createRecipeWithSuccessBlock({
+            (recipe: Recipe) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.showDiaryEntryNutritionAdderForRecipe(recipe)
+            })
+            },
+            withFailureBlock: {
+                (errorMessage: String) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    // TODO: handle error better. For now just print to debug.
+                    print(errorMessage)
+                })
+        })
     }
     
     

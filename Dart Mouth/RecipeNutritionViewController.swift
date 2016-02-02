@@ -134,7 +134,7 @@ class RecipeNutritionViewController: UIViewController, UIPickerViewDataSource,
         sugarsValue?.text = "\(getMultipliedFloatValue(recipe.getFiber()) ?? Identifiers.ErrorNutrientValue) g"
         proteinValue?.text = "\(getMultipliedFloatValue(recipe.getProtein()) ?? Identifiers.ErrorNutrientValue) g"
         servingSizeValue?.text = "\(getMultipliedIntegerValue(recipe.getServingSizeGrams()) ?? Identifiers.ErrorNutrientValue) g"
-        servingSizeText?.text = recipe.getServingSizeText()
+        servingSizeText?.text = "\(recipe.getServingSizeText() ?? Identifiers.ErrorNutrientValue)"
     }
     
     

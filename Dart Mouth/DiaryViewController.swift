@@ -243,8 +243,9 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         let cell = tableView.dequeueReusableCellWithIdentifier(Identifiers.DiaryEntryCell) as! DiaryEntryTableViewCell
         
         // Configure the cell
-        let diaryEntry = displayedUserMeals[indexPath.section]!.entries[indexPath.row]
-        cell.diaryEntry = diaryEntry
+        if let diaryEntry = displayedUserMeals[indexPath.section]?.entries[indexPath.row] {
+            cell.diaryEntry = diaryEntry
+        }
         
         return cell
     }
