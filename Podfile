@@ -9,6 +9,7 @@ target 'Dart Mouth' do
   pod 'MBProgressHUD', '~> 0.9.2'
   pod 'Charts'
   pod 'Alamofire', '~> 3.0'
+  pod 'TTRangeSlider'
 end
 
 target 'Dart MouthTests' do

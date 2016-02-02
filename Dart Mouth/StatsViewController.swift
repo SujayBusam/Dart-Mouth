@@ -52,9 +52,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     var carbs : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
     
     var goalCalories : Int = 2000
-    var goalProtein : Float = 0.25
-    var goalCarbs : Float = 0.5
-    var goalFat : Float = 0.25
+    var goalProtein : Float = 0.1
+    var goalCarbs : Float = 0.3
+    var goalFat : Float = 0.1
     
     var weeksBack : Int = 0
     var startOfWeek : NSDate = NSDate()
@@ -98,10 +98,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         
         static let DefaultColor = FlatWhite()
         static let GoalLineColor = FlatWhiteDark()
-        
-        static let ProteinColor = UIColor(hexString: "189090")
-        static let CarbColor = UIColor(hexString: "F0B428")
-        static let FatColor = UIColor(hexString: "E42640")
         
         //DATA SETTINGS
         static let totalDays = 7
@@ -155,6 +151,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
 //        spinningActivity.userInteractionEnabled = false
     
         UserMeal.findObjectsInBackgroundWithBlockWithinRange(self.userMealQueryCompletionHandler, startDate: startOfWeek, endDate: endOfWeek, forUser: CustomUser.currentUser()!)
+        //loadFakeData()
     }
     
     // Function that gets called after getting UserMeals this week.
@@ -276,7 +273,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         dayChart.holeRadiusPercent = DisplayOptions.HoleRadiusPercent
         dayChart.drawSliceTextEnabled = false
         dayChart.legend.position = ChartLegend.ChartLegendPosition.BelowChartRight
-        dayChart.userInteractionEnabled = false
+        //dayChart.userInteractionEnabled = false
     }
     
     func weekChartSetup() {
@@ -421,7 +418,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         
         //configure macro data set
         let dayChartDataSet = PieChartDataSet(yVals: dayDataEntries)
-        dayChartDataSet.colors = [DisplayOptions.ProteinColor, DisplayOptions.CarbColor, DisplayOptions.FatColor]
+        dayChartDataSet.colors = [Constants.Colors.ProteinColor, Constants.Colors.CarbColor, Constants.Colors.FatColor]
         let formatter = NSNumberFormatter()
         formatter.numberStyle = NSNumberFormatterStyle.PercentStyle
         dayChartDataSet.valueFormatter = formatter
@@ -453,7 +450,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
         
         barChartDataSet.barSpace = DisplayOptions.BarSpacing
-        barChartDataSet.colors = [DisplayOptions.ProteinColor, DisplayOptions.CarbColor, DisplayOptions.FatColor]
+        barChartDataSet.colors = [Constants.Colors.ProteinColor, Constants.Colors.CarbColor, Constants.Colors.FatColor]
         barChartDataSet.drawValuesEnabled = false
         let barChartData = BarChartData(xVals: dateStrings, dataSet: barChartDataSet)
         weekChart.leftAxis.removeAllLimitLines()

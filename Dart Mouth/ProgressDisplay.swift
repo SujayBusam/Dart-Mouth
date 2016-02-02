@@ -85,26 +85,23 @@ class ProgressDisplay: UIView {
         animateSingleDisplay()
     }
     
-    func updateMacroDisplay(carbs: Int, protein: Int, fat: Int){
-//        let proteinDescription = String("Protein")
-//        proteinDescription.color
-        
+    func updateMacroDisplay(carbs: Int, protein: Int, fat: Int){        
         leftDisplay.updateValue(protein, unit: "g", type: .Protein)
         let proteinDescription = "Protein"
         let proteinAttributedDescription = NSMutableAttributedString(string: proteinDescription)
-        proteinAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "189090"), range: NSMakeRange(0, proteinDescription.characters.count))
+        proteinAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: Constants.Colors.ProteinColor, range: NSMakeRange(0, proteinDescription.characters.count))
         leftDisplay.updateAttributedDescription(proteinAttributedDescription)
         
         centerDisplay.updateValue(carbs, unit: "g", type: .Carb)
         let carbDescription = "Carbs"
         let carbAttributedDescription = NSMutableAttributedString(string: carbDescription)
-        carbAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "F0B428"), range: NSMakeRange(0, carbDescription.characters.count))
+        carbAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: Constants.Colors.CarbColor, range: NSMakeRange(0, carbDescription.characters.count))
         centerDisplay.updateAttributedDescription(carbAttributedDescription)
 
         rightDisplay.updateValue(fat, unit: "g", type: .Fat)
         let fatDescription = "Fat"
         let fatAttributedDescription = NSMutableAttributedString(string: fatDescription)
-        fatAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: UIColor(hexString: "E42640"), range: NSMakeRange(0, fatDescription.characters.count))
+        fatAttributedDescription.addAttribute(NSForegroundColorAttributeName, value: Constants.Colors.FatColor, range: NSMakeRange(0, fatDescription.characters.count))
         rightDisplay.updateAttributedDescription(fatAttributedDescription)
 
         animateFullDisplay()
