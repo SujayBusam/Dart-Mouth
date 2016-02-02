@@ -119,6 +119,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         menuVC.view.frame = self.containerView.bounds
         self.containerView.addSubview(menuVC.view)
         menuVC.didMoveToParentViewController(self)
+        menuVC.date = self.date
         self.currentDisplayedVC = menuVC
         
         // Create and add PreviousRecipesVC

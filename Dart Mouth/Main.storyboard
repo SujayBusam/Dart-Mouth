@@ -1618,8 +1618,6 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="kHe-nx-Hhm"/>
-                                <exclude reference="0gh-tn-ZUq"/>
-                                <exclude reference="S2M-Cq-3oO"/>
                                 <exclude reference="Df7-Pd-XIP"/>
                                 <exclude reference="Izz-E5-8ZD"/>
                                 <exclude reference="QvN-PV-xAR"/>
@@ -1627,6 +1625,8 @@
                                 <exclude reference="Zte-gV-jN0"/>
                                 <exclude reference="dOX-bg-E2N"/>
                                 <exclude reference="nsQ-se-ZB7"/>
+                                <exclude reference="0gh-tn-ZUq"/>
+                                <exclude reference="S2M-Cq-3oO"/>
                                 <exclude reference="2Yt-ra-TNm"/>
                                 <exclude reference="3fm-0y-yIN"/>
                                 <exclude reference="FqU-c6-O6N"/>

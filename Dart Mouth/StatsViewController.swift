@@ -79,6 +79,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     var calorieTotalLabelTextFont = DisplayOptions.CalorieTotalLabelTextFontNormal
     
     private struct DisplayOptions {
+        // TITLE
+        static let Title = "Nutrition Stats"
+        
         //ANIMATION VARIABLES
         static let AnimateDuration : NSTimeInterval = 0.6
         static let AnimateStyle : ChartEasingOption = ChartEasingOption.EaseOutQuint
@@ -125,6 +128,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = DisplayOptions.Title
         startOfWeek = getMostRecentMonday()
         barSelection = getDayIndex(NSDate()) //defaults to current weekday
         
