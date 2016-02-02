@@ -79,11 +79,27 @@ struct Constants {
         static let SnacksParse = "Courtyard Snacks"
     }
     
+    struct NutritionalConstants {
+        static let ProteinCaloriesToGram : Float = 4.0
+        static let CarbsCaloriesToGram : Float = 4.0
+        static let FatCaloriesToGram : Float = 9.0
+        
+        static let DefaultCalories : Int = 2000
+        static let DefaultProteinPercent : Float = 0.25
+        static let DefaultCarbsPercent : Float = 0.5
+        static let DefaultFatPercent : Float = 0.25
+        
+    }
+    
     struct Colors {
         static let appPrimaryColor = FlatMint()
         static let appPrimaryColorDark = FlatMintDark()
         static let appSecondaryColor = FlatNavyBlue()
         static let appSecondaryColorDark = FlatNavyBlueDark()
+        
+        static let ProteinColor = UIColor(hexString: "189090")
+        static let CarbColor = UIColor(hexString: "F0B428")
+        static let FatColor = UIColor(hexString: "E42640")
     }
     
     struct Validation {

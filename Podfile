@@ -10,6 +10,7 @@ target 'Dart Mouth' do
   pod 'Charts'
   pod 'Alamofire', '~> 3.0'
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+  pod 'TTRangeSlider'
 end
 
 target 'Dart MouthTests' do
@@ -21,4 +22,5 @@ target 'Dart MouthTests' do
   pod 'Charts'
   pod 'Alamofire', '~> 3.0'
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+  pod 'TTRangeSlider'
 end

@@ -30,6 +30,30 @@ class DiaryEntry: PFObject, PFSubclassing {
         return nil
     }
     
+    func getTotalProtein() -> Float? {
+        if let recipeProtein = recipe.getProtein() {
+            // Rounds to nearest integer.
+            return recipeProtein * self.servingsMultiplier
+        }
+        return nil
+    }
+    
+    func getTotalCarbs() -> Float? {
+        if let recipeCarbs = recipe.getTotalCarbs() {
+            // Rounds to nearest integer.
+            return recipeCarbs * self.servingsMultiplier
+        }
+        return nil
+    }
+    
+    func getTotalFat() -> Float? {
+        if let recipeFat = recipe.getTotalFat() {
+            // Rounds to nearest integer.
+            return recipeFat * self.servingsMultiplier
+        }
+        return nil
+    }
+    
     
     // MARK: - Parse helper functions
     

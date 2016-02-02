@@ -11,6 +11,7 @@ PODS:
     - Bolts/Tasks (~> 1.5)
   - PureLayout (3.0.1)
   - SwiftyJSON (2.3.2)
+  - TTRangeSlider (1.0.3)
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - Parse
   - PureLayout
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - TTRangeSlider
 
 EXTERNAL SOURCES:
   SwiftyJSON:
@@ -41,5 +43,6 @@ SPEC CHECKSUMS:
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TTRangeSlider: a12d0ac242a785cf96d4c7dacfe07e42a161251e
 
 COCOAPODS: 0.39.0
