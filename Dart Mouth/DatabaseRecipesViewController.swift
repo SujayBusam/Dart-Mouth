@@ -50,6 +50,15 @@ class DatabaseRecipesViewController: SearchableViewController,
         delegate.databaseRecipesVCDidAppear(self)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Unselect the previously selected item, if there was one.
+        if let indexPathForSelectedRow = self.recipesTableView.indexPathForSelectedRow {
+            self.recipesTableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("DB Recipes VC did load.")
