@@ -65,6 +65,9 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set the title to the user's email
+        self.navigationItem.title = CustomUser.currentUser()?.email
+        
         // Looks for single or multiple taps
         let tap = UITapGestureRecognizer(target: self,
             action: NSSelectorFromString(Identifiers.DismissKeyboard))

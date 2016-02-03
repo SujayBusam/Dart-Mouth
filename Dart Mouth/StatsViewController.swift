@@ -89,7 +89,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     private struct DisplayOptions {
         // TITLE
-        static let Title = "Stats"
+        static let Title = "Nutrition Stats"
         
         //ANIMATION VARIABLES
         static let AnimateDuration : NSTimeInterval = 0.6
@@ -137,7 +137,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = DisplayOptions.Title
+        
+        self.navigationItem.title = DisplayOptions.Title
+        
         startOfWeek = getMostRecentMonday()
         barSelection = getDayIndex(NSDate()) //defaults to current weekday
         
