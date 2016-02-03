@@ -8,7 +8,6 @@
 
 import UIKit
 import ChameleonFramework
-import MBProgressHUD
 import Parse
 
 protocol PreviousRecipesViewControllerDelegate: class {
@@ -67,9 +66,6 @@ class PreviousRecipesViewController: SearchableViewController,
     }
     
     func updateUI() {
-        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        spinningActivity.userInteractionEnabled = false
-        
         // TODO: need to restrict this to something like the past 2 weeks
         CustomUser.currentUser()!.findAllPreviousRecipesWithCompletionHandler(self.getPreviousRecipesCompletionHandler)
     }
@@ -126,8 +122,6 @@ class PreviousRecipesViewController: SearchableViewController,
             if !self.filteredRecipes.isEmpty {
                 self.previousRecipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
             }
-            
-            MBProgressHUD.hideHUDForView(self.view, animated: true)
         }
     }
     

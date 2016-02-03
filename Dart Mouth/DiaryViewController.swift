@@ -15,7 +15,7 @@ import ChameleonFramework
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate,
     UIPopoverPresentationControllerDelegate,
-    DiaryEntryMealPickerViewControllerDelegate, DiaryTableHeaderViewDelegate,
+    PreviousRecipesViewControllerDelegate, DiaryTableHeaderViewDelegate,
     THDatePickerDelegate {
     
     // MARK: - Local Constants
@@ -184,7 +184,7 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     
     func addToDiaryPressed(sender: UIBarButtonItem) {
         let popoverContentVC = self.storyboard!
-            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryMealPicker) as! DiaryEntryMealPickerViewController
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.PreviousRecipes) as! PreviousRecipesViewController
         
         // Configure the popover content VC (the diary entry meal picker)
         popoverContentVC.delegate = self
@@ -239,10 +239,10 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     }
     
     
-    // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
+    // MARK: - PreviousRecipesViewController protocol methods
     
-    func mealWasSelectedForDiaryEntryMealPicker(meal: String, sender: DiaryEntryMealPickerViewController) {
-        pushDiaryEntryAddContainerVCAfterSelectingUserMeal(meal)
+    func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) {
+        print("selected")
     }
     
     
