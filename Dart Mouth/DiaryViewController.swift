@@ -9,11 +9,14 @@
 import UIKit
 import Parse
 import MBProgressHUD
+import THCalendarDatePicker
+import ChameleonFramework
 
 class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     CalorieBudgetViewDelegate, UITableViewDataSource, UITableViewDelegate,
     UIPopoverPresentationControllerDelegate,
-    DiaryEntryMealPickerViewControllerDelegate, DiaryTableHeaderViewDelegate {
+    DiaryEntryMealPickerViewControllerDelegate, DiaryTableHeaderViewDelegate,
+    THDatePickerDelegate {
     
     // MARK: - Local Constants
     
@@ -36,11 +39,18 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         static let DiaryEntryCell = "DiaryEntryCell"
         static let AddButton = "PlusUnfilledWhite"
         static let addToDiaryPressed = "addToDiaryPressed:"
+        static let calendarButtonPressed: String = "calendarButtonPressed:"
         static let Title = "Diary"
     }
     
     
     // MARK: - Instance variables
+    
+    var datePicker: THDatePickerViewController! {
+        didSet {
+            datePicker.delegate = self
+        }
+    }
     
     var displayedUserMeals: [UserMeal?] = [nil, nil, nil, nil]
     
@@ -53,6 +63,7 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         return [breakfastHeader, lunchHeader, dinnerHeader, snacksHeader]
     }
     
+    var calendarButton: UIBarButtonItem!
     var addToDiaryBarButton: UIBarButtonItem!
     
     // The current diary date.
@@ -102,6 +113,23 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     private func setupViews() {
         self.title = Identifiers.Title
         
+        // Create and setup the calendar bar button
+        self.calendarButton = UIBarButtonItem(image: UIImage(named: Constants.Images.Calendar), style: .Plain, target: self, action: NSSelectorFromString(Identifiers.calendarButtonPressed))
+        self.navigationItem.leftBarButtonItem = self.calendarButton
+        
+        // Create and setup the date picker VC
+        self.datePicker = THDatePickerViewController.datePicker()
+        datePicker.setAllowClearDate(false)
+        datePicker.setClearAsToday(true)
+        datePicker.setAutoCloseOnSelectDate(false)
+        datePicker.setAllowSelectionOfSelectedDate(true)
+        datePicker.setDisableFutureSelection(false)
+        datePicker.setDisableHistorySelection(false)
+        datePicker.setDisableYearSwitch(false)
+        datePicker.selectedBackgroundColor = Constants.Colors.appPrimaryColor
+        datePicker.currentDateColor = FlatRed()
+        datePicker.currentDateColorSelected = FlatRed()
+        
         // Create and setup date navigation control
         dateNavigationControl = DateNavigationControl(
             frame: CGRectMake(0, 0, Dimensions.DateNavControlWidth, Dimensions.NavBarItemHeight))
@@ -149,6 +177,11 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
     
     // MARK: - Button actions
     
+    func calendarButtonPressed(sender: UIBarButtonItem) {
+        self.datePicker.date = self.date
+        self.presentSemiViewController(self.datePicker)
+    }
+    
     func addToDiaryPressed(sender: UIBarButtonItem) {
         let popoverContentVC = self.storyboard!
             .instantiateViewControllerWithIdentifier(Constants.ViewControllers.DiaryEntryMealPicker) as! DiaryEntryMealPickerViewController
@@ -164,6 +197,18 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         presentationController.delegate = self
         
         self.presentViewController(popoverContentVC, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - THDatePickerDelegate protocol methods
+    
+    func datePickerDonePressed(datePicker: THDatePickerViewController!) {
+        self.date = datePicker.date
+        self.dismissSemiModalView()
+    }
+    
+    func datePickerCancelPressed(datePicker: THDatePickerViewController!) {
+        self.dismissSemiModalView()
     }
     
     
