@@ -458,8 +458,8 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             
             let proteinCalories = Double(protein[i] * Constants.NutritionalConstants.ProteinCaloriesToGram)
             let carbCalories = Double(carbs[i] * Constants.NutritionalConstants.CarbsCaloriesToGram)
-            let fatCalories = Double(carbs[i] * Constants.NutritionalConstants.FatCaloriesToGram)
-            let dataEntry = BarChartDataEntry(values: [carbCalories, proteinCalories, fatCalories] , xIndex: i)
+            let fatCalories = Double(fat[i] * Constants.NutritionalConstants.FatCaloriesToGram)
+            let dataEntry = BarChartDataEntry(values: [proteinCalories, carbCalories, fatCalories] , xIndex: i)
             barDataEntries.append(dataEntry)
         }
         let barChartDataSet = BarChartDataSet(yVals: barDataEntries)
