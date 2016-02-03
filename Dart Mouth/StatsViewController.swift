@@ -52,9 +52,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     var carbs : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
     
     var goalCalories : Int = 2000
-    var goalProtein : Float = 0.1
-    var goalCarbs : Float = 0.3
-    var goalFat : Float = 0.1
+    var goalProtein : Float = 0.25
+    var goalCarbs : Float = 0.5
+    var goalFat : Float = 0.25
     
     var weeksBack : Int = 0
     var startOfWeek : NSDate = NSDate()

@@ -50,6 +50,7 @@ class DatabaseRecipe {
         static let Sodium = "Sodium, Na"
         static let TotalCarbs = "Carbohydrate, by difference"
         static let Fiber = "Fiber, total dietary"
+        static let Sugar = "Sugars, total"
         static let Protein = "Protein"
     }
     
@@ -68,8 +69,9 @@ class DatabaseRecipe {
     
     
     /**
-    Asynchronously query the third party food database, create a list of DatabaseRecipe objects from the query
-    result, and call the success block by passing in those DatabaseRecipe objects.
+    Asynchronously query the third party food database, create a list of DatabaseRecipe 
+    objects from the query result, and call the success block by passing in those 
+    DatabaseRecipe objects.
      
     Also requires a failure block that gets called by passing in an error message.
     **/
@@ -137,21 +139,89 @@ class DatabaseRecipe {
             && recipeJSON["ndbno"].isExists()
     }
     
+    /**
+    Create and return a nutrients dictionary from the JSON that contains item nutrition info
+    from the USDA database.
+     
+    Assumes the JSON is from a "basic" report.
+    **/
     class func extractNutrients(dbNutrientsJSONArray: [JSON]) -> [String : [ String : NSObject]] {
         var topLevelDict = [String : [ String : NSObject]]()
         var nutrientsDict = [String : NSObject]()
         
-        // Create the inner nutrients dictionary
+        // Set the serving size text
+        if let firstNutrientJSON = dbNutrientsJSONArray.first {
+            if let measures = firstNutrientJSON["measures"].array {
+                if let firstMeasure = measures.first {
+                    if let label = firstMeasure["label"].string {
+                        if let qty = firstMeasure["qty"].int {
+                            nutrientsDict[Recipe.Fields.ServingSizeText] = "\(qty) \(label)"
+                        }
+                    }
+                    
+                    if let eqv = firstMeasure["eqv"].int {
+                        nutrientsDict[Recipe.Fields.ServingSizeGrams] = eqv
+                    }
+                }
+            }
+        }
+        
+        // Create the inner nutrients dictionary, setting all of the nutrients
         for dbNutrientJSON in dbNutrientsJSONArray {
             if let nutrientName = dbNutrientJSON["name"].string {
                 switch nutrientName {
-                // TODO: implement
+                case ReportNutrients.Calories:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.Calories] = value
+                    }
+                    break
+                case ReportNutrients.TotalFat:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.TotalFat] = value
+                    }
+                    break
+                case ReportNutrients.SaturatedFat:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.SaturatedFat] = value
+                    }
+                    break
+                case ReportNutrients.Cholesterol:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.Cholesterol] = value
+                    }
+                    break
+                case ReportNutrients.Sodium:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.Sodium] = value
+                    }
+                    break
+                case ReportNutrients.TotalCarbs:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.TotalCarbs] = value
+                    }
+                    break
+                case ReportNutrients.Fiber:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.Fiber] = value
+                    }
+                    break
+                case ReportNutrients.Sugar:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.Sugars] = value
+                    }
+                    break
+                case ReportNutrients.Protein:
+                    if let value = dbNutrientJSON["value"].string {
+                        nutrientsDict[Recipe.Fields.Protein] = value
+                    }
+                    break
                 default:
                     break
                 }
             }
         }
         
+        topLevelDict[Recipe.Fields.NutrientResults] = nutrientsDict
         return topLevelDict
     }
     
@@ -160,15 +230,14 @@ class DatabaseRecipe {
     // MARK: - Useful instance helper functions
     
     /**
-        Creates a Recipe from this DatabaseRecipe. Asynchronous so needs a success and failure block.
-    
+    Creates a Recipe from this DatabaseRecipe. Asynchronous so needs a success and failure block.
     **/
     func createRecipeWithSuccessBlock(successBlock: (Recipe) -> Void,
         withFailureBlock failureBlock: (String) -> Void) {
         let parameters: [String : String] = [
             ParameterKeys.ApiKey : Constants.FoodDatabase.ApiKey,
             ParameterKeys.NDBNumber : self.ndbno,
-            ParameterKeys.ReportType : ParameterValues.ReportStats,
+            ParameterKeys.ReportType : ParameterValues.ReportBasic,
             ParameterKeys.ResponseFormat : ParameterValues.JSON,
         ]
         
