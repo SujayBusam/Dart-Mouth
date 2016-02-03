@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import THCalendarDatePicker
+import ChameleonFramework
 
 /*
     This is a container view container whose only child view controller is
@@ -18,7 +20,7 @@ import UIKit
     See Apple documentation on container view controllers for more detail.
 */
 class MenuContainerViewController: UIViewController, DateNavigationControlDelegate,
-    UISearchBarDelegate, MenuViewControllerDelegate {
+    UISearchBarDelegate, MenuViewControllerDelegate, THDatePickerDelegate {
     
     // MARK: - Local Constants
     
@@ -29,9 +31,9 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     }
     
     private struct Identifiers {
-        static let searchButtonImage: String = "Search"
         static let searchButtonPressed: String = "searchButtonPressed:"
         static let cancelButtonPressed: String = "cancelButtonPressed:"
+        static let calendarButtonPressed: String = "calendarButtonPressed:"
         static let Title = "Menus"
     }
     
@@ -42,6 +44,12 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     
     // MARK: - Instance Variables
     
+    var datePicker: THDatePickerViewController! {
+        didSet {
+            datePicker.delegate = self
+        }
+    }
+    
     var dateNavigationControl: DateNavigationControl! {
         didSet { dateNavigationControl.delegate = self }
     }
@@ -50,6 +58,7 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
         didSet { updateUI() }
     }
     
+    var calendarButton: UIBarButtonItem!
     var searchButton: UIBarButtonItem!
     var cancelButton: UIBarButtonItem!
     
@@ -75,8 +84,25 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     private func setupViews() {
         self.title = Identifiers.Title
         
+        // Create and setup the calendar bar button
+        self.calendarButton = UIBarButtonItem(image: UIImage(named: Constants.Images.Calendar), style: .Plain, target: self, action: NSSelectorFromString(Identifiers.calendarButtonPressed))
+        self.navigationItem.leftBarButtonItem = self.calendarButton
+        
+        // Create and setup the date picker VC
+        self.datePicker = THDatePickerViewController.datePicker()
+        datePicker.setAllowClearDate(false)
+        datePicker.setClearAsToday(true)
+        datePicker.setAutoCloseOnSelectDate(false)
+        datePicker.setAllowSelectionOfSelectedDate(true)
+        datePicker.setDisableFutureSelection(false)
+        datePicker.setDisableHistorySelection(false)
+        datePicker.setDisableYearSwitch(false)
+        datePicker.selectedBackgroundColor = Constants.Colors.appPrimaryColor
+        datePicker.currentDateColor = FlatRed()
+        datePicker.currentDateColorSelected = FlatRed()
+        
         // Create and setup search bar button
-        self.searchButton = UIBarButtonItem(image: UIImage(named: Identifiers.searchButtonImage), style: .Plain, target: self, action: NSSelectorFromString(Identifiers.searchButtonPressed))
+        self.searchButton = UIBarButtonItem(image: UIImage(named: Constants.Images.SearchIcon), style: .Plain, target: self, action: NSSelectorFromString(Identifiers.searchButtonPressed))
         self.navigationItem.rightBarButtonItem = self.searchButton
         
         // Create and setup search bar
@@ -128,6 +154,18 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     }
     
     
+    // MARK: - THDatePickerDelegate protocol methods
+
+    func datePickerDonePressed(datePicker: THDatePickerViewController!) {
+        self.date = datePicker.date
+        self.dismissSemiModalView()
+    }
+    
+    func datePickerCancelPressed(datePicker: THDatePickerViewController!) {
+        self.dismissSemiModalView()
+    }
+    
+    
     // MARK: - DateNavigationControlDelegate protocol methods
     
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate {
@@ -165,7 +203,12 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
     
     // MARK: - Button action functions
     
-    func searchButtonPressed(sender: UIButton) {
+    func calendarButtonPressed(sender: UIBarButtonItem) {
+        self.datePicker.date = self.date
+        self.presentSemiViewController(self.datePicker)
+    }
+    
+    func searchButtonPressed(sender: UIBarButtonItem) {
         displaySearchBarAndCancelButton(animated: true)
     }
     

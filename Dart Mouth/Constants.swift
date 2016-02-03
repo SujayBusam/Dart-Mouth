@@ -147,6 +147,7 @@ struct Constants {
         static let RightArrowBlack = "RightArrowBlack"
         static let SearchIcon = "Search"
         static let TrashGreen = "TrashGreen"
+        static let Calendar = "CalendarWhite"
     }
     
     struct FoodDatabase {

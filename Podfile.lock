@@ -6,11 +6,14 @@ PODS:
     - ChameleonFramework/Default
   - Charts (2.1.6)
   - HTHorizontalSelectionList (0.6.2)
+  - KNSemiModalViewController_hons82 (0.4.4)
   - MBProgressHUD (0.9.2)
   - Parse (1.10.0):
     - Bolts/Tasks (~> 1.5)
   - PureLayout (3.0.1)
   - SwiftyJSON (2.3.2)
+  - THCalendarDatePicker (1.2.5):
+    - KNSemiModalViewController_hons82 (~> 0.4.3)
   - TTRangeSlider (1.0.3)
 
 DEPENDENCIES:
@@ -22,6 +25,7 @@ DEPENDENCIES:
   - Parse
   - PureLayout
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - THCalendarDatePicker (~> 1.2.5)
   - TTRangeSlider
 
 EXTERNAL SOURCES:
@@ -39,10 +43,12 @@ SPEC CHECKSUMS:
   ChameleonFramework: a6b466873ff9a4ce3a5196c20bccf1a97ad9f446
   Charts: 5e1e5ac23898e5b09d226a2fc3e9d86bc281937e
   HTHorizontalSelectionList: 104417001c87753cc9560ab9674c7974db079a32
+  KNSemiModalViewController_hons82: 22aead5ef5d8ca749bc1babb43fa7d6f14b030a3
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  THCalendarDatePicker: 65c63c1814d1a27defc89f4b72ec7a1d01d5503d
   TTRangeSlider: a12d0ac242a785cf96d4c7dacfe07e42a161251e
 
 COCOAPODS: 0.39.0
