@@ -68,7 +68,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             if weeksBack > 0 {
                 return 7
             } else {
-                return howManyDaysAgo(startOfWeek)
+                return howManyDaysAgo(startOfWeek) + 1
             }
         }
     }
