@@ -52,15 +52,24 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     var carbs : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
     
     var goalCalories : Int = 2000
-    var goalProtein : Float = 0.1
-    var goalCarbs : Float = 0.3
-    var goalFat : Float = 0.1
+    var goalProtein : Float = 0.25
+    var goalCarbs : Float = 0.5
+    var goalFat : Float = 0.25
     
     var weeksBack : Int = 0
     var startOfWeek : NSDate = NSDate()
     var endOfWeek : NSDate {
         get {
             return NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 6, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
+        }
+    }
+    var daysInWeek : Int {
+        get{
+            if weeksBack < 0 {
+                return 7
+            } else {
+                return howManyDaysAgo(startOfWeek)
+            }
         }
     }
     
@@ -397,7 +406,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.leftAxis.addLimitLine(goalLine)
         
         //update week progress bar
-        weekProgressDisplay.updateCalorieDisplay(Int(weekCumulativeCalories - goalCalories * 7))
+        weekProgressDisplay.updateCalorieDisplay(Int(weekCumulativeCalories - goalCalories * daysInWeek))
     }
 
     
@@ -466,9 +475,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         
         
         //update Week ProgressBar
-        let targetProtein = Float(7) * Float(goalCalories) * goalProtein / Constants.NutritionalConstants.ProteinCaloriesToGram
-        let targetCarbs = Float(7) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.CarbsCaloriesToGram
-        let targetFat = Float(7) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.FatCaloriesToGram
+        let targetProtein = Float(daysInWeek) * Float(goalCalories) * goalProtein / Constants.NutritionalConstants.ProteinCaloriesToGram
+        let targetCarbs = Float(daysInWeek) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.CarbsCaloriesToGram
+        let targetFat = Float(daysInWeek) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.FatCaloriesToGram
         weekProgressDisplay.updateMacroDisplay(Int(roundf(weekCumulativeCarbs - targetCarbs)),
             protein: Int(roundf(weekCumulativeProtein - targetProtein)),
             fat: Int(roundf(weekCumulativeFat - targetFat)))
