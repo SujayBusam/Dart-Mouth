@@ -65,7 +65,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     }
     var daysInWeek : Int {
         get{
-            if weeksBack < 0 {
+            if weeksBack > 0 {
                 return 7
             } else {
                 return howManyDaysAgo(startOfWeek)
@@ -286,7 +286,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         dayChart.holeRadiusPercent = DisplayOptions.HoleRadiusPercent
         dayChart.drawSliceTextEnabled = false
         dayChart.legend.position = ChartLegend.ChartLegendPosition.BelowChartRight
-        //dayChart.userInteractionEnabled = false
+        dayChart.userInteractionEnabled = false
     }
     
     func weekChartSetup() {
