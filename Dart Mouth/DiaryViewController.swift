@@ -189,6 +189,10 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         }
     }
     
+    func dateWasDoublePressed(sender: UIButton) {
+        self.date = NSDate()
+    }
+    
     
     // MARK: - DiaryEntryMealPickerViewControllerDelegate protocol methods
     

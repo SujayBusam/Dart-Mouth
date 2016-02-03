@@ -18,6 +18,7 @@ protocol DateNavigationControlDelegate: class {
     func dateForDateNavigationControl(sender: DateNavigationControl) -> NSDate
     func leftArrowWasPressed(sender: UIButton) -> Void
     func rightArrowWasPressed(sender: UIButton) -> Void
+    func dateWasDoublePressed(sender: UIButton) -> Void
 }
 
 /*
@@ -40,35 +41,33 @@ class DateNavigationControl: UIView {
     // Subviews
     var leftButton: UIButton!
     var rightButton: UIButton!
-    var dateLabel: UILabel!
+    var dateLabel: UIButton!
     
     weak var delegate: DateNavigationControlDelegate?
     
     // Calculated dimensions
-    var buttonSize: CGFloat { return CGFloat(min(frame.height, frame.width)) }
+    var arrowButtonSize: CGFloat { return CGFloat(min(frame.height, frame.width)) }
     var dateLabelHeight: CGFloat { return CGFloat(frame.height) }
-    var dateLabelWidth: CGFloat { return CGFloat(frame.width - 2 * buttonSize) }
+    var dateLabelWidth: CGFloat { return CGFloat(frame.width - 2 * arrowButtonSize) }
     
     // Setup left arrow, right arrow, and date label.
     private func setupSubviews() {
         self.backgroundColor = UIColor.clearColor()
         
         // Setup left button
-        leftButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
+        leftButton = UIButton(frame: CGRectMake(0, 0, arrowButtonSize, arrowButtonSize))
         leftButton.setImage(UIImage(named: Constants.Images.LeftArrowWhite), forState: UIControlState.Normal)
         leftButton.addTarget(self, action: "leftArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup right button
-        rightButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
+        rightButton = UIButton(frame: CGRectMake(0, 0, arrowButtonSize, arrowButtonSize))
         rightButton.setImage(UIImage(named: Constants.Images.RightArrowWhite), forState: UIControlState.Normal)
         rightButton.addTarget(self, action: "rightArrowWasPressed:", forControlEvents: .TouchUpInside)
         
         // Setup date label
-        dateLabel = UILabel(frame: CGRectMake(0, 0, dateLabelWidth, dateLabelHeight))
-        dateLabel.textAlignment = NSTextAlignment.Center
-        dateLabel.textColor = UIColor.whiteColor()
-        dateLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
-        dateLabel.adjustsFontSizeToFitWidth = true
+        dateLabel = UIButton(frame: CGRectMake(0, 0, dateLabelWidth, dateLabelHeight))
+        dateLabel.addTarget(self, action: "dateWasPressed:", forControlEvents: .TouchDownRepeat)
+        dateLabel.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         updateDateLabel()
         
         self.addSubview(leftButton)
@@ -81,10 +80,10 @@ class DateNavigationControl: UIView {
     // Use PureLayout to set up constraints for positioning the subviews.
     private func setupConstraints() {
         leftButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Right)
-        leftButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
+        leftButton.autoSetDimensionsToSize(CGSizeMake(arrowButtonSize, arrowButtonSize))
         
         rightButton.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsetsZero, excludingEdge: .Left)
-        rightButton.autoSetDimensionsToSize(CGSizeMake(buttonSize, buttonSize))
+        rightButton.autoSetDimensionsToSize(CGSizeMake(arrowButtonSize, arrowButtonSize))
 
         dateLabel.autoCenterInSuperview()
         dateLabel.autoSetDimensionsToSize(CGSizeMake(dateLabelWidth, dateLabelHeight))
@@ -95,25 +94,26 @@ class DateNavigationControl: UIView {
             // Display date in the format of "Thu, Jan 10" for example.
             let formatter = NSDateFormatter()
             formatter.dateFormat = "EEE, MMM d"
-            dateLabel.text = formatter.stringFromDate(date)
+            dateLabel.setTitle(formatter.stringFromDate(date), forState: .Normal)
         } else {
-            dateLabel.text = "N/A"
+            dateLabel.setTitle("N/A", forState: .Normal)
         }
     }
     
     func leftArrowWasPressed(sender: UIButton) { delegate?.leftArrowWasPressed(sender) }
     func rightArrowWasPressed(sender: UIButton) { delegate?.rightArrowWasPressed(sender) }
+    func dateWasPressed(sender: UIButton) { delegate?.dateWasDoublePressed(sender) }
     
     // Default theme is white.
     func changeTheme(theme: DateNavigationColorTheme) {
         switch theme {
         case .Black:
-            dateLabel.textColor = UIColor.blackColor()
+            dateLabel.setTitleColor(UIColor.blackColor(), forState: .Normal)
             leftButton.setImage(UIImage(named: Constants.Images.LeftArrowBlack), forState: .Normal)
             rightButton.setImage(UIImage(named: Constants.Images.RightArrowBlack), forState: .Normal)
             break
         case .White:
-            dateLabel.textColor = UIColor.whiteColor()
+            dateLabel.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             leftButton.setImage(UIImage(named: Constants.Images.LeftArrowWhite), forState: .Normal)
             rightButton.setImage(UIImage(named: Constants.Images.RightArrowWhite), forState: .Normal)
             break

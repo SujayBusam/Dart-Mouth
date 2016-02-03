@@ -536,6 +536,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     func rightArrowWasPressed(sender: UIButton){
         shiftWeekNext()
     }
+    func dateWasDoublePressed(sender: UIButton) {
+        // TODO: Tommy, implement if this is useful.
+    }
     
     // MARK: - Chart Protocol Methods
     

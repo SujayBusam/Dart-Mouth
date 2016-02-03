@@ -1444,8 +1444,8 @@
                                     <action selector="logoutButtonPressed:" destination="1AC-Pa-W6a" eventType="touchUpInside" id="xv7-pr-KyZ"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iUL-Zw-dE6">
-                                <rect key="frame" x="125" y="72" width="125" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iUL-Zw-dE6">
+                                <rect key="frame" x="126" y="72" width="123" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="jL7-ID-bhP"/>
                                 </constraints>
@@ -1693,8 +1693,8 @@
                                     <constraint firstAttribute="height" constant="30" id="Vs0-f3-Itw"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdI-zo-vaG" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="425" width="379" height="191"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pdI-zo-vaG" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="425" width="379" height="190"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBi-9D-1wp" customClass="PieChartView" customModule="Charts">
                                 <rect key="frame" x="16" y="130" width="343" height="191"/>

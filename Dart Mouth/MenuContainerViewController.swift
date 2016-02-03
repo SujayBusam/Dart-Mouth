@@ -188,6 +188,10 @@ class MenuContainerViewController: UIViewController, DateNavigationControlDelega
         }
     }
     
+    func dateWasDoublePressed(sender: UIButton) {
+        self.date = NSDate()
+    }
+    
     
     // MARK: - UISearchBarDelegate protocol methods
     
