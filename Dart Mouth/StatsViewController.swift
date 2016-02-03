@@ -63,6 +63,15 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             return NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 6, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
         }
     }
+    var daysInWeek : Int {
+        get{
+            if weeksBack < 0 {
+                return 7
+            } else {
+                return howManyDaysAgo(startOfWeek)
+            }
+        }
+    }
     
     var display : StatDisplay = .Calorie
     var barSelection : Int = 0
@@ -395,7 +404,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         weekChart.leftAxis.addLimitLine(goalLine)
         
         //update week progress bar
-        weekProgressDisplay.updateCalorieDisplay(Int(weekCumulativeCalories - goalCalories * 7))
+        weekProgressDisplay.updateCalorieDisplay(Int(weekCumulativeCalories - goalCalories * daysInWeek))
     }
 
     
@@ -464,9 +473,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         
         
         //update Week ProgressBar
-        let targetProtein = Float(7) * Float(goalCalories) * goalProtein / Constants.NutritionalConstants.ProteinCaloriesToGram
-        let targetCarbs = Float(7) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.CarbsCaloriesToGram
-        let targetFat = Float(7) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.FatCaloriesToGram
+        let targetProtein = Float(daysInWeek) * Float(goalCalories) * goalProtein / Constants.NutritionalConstants.ProteinCaloriesToGram
+        let targetCarbs = Float(daysInWeek) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.CarbsCaloriesToGram
+        let targetFat = Float(daysInWeek) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.FatCaloriesToGram
         weekProgressDisplay.updateMacroDisplay(Int(roundf(weekCumulativeCarbs - targetCarbs)),
             protein: Int(roundf(weekCumulativeProtein - targetProtein)),
             fat: Int(roundf(weekCumulativeFat - targetFat)))
