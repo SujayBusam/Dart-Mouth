@@ -56,6 +56,7 @@ class PreviousRecipesViewController: SearchableViewController,
     override func viewDidLoad() {
         print("PreviousRecipesVC did load.")
         super.viewDidLoad()
+        
         updateUI()
     }
     
