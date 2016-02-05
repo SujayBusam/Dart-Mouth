@@ -39,7 +39,11 @@ struct Constants {
         static let LateNightParse = "Late Night"
         
         static let AllDayDisplay = "All Day"
-        static let AllDayParse = "Every Day"
+        static let AllDayParse = "Everyday"
+        
+        // Novack is weird and sometimes has a Specials mealtime
+        static let NovackSpecialsDisplay = "Specials"
+        static let NovackSpecialsParse = "Specials"
         
         // Used just for Diary
         static let SnacksDisplay = "Snacks"

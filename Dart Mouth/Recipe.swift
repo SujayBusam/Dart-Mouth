@@ -136,7 +136,6 @@ class Recipe: PFObject, PFSubclassing {
         return getAllNutrients()?[Fields.ServingSizeText] as? String
     }
     
-    
     static func parseClassName() -> String {
         return "Recipe"
     }
@@ -160,7 +159,14 @@ class Recipe: PFObject, PFSubclassing {
         offeringQuery.whereKey("day", equalTo: components.day)
         offeringQuery.whereKey("year", equalTo: components.year)
         if venueKey != nil { offeringQuery.whereKey("venueKey", equalTo: venueKey!) }
-        if mealName != nil { offeringQuery.whereKey("mealName", equalTo: mealName!) }
+        if mealName != nil {
+            // Novack is weird in that its mealNames are Everyday and Specials.
+            // We account for this by putting everything under All Day, so here to query,
+            // we need to restrict the mealName only if it's not for Novack.
+            if venueKey != Venue.Novack.parseField! {
+                offeringQuery.whereKey("mealName", equalTo: mealName!)
+            }
+        }
         if menuName != nil { offeringQuery.whereKey("menuName", equalTo: menuName!) }
         
         // Get all Offerings for given date, venue, meal, and menu
@@ -170,6 +176,7 @@ class Recipe: PFObject, PFSubclassing {
             if error == nil {
                 let offerings = objects as! [Offering] // TODO: potential crash here. Implement safeguard
                 if offerings.isEmpty {
+                    print("No offerings for \(venueKey) \(mealName) \(menuName)")
                     completionHandler(nil)
                 } else {
                     // Get all Recipe relations for all Offerings queried above
@@ -177,7 +184,7 @@ class Recipe: PFObject, PFSubclassing {
                     for offering in offerings {
                         relationQueries.append(offering.recipes.query())
                     }
-                    
+
                     let recipesQuery = PFQuery.orQueryWithSubqueries(relationQueries)
                     recipesQuery.cachePolicy = .CacheElseNetwork
                     if orderAlphabetically { recipesQuery.orderByAscending("name") }

@@ -65,6 +65,7 @@ struct Mappings {
             StringTypes.Display : Constants.MealTimeStrings.AllDayDisplay,
         ],
         
+        // Purely for Diary display
         MealTime.Snacks: [
             StringTypes.Display : Constants.MealTimeStrings.SnacksDisplay,
         ],
@@ -151,7 +152,7 @@ struct Mappings {
         ],
         
         Venue.Novack: [
-            MealTime.AllDay
+            MealTime.AllDay,
         ],
     ]
     
@@ -184,7 +185,8 @@ struct Mappings {
         ],
         
         Venue.Novack: [
-            Menu.AllItems,
+            Menu.EverydayItems,
+            Menu.Specials,
         ]
     ]
 }
