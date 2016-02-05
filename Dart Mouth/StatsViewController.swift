@@ -152,25 +152,21 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         hideCharts()
         
         //request data to be loaded on charts
-        loadWeekData()
+        loadWeekData(true)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        loadWeekData()
+        loadWeekData(false)
     }
     
-    func loadWeekData(){
-        
-//        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//        spinningActivity.userInteractionEnabled = false
-    
-        UserMeal.findObjectsInBackgroundWithBlockWithinRange(self.userMealQueryCompletionHandler, startDate: startOfWeek, endDate: endOfWeek, forUser: CustomUser.currentUser()!)
-        //loadFakeData()
+    func loadWeekData(animated : Bool){
+        let handler = animated ? self.userMealQueryCompletionHandlerAnimated : self.userMealQueryCompletionHandlerNonAnimated
+        UserMeal.findObjectsInBackgroundWithBlockWithinRange(handler, startDate: startOfWeek, endDate: endOfWeek, forUser: CustomUser.currentUser()!)
     }
     
     // Function that gets called after getting UserMeals this week.
-    func userMealQueryCompletionHandler(objects: [PFObject]?, error: NSError?) -> Void {
+    func userMealQueryCompletionHandlerNonAnimated(objects: [PFObject]?, error: NSError?) -> Void {
         clearData()
         goalCalories = CustomUser.currentUser()!.goalDailyCalories
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
@@ -185,8 +181,27 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
                     self.carbs[i] += userMeal.getCumulativeCarbs()
                 }
             }
-            //MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            self.updateUI()
+            self.updateUI(false)
+            self.showCharts()
+        }
+    }
+    
+    func userMealQueryCompletionHandlerAnimated(objects: [PFObject]?, error: NSError?) -> Void {
+        clearData()
+        goalCalories = CustomUser.currentUser()!.goalDailyCalories
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            if error == nil {
+                let userMeals = objects as! [UserMeal]
+                for userMeal in userMeals {
+                    let i = self.getDayIndex(userMeal.date)
+                    
+                    self.calories[i] += userMeal.getCumulativeCalories()
+                    self.protein[i] += userMeal.getCumulativeProtein()
+                    self.fat[i] += userMeal.getCumulativeFat()
+                    self.carbs[i] += userMeal.getCumulativeCarbs()
+                }
+            }
+            self.updateUI(true)
             self.showCharts()
         }
     }
@@ -237,29 +252,32 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     }
     
     
-    func updateUI(){
-        updateDayChart()
-        updateWeekChart()
+    func updateUI(animate : Bool){
+        updateDayChart(animate)
+        updateWeekChart(animate)
     }
     
-    func updateDayChart(){
+    func updateDayChart(animate: Bool){
         if(display == StatDisplay.Calorie){
             updateDayCalorieChart()
         } else if(display == StatDisplay.Macro){
             updateDayMacroChart()
         }
-        dayChart.animate(yAxisDuration: DisplayOptions.AnimateDuration, easingOption: DisplayOptions.AnimateStyle)
+        if(animate){
+            dayChart.animate(yAxisDuration: DisplayOptions.AnimateDuration, easingOption: DisplayOptions.AnimateStyle)
+        }
     }
     
-    func updateWeekChart(){
+    func updateWeekChart(animate: Bool){
         if(display == StatDisplay.Calorie){
             updateWeeklyCalorieChart()
         } else if(display == StatDisplay.Macro){
             updateWeeklyMacroChart()
         }
-        weekChart.animate(xAxisDuration: DisplayOptions.AnimateDuration, yAxisDuration: DisplayOptions.AnimateDuration,
-            easingOption: DisplayOptions.AnimateStyle)
-        
+        if(animate){
+            weekChart.animate(xAxisDuration: DisplayOptions.AnimateDuration, yAxisDuration: DisplayOptions.AnimateDuration,
+                easingOption: DisplayOptions.AnimateStyle)
+        }
     }
     
     // MARK: - Setup Functions
@@ -488,7 +506,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     func shiftWeekPrev(){
         startOfWeek = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: -7, toDate: startOfWeek, options: NSCalendarOptions.MatchPreviousTimePreservingSmallerUnits)!
         weeksBack++
-        loadWeekData()
+        loadWeekData(true)
     }
     
     func shiftWeekNext(){
@@ -497,7 +515,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         }
         startOfWeek = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 7, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
         weeksBack--
-        loadWeekData()
+        loadWeekData(true)
     }
 
     
@@ -522,7 +540,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     func selectionList(selectionList: HTHorizontalSelectionList!, didSelectButtonWithIndex index: Int) {
         display = StatDisplay(rawValue: index)!
-        updateUI()    
+        updateUI(true)
     }
     
     // MARK: -  DateNavigationControlDelegate Protocol Methods
@@ -546,7 +564,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         barSelection = entry.xIndex
         //highlight the whole bar, not just the segment that was actually clicked on
         weekChart.highlightValue(xIndex: barSelection, dataSetIndex: 0, callDelegate: false)
-        updateDayChart()
+        updateDayChart(true)
     }
     
     // MARK: - Date Range Utility Methods
