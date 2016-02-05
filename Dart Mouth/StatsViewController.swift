@@ -475,9 +475,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         
         
         //update Week ProgressBar
-        let targetProtein = Float(daysInWeek) * Float(goalCalories) * goalProtein / Constants.NutritionalConstants.ProteinCaloriesToGram
-        let targetCarbs = Float(daysInWeek) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.CarbsCaloriesToGram
-        let targetFat = Float(daysInWeek) * Float(goalCalories) * goalCarbs / Constants.NutritionalConstants.FatCaloriesToGram
+        let targetProtein = (Float(daysInWeek) * Float(goalCalories) * goalProtein) / Constants.NutritionalConstants.ProteinCaloriesToGram
+        let targetCarbs = (Float(daysInWeek) * Float(goalCalories) * goalCarbs) / Constants.NutritionalConstants.CarbsCaloriesToGram
+        let targetFat = (Float(daysInWeek) * Float(goalCalories) * goalFat) / Constants.NutritionalConstants.FatCaloriesToGram
         weekProgressDisplay.updateMacroDisplay(Int(roundf(weekCumulativeCarbs - targetCarbs)),
             protein: Int(roundf(weekCumulativeProtein - targetProtein)),
             fat: Int(roundf(weekCumulativeFat - targetFat)))
