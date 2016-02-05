@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import DZNEmptyDataSet
 
 protocol DatabaseRecipesViewControllerDelegate: class {
     func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController)
@@ -16,7 +17,8 @@ protocol DatabaseRecipesViewControllerDelegate: class {
 }
 
 class DatabaseRecipesViewController: SearchableViewController,
-    UITableViewDataSource, UITableViewDelegate {
+    UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource,
+    DZNEmptyDataSetDelegate {
     
     
     // MARK: - Local Constants
@@ -39,6 +41,9 @@ class DatabaseRecipesViewController: SearchableViewController,
         didSet {
             recipesTableView.dataSource = self
             recipesTableView.delegate = self
+            recipesTableView.emptyDataSetSource = self
+            recipesTableView.emptyDataSetDelegate = self
+            recipesTableView.tableFooterView = UIView()
         }
     }
     
@@ -134,4 +139,12 @@ class DatabaseRecipesViewController: SearchableViewController,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         delegate.didSelectDBRecipeForDBRecipesView(self.currentRecipes[indexPath.row], sender: self)
     }
+    
+    
+    // MARK: - DZNEmptyDataSetSource / Delegate protocol methods
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Search the USDA Database for Foods")
+    }
+    
 }

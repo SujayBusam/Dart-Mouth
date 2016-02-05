@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import HTHorizontalSelectionList
 import MBProgressHUD
+import DZNEmptyDataSet
 
 protocol MenuViewControllerDelegate: class {
     func didSelectRecipeForMenuView(recipe: Recipe, sender: MenuViewController) -> Void
@@ -28,7 +29,7 @@ protocol MenuViewControllerDelegate: class {
 */
 class MenuViewController: SearchableViewController, HTHorizontalSelectionListDataSource,
     HTHorizontalSelectionListDelegate, UITableViewDataSource, UITableViewDelegate,
-    MBProgressHUDDelegate {
+    MBProgressHUDDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     // MARK: - Local Constants
     
@@ -99,6 +100,9 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
         didSet {
             recipesTableView.dataSource = self
             recipesTableView.delegate = self
+            recipesTableView.emptyDataSetSource = self
+            recipesTableView.emptyDataSetDelegate = self
+            recipesTableView.tableFooterView = UIView()
         }
     }
     
@@ -234,6 +238,20 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         recipeWasSelectedAtIndexPath(indexPath)
+    }
+    
+    
+    // MARK: - DZNEmptyDataSetSource / Delegate protocol methods
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        if self.currentSearchText != nil && !self.currentSearchText!.isEmpty {
+            return NSAttributedString(string: "No Items Found")
+        }
+        return NSAttributedString(string: "No Items Available (Yet)")
+    }
+    
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Try creating a custom food")
     }
     
     

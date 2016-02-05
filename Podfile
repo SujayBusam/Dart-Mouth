@@ -12,6 +12,7 @@ target 'Dart Mouth' do
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
   pod 'TTRangeSlider'
   pod 'THCalendarDatePicker', '~> 1.2.5'
+  pod 'DZNEmptyDataSet'
 end
 
 target 'Dart MouthTests' do
@@ -25,6 +26,7 @@ target 'Dart MouthTests' do
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
   pod 'TTRangeSlider'
   pod 'THCalendarDatePicker', '~> 1.2.5'
+  pod 'DZNEmptyDataSet'
 end
 
 
