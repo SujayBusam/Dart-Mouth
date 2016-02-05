@@ -41,15 +41,13 @@ struct Constants {
         static let AllDayDisplay = "All Day"
         static let AllDayParse = "Everyday"
         
-        // Novack is weird and sometimes has a Specials mealtime
-        static let NovackSpecialsDisplay = "Specials"
-        static let NovackSpecialsParse = "Specials"
-        
         // Used just for Diary
         static let SnacksDisplay = "Snacks"
     }
     
     struct MenuStrings {
+        // No equivalent parse string. When this is used, the menu is not
+        // filtered for queries. See the api call in Recipe.
         static let AllItemsDisplay = "All Items"
         
         static let SpecialsDisplay = "Today's Specials"
