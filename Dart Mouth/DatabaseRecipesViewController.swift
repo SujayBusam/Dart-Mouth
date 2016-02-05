@@ -24,6 +24,7 @@ class DatabaseRecipesViewController: SearchableViewController,
     
     private struct Identifiers {
         static let recipeCell: String = "DBRecipeCell"
+        static let DatabaseSearchError = "Search again or create a custom food."
     }
     
     
@@ -95,10 +96,12 @@ class DatabaseRecipesViewController: SearchableViewController,
             withFailureBlock: { (errorMessage: String) -> Void in
                 // The failure handler. On UI thread.
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    // TODO: implement better error display. Use an AlertView.
-                    // Just print for internal debugging purposes for now.
+                    // Show the error message as an alert
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                    print(errorMessage)
+                    let alert = UIAlertController(title: errorMessage, message: Identifiers.DatabaseSearchError, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 })
             })
     }
