@@ -185,9 +185,12 @@ class DiaryEntryAddContainerViewController: UIViewController,
     func didSelectDBRecipeForDBRecipesView(dbRecipe: DatabaseRecipe, sender: DatabaseRecipesViewController) {
         
         // Create the recipe and transition to diary nutrition adder container
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivity.userInteractionEnabled = false
         dbRecipe.createRecipeWithSuccessBlock({
             (recipe: Recipe) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 self.showDiaryEntryNutritionAdderForRecipe(recipe)
             })
             },
@@ -196,6 +199,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     // TODO: handle error better. For now just print to debug.
                     print(errorMessage)
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
         })
     }

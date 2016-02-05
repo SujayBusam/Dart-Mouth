@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyJSON
 import DZNEmptyDataSet
+import MBProgressHUD
 
 protocol DatabaseRecipesViewControllerDelegate: class {
     func databaseRecipesVCDidAppear(sender: DatabaseRecipesViewController)
@@ -79,6 +78,9 @@ class DatabaseRecipesViewController: SearchableViewController,
             return
         }
         
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivity.userInteractionEnabled = false
+        
         self.currentRecipes.removeAll()
         
         DatabaseRecipe.findDatabaseRecipesWithSearchText(self.currentSearchText!,
@@ -87,6 +89,7 @@ class DatabaseRecipesViewController: SearchableViewController,
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.currentRecipes = dbRecipes
                     self.recipesTableView.reloadData()
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
             },
             withFailureBlock: { (errorMessage: String) -> Void in
@@ -94,6 +97,7 @@ class DatabaseRecipesViewController: SearchableViewController,
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     // TODO: implement better error display. Use an AlertView.
                     // Just print for internal debugging purposes for now.
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                     print(errorMessage)
                 })
             })
