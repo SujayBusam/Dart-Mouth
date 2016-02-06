@@ -24,16 +24,7 @@ class UserMeal: PFObject, PFSubclassing {
     
     class func findObjectsInBackgroundWithBlock(block: PFQueryArrayResultBlock,
         forDate date: NSDate, forUser user: CustomUser) -> Void {
-        let query = UserMeal.query()!
-        query.includeKey("entries.recipe")
-        query.includeKey("entries.user")
-            
-        // Restrict query based on parameters
-        query.whereKey("user", equalTo: user)
-        query.whereKey("date", greaterThanOrEqualTo: date.startOfDay)
-        query.whereKey("date", lessThanOrEqualTo: date.endOfDay!)
-            
-        query.findObjectsInBackgroundWithBlock(block)
+        findObjectsInBackgroundWithBlockWithinRange(block, startDate: date, endDate: date, forUser: user)
     }
     
     class func findObjectsInBackgroundWithBlockWithinRange(block: PFQueryArrayResultBlock,
@@ -50,6 +41,21 @@ class UserMeal: PFObject, PFSubclassing {
             query.findObjectsInBackgroundWithBlock(block)
     }
     
+    class func findRecentObjectsInBackgroundWithBlock(block: PFQueryArrayResultBlock, forUser user: CustomUser, withSkip skip: Int,
+        withLimit limit: Int) {
+        
+        let query = UserMeal.query()!
+        query.includeKey("entries.recipe")
+        query.includeKey("entries.user")
+        
+        // Restrict query based on parameters
+        query.whereKey("user", equalTo: user)
+        query.orderByDescending("date")
+        query.limit = limit
+        query.skip = skip
+        
+        query.findObjectsInBackgroundWithBlock(block)
+    }
     
     
     // MARK: - Useful instance helper functions
@@ -95,16 +101,16 @@ class UserMeal: PFObject, PFSubclassing {
     }
     
     /**
-    Return the names of all Recipes within this UserMeal, separated by commas.
+    Return the names of all Recipes within this UserMeal, separated by given string.
      
     Returns nil if this UserMeal has no DiaryEntries, which should not be the case
     if all apps delete UserMeals once their entries are empty.
     **/
-    func getCommaSeparatedRecipes() -> String? {
+    func getStringSeparatedRecipes(separator: String) -> String? {
         guard !self.entries.isEmpty else { return nil }
         
         return self.entries.map({ (entry: DiaryEntry) -> String in
-            return entry.recipe.name
-        }).joinWithSeparator(",")
+            return entry.recipe.name.trim()
+        }).joinWithSeparator(separator)
     }
 }

@@ -43,7 +43,7 @@ class PastMealTableViewCell: UITableViewCell {
     func setupUI() {
         if let userMeal = self.userMeal {
             mealNameLabel.text = userMeal.title
-            mealEntriesLabel.text = userMeal.getCommaSeparatedRecipes() ?? ""
+            mealEntriesLabel.text = userMeal.getStringSeparatedRecipes(" | ")
             
             // Set the image view based on UserMeal title
             switch userMeal.title {

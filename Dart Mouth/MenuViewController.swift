@@ -268,16 +268,14 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
     
     // Function that handles the Recipes after fetching them from Parse
     func getRecipesCompletionHandler(recipes: [Recipe]?) -> Void {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.populateAllCategoriesAndRecipes(recipes)
-            self.setFilteredRecipesAndCategoriesWithSearchText(self.currentSearchText)
-            
-            // Every time UI updates, table view should reset to top, as long as it's not empty.
-            if !self.filteredRecipes.isEmpty {
-                self.recipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
-            }
-            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        self.populateAllCategoriesAndRecipes(recipes)
+        self.setFilteredRecipesAndCategoriesWithSearchText(self.currentSearchText)
+        
+        // Every time UI updates, table view should reset to top, as long as it's not empty.
+        if !self.filteredRecipes.isEmpty {
+            self.recipesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
         }
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
         
     }
     
