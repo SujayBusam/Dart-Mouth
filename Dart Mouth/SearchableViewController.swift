@@ -9,18 +9,23 @@
 import UIKit
 
 class SearchableViewController: UIViewController {
+    
+    var currentSearchText: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func searchTextChanged(newSearchText: String?) {}
+    func searchTextChanged(newSearchText: String?) {
+        self.currentSearchText = newSearchText
+    }
+    
     func searchRequested() {}
 }

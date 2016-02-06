@@ -37,7 +37,7 @@ class PreviousMealsViewController: SearchableViewController,
     var filteredDatesForHeaders = NSMutableOrderedSet()
     var filteredUserMealDict = [String : [UserMeal]]()
     
-    var currentSearchText: String? {
+    override var currentSearchText: String? {
         didSet {
             setFilteredDateHeadersAndUserMeals(currentSearchText)
         }
@@ -75,11 +75,12 @@ class PreviousMealsViewController: SearchableViewController,
     // MARK: - Other Overrides
     
     override func searchTextChanged(newSearchText: String?) {
-        self.currentSearchText = newSearchText
+        super.searchTextChanged(newSearchText)
     }
     
     override func searchRequested() {
-        // Do nothing. Changing the search text already updates UI
+        // Do nothing more. Changing the search text already updates UI
+        super.searchRequested()
     }
     
     

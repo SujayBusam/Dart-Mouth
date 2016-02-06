@@ -51,7 +51,7 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
         didSet { updateUI() }
     }
     
-    var currentSearchText: String? {
+    override var currentSearchText: String? {
         didSet {
             // NOTE: doesn't need to call updateUI() since other values such as
             // current venue or date haven't changed. Therefore, API calls do not
@@ -382,7 +382,6 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
     
     override func searchTextChanged(newSearchText: String?) {
         super.searchTextChanged(newSearchText)
-        self.currentSearchText = newSearchText
     }
     
     override func searchRequested() {
