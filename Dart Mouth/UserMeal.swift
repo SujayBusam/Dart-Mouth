@@ -10,7 +10,7 @@ import Parse
 
 class UserMeal: PFObject, PFSubclassing {
     
-    @NSManaged var title: String // Breakfast, Lunch, Dinner, Snack
+    @NSManaged var title: String // Breakfast, Lunch, Dinner, Snacks
     @NSManaged var date: NSDate
     @NSManaged var user: CustomUser
     @NSManaged var entries: [DiaryEntry]
@@ -92,5 +92,19 @@ class UserMeal: PFObject, PFSubclassing {
             }
         }
         return total
+    }
+    
+    /**
+    Return the names of all Recipes within this UserMeal, separated by commas.
+     
+    Returns nil if this UserMeal has no DiaryEntries, which should not be the case
+    if all apps delete UserMeals once their entries are empty.
+    **/
+    func getCommaSeparatedRecipes() -> String? {
+        guard !self.entries.isEmpty else { return nil }
+        
+        return self.entries.map({ (entry: DiaryEntry) -> String in
+            return entry.recipe.name
+        }).joinWithSeparator(",")
     }
 }

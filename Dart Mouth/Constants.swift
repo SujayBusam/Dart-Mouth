@@ -150,6 +150,10 @@ struct Constants {
         static let SearchIcon = "Search"
         static let TrashGreen = "TrashGreen"
         static let Calendar = "CalendarWhite"
+        static let SunGreen = "SunGreen"
+        static let SunriseGreen = "SunriseGreen"
+        static let SunsetGreen = "SunsetGreen"
+        static let ClockGreen = "ClockGreen"
     }
     
     struct FoodDatabase {

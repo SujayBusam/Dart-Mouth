@@ -25,6 +25,7 @@
 		237630931BEEB3F0000A6C54 /* RecipeNutritionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */; };
 		237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */; };
 		237CC7B81C48BA3200205DC6 /* DiaryTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */; };
+		2384EF081C65480F00C9491B /* PastMealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2384EF071C65480F00C9491B /* PastMealTableViewCell.swift */; };
 		238F1C8F1C2A2077007720F8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C8E1C2A2077007720F8 /* Recipe.swift */; };
 		238F1C971C2B8190007720F8 /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C961C2B8190007720F8 /* Offering.swift */; };
 		238F1C991C2C6F22007720F8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238F1C981C2C6F22007720F8 /* Constants.swift */; };
@@ -91,6 +92,7 @@
 		237630921BEEB3F0000A6C54 /* RecipeNutritionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritionViewController.swift; sourceTree = "<group>"; };
 		237CC7B51C448E8300205DC6 /* DiaryEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryTableViewCell.swift; sourceTree = "<group>"; };
 		237CC7B71C48BA3200205DC6 /* DiaryTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryTableHeaderView.swift; sourceTree = "<group>"; };
+		2384EF071C65480F00C9491B /* PastMealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastMealTableViewCell.swift; sourceTree = "<group>"; };
 		238F1C8E1C2A2077007720F8 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		238F1C961C2B8190007720F8 /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		238F1C981C2C6F22007720F8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				23C174251C543D6000602A04 /* CustomRecipesViewController.swift */,
 				23C174271C543D9000602A04 /* DatabaseRecipesViewController.swift */,
 				23C1742B1C54A2B800602A04 /* PreviousMealsViewController.swift */,
+				2384EF071C65480F00C9491B /* PastMealTableViewCell.swift */,
 			);
 			name = DiaryView;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				23C1742A1C54A0E700602A04 /* SearchableViewController.swift in Sources */,
 				23C174241C5425D900602A04 /* PreviousRecipesViewController.swift in Sources */,
 				23C1741C1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift in Sources */,
+				2384EF081C65480F00C9491B /* PastMealTableViewCell.swift in Sources */,
 				23C174321C57059100602A04 /* StatsViewController.swift in Sources */,
 				23C174201C5413E400602A04 /* DiaryEntryNutritionAdderContainerViewController.swift in Sources */,
 				2376308C1BEE94D8000A6C54 /* PreferencesViewController.swift in Sources */,
