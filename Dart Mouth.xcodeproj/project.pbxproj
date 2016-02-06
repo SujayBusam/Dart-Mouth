@@ -411,7 +411,7 @@
 				TargetAttributes = {
 					2375D5D31BDC09B70065AC14 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 8529HT92V4;
+						DevelopmentTeam = 4KDF53QYYU;
 					};
 					2375D5E71BDC09B70065AC14 = {
 						CreatedOnToolsVersion = 7.1;
@@ -726,7 +726,7 @@
 				INFOPLIST_FILE = "Dart Mouth/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.Dart-Munch";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.Dart-Mouth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -743,7 +743,7 @@
 				INFOPLIST_FILE = "Dart Mouth/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.Dart-Munch";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.dartmouth.Dart-Mouth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
