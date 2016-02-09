@@ -91,6 +91,13 @@ struct Constants {
         static let DefaultCarbsPercent : Float = 0.5
         static let DefaultFatPercent : Float = 0.25
         
+        
+//        eat:
+//        – Protein: 1 gram per pound of body weight
+//        – Fat: .45 grams per pound of body weight
+//        – Carbs: The remaining number of calories left will be filled with carbs
+        
+
     }
     
     struct Colors {

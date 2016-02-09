@@ -13,6 +13,7 @@ target 'Dart Mouth' do
   pod 'TTRangeSlider'
   pod 'THCalendarDatePicker', '~> 1.2.5'
   pod 'DZNEmptyDataSet'
+  pod 'ActionSheetPicker-3.0', '~> 2.0.5'
 end
 
 target 'Dart MouthTests' do
@@ -27,6 +28,9 @@ target 'Dart MouthTests' do
   pod 'TTRangeSlider'
   pod 'THCalendarDatePicker', '~> 1.2.5'
   pod 'DZNEmptyDataSet'
+  pod 'AMTextFieldPickerExtension', '~> 0.3'
+  pod 'ActionSheetPicker-3.0', '~> 2.0.5'
+
 end
 
 

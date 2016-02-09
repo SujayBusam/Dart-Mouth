@@ -9,18 +9,54 @@
 import UIKit
 import TTRangeSlider
 import ChameleonFramework
+import ActionSheetPicker_3_0
 
-class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeSliderDelegate {
+//import DTPickerPresenter
 
+class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, TTRangeSliderDelegate {
 
+    enum Gender : String {
+        case Male = "Male", Female = "Female"
+    }
     
-    @IBOutlet weak var goalCaloriesLabel: UILabel!
     
-    @IBOutlet weak var goalCaloriesText: UITextField!{
+    @IBOutlet weak var genderText: UITextField!{
         didSet{
-            goalCaloriesText.delegate = self
+            genderText.delegate = self
         }
     }
+    
+    @IBOutlet weak var ageText: UITextField!{
+        didSet{
+            ageText.delegate = self
+        }
+    }
+    
+    @IBOutlet weak var weightText: UITextField!{
+        didSet{
+            weightText.delegate = self
+        }
+    }
+    
+    @IBOutlet weak var heightText: UITextField!{
+        didSet{
+            heightText.delegate = self
+        }
+    }
+    
+    @IBOutlet weak var estimatedDailyText: UITextField!
+    
+    @IBOutlet weak var caloriesDisplay: UILabel!
+    
+    
+    
+//    @IBOutlet weak var goalCaloriesLabel: UILabel!
+//    
+//    @IBOutlet weak var goalCaloriesText: UITextField!{
+//        didSet{
+//            goalCaloriesText.delegate = self
+//        }
+//    }
     
     @IBOutlet weak var macroSlider: TTRangeSlider!{
         didSet{
@@ -36,6 +72,14 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     @IBOutlet weak var carbsGramsLabel: UILabel!
     @IBOutlet weak var fatGramsLabel: UILabel!
     
+    var picker: ActionSheetStringPicker!
+    
+    var gender : Gender?
+    var age : Int?
+    var weight : Int?
+    var height : Int?
+    
+    
     @IBAction func logoutButtonPressed(sender: UIButton) {
         // TODO: error handling
         CustomUser.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
@@ -50,10 +94,14 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     }
     
     private struct DisplayOptions{
+        //COLORS
         static let GramLabelColor = FlatGray()
         
-        static let MinCalories = 1000
-        static let MaxCalories = 5000
+        //PICKER OPTIONS
+        static let GenderOptions : [Gender] = [Gender.Male, Gender.Female]
+        static let AgeOptions : Range<Int> = 12...99 // years
+        static let WeightOptions : Range<Int> = 100...500 // pounds
+        static let HeightOptions : Range<Int> = 36...96 // inches
         
     }
     
@@ -72,13 +120,13 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         let tap = UITapGestureRecognizer(target: self,
             action: NSSelectorFromString(Identifiers.DismissKeyboard))
         view.addGestureRecognizer(tap)
-
         
-        goalCaloriesLabel.text = "Goal Calories"
-        goalCaloriesText.textAlignment = .Center
+        genderText.textAlignment = .Center
+        ageText.textAlignment = .Center
+        weightText.textAlignment = .Center
+        heightText.textAlignment = .Center
+        caloriesDisplay.textAlignment = .Center
         
-        
-        goalCaloriesText.text = String(calories)
         
         percentFormatter.numberStyle = .PercentStyle
         gramFormatter.numberStyle = .DecimalStyle
@@ -100,6 +148,36 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         
     }
     
+    // MARK - UIPickerViewDataSource methods
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        switch pickerView {
+//        case genderPicker : return DisplayOptions.GenderOptions.count
+//        case agePicker : return DisplayOptions.AgeOptions.count
+//        case weightPicker : return DisplayOptions.WeightOptions.count
+//        case heightPicker : return DisplayOptions.HeightOptions.count
+//        default : return 0
+//        }
+        return 10
+    }
+    
+    // MARK - UIPickerViewDelegate methods
+
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "Option"
+//        switch pickerView {
+//        case genderPicker : return DisplayOptions.GenderOptions[row].rawValue
+//        case agePicker : return String(DisplayOptions.AgeOptions.first!)
+//        case weightPicker : return String(DisplayOptions.WeightOptions.first!)
+//        case heightPicker : return getHeightOptionString(DisplayOptions.HeightOptions.first!)
+//        default : return ""
+//        }
+    }
+    
     // MARK: - Gesture actions
 
     func dismissKeyboard() {
@@ -107,9 +185,93 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         view.endEditing(true)
     }
     
+    // MARK: - UITextField option / update methods
+    
+    func getOptionsForTextField(textField: UITextField) -> [String]{
+        switch textField{
+        case genderText: return DisplayOptions.GenderOptions.map({$0.rawValue})
+        case ageText: return DisplayOptions.AgeOptions.map({String($0)})
+        case weightText: return DisplayOptions.WeightOptions.map({String($0)})
+        case heightText: return DisplayOptions.HeightOptions.map({getHeightOptionString($0)})
+        default: return []
+        }
+    }
+    
+    func getTitleForTextField(textField: UITextField) -> String{
+        switch textField{
+        case genderText: return "Select Gender"
+        case ageText: return "Select Age"
+        case weightText: return "Select Weight"
+        case heightText: return "Select Height"
+        default: return ""
+        }
+    }
+    
+    func updateValueForTextField(textField: UITextField, index: Int){
+        switch textField{
+        case genderText: gender = DisplayOptions.GenderOptions[index]
+        case ageText: age = DisplayOptions.AgeOptions.first! + index
+        case weightText: weight = DisplayOptions.WeightOptions.first! + index
+        case heightText: height = DisplayOptions.HeightOptions.first! + index
+        default: return
+        }
+    }
+    
+    func getSelectedValueForTextField(textField: UITextField) -> Int{
+        switch textField{
+        case genderText:
+            if let g = gender {
+                return g == .Female ? 1 : 0
+            } else { return 0 }
+        case ageText:
+            if let a = age {
+                return a - DisplayOptions.AgeOptions.first!
+            } else { return 0 }
+        case weightText:
+            if let w = weight {
+                print(w)
+                print(DisplayOptions.WeightOptions.first!)
+                return w - DisplayOptions.WeightOptions.first!
+            } else { return 0 }
+        case heightText:
+            if let h = height{
+                return h - DisplayOptions.HeightOptions.first!
+            } else { return 0 }
+        default: return 0
+        }
+    }
+    
+    func updateEstimatedCaloriesIfPossible(){
+        if let g = gender, a = age, w = weight, h = height{
+            let estimate = getBMR(w, height: h, age: a, gender: g)
+            estimatedDailyText.text = String(estimate)
+        }
+    }
     // MARK: - UITextField protocol methods
 
     //only calories field is delegated to this class
+    
+    
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        let title = getTitleForTextField(textField)
+        let options = getOptionsForTextField(textField)
+        let selected = getSelectedValueForTextField(textField)
+        
+        picker = ActionSheetStringPicker(title: title, rows: options, initialSelection: selected, doneBlock: {
+            picker, index, value in
+            self.updateValueForTextField(textField, index: index)
+            textField.text = String(value)
+            self.updateEstimatedCaloriesIfPossible()
+            textField.resignFirstResponder()
+            return
+            }, cancelBlock: {
+            ActionStringCancelBlock in
+            textField.resignFirstResponder()
+            return
+            }, origin: textField)
+        picker.showActionSheetPicker()
+    }
     
     func textFieldDidEndEditing(textField: UITextField) {
         caloriesEntered()
@@ -118,17 +280,30 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         caloriesEntered()
+        
+        picker = ActionSheetStringPicker(title: "Title", rows: ["Male", "Female"], initialSelection: 0, doneBlock: {
+              picker, value, index in
+            print("value = \(value)")
+            print("index = \(index)")
+            print("picker = \(picker)")
+            return
+            }, cancelBlock: {ActionStringCancelBlock in return}, origin: textField)
+        picker.showActionSheetPicker()
         return true
     }
     
+    
+    
+
+    
     func caloriesEntered(){
-        if var newValue : Int = Int(goalCaloriesText.text!){
-            newValue = min(newValue, DisplayOptions.MaxCalories)
-            newValue = max(newValue, DisplayOptions.MinCalories)
-            calories = newValue
-        }
-        goalCaloriesText.text = String(calories)
-        updateMacroLabels()
+//        if var newValue : Int = Int(goalCaloriesText.text!){
+//            newValue = min(newValue, DisplayOptions.MaxCalories)
+//            newValue = max(newValue, DisplayOptions.MinCalories)
+//            calories = newValue
+//        }
+//        goalCaloriesText.text = String(calories)
+//        updateMacroLabels()
     }
     
     
@@ -165,10 +340,23 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     }
     
     
+
+    //MARK: - Utility Methods
+
+    //Base on Mifflin-St Jeor equation
+    func getBMR(weight : Int, height : Int, age : Int, gender : Gender) -> Int {
+        let genderFactor : Float = (gender == .Male) ? 5.0: -161.0
+        return Int(round(22.05 * Float(weight) + 2.4601 * Float(height) - 5.0 * Float(age) + genderFactor))
+    }
     
+    func getWeightOptionString(value: Int) -> String {
+        return "\(weight) lbs"
+    }
+    func getHeightOptionString(value : Int) -> String {
+        let feet = value / 12
+        let inches = value % 12
+        
+        return "\(feet)' \(inches)\""
+    }
     
-
-
-
-
 }

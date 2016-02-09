@@ -1,5 +1,7 @@
 PODS:
+  - ActionSheetPicker-3.0 (2.0.5)
   - Alamofire (3.1.5)
+  - AMTextFieldPickerExtension (0.3.0)
   - Bolts/Tasks (1.5.0)
   - ChameleonFramework/Default (2.0.6)
   - ChameleonFramework/Swift (2.0.6):
@@ -18,7 +20,9 @@ PODS:
   - TTRangeSlider (1.0.3)
 
 DEPENDENCIES:
+  - ActionSheetPicker-3.0 (~> 2.0.5)
   - Alamofire (~> 3.0)
+  - AMTextFieldPickerExtension (~> 0.3)
   - ChameleonFramework/Swift
   - Charts
   - DZNEmptyDataSet
@@ -40,7 +44,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
+  AMTextFieldPickerExtension: e134f956ab32d9b1a4e22d86a63f17ef45fdc815
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   ChameleonFramework: a6b466873ff9a4ce3a5196c20bccf1a97ad9f446
   Charts: 5e1e5ac23898e5b09d226a2fc3e9d86bc281937e
