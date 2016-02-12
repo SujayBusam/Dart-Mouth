@@ -30,7 +30,11 @@ class DatabaseRecipesViewController: SearchableViewController,
     
     // MARK: - Instance variables
     
-    var currentSearchText: String?
+    override var currentSearchText: String? {
+        didSet {
+            // Nothing to override
+        }
+    }
     var currentRecipes: [DatabaseRecipe] = [DatabaseRecipe]()
     var delegate: DatabaseRecipesViewControllerDelegate!
     
@@ -111,7 +115,10 @@ class DatabaseRecipesViewController: SearchableViewController,
     
     override func searchTextChanged(newSearchText: String?) {
         super.searchTextChanged(newSearchText)
-        self.currentSearchText = newSearchText
+        
+        // Only update the search data when the text changes if the text
+        // changes to empty or nil. The updating of search data otherwise
+        // only occurs when a search is requested via a call of searchRequested()
         if newSearchText == nil || newSearchText!.isEmpty {
             self.updateSearchData()
         }
