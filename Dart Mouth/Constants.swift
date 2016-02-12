@@ -100,6 +100,10 @@ struct Constants {
 
     }
     
+    struct UserDefaults{
+        
+    }
+    
     struct Colors {
         static let appPrimaryColor = FlatMint()
         static let appPrimaryColorDark = FlatMintDark()

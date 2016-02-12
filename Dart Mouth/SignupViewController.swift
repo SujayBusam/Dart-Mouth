@@ -67,7 +67,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
             user.email = emailTextField.text!
             user.username = emailTextField.text!
             user.password = passwordTextField.text!
-            user.goalDailyCalories = 2000 // TODO: let user specify this in another screen.
+            
+            user.goalDailyCalories = Constants.NutritionalConstants.DefaultCalories
             
             let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             spinningActivity.userInteractionEnabled = false

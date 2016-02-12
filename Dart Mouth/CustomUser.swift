@@ -11,8 +11,17 @@ import Parse
 class CustomUser: PFUser {
     
     @NSManaged var goalDailyCalories: Int
-    @NSManaged var 
+    @NSManaged var goalCarb : Float
+    @NSManaged var goalProtein : Float
+    @NSManaged var goalFat : Float
     
+    struct KeyNames {
+        let Gender = "gender"
+        let Age = "age"
+        let Weight = "weight"
+        let height = "height"
+        let ActivityLevel = "activityLevel"
+    }
     // See http://stackoverflow.com/questions/32041247/declare-a-read-only-nsmanaged-property-in-swift-for-parses-pfrelation
     var pastRecipes: PFRelation! {
         return relationForKey("pastRecipes")

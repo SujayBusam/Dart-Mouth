@@ -11,8 +11,6 @@ import TTRangeSlider
 import ChameleonFramework
 import ActionSheetPicker_3_0
 
-//import DTPickerPresenter
-
 class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeSliderDelegate {
 
     enum Gender : Int {
@@ -62,17 +60,8 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     
     
     @IBOutlet weak var dailyBurnedLabel: UILabel!
+    
     @IBOutlet weak var caloriesDisplay: UILabel!
-    
-    
-    
-//    @IBOutlet weak var goalCaloriesLabel: UILabel!
-//    
-//    @IBOutlet weak var goalCaloriesText: UITextField!{
-//        didSet{
-//            goalCaloriesText.delegate = self
-//        }
-//    }
     
     @IBOutlet weak var macroSlider: TTRangeSlider!{
         didSet{
@@ -123,7 +112,7 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         static let WeightOptions : Range<Int> = 100...500 // pounds
         static let HeightOptions : Range<Int> = 48...96 // inches
         
-        static let CalorieColorDefault = FlatWhite()
+        static let CalorieColorDefault = FlatWhiteDark()
         static let CalorieColorCalculated = FlatPowderBlue()
     }
     
@@ -171,10 +160,22 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         carbsGramsLabel.textColor = DisplayOptions.GramLabelColor
         fatGramsLabel.textColor = DisplayOptions.GramLabelColor
         
+        retrieveUserStats()
         updateMacroLabels()
         updateEstimatedCaloriesIfPossible()
     }
     
+    func retrieveUserStats(){
+//        if let a = CustomUser.currentUser()!.valueForKey(CustomUser.KeyNames.) as? Int {
+//            age = a
+//            
+// 
+//        } else {
+//        }
+        CustomUser.currentUser()!.setValue(123, forKey: "age")
+        CustomUser.currentUser()!.saveInBackground()
+        
+    }
     // MARK: - Gesture actions
 
     func dismissKeyboard() {
@@ -210,7 +211,9 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     
     func updateValueForTextField(textField: UITextField, index: Int){
         switch textField{
-        case genderText: gender = DisplayOptions.GenderOptions[index]
+        case genderText:
+            gender = DisplayOptions.GenderOptions[index]
+            
         case activityText : activityLevel = DisplayOptions.ActivityOptions[index]
         case ageText: age = DisplayOptions.AgeOptions.first! + index
         case weightText: weight = DisplayOptions.WeightOptions.first! + index
