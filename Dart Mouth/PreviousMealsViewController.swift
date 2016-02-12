@@ -111,6 +111,16 @@ class PreviousMealsViewController: SearchableViewController,
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let alert = UIAlertController(title: "Add Previous Meal", message: "Feature coming soon!", preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        alert.addAction(action)
+        self.presentViewController(alert, animated: true) { () -> Void in
+            self.previousUserMealsTable.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+        
+    }
+    
     
     // MARK: - Helper Functions
     
