@@ -136,8 +136,9 @@ class DiaryViewController: UIViewController, DateNavigationControlDelegate,
         self.navigationItem.titleView = dateNavigationControl
         
         // Create and setup add to diary button in navigation bar
-        self.addToDiaryBarButton = UIBarButtonItem(image: UIImage(named: Identifiers.AddButton), style: UIBarButtonItemStyle.Plain, target: self, action: NSSelectorFromString(Identifiers.addToDiaryPressed))
-        self.navigationItem.rightBarButtonItem = self.addToDiaryBarButton
+        // Commented out for now for user studies.
+        //self.addToDiaryBarButton = UIBarButtonItem(image: UIImage(named: Identifiers.AddButton), style: UIBarButtonItemStyle.Plain, target: self, action: NSSelectorFromString(Identifiers.addToDiaryPressed))
+        //self.navigationItem.rightBarButtonItem = self.addToDiaryBarButton
         
         // Initialize calorie budget values
         self.calorieBudget = CustomUser.currentUser()!.goalDailyCalories
