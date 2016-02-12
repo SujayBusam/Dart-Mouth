@@ -11,6 +11,7 @@ import Parse
 class CustomUser: PFUser {
     
     @NSManaged var goalDailyCalories: Int
+    @NSManaged var 
     
     // See http://stackoverflow.com/questions/32041247/declare-a-read-only-nsmanaged-property-in-swift-for-parses-pfrelation
     var pastRecipes: PFRelation! {

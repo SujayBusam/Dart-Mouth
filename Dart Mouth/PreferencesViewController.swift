@@ -13,10 +13,14 @@ import ActionSheetPicker_3_0
 
 //import DTPickerPresenter
 
-class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, TTRangeSliderDelegate {
+class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeSliderDelegate {
 
-    enum Gender : String {
-        case Male = "Male", Female = "Female"
+    enum Gender : Int {
+        case Male = 0, Female
+    }
+    
+    enum ActivityLevel : Int {
+        case Sedentary = 0, Light, Moderate, Very, Extra
     }
     
     
@@ -44,8 +48,20 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    @IBOutlet weak var estimatedDailyText: UITextField!
+    @IBOutlet weak var activityText: UITextField!{
+        didSet{
+            activityText.delegate = self
+        }
+    }
     
+    @IBOutlet weak var goalText: UITextField!{
+        didSet{
+            goalText.delegate = self
+        }
+    }
+    
+    
+    @IBOutlet weak var dailyBurnedLabel: UILabel!
     @IBOutlet weak var caloriesDisplay: UILabel!
     
     
@@ -75,9 +91,11 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var picker: ActionSheetStringPicker!
     
     var gender : Gender?
+    var activityLevel : ActivityLevel?
     var age : Int?
     var weight : Int?
     var height : Int?
+    var goal : Float?
     
     
     @IBAction func logoutButtonPressed(sender: UIButton) {
@@ -98,11 +116,15 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
         static let GramLabelColor = FlatGray()
         
         //PICKER OPTIONS
-        static let GenderOptions : [Gender] = [Gender.Male, Gender.Female]
+        static let GenderOptions : [Gender] = [.Male, .Female]
+        static let ActivityOptions : [ActivityLevel] = [.Sedentary, .Light, .Moderate, .Very, .Extra]
+        static let GoalOptions: [Float] = [-1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5]
         static let AgeOptions : Range<Int> = 12...99 // years
         static let WeightOptions : Range<Int> = 100...500 // pounds
-        static let HeightOptions : Range<Int> = 36...96 // inches
+        static let HeightOptions : Range<Int> = 48...96 // inches
         
+        static let CalorieColorDefault = FlatWhite()
+        static let CalorieColorCalculated = FlatPowderBlue()
     }
     
     var calories : Int = Constants.NutritionalConstants.DefaultCalories
@@ -125,8 +147,14 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
         ageText.textAlignment = .Center
         weightText.textAlignment = .Center
         heightText.textAlignment = .Center
+        activityText.textAlignment = .Center
+        goalText.textAlignment = .Center
+        dailyBurnedLabel.textAlignment = .Center
+        dailyBurnedLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
         caloriesDisplay.textAlignment = .Center
-        
+        goalText.backgroundColor = Constants.Colors.appPrimaryColor
+        goalText.textColor = UIColor.whiteColor()
+        caloriesDisplay.textColor = DisplayOptions.CalorieColorCalculated
         
         percentFormatter.numberStyle = .PercentStyle
         gramFormatter.numberStyle = .DecimalStyle
@@ -144,38 +172,7 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
         fatGramsLabel.textColor = DisplayOptions.GramLabelColor
         
         updateMacroLabels()
-        
-        
-    }
-    
-    // MARK - UIPickerViewDataSource methods
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        switch pickerView {
-//        case genderPicker : return DisplayOptions.GenderOptions.count
-//        case agePicker : return DisplayOptions.AgeOptions.count
-//        case weightPicker : return DisplayOptions.WeightOptions.count
-//        case heightPicker : return DisplayOptions.HeightOptions.count
-//        default : return 0
-//        }
-        return 10
-    }
-    
-    // MARK - UIPickerViewDelegate methods
-
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "Option"
-//        switch pickerView {
-//        case genderPicker : return DisplayOptions.GenderOptions[row].rawValue
-//        case agePicker : return String(DisplayOptions.AgeOptions.first!)
-//        case weightPicker : return String(DisplayOptions.WeightOptions.first!)
-//        case heightPicker : return getHeightOptionString(DisplayOptions.HeightOptions.first!)
-//        default : return ""
-//        }
+        updateEstimatedCaloriesIfPossible()
     }
     
     // MARK: - Gesture actions
@@ -189,10 +186,12 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     func getOptionsForTextField(textField: UITextField) -> [String]{
         switch textField{
-        case genderText: return DisplayOptions.GenderOptions.map({$0.rawValue})
+        case genderText: return DisplayOptions.GenderOptions.map({getGenderOptionString($0)})
+        case activityText: return DisplayOptions.ActivityOptions.map({getActivityOptionString($0)})
         case ageText: return DisplayOptions.AgeOptions.map({String($0)})
         case weightText: return DisplayOptions.WeightOptions.map({String($0)})
         case heightText: return DisplayOptions.HeightOptions.map({getHeightOptionString($0)})
+        case goalText: return DisplayOptions.GoalOptions.map({getGoalOptionStringValue($0)})
         default: return []
         }
     }
@@ -200,9 +199,11 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
     func getTitleForTextField(textField: UITextField) -> String{
         switch textField{
         case genderText: return "Select Gender"
+        case activityText: return "Select Activity Level"
         case ageText: return "Select Age"
         case weightText: return "Select Weight"
         case heightText: return "Select Height"
+        case goalText: return "Select Goal"
         default: return ""
         }
     }
@@ -210,9 +211,11 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
     func updateValueForTextField(textField: UITextField, index: Int){
         switch textField{
         case genderText: gender = DisplayOptions.GenderOptions[index]
+        case activityText : activityLevel = DisplayOptions.ActivityOptions[index]
         case ageText: age = DisplayOptions.AgeOptions.first! + index
         case weightText: weight = DisplayOptions.WeightOptions.first! + index
         case heightText: height = DisplayOptions.HeightOptions.first! + index
+        case goalText: goal = DisplayOptions.GoalOptions[index]
         default: return
         }
     }
@@ -221,7 +224,11 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
         switch textField{
         case genderText:
             if let g = gender {
-                return g == .Female ? 1 : 0
+                return g.rawValue
+            } else { return 0 }
+        case activityText:
+            if let l = activityLevel{
+                return l.rawValue
             } else { return 0 }
         case ageText:
             if let a = age {
@@ -237,14 +244,33 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
             if let h = height{
                 return h - DisplayOptions.HeightOptions.first!
             } else { return 0 }
+        case goalText:
+            if let g = goal {
+                return DisplayOptions.GoalOptions.indexOf(g)!
+            } else {return 0}
         default: return 0
         }
     }
     
     func updateEstimatedCaloriesIfPossible(){
-        if let g = gender, a = age, w = weight, h = height{
-            let estimate = getBMR(w, height: h, age: a, gender: g)
-            estimatedDailyText.text = String(estimate)
+        if let g = gender, a = age, w = weight, h = height, l = activityLevel{
+            let estimate = getBMR(w, height: h, age: a, gender: g, level: l)
+            dailyBurnedLabel.text = String(estimate)
+            dailyBurnedLabel.textColor = DisplayOptions.CalorieColorCalculated
+
+            
+            if let userGoal = goal{
+                let goalValue = Int(userGoal * 500)
+                let total = estimate + goalValue
+                let op = userGoal >= 0 ? "+" : "-"
+
+                caloriesDisplay.text = "\(estimate) \(op) \(abs(goalValue))= \(total)"
+            } else {
+                caloriesDisplay.text = ""
+            }
+        } else {
+            dailyBurnedLabel.text = String(Constants.NutritionalConstants.DefaultCalories)
+            dailyBurnedLabel.textColor = DisplayOptions.CalorieColorDefault
         }
     }
     // MARK: - UITextField protocol methods
@@ -343,11 +369,39 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
     //MARK: - Utility Methods
 
-    //Base on Mifflin-St Jeor equation
-    func getBMR(weight : Int, height : Int, age : Int, gender : Gender) -> Int {
-        let genderFactor : Float = (gender == .Male) ? 5.0: -161.0
-        return Int(round(22.05 * Float(weight) + 2.4601 * Float(height) - 5.0 * Float(age) + genderFactor))
+    func getActivityMultiplier(level : ActivityLevel) -> Float{
+        switch(level){
+        case .Sedentary: return 1.2
+        case .Light: return 1.375
+        case .Moderate: return 1.55
+        case .Very: return 1.725
+        case .Extra: return 1.9
+        }
     }
+    //Base on Mifflin-St Jeor equation
+    func getBMR(weight : Int, height : Int, age : Int, gender : Gender, level : ActivityLevel) -> Int {
+        let activityMultiplier = getActivityMultiplier(level)
+        let genderFactor : Float = (gender == .Male) ? 5.0: -161.0
+        return Int(round(activityMultiplier * (4.536 * Float(weight) + 15.875 * Float(height) - 5.0 * Float(age) + genderFactor)))
+    }
+    
+    func getGenderOptionString(gender: Gender) -> String {
+        switch gender{
+        case .Male: return "Male"
+        case .Female: return "Female"
+        }
+    }
+    
+    func getActivityOptionString(level: ActivityLevel) -> String {
+        switch level{
+        case .Sedentary: return "Sedentary"
+        case .Light: return "Light"
+        case .Moderate: return "Moderate"
+        case .Very: return "High"
+        case .Extra: return "Extreme"
+        }
+    }
+    
     
     func getWeightOptionString(value: Int) -> String {
         return "\(weight) lbs"
@@ -357,6 +411,14 @@ class PreferencesViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let inches = value % 12
         
         return "\(feet)' \(inches)\""
+    }
+    
+    func getGoalOptionStringValue(value: Float) -> String {
+        if value == 0.0{
+            return "I want to stay the same weight"
+        }
+        let verb = (value > 0) ? "gain" : "lose"
+        return "I want to \(verb) \(abs(value)) lbs/week!"
     }
     
 }
