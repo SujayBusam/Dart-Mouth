@@ -11,6 +11,17 @@ import UIKit
 class PreviousMealsAddViewController: UIViewController, UITableViewDataSource,
     UITableViewDelegate {
     
+    // MARK: - Local Constants
+    
+    private struct Identifiers {
+        static let Title = "Add Food"
+        static let AddButtonText = "Add"
+        static let CancelButtonText = "Cancel"
+        static let addToDiaryButtonPressed = "addToDiaryButtonPressed:"
+        static let cancelButtonPressed = "cancelButtonPressed:"
+        static let Cell = "PastMealEntryCell"
+    }
+    
     // MARK: - Outlets
     
     @IBOutlet weak var previousEntriesTableView: UITableView! {
@@ -36,7 +47,19 @@ class PreviousMealsAddViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         updateUI()
+    }
+    
+    func setupViews() {
+        // Set navigation title
+        self.navigationItem.title = Identifiers.Title
+        
+        // Add button on right side of navigation bar
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: Identifiers.AddButtonText, style: .Done, target: self, action: NSSelectorFromString(Identifiers.addToDiaryButtonPressed))
+        
+        // Cancel button on left side of navigation bar
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: Identifiers.CancelButtonText, style: .Done, target: self, action: NSSelectorFromString(Identifiers.cancelButtonPressed))
     }
     
     func updateUI() {
@@ -55,10 +78,21 @@ class PreviousMealsAddViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = previousEntriesTableView
-            .dequeueReusableCellWithIdentifier("PastMealEntryCell", forIndexPath: indexPath) as! PreviousMealEntryTableViewCell
+            .dequeueReusableCellWithIdentifier(Identifiers.Cell, forIndexPath: indexPath) as! PreviousMealEntryTableViewCell
         let entry = self.previousUserMeal.entries[indexPath.row]
         cell.diaryEntry = entry
         
         return cell
+    }
+    
+    
+    // MARK: - Button actions
+    
+    func cancelButtonPressed(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func addToDiaryButtonPressed(sender: UIBarButtonItem) {
+        // TODO: implement
     }
 }
