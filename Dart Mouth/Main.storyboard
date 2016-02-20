@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jnt-eT-OwA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jnt-eT-OwA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -1051,6 +1051,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2zs-mJ-wM9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-223.5" y="2507.5"/>
+        </scene>
+        <!--Previous Meals Add View Controller-->
+        <scene sceneID="sN6-dc-Aik">
+            <objects>
+                <viewController storyboardIdentifier="PreviousMealsAddViewController" id="lNL-8l-acZ" customClass="PreviousMealsAddViewController" customModule="Dart_Mouth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gbI-Ta-FgS"/>
+                        <viewControllerLayoutGuide type="bottom" id="fne-th-b3u"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UJx-Cd-iOc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add selected foods from this meal to my diary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BWv-Sd-Acc">
+                                <rect key="frame" x="16" y="72" width="343" height="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eBR-7U-WLV">
+                                <rect key="frame" x="0.0" y="97" width="375" height="570"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Fst-oJ-9cb" customClass="PreviousMealRecipeTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fst-oJ-9cb" id="WeD-PB-BmS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="eBR-7U-WLV" secondAttribute="trailing" constant="-20" id="7rv-b4-YCO"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="BWv-Sd-Acc" secondAttribute="leading" id="BPs-T5-9yl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BWv-Sd-Acc" secondAttribute="trailing" id="JHR-1d-SVx"/>
+                            <constraint firstItem="eBR-7U-WLV" firstAttribute="top" secondItem="BWv-Sd-Acc" secondAttribute="bottom" constant="8" symbolic="YES" id="kE4-cd-ytt"/>
+                            <constraint firstItem="eBR-7U-WLV" firstAttribute="centerX" secondItem="BWv-Sd-Acc" secondAttribute="centerX" id="lCM-ON-zqH"/>
+                            <constraint firstItem="eBR-7U-WLV" firstAttribute="leading" secondItem="UJx-Cd-iOc" secondAttribute="leading" id="msd-qP-2MB"/>
+                            <constraint firstItem="eBR-7U-WLV" firstAttribute="bottom" secondItem="fne-th-b3u" secondAttribute="top" id="pZH-22-A8P"/>
+                            <constraint firstItem="BWv-Sd-Acc" firstAttribute="top" secondItem="gbI-Ta-FgS" secondAttribute="bottom" constant="8" id="zxA-me-KxW"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7rv-b4-YCO"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QUJ-2x-H3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-223.5" y="3355.5"/>
         </scene>
         <!--Database Recipes View Controller-->
         <scene sceneID="edu-Pe-Jgc">

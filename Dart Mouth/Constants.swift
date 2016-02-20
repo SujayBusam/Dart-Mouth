@@ -151,6 +151,7 @@ struct Constants {
         static let CustomRecipes = "CustomRecipesViewController"
         static let PreviousMeals = "PreviousMealsViewController"
         static let DatabaseRecipes = "DatabaseRecipesViewController"
+        static let PreviousMealsAdd = "PreviousMealsAddViewController"
     }
     
     struct Images {

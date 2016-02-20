@@ -19,7 +19,8 @@ import MBProgressHUD
     navigation to other view controllers.
 */
 class DiaryEntryAddContainerViewController: UIViewController,
-    UISearchBarDelegate, MenuViewControllerDelegate, PreviousRecipesViewControllerDelegate, DatabaseRecipesViewControllerDelegate {
+    UISearchBarDelegate, MenuViewControllerDelegate, PreviousRecipesViewControllerDelegate, DatabaseRecipesViewControllerDelegate,
+        PreviousMealsViewControllerDelegate {
     
     // MARK: - Local Constants
     
@@ -136,6 +137,7 @@ class DiaryEntryAddContainerViewController: UIViewController,
         
         // Create and PreviousMealsVC
         let previousMealsVC = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.ViewControllers.PreviousMeals) as! PreviousMealsViewController
+        previousMealsVC.delegate = self
         self.addChildViewController(previousMealsVC)
         previousMealsVC.didMoveToParentViewController(self)
         previousMealsVC.view.frame = self.containerView.bounds
@@ -173,6 +175,13 @@ class DiaryEntryAddContainerViewController: UIViewController,
     
     func didSelectRecipeForPreviousRecipesView(recipe: Recipe, sender: PreviousRecipesViewController) {
         showDiaryEntryNutritionAdderForRecipe(recipe)
+    }
+    
+    
+    // MARK: - PreviousMealsViewControllerDelegate protocol methods
+    
+    func didSelectMealForPreviousMealsView(meal: UserMeal, sender: PreviousMealsViewController) {
+        
     }
     
     
