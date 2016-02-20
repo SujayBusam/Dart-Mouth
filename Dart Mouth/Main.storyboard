@@ -1071,7 +1071,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eBR-7U-WLV">
-                                <rect key="frame" x="0.0" y="97" width="375" height="570"/>
+                                <rect key="frame" x="0.0" y="104" width="375" height="563"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PastMealEntryCell" rowHeight="60" id="Fst-oJ-9cb" customClass="PreviousMealEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
@@ -1186,7 +1186,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="eBR-7U-WLV" secondAttribute="trailing" constant="-20" id="7rv-b4-YCO"/>
                             <constraint firstAttribute="leadingMargin" secondItem="BWv-Sd-Acc" secondAttribute="leading" id="BPs-T5-9yl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BWv-Sd-Acc" secondAttribute="trailing" id="JHR-1d-SVx"/>
-                            <constraint firstItem="eBR-7U-WLV" firstAttribute="top" secondItem="BWv-Sd-Acc" secondAttribute="bottom" constant="8" symbolic="YES" id="kE4-cd-ytt"/>
+                            <constraint firstItem="eBR-7U-WLV" firstAttribute="top" secondItem="BWv-Sd-Acc" secondAttribute="bottom" constant="15" id="kE4-cd-ytt"/>
                             <constraint firstItem="eBR-7U-WLV" firstAttribute="centerX" secondItem="BWv-Sd-Acc" secondAttribute="centerX" id="lCM-ON-zqH"/>
                             <constraint firstItem="eBR-7U-WLV" firstAttribute="leading" secondItem="UJx-Cd-iOc" secondAttribute="leading" id="msd-qP-2MB"/>
                             <constraint firstItem="eBR-7U-WLV" firstAttribute="bottom" secondItem="fne-th-b3u" secondAttribute="top" id="pZH-22-A8P"/>
@@ -1200,6 +1200,9 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="previousEntriesTableView" destination="eBR-7U-WLV" id="mlR-7G-a12"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QUJ-2x-H3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

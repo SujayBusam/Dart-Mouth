@@ -181,7 +181,15 @@ class DiaryEntryAddContainerViewController: UIViewController,
     // MARK: - PreviousMealsViewControllerDelegate protocol methods
     
     func didSelectMealForPreviousMealsView(meal: UserMeal, sender: PreviousMealsViewController) {
+        let previousMealsAddVC = self.storyboard!
+            .instantiateViewControllerWithIdentifier(Constants.ViewControllers.PreviousMealsAdd)
+            as! PreviousMealsAddViewController
         
+        previousMealsAddVC.previousUserMeal = meal
+        
+        // Push onto navigation controller stack
+        previousMealsAddVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(previousMealsAddVC, animated: true)
     }
     
     
