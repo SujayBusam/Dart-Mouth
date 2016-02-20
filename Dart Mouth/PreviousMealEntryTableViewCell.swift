@@ -1,5 +1,5 @@
 //
-//  PreviousMealRecipeTableViewCell.swift
+//  PreviousMealEntryTableViewCell.swift
 //  Dart Mouth
 //
 //  Created by Sujay Busam on 2/20/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviousMealRecipeTableViewCell: UITableViewCell {
+class PreviousMealEntryTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
