@@ -17,6 +17,7 @@
 		23300B611C3B3A2F00D2C166 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23300B601C3B3A2F00D2C166 /* LoginViewController.swift */; };
 		233CB02D1C78FB06006C0269 /* PreviousMealsAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233CB02C1C78FB06006C0269 /* PreviousMealsAddViewController.swift */; };
 		233CB02F1C78FC2C006C0269 /* PreviousMealEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233CB02E1C78FC2C006C0269 /* PreviousMealEntryTableViewCell.swift */; };
+		233CB0311C790508006C0269 /* CheckboxUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233CB0301C790508006C0269 /* CheckboxUIButton.swift */; };
 		233F94FF1C1930CA00C0D714 /* DateNavigationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */; };
 		2375D5D81BDC09B70065AC14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2375D5D71BDC09B70065AC14 /* AppDelegate.swift */; };
 		2375D5DF1BDC09B70065AC14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2375D5DE1BDC09B70065AC14 /* Assets.xcassets */; };
@@ -81,6 +82,7 @@
 		23300B601C3B3A2F00D2C166 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		233CB02C1C78FB06006C0269 /* PreviousMealsAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousMealsAddViewController.swift; sourceTree = "<group>"; };
 		233CB02E1C78FC2C006C0269 /* PreviousMealEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousMealEntryTableViewCell.swift; sourceTree = "<group>"; };
+		233CB0301C790508006C0269 /* CheckboxUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxUIButton.swift; sourceTree = "<group>"; };
 		233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateNavigationControl.swift; sourceTree = "<group>"; };
 		23757699ACDEC8980594772C /* Pods-Dart MouthTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart MouthTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dart MouthTests/Pods-Dart MouthTests.release.xcconfig"; sourceTree = "<group>"; };
 		2375D5D41BDC09B70065AC14 /* Dart Mouth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dart Mouth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,6 +328,7 @@
 			children = (
 				233F94FE1C1930CA00C0D714 /* DateNavigationControl.swift */,
 				23113EA01C41BCCD00B07756 /* CalorieBudgetView.swift */,
+				233CB0301C790508006C0269 /* CheckboxUIButton.swift */,
 			);
 			name = "Reusable Views";
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				23300B561C36FBE200D2C166 /* String+Trim.swift in Sources */,
 				23113EA11C41BCCD00B07756 /* CalorieBudgetView.swift in Sources */,
 				23A4F5CA1C502965006C7891 /* MenuContainerViewController.swift in Sources */,
+				233CB0311C790508006C0269 /* CheckboxUIButton.swift in Sources */,
 				23A4F5CC1C5040BC006C7891 /* FractionUtil.swift in Sources */,
 				237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,

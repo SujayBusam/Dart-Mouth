@@ -1070,16 +1070,106 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eBR-7U-WLV">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eBR-7U-WLV">
                                 <rect key="frame" x="0.0" y="97" width="375" height="570"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PastMealEntryCell" rowHeight="71" id="Fst-oJ-9cb" customClass="PreviousMealEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="71"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PastMealEntryCell" rowHeight="60" id="Fst-oJ-9cb" customClass="PreviousMealEntryTableViewCell" customModule="Dart_Mouth" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fst-oJ-9cb" id="WeD-PB-BmS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ap6-pg-AbB" customClass="CheckboxUIButton" customModule="Dart_Mouth" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="17.5" width="25" height="25"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="55" id="4PQ-HL-E4f"/>
+                                                        <constraint firstAttribute="width" constant="52" id="RMM-MC-cyN"/>
+                                                        <constraint firstAttribute="height" constant="25" id="VrP-1c-TFB"/>
+                                                        <constraint firstAttribute="width" constant="25" id="cHT-ye-tw9"/>
+                                                        <constraint firstAttribute="width" constant="52" id="o0a-0s-VSh"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="wF7-7d-pfs"/>
+                                                        <constraint firstAttribute="width" constant="54" id="xXw-21-q44"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="zrL-ey-fvO"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="4PQ-HL-E4f"/>
+                                                            <exclude reference="RMM-MC-cyN"/>
+                                                            <exclude reference="o0a-0s-VSh"/>
+                                                            <exclude reference="wF7-7d-pfs"/>
+                                                            <exclude reference="xXw-21-q44"/>
+                                                            <exclude reference="zrL-ey-fvO"/>
+                                                        </mask>
+                                                    </variation>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QHX-Ho-m0M">
+                                                    <rect key="frame" x="41" y="9" width="268" height="18.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fZ-nU-y9x">
+                                                    <rect key="frame" x="317" y="8" width="50" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="v2Y-iF-43u"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Serving" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an4-72-N9S">
+                                                    <rect key="frame" x="41" y="35.5" width="268" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="MMI-T5-3e8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QHX-Ho-m0M" firstAttribute="firstBaseline" secondItem="1fZ-nU-y9x" secondAttribute="firstBaseline" id="0CP-HL-LKp"/>
+                                                <constraint firstItem="1fZ-nU-y9x" firstAttribute="bottom" secondItem="ap6-pg-AbB" secondAttribute="bottom" id="0sS-m2-wgL"/>
+                                                <constraint firstAttribute="trailing" secondItem="ap6-pg-AbB" secondAttribute="trailing" constant="313" id="3uZ-CC-9Oz"/>
+                                                <constraint firstItem="ap6-pg-AbB" firstAttribute="centerY" secondItem="WeD-PB-BmS" secondAttribute="centerY" id="9Cm-TL-POx"/>
+                                                <constraint firstItem="ap6-pg-AbB" firstAttribute="leading" secondItem="WeD-PB-BmS" secondAttribute="leadingMargin" id="MI5-ou-4gD"/>
+                                                <constraint firstItem="QHX-Ho-m0M" firstAttribute="leading" secondItem="ap6-pg-AbB" secondAttribute="trailing" constant="8" symbolic="YES" id="Nif-U2-dkB"/>
+                                                <constraint firstItem="ap6-pg-AbB" firstAttribute="leading" secondItem="WeD-PB-BmS" secondAttribute="leadingMargin" id="PHY-U1-Yc0"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="1fZ-nU-y9x" secondAttribute="bottom" id="PyJ-Wy-xF3"/>
+                                                <constraint firstItem="1fZ-nU-y9x" firstAttribute="leading" secondItem="an4-72-N9S" secondAttribute="trailing" constant="8" symbolic="YES" id="QSp-I1-fDc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="QHX-Ho-m0M" secondAttribute="bottom" constant="22.5" id="UwP-jR-YuW"/>
+                                                <constraint firstItem="an4-72-N9S" firstAttribute="leading" secondItem="QHX-Ho-m0M" secondAttribute="leading" id="YSt-Tf-qyw"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ap6-pg-AbB" secondAttribute="bottom" id="aKv-Eq-21P"/>
+                                                <constraint firstAttribute="topMargin" secondItem="1fZ-nU-y9x" secondAttribute="top" id="c23-gV-we5"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="an4-72-N9S" secondAttribute="bottom" id="e8c-rC-tAJ"/>
+                                                <constraint firstItem="1fZ-nU-y9x" firstAttribute="trailing" secondItem="WeD-PB-BmS" secondAttribute="trailingMargin" id="eaV-YA-S6Q"/>
+                                                <constraint firstItem="1fZ-nU-y9x" firstAttribute="top" secondItem="ap6-pg-AbB" secondAttribute="top" id="gsv-eF-opE"/>
+                                                <constraint firstItem="ap6-pg-AbB" firstAttribute="top" secondItem="WeD-PB-BmS" secondAttribute="top" id="mLa-D5-Usb"/>
+                                                <constraint firstItem="1fZ-nU-y9x" firstAttribute="leading" secondItem="QHX-Ho-m0M" secondAttribute="trailing" constant="8" symbolic="YES" id="odP-Vd-yCw"/>
+                                                <constraint firstItem="ap6-pg-AbB" firstAttribute="top" secondItem="WeD-PB-BmS" secondAttribute="topMargin" id="pS9-eP-6af"/>
+                                                <constraint firstItem="ap6-pg-AbB" firstAttribute="centerY" secondItem="WeD-PB-BmS" secondAttribute="centerY" id="pWW-bB-ZJ7"/>
+                                                <constraint firstItem="an4-72-N9S" firstAttribute="top" secondItem="QHX-Ho-m0M" secondAttribute="bottom" constant="8" symbolic="YES" id="xsp-Np-cVf"/>
+                                                <constraint firstAttribute="trailing" secondItem="ap6-pg-AbB" secondAttribute="trailing" constant="315" id="zCB-9Y-qvh"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ap6-pg-AbB" secondAttribute="bottom" id="zQW-9p-7wO"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="3uZ-CC-9Oz"/>
+                                                    <exclude reference="9Cm-TL-POx"/>
+                                                    <exclude reference="MI5-ou-4gD"/>
+                                                    <exclude reference="aKv-Eq-21P"/>
+                                                    <exclude reference="mLa-D5-Usb"/>
+                                                    <exclude reference="pS9-eP-6af"/>
+                                                    <exclude reference="zCB-9Y-qvh"/>
+                                                    <exclude reference="zQW-9p-7wO"/>
+                                                    <exclude reference="UwP-jR-YuW"/>
+                                                    <exclude reference="0sS-m2-wgL"/>
+                                                    <exclude reference="gsv-eF-opE"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
