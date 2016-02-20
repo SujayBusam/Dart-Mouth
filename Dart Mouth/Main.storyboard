@@ -1171,6 +1171,12 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkBoxButton" destination="ap6-pg-AbB" id="ue7-Z5-Qzf"/>
+                                            <outlet property="recipeNameLabel" destination="QHX-Ho-m0M" id="WAJ-s3-7cc"/>
+                                            <outlet property="servingsLabel" destination="an4-72-N9S" id="wDq-gb-yfr"/>
+                                            <outlet property="totalCaloriesLabel" destination="1fZ-nU-y9x" id="Ct1-sV-rKZ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
