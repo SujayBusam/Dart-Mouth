@@ -17,6 +17,7 @@ class PreviousMealsAddViewController: UIViewController, UITableViewDataSource,
         didSet {
             previousEntriesTableView.dataSource = self
             previousEntriesTableView.delegate = self
+            previousEntriesTableView.tableFooterView = UIView(frame: CGRect.zero)
         }
     }
     
