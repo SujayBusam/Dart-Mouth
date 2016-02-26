@@ -85,6 +85,16 @@ class PreviousMealsAddViewController: UIViewController, UITableViewDataSource,
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! PreviousMealEntryTableViewCell
+        cell.setChecked(true)
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! PreviousMealEntryTableViewCell
+        cell.setChecked(false)
+    }
+    
     
     // MARK: - Button actions
     
@@ -93,6 +103,6 @@ class PreviousMealsAddViewController: UIViewController, UITableViewDataSource,
     }
     
     func addToDiaryButtonPressed(sender: UIBarButtonItem) {
-        // TODO: implement
+        
     }
 }

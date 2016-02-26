@@ -9,14 +9,18 @@
 import UIKit
 import ChameleonFramework
 
-class PreviousMealEntryTableViewCell: UITableViewCell {
+class PreviousMealEntryTableViewCell: UITableViewCell, CheckboxUIButtonDelegate {
 
     // MARK: - Outlets
     // This is for ONE diary entry. The current cell.
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var servingsLabel: UILabel!
     @IBOutlet weak var totalCaloriesLabel: UILabel!
-    @IBOutlet weak var checkBoxButton: CheckboxUIButton!
+    @IBOutlet weak var checkBoxButton: CheckboxUIButton! {
+        didSet {
+            checkBoxButton.delegate = self
+        }
+    }
     
     
     // MARK: - Instance variables
@@ -67,6 +71,21 @@ class PreviousMealEntryTableViewCell: UITableViewCell {
             servingsLabel?.text = "\(fracUtil.vulgarFraction(Double(multiplier)).0) " + servingsText
             totalCaloriesLabel?.text = self.numberFormatter.stringFromNumber(diaryEntry.getTotalCalories()!)
         }
+    }
+    
+    func setChecked(checked: Bool) {
+        self.checkBoxButton.isChecked = checked
+    }
+    
+    func toggleCheckbox() {
+        self.checkBoxButton.toggleCheck()
+    }
+    
+    
+    // MARK: - CheckboxUIButtonDelegate Protocol Methods
+    
+    func didSelectCheckbox(sender: CheckboxUIButton) {
+        // Do nothing. Class with table view takes care of it
     }
 
 }
