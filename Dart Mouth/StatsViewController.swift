@@ -51,10 +51,10 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     var fat : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
     var carbs : [Float] = [Float](count: DisplayOptions.totalDays, repeatedValue: 0)
     
-    var goalCalories : Int = 2000
-    var goalProtein : Float = 0.25
-    var goalCarbs : Float = 0.5
-    var goalFat : Float = 0.25
+    var goalCalories : Int = Constants.NutritionalConstants.DefaultCalories
+    var goalProtein : Float = Float(Constants.NutritionalConstants.DefaultProteinPercent)
+    var goalCarbs : Float = Float(Constants.NutritionalConstants.DefaultCarbsPercent)
+    var goalFat : Float = Float(Constants.NutritionalConstants.DefaultFatPercent)
     
     var weeksBack : Int = 0
     var startOfWeek : NSDate = NSDate()
@@ -65,7 +65,7 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     }
     var daysInWeek : Int {
         get{
-            if weeksBack > 0 {
+            if weeksBack != 0 {
                 return 7
             } else {
                 return howManyDaysAgo(startOfWeek) + 1
@@ -140,6 +140,8 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
         
         self.navigationItem.title = DisplayOptions.Title
         
+        loadUserData()
+        
         startOfWeek = getMostRecentMonday()
         barSelection = getDayIndex(NSDate()) //defaults to current weekday
         
@@ -157,7 +159,26 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        loadUserData()
         loadWeekData(false)
+    }
+    
+    func loadUserData(){
+        if let savedGoalCalories = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalCalories) as? Int{
+            goalCalories = savedGoalCalories
+        }
+        
+        if let savedProtein = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalProtein) as? Float{
+            goalProtein = savedProtein
+        }
+        
+        if let savedCarbs = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalCarbs) as? Float{
+            goalCarbs = savedCarbs
+        }
+        
+        if let savedFat = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalFat) as? Float{
+            goalFat = savedFat
+        }
     }
     
     func loadWeekData(animated : Bool){
@@ -168,7 +189,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     // Function that gets called after getting UserMeals this week.
     func userMealQueryCompletionHandlerNonAnimated(objects: [PFObject]?, error: NSError?) -> Void {
         clearData()
-        goalCalories = CustomUser.currentUser()!.goalDailyCalories
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             if error == nil {
                 let userMeals = objects as! [UserMeal]
@@ -188,7 +208,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     
     func userMealQueryCompletionHandlerAnimated(objects: [PFObject]?, error: NSError?) -> Void {
         clearData()
-        goalCalories = CustomUser.currentUser()!.goalDailyCalories
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             if error == nil {
                 let userMeals = objects as! [UserMeal]
@@ -203,30 +222,6 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
             }
             self.updateUI(true)
             self.showCharts()
-        }
-    }
-    
-    func loadFakeData(){
-        for i in 0..<7 {
-            calories[i] = 1600 + Int(arc4random_uniform(800))
-            dates[i] = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: i, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
-            
-            var p = Float(0.2 + Float(arc4random_uniform(20)) * 0.01)
-            var f = Float(0.2 + Float(arc4random_uniform(10)) * 0.01)
-            var c = Float(0.3 + Float(arc4random_uniform(30)) * 0.01)
-
-
-            //make future dates have no data
-            if(NSDate().compare(dates[i]) == NSComparisonResult.OrderedAscending){
-                p = 0
-                f = 0
-                c = 0
-                self.calories[i] = 0
-            }
-            
-            protein[i] = p
-            fat[i] = f
-            carbs[i] = c
         }
     }
     
@@ -510,9 +505,9 @@ class StatsViewController: UIViewController, ChartViewDelegate,HTHorizontalSelec
     }
     
     func shiftWeekNext(){
-        if(weeksBack == 0){
-            return
-        }
+//        if(weeksBack == 0){
+//            return
+//        }
         startOfWeek = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: 7, toDate: startOfWeek, options: NSCalendarOptions.MatchNextTime)!
         weeksBack--
         loadWeekData(true)

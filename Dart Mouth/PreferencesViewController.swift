@@ -10,8 +10,10 @@ import UIKit
 import TTRangeSlider
 import ChameleonFramework
 import ActionSheetPicker_3_0
+import VBFPopFlatButton
+import AMPopTip
 
-class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeSliderDelegate {
+class PreferencesViewController: UIViewController, UITextFieldDelegate {
 
     enum Gender : Int {
         case Male = 0, Female
@@ -59,23 +61,32 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     }
     
     
-    @IBOutlet weak var dailyBurnedLabel: UILabel!
+    @IBOutlet weak var dailyEstimate: UILabel!
     
-    @IBOutlet weak var caloriesDisplay: UILabel!
-    
-    @IBOutlet weak var macroSlider: TTRangeSlider!{
+    @IBOutlet weak var dailyBurned: UITextField!{
         didSet{
-            macroSlider.delegate = self
+            dailyBurned.delegate = self
         }
     }
     
-    @IBOutlet weak var proteinLabel: UILabel!
-    @IBOutlet weak var carbsLabel: UILabel!
-    @IBOutlet weak var fatLabel: UILabel!
+    @IBOutlet weak var caloriesDisplay: UILabel!
     
-    @IBOutlet weak var proteinGramsLabel: UILabel!
-    @IBOutlet weak var carbsGramsLabel: UILabel!
-    @IBOutlet weak var fatGramsLabel: UILabel!
+    @IBOutlet weak var macroSlider: MacroSlider!
+    
+    @IBOutlet weak var setEstimatedButton: VBFPopFlatButton!{
+        didSet{
+            setEstimatedButton.addTarget(self, action: "buttonPressed", forControlEvents: .TouchUpInside)
+        }
+    }
+  
+    @IBOutlet weak var activityTipImage: UIImageView!{
+        didSet{
+            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("tipTapped"))
+            activityTipImage.userInteractionEnabled = true
+            activityTipImage.addGestureRecognizer(tapGestureRecognizer)
+        }
+    }
+    var activityTipPopUp = AMPopTip()
     
     var picker: ActionSheetStringPicker!
     
@@ -86,7 +97,10 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     var height : Int?
     var goal : Float?
     
-    
+    var protein : Float = Float(Constants.NutritionalConstants.DefaultProteinPercent)
+    var carbs : Float = Float(Constants.NutritionalConstants.DefaultCarbsPercent)
+    var fat : Float = Float(Constants.NutritionalConstants.DefaultFatPercent)
+
     @IBAction func logoutButtonPressed(sender: UIButton) {
         // TODO: error handling
         CustomUser.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
@@ -94,6 +108,18 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
                 .instantiateViewControllerWithIdentifier(Constants.ViewControllers.Signup)
             self.navigationController!.presentViewController(destinationVC, animated: true, completion: nil)
         }
+    }
+    
+    func buttonPressed(){
+        if let cal:Int = Int(dailyEstimate.text!){
+            dailyBurned.text = dailyEstimate.text
+            burnedCalories = cal
+        }
+        updateEstimatedCaloriesIfPossible()
+    }
+    
+    func tipTapped(){
+        activityTipPopUp.showText(DisplayOptions.ActivityTip, direction: .Left, maxWidth: DisplayOptions.MaxTipWidth, inView: self.view, fromFrame: activityTipImage.frame)
     }
     
     struct Identifiers {
@@ -112,11 +138,24 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         static let WeightOptions : Range<Int> = 100...500 // pounds
         static let HeightOptions : Range<Int> = 48...96 // inches
         
-        static let CalorieColorDefault = FlatWhiteDark()
-        static let CalorieColorCalculated = FlatPowderBlue()
+        static let CalorieColorDefault = UIColor.blackColor()
+        static let CalorieColorCalculated = FlatPowderBlueDark()
+        static let EstimateButtonActive = Constants.Colors.appPrimaryColor
+        static let EstimateButtonInactive = FlatWhiteDark()
+        
+        static let MinCalories = 1000
+        static let MaxCalories = 5000
+        
+        static let MaxTipWidth : CGFloat = 200.0
+        
+        static let ActivityTip = "Sedentary: Little to no exercise\nLight: Light: Light exercise 1-3 times/week\nModerate: Moderate exercise 3-5 times/week\n High: Hard exercise 6-7 days/week\n Extreme: Very hard exercise/sports and physically demanding job"
+        
+        
     }
     
-    var calories : Int = Constants.NutritionalConstants.DefaultCalories
+    var burnedCalories : Int = Constants.NutritionalConstants.DefaultCalories
+    var goalCalories : Int = Constants.NutritionalConstants.DefaultCalories
+    
     
     let percentFormatter = NSNumberFormatter()
     let gramFormatter = NSNumberFormatter()
@@ -138,42 +177,78 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         heightText.textAlignment = .Center
         activityText.textAlignment = .Center
         goalText.textAlignment = .Center
-        dailyBurnedLabel.textAlignment = .Center
-        dailyBurnedLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleTitle3)
         caloriesDisplay.textAlignment = .Center
         goalText.backgroundColor = Constants.Colors.appPrimaryColor
         goalText.textColor = UIColor.whiteColor()
         caloriesDisplay.textColor = DisplayOptions.CalorieColorCalculated
+        dailyBurned.textColor = DisplayOptions.CalorieColorCalculated
+        setEstimatedButton.setTitle("", forState: .Normal)
+        setEstimatedButton.currentButtonStyle = .buttonPlainStyle
         
+        activityTipPopUp.shouldDismissOnTap = true
+        activityTipPopUp.shouldDismissOnTapOutside = true
+        activityTipPopUp.shouldDismissOnSwipeOutside = true
+        activityTipPopUp.popoverColor = Constants.Colors.appSecondaryColor
+
         percentFormatter.numberStyle = .PercentStyle
         gramFormatter.numberStyle = .DecimalStyle
         gramFormatter.roundingIncrement = 0.5
-        macroSlider.numberFormatterOverride = percentFormatter
-        
-        macroSlider.minValue = 0.0
-        macroSlider.maxValue = 1.0
-        macroSlider.selectedMinimum = Constants.NutritionalConstants.DefaultProteinPercent
-        macroSlider.selectedMaximum = 1.0 - Constants.NutritionalConstants.DefaultFatPercent
-        macroSlider.tintColor = Constants.Colors.appPrimaryColor
-
-        proteinGramsLabel.textColor = DisplayOptions.GramLabelColor
-        carbsGramsLabel.textColor = DisplayOptions.GramLabelColor
-        fatGramsLabel.textColor = DisplayOptions.GramLabelColor
         
         retrieveUserStats()
-        updateMacroLabels()
         updateEstimatedCaloriesIfPossible()
+        macroSlider.updateCalories(goalCalories)
+        macroSlider.updateMacroValues(protein, carbs: carbs, fat: fat)
     }
     
     func retrieveUserStats(){
-//        if let a = CustomUser.currentUser()!.valueForKey(CustomUser.KeyNames.) as? Int {
-//            age = a
-//            
-// 
-//        } else {
-//        }
-        CustomUser.currentUser()!.setValue(123, forKey: "age")
-        CustomUser.currentUser()!.saveInBackground()
+        if let savedGender = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.Gender) as? Int {
+            gender = Gender(rawValue: savedGender)
+            genderText.text = String(DisplayOptions.GenderOptions[savedGender])
+        }
+        
+        if let savedAge = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.Age) as? Int{
+            age = savedAge
+            ageText.text = String(savedAge)
+        }
+        
+        if let savedWeight = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.Weight) as? Int{
+            weight = savedWeight
+            weightText.text = String(savedWeight)
+        }
+        
+        if let savedHeight = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.Height) as? Int{
+            height = savedHeight
+            heightText.text = getHeightOptionString(savedHeight)
+        }
+        
+        if let savedGoal = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalChange) as? Float {
+            goal = savedGoal
+            goalText.text = getGoalOptionStringValue(savedGoal)
+        }
+        
+        if let savedActivity = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.Activity) as? Int {
+            activityLevel = ActivityLevel(rawValue: savedActivity)
+            activityText.text = getActivityOptionString(activityLevel!)
+        }
+        
+        if let savedGoalCalories = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalCalories) as? Int{
+            goalCalories = savedGoalCalories
+            let burned = savedGoalCalories - Int(500 * goal!)
+            burnedCalories = burned
+            dailyBurned.text = String(burned)
+        }
+        
+        if let savedProtein = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalProtein) as? Float{
+            protein = savedProtein
+        }
+        
+        if let savedCarbs = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalCarbs) as? Float{
+            carbs = savedCarbs
+        }
+        
+        if let savedFat = CustomUser.currentUser()!.objectForKey(Constants.Parse.UserKeys.GoalFat) as? Float{
+            fat = savedFat
+        }
         
     }
     // MARK: - Gesture actions
@@ -213,14 +288,25 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
         switch textField{
         case genderText:
             gender = DisplayOptions.GenderOptions[index]
-            
-        case activityText : activityLevel = DisplayOptions.ActivityOptions[index]
-        case ageText: age = DisplayOptions.AgeOptions.first! + index
-        case weightText: weight = DisplayOptions.WeightOptions.first! + index
-        case heightText: height = DisplayOptions.HeightOptions.first! + index
-        case goalText: goal = DisplayOptions.GoalOptions[index]
+            CustomUser.currentUser()!.setValue(gender?.rawValue, forKey: Constants.Parse.UserKeys.Gender)
+        case activityText :
+            activityLevel = DisplayOptions.ActivityOptions[index]
+            CustomUser.currentUser()!.setValue(activityLevel?.rawValue, forKey: Constants.Parse.UserKeys.Activity)
+        case ageText:
+            age = DisplayOptions.AgeOptions.first! + index
+            CustomUser.currentUser()!.setValue(age, forKey: Constants.Parse.UserKeys.Age)
+        case weightText:
+            weight = DisplayOptions.WeightOptions.first! + index
+            CustomUser.currentUser()!.setValue(weight, forKey: Constants.Parse.UserKeys.Weight)
+        case heightText:
+            height = DisplayOptions.HeightOptions.first! + index
+            CustomUser.currentUser()!.setValue(height, forKey: Constants.Parse.UserKeys.Height)
+        case goalText:
+            goal = DisplayOptions.GoalOptions[index]
+            CustomUser.currentUser()!.setValue(goal, forKey: Constants.Parse.UserKeys.GoalChange)
         default: return
         }
+        CustomUser.currentUser()!.saveInBackground()
     }
     
     func getSelectedValueForTextField(textField: UITextField) -> Int{
@@ -258,31 +344,67 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     func updateEstimatedCaloriesIfPossible(){
         if let g = gender, a = age, w = weight, h = height, l = activityLevel{
             let estimate = getBMR(w, height: h, age: a, gender: g, level: l)
-            dailyBurnedLabel.text = String(estimate)
-            dailyBurnedLabel.textColor = DisplayOptions.CalorieColorCalculated
-
+            dailyEstimate.text = String(estimate)
+            dailyEstimate.textColor = DisplayOptions.CalorieColorCalculated
             
-            if let userGoal = goal{
-                let goalValue = Int(userGoal * 500)
-                let total = estimate + goalValue
-                let op = userGoal >= 0 ? "+" : "-"
-
-                caloriesDisplay.text = "\(estimate) \(op) \(abs(goalValue))= \(total)"
+            if (burnedCalories != estimate){
+                setEstimatedButton.animateToType(.buttonForwardType)
+                setEstimatedButton.tintColor = DisplayOptions.EstimateButtonActive
             } else {
-                caloriesDisplay.text = ""
+                setEstimatedButton.animateToType(.buttonMenuType)
+                setEstimatedButton.tintColor = DisplayOptions.EstimateButtonInactive
             }
         } else {
-            dailyBurnedLabel.text = String(Constants.NutritionalConstants.DefaultCalories)
-            dailyBurnedLabel.textColor = DisplayOptions.CalorieColorDefault
+            setEstimatedButton.animateToType(.buttonMenuType)
+            setEstimatedButton.tintColor = DisplayOptions.EstimateButtonInactive
+
+            dailyEstimate.text = "---"
+            dailyEstimate.textColor = DisplayOptions.CalorieColorDefault
+        }
+        
+        //also update total
+        if let userGoal = goal{
+            let goalValue = Int(userGoal * 500.0)
+            let total = burnedCalories + goalValue
+            let op = userGoal >= 0 ? "+" : "-"
+            
+            caloriesDisplay.text = "\(burnedCalories) \(op) \(abs(goalValue))= \(total)"
+            
+            goalCalories = total
+            CustomUser.currentUser()!.setValue(goalCalories, forKey: Constants.Parse.UserKeys.GoalCalories)
+            CustomUser.currentUser()!.saveInBackground()            
+            updateMacroLabels()
+        } else {
+            caloriesDisplay.text = ""
         }
     }
+    
+    func caloriesEntered(){
+        if var newValue : Int = Int(dailyBurned.text!){
+            newValue = min(newValue, DisplayOptions.MaxCalories)
+            newValue = max(newValue, DisplayOptions.MinCalories)
+            burnedCalories = newValue
+        }
+        dailyBurned.text = String(burnedCalories)
+    }
+    
+    func updateMacroLabels(){
+        macroSlider.updateCalories(goalCalories)
+    }
+    
+    
+    
     // MARK: - UITextField protocol methods
 
     //only calories field is delegated to this class
     
     
-    
     func textFieldDidBeginEditing(textField: UITextField) {
+        if(textField == dailyBurned){
+            return
+        }
+        textField.resignFirstResponder()
+
         let title = getTitleForTextField(textField)
         let options = getOptionsForTextField(textField)
         let selected = getSelectedValueForTextField(textField)
@@ -303,73 +425,34 @@ class PreferencesViewController: UIViewController, UITextFieldDelegate, TTRangeS
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+        if(textField == dailyBurned){
+            if let cal:Int = Int(textField.text!) {
+                burnedCalories = cal
+            }
+            updateEstimatedCaloriesIfPossible()
+        }
+        textField.resignFirstResponder()
+
         caloriesEntered()
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        caloriesEntered()
+        if(textField == dailyBurned){
+            caloriesEntered()
+            updateEstimatedCaloriesIfPossible()
+        }
         
-        picker = ActionSheetStringPicker(title: "Title", rows: ["Male", "Female"], initialSelection: 0, doneBlock: {
-              picker, value, index in
-            print("value = \(value)")
-            print("index = \(index)")
-            print("picker = \(picker)")
-            return
-            }, cancelBlock: {ActionStringCancelBlock in return}, origin: textField)
-        picker.showActionSheetPicker()
+//        picker = ActionSheetStringPicker(title: "Title", rows: ["Male", "Female"], initialSelection: 0, doneBlock: {
+//              picker, value, index in
+//            return
+//            }, cancelBlock: {ActionStringCancelBlock in return}, origin: textField)
+//        picker.showActionSheetPicker()
         return true
     }
     
-    
-    
 
     
-    func caloriesEntered(){
-//        if var newValue : Int = Int(goalCaloriesText.text!){
-//            newValue = min(newValue, DisplayOptions.MaxCalories)
-//            newValue = max(newValue, DisplayOptions.MinCalories)
-//            calories = newValue
-//        }
-//        goalCaloriesText.text = String(calories)
-//        updateMacroLabels()
-    }
-    
-    
-    
-    //MARK: - TTRangeSliderDelegate protocol methods
-    
-    func rangeSlider(sender: TTRangeSlider!, didChangeSelectedMinimumValue selectedMinimum: Float, andMaximumValue selectedMaximum: Float) {
-        updateMacroLabels()
-    }
-    
-    func updateMacroLabels(){
-        let proteinFloat = macroSlider.selectedMinimum
-        let fatFloat = 1.0 - macroSlider.selectedMaximum
-        let carbFloat = 1.0 - proteinFloat - fatFloat
-        
-        let proteinGrams = Float(calories) * proteinFloat / Constants.NutritionalConstants.ProteinCaloriesToGram
-        let carbsGrams = Float(calories) * carbFloat / Constants.NutritionalConstants.CarbsCaloriesToGram
-        let fatGrams = Float(calories) * fatFloat / Constants.NutritionalConstants.FatCaloriesToGram
-        
-        let proteinLabelString = NSMutableAttributedString(string: "Protein : " + percentFormatter.stringFromNumber(proteinFloat)!)
-        proteinLabelString.addAttribute(NSForegroundColorAttributeName, value: Constants.Colors.ProteinColor, range: NSMakeRange(0, "Protein".length))
-        let carbsLabelString = NSMutableAttributedString(string: "Carbs : " + percentFormatter.stringFromNumber(carbFloat)!)
-        carbsLabelString.addAttribute(NSForegroundColorAttributeName, value: Constants.Colors.CarbColor, range: NSMakeRange(0, "Carbs".length))
-        let fatLabelString = NSMutableAttributedString(string: "Fat : " + percentFormatter.stringFromNumber(fatFloat)!)
-        fatLabelString.addAttribute(NSForegroundColorAttributeName, value: Constants.Colors.FatColor, range: NSMakeRange(0, "Fat".length))
-        
-        proteinLabel.attributedText = proteinLabelString
-        carbsLabel.attributedText = carbsLabelString
-        fatLabel.attributedText = fatLabelString
-
-        proteinGramsLabel.text = gramFormatter.stringFromNumber(proteinGrams)! + "g"
-        carbsGramsLabel.text = gramFormatter.stringFromNumber(carbsGrams)! + "g"
-        fatGramsLabel.text = gramFormatter.stringFromNumber(fatGrams)! + "g"
-    }
-    
-    
-
     //MARK: - Utility Methods
 
     func getActivityMultiplier(level : ActivityLevel) -> Float{

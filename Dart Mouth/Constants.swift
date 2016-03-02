@@ -87,9 +87,9 @@ struct Constants {
         static let FatCaloriesToGram : Float = 9.0
         
         static let DefaultCalories : Int = 2000
-        static let DefaultProteinPercent : Float = 0.25
-        static let DefaultCarbsPercent : Float = 0.5
-        static let DefaultFatPercent : Float = 0.25
+        static let DefaultProteinPercent : Double = 0.3
+        static let DefaultCarbsPercent : Double = 0.3
+        static let DefaultFatPercent : Double = 0.4
         
         
 //        eat:
@@ -98,10 +98,6 @@ struct Constants {
 //        – Carbs: The remaining number of calories left will be filled with carbs
         
 
-    }
-    
-    struct UserDefaults{
-        
     }
     
     struct Colors {
@@ -135,6 +131,22 @@ struct Constants {
     
     struct ParseIDS {
         static let DDSUser = "95xfYTL7GG"
+    }
+    
+    struct Parse {
+        struct UserKeys {
+            static let Gender = "gender"
+            static let Age = "age"
+            static let Weight = "weight"
+            static let Height = "height"
+            static let Activity = "activity"
+            static let GoalChange = "goal"
+            static let GoalCalories = "goalCalories"
+            
+            static let GoalProtein = "goalProtein"
+            static let GoalCarbs = "goalCarbs"
+            static let GoalFat = "goalFat"
+        }
     }
     
     struct ViewControllers {
