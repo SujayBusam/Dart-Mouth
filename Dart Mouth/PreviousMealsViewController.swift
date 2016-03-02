@@ -9,6 +9,10 @@
 import UIKit
 import Parse
 
+protocol PreviousMealsViewControllerDelegate: class {
+    func didSelectMealForPreviousMealsView(meal: UserMeal, sender: PreviousMealsViewController) -> Void
+}
+
 class PreviousMealsViewController: SearchableViewController,
     UITableViewDataSource, UITableViewDelegate {
     
@@ -46,6 +50,7 @@ class PreviousMealsViewController: SearchableViewController,
     var cal = NSCalendar.currentCalendar()
     var formatter = NSDateFormatter()
     
+    weak var delegate: PreviousMealsViewControllerDelegate!
     
     // MARK: - View Setup
 
@@ -112,13 +117,10 @@ class PreviousMealsViewController: SearchableViewController,
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alert = UIAlertController(title: "Add Previous Meal", message: "Feature coming soon!", preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-        alert.addAction(action)
-        self.presentViewController(alert, animated: true) { () -> Void in
-            self.previousUserMealsTable.deselectRowAtIndexPath(indexPath, animated: true)
-        }
         
+        let dateKey = filteredDatesForHeaders.objectAtIndex(indexPath.section) as! String
+        let userMeal = filteredUserMealDict[dateKey]![indexPath.row]
+        delegate.didSelectMealForPreviousMealsView(userMeal, sender: self)
     }
     
     
