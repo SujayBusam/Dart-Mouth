@@ -161,8 +161,8 @@ class Recipe: PFObject, PFSubclassing {
         if venueKey != nil { offeringQuery.whereKey("venueKey", equalTo: venueKey!) }
         if mealName != nil {
             // Novack is weird in that its mealNames are Everyday and Specials.
-            // We account for this by putting everything under All Day, so here to query,
-            // we need to restrict the mealName only if it's not for Novack.
+            // We account for this by putting everything under All Day.
+            // So here, we need to restrict the mealName only if it's not for Novack.
             if venueKey != Venue.Novack.parseField! {
                 offeringQuery.whereKey("mealName", equalTo: mealName!)
             }
@@ -208,6 +208,26 @@ class Recipe: PFObject, PFSubclassing {
                 
             } else {
                 print("Error fetching Offerings.")
+            }
+        }
+    }
+    
+    
+    /*
+    * Async class function that queries for all Recipes offered in the past containing the given search string.
+    */
+    class func findDDSRecipesContainingSearchText(searchText: String,
+        withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
+        let recipesQuery = Recipe.query()!
+        recipesQuery.limit = 1000
+        recipesQuery.whereKey("name", containsString: searchText)
+        
+        recipesQuery.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                let recipes = objects as! [Recipe]
+                completionHandler(recipes)
+            } else {
+                print("Error querying for Recipes with search text: \(searchText)")
             }
         }
     }
