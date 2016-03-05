@@ -16,4 +16,5 @@ class Subscription: PFObject, PFSubclassing {
     static func parseClassName() -> String {
         return "Subscription"
     }
+    
 }

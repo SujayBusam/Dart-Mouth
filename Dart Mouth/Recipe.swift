@@ -221,6 +221,7 @@ class Recipe: PFObject, PFSubclassing {
         let recipesQuery = Recipe.query()!
         recipesQuery.limit = 1000
         recipesQuery.whereKey("name", containsString: searchText)
+        recipesQuery.whereKey("createdBy", equalTo: CustomUser.objectWithoutDataWithObjectId(Constants.ParseIDS.DDSUser))
         
         recipesQuery.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {

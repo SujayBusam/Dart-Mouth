@@ -47,5 +47,27 @@ class CustomUser: PFUser {
             }
         }
     }
+    
+    /*
+    * For the given Recipe, create a Subscription object in Parse or
+    * append to the existing Subscription object's recipes.
+    */
+    func createSubscriptionForRecipe(recipe: Recipe) {
+        let subscriptionQuery = Subscription.query()!
+        subscriptionQuery.whereKey("user", equalTo: self)
+        
+        subscriptionQuery.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                let subscriptions = objects as! [Subscription]
+                if subscriptions.isEmpty {
+                    // No Subscription object exists yet for this user.
+                } else {
+                    
+                }
+            } else {
+                print("Error getting subscriptions for CurrentUser")
+            }
+        }
+    }
 
 }
