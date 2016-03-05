@@ -217,9 +217,9 @@ class Recipe: PFObject, PFSubclassing {
     * Async class function that queries for all Recipes offered in the past containing the given search string.
     */
     class func findDDSRecipesContainingSearchText(searchText: String,
-        withCompletionHandler completionHandler: ([Recipe]?) -> Void) {
+        withLimit limit: Int, withCompletionHandler completionHandler: ([Recipe]) -> Void) {
         let recipesQuery = Recipe.query()!
-        recipesQuery.limit = 1000
+        recipesQuery.limit = limit
         recipesQuery.whereKey("name", containsString: searchText)
         recipesQuery.whereKey("createdBy", equalTo: CustomUser.objectWithoutDataWithObjectId(Constants.ParseIDS.DDSUser))
         
