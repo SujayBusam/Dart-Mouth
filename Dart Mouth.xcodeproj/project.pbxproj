@@ -43,6 +43,7 @@
 		23A4F5CC1C5040BC006C7891 /* FractionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5CB1C5040BC006C7891 /* FractionUtil.swift */; };
 		23A4F5D01C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5CF1C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift */; };
 		23A4F5D21C509D0C006C7891 /* DiaryEntryEditContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4F5D11C509D0B006C7891 /* DiaryEntryEditContainerViewController.swift */; };
+		23B9FFDD1C8A2E1800E8D680 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B9FFDC1C8A2E1800E8D680 /* Subscription.swift */; };
 		23BF16BB1C0D319D00F2CD8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BF16BA1C0D319D00F2CD8E /* Main.storyboard */; };
 		23C1741C1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1741B1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift */; };
 		23C1741E1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1741D1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift */; };
@@ -116,6 +117,7 @@
 		23A4F5CB1C5040BC006C7891 /* FractionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FractionUtil.swift; sourceTree = "<group>"; };
 		23A4F5CF1C50726C006C7891 /* RecipeNutritonAdderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNutritonAdderContainerViewController.swift; sourceTree = "<group>"; };
 		23A4F5D11C509D0B006C7891 /* DiaryEntryEditContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryEditContainerViewController.swift; sourceTree = "<group>"; };
+		23B9FFDC1C8A2E1800E8D680 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		23BF16BA1C0D319D00F2CD8E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		23C1741B1C51F68B00602A04 /* DiaryEntryMealPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryMealPickerViewController.swift; sourceTree = "<group>"; };
 		23C1741D1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiaryEntryAddContainerViewController.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				23113E9E1C41A44F00B07756 /* UserMeal.swift */,
 				23C174291C54A0E700602A04 /* SearchableViewController.swift */,
 				2304D8D21C5D49CF005E8D36 /* DatabaseRecipe.swift */,
+				23B9FFDC1C8A2E1800E8D680 /* Subscription.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				65E682191C77B45C00B0FD7E /* MacroSlider.swift in Sources */,
 				2376308D1BEE94D8000A6C54 /* DiaryViewController.swift in Sources */,
 				238F1C991C2C6F22007720F8 /* Constants.swift in Sources */,
+				23B9FFDD1C8A2E1800E8D680 /* Subscription.swift in Sources */,
 				23300B561C36FBE200D2C166 /* String+Trim.swift in Sources */,
 				23113EA11C41BCCD00B07756 /* CalorieBudgetView.swift in Sources */,
 				23A4F5CA1C502965006C7891 /* MenuContainerViewController.swift in Sources */,

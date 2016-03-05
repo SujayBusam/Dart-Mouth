@@ -29,6 +29,7 @@ class InitializationViewController: UIViewController {
         if !DEBUG {
             let currentUser = CustomUser.currentUser()
             if currentUser != nil {
+                scheduleNotifications()
                 performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
             } else {
                 performSegueWithIdentifier(Identifiers.SignupSegue, sender: self)
@@ -39,6 +40,13 @@ class InitializationViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // MARK: - Notifications
+    
+    private func scheduleNotifications() {
+        print("Scheduling Notifications")
     }
     
     

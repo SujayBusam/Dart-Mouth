@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CustomUser.registerSubclass()
         UserMeal.registerSubclass()
         DiaryEntry.registerSubclass()
+        Subscription.registerSubclass()
         
         // Initialize Parse.
         Parse.setApplicationId("BAihtNGpVTx4IJsuuFV5f9LibJGnD1ZBOsnXk9qp", clientKey: "TRnSXKYLvWENuPULgil1OtMbTS8BBxfkhV5kcQlz")
