@@ -8,6 +8,8 @@
 
 import UIKit
 import HTHorizontalSelectionList
+import MBProgressHUD
+
 
 class SubscriptionViewController : SearchableViewController, UISearchBarDelegate,
 HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
@@ -38,7 +40,6 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
     
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
-        static let DateNavControlWidth: CGFloat = 190
         static let SearchBarWidth: CGFloat = 150
     }
 
@@ -47,7 +48,12 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
         static let cancelButtonPressed: String = "cancelButtonPressed:"
         static let calendarButtonPressed: String = "calendarButtonPressed:"
         static let Title = "Manage Subscriptions"
+        static let subscriptionCell: String = "SubscriptionCell"
+
     }
+    
+    var currentSubscriptions : [Recipe] = []
+    var newSubscriptions : [Recipe] = []
     
     
     override func viewDidLoad() {
