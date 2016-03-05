@@ -2307,23 +2307,6 @@
             </objects>
             <point key="canvasLocation" x="1128.5" y="-841.5"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="HBy-uo-o6U">
-            <objects>
-                <viewController id="DgR-yY-1Yv" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="KDJ-GH-2Lj"/>
-                        <viewControllerLayoutGuide type="bottom" id="jKh-BL-nRf"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2h9-cr-PVk">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p60-0u-H7c" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
         <image name="DiaryIcon" width="44" height="44"/>
