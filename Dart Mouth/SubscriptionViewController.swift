@@ -111,6 +111,14 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource, UITableV
         })
     }
     
+    func loadCurrentSubscriptions(){
+        //TODO -- actual loading
+        self.addSubscriptionTable.alpha = 0.0
+        self.currentSubscriptionTable.alpha = 1.0
+        newSubscriptions = []
+        addSubscriptionTable.reloadData()
+    }
+    
     // MARK: - Button action functions
     
     func searchButtonPressed(sender: UIBarButtonItem) {
@@ -125,7 +133,7 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource, UITableV
         displaySearchButton(animated: true)
         //change to current subscriptions display
         subscriptionSelector.selectedButtonIndex = SubscriptionDisplay.Current.rawValue
-
+        loadCurrentSubscriptions()
     }
     
     // Helper function to replace whatever is in the navigation bar with
@@ -200,7 +208,9 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource, UITableV
 //            displaySearchButton(animated: true)
 //        }
         switch display {
-            case .Current: displaySearchButton(animated: true)
+            case .Current:
+                displaySearchButton(animated: true)
+                loadCurrentSubscriptions()
             case .AddNew: displaySearchBarAndCancelButton(animated: true)
         }
     }
