@@ -106,7 +106,6 @@ class MacroSlider : UIControl {
             updateLayerFrames()
         }
     }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()

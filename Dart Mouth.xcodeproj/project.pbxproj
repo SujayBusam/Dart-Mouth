@@ -59,6 +59,7 @@
 		23C174341C57059100602A04 /* ProgressDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174301C57059100602A04 /* ProgressDisplay.swift */; };
 		23C174351C57059100602A04 /* ArrowLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C174311C57059100602A04 /* ArrowLabel.swift */; };
 		33FE7331FAFB7216A0393ABB /* Pods_Dart_Mouth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */; };
+		6503A2FA1C8B7A1C00E9E50C /* SubscriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6503A2F91C8B7A1C00E9E50C /* SubscriptionCell.swift */; };
 		6505F16D1C8A26CD001BEDD1 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6505F16C1C8A26CD001BEDD1 /* SubscriptionViewController.swift */; };
 		65804B331C7905E200F164AC /* MacroSliderThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65804B321C7905E200F164AC /* MacroSliderThumbLayer.swift */; };
 		65E682191C77B45C00B0FD7E /* MacroSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E682181C77B45C00B0FD7E /* MacroSlider.swift */; };
@@ -135,6 +136,7 @@
 		263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_MouthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9E8057BEC0D6AA9341EBAC /* Pods_Dart_Mouth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dart_Mouth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A186857541FACAF86F6959 /* Pods-Dart Mouth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.debug.xcconfig"; sourceTree = "<group>"; };
+		6503A2F91C8B7A1C00E9E50C /* SubscriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionCell.swift; sourceTree = "<group>"; };
 		6505F16C1C8A26CD001BEDD1 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		65804B321C7905E200F164AC /* MacroSliderThumbLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacroSliderThumbLayer.swift; sourceTree = "<group>"; };
 		65E682181C77B45C00B0FD7E /* MacroSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacroSlider.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				65E682181C77B45C00B0FD7E /* MacroSlider.swift */,
 				65804B321C7905E200F164AC /* MacroSliderThumbLayer.swift */,
 				6505F16C1C8A26CD001BEDD1 /* SubscriptionViewController.swift */,
+				6503A2F91C8B7A1C00E9E50C /* SubscriptionCell.swift */,
 			);
 			name = PreferencesView;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				237CC7B61C448E8300205DC6 /* DiaryEntryTableViewCell.swift in Sources */,
 				23A08E131BF30B94002685A6 /* InitializationViewController.swift in Sources */,
 				23C1741E1C51F71000602A04 /* DiaryEntryAddContainerViewController.swift in Sources */,
+				6503A2FA1C8B7A1C00E9E50C /* SubscriptionCell.swift in Sources */,
 				23A4F5D21C509D0C006C7891 /* DiaryEntryEditContainerViewController.swift in Sources */,
 				23C174261C543D6000602A04 /* CustomRecipesViewController.swift in Sources */,
 				238F1C9D1C2DE938007720F8 /* MealEnums.swift in Sources */,
