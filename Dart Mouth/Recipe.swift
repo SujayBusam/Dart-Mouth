@@ -218,6 +218,7 @@ class Recipe: PFObject, PFSubclassing {
     */
     class func findDDSRecipesContainingSearchText(searchText: String,
         withLimit limit: Int, withCompletionHandler completionHandler: ([Recipe]) -> Void) {
+        // TODO: order by rank
         let recipesQuery = Recipe.query()!
         recipesQuery.limit = limit
         recipesQuery.whereKey("name", containsString: searchText)
