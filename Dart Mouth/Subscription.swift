@@ -11,7 +11,7 @@ import Parse
 class Subscription: PFObject, PFSubclassing {
     
     @NSManaged var user: CustomUser
-    @NSManaged var recipes: [Recipe]
+    @NSManaged var recipes: [Int]
     
     static func parseClassName() -> String {
         return "Subscription"
