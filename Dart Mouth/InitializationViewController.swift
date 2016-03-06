@@ -47,6 +47,7 @@ class InitializationViewController: UIViewController {
     
     private func scheduleNotifications() {
         print("Scheduling Notifications")
+        // TODO: implement dummy ones
     }
     
     
