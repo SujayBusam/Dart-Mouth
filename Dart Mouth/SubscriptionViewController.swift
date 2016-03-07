@@ -9,10 +9,11 @@
 import UIKit
 import HTHorizontalSelectionList
 import MBProgressHUD
+import VBFPopFlatButton
 
 
 class SubscriptionViewController : SearchableViewController, UISearchBarDelegate,
-HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
+HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource, UITableViewDataSource, UITableViewDelegate {
     
     enum SubscriptionDisplay : Int {
         case Current = 0, AddNew = 1
@@ -34,9 +35,19 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
         }
     }
     
-    @IBOutlet weak var currentSubscriptionTable: UITableView!
+    @IBOutlet weak var currentSubscriptionTable: UITableView!{
+        didSet{
+            currentSubscriptionTable.delegate = self
+            currentSubscriptionTable.dataSource = self
+        }
+    }
     
-    @IBOutlet weak var addSubscriptionTable: UITableView!
+    @IBOutlet weak var addSubscriptionTable: UITableView!{
+        didSet{
+            addSubscriptionTable.delegate = self
+            addSubscriptionTable.dataSource = self
+        }
+    }
     
     private struct Dimensions {
         static let NavBarItemHeight: CGFloat = 35
@@ -87,8 +98,25 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
         subscriptionSelector.bottomTrimHidden = true
         subscriptionSelector.centerAlignButtons = true
         subscriptionSelector.reloadData()
+    }
+    
+    func loadNewSubscriptions(searchText : String){
+        Recipe.findDDSRecipesContainingSearchText(searchText, withLimit: 100, withCompletionHandler: {
+            (recipes: [Recipe])  in
+             self.newSubscriptions = recipes
+             self.addSubscriptionTable.reloadData()
+             self.addSubscriptionTable.alpha = 1.0
+             self.currentSubscriptionTable.alpha = 0.0
 
-
+        })
+    }
+    
+    func loadCurrentSubscriptions(){
+        //TODO -- actual loading
+        self.addSubscriptionTable.alpha = 0.0
+        self.currentSubscriptionTable.alpha = 1.0
+        newSubscriptions = []
+        addSubscriptionTable.reloadData()
     }
     
     // MARK: - Button action functions
@@ -105,7 +133,7 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
         displaySearchButton(animated: true)
         //change to current subscriptions display
         subscriptionSelector.selectedButtonIndex = SubscriptionDisplay.Current.rawValue
-
+        loadCurrentSubscriptions()
     }
     
     // Helper function to replace whatever is in the navigation bar with
@@ -152,7 +180,7 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        //getChildMenuVC().searchRequested()
+        loadNewSubscriptions(searchBar.text!)
     }
     
     // MARK: - HTHorizontalSelectionListDataSource Protocol Methods
@@ -180,8 +208,51 @@ HTHorizontalSelectionListDelegate, HTHorizontalSelectionListDataSource {
 //            displaySearchButton(animated: true)
 //        }
         switch display {
-            case .Current: displaySearchButton(animated: true)
+            case .Current:
+                displaySearchButton(animated: true)
+                loadCurrentSubscriptions()
             case .AddNew: displaySearchBarAndCancelButton(animated: true)
         }
     }
+    
+    
+    // MARK: - UITableViewDataSource / Delegate Protocol Methods
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (tableView == currentSubscriptions) ? currentSubscriptions.count : newSubscriptions.count
+    }
+    
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return filteredCategories[section]
+//    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+        
+        let cell : SubscriptionCell = tableView.dequeueReusableCellWithIdentifier(Identifiers.subscriptionCell, forIndexPath: indexPath) as! SubscriptionCell
+        
+        if(tableView == currentSubscriptions){
+            cell.setRecipe(currentSubscriptions[indexPath.row])
+            cell.display = .Current
+        } else {
+            cell.setRecipe(newSubscriptions[indexPath.row])
+            cell.display = .New
+        }
+        cell.updateDisplay()
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        //recipeWasSelectedAtIndexPath(indexPath)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //recipeWasSelectedAtIndexPath(indexPath)
+    }
+
 }
