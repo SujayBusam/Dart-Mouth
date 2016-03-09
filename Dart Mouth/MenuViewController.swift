@@ -122,13 +122,6 @@ class MenuViewController: SearchableViewController, HTHorizontalSelectionListDat
         
         setupViews()
         updateUI()
-        
-        let noti = UILocalNotification()
-        noti.alertTitle = "Your food is being offered!"
-        noti.alertBody = "Chicken Bowl offered in Hop on 3/6/16"
-        noti.alertAction = "Ok"
-        noti.category = "Test"
-        UIApplication.sharedApplication().presentLocalNotificationNow(noti)
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -27,7 +27,6 @@ class InitializationViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         if !DEBUG {
-            scheduleDummyNotification()
             let currentUser = CustomUser.currentUser()
             if currentUser != nil {
                 performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
@@ -60,7 +59,7 @@ class InitializationViewController: UIViewController {
         mutableNotiCategory.setActions([action], forContext: .Default)
         
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(
-            forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil))
+            forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: [mutableNotiCategory]))
     }
     
     
