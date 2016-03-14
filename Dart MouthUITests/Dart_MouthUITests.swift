@@ -23,6 +23,7 @@ class Dart_MouthUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         
+        //beginning of each test starts with logging in
         let app = XCUIApplication()
         app.launch()
         let loginButton = app.buttons["Login"]
@@ -42,35 +43,34 @@ class Dart_MouthUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
         
+        //end of each test logs out (this requires the test to end in the tab bar scene)
         let app = XCUIApplication()
         app.tabBars.buttons["Preferences"].tap()
         app.buttons["Log Out"].tap()
-        
-        
-        
     }
     
     func testDiaryAddRemove() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        
-        
+        //navigate to menu
         let app = XCUIApplication()
         let tabBarsQuery = app.tabBars
         tabBarsQuery.buttons["Menus"].tap()
         
+        //select food items from the hop deli at lunch time
         let collectionViewsQuery = app.collectionViews
         collectionViewsQuery.staticTexts["Hop"].tap()
         collectionViewsQuery.staticTexts["Lunch"].tap()
         collectionViewsQuery.staticTexts["Deli"].tap()
         
+        //search for chicken
         let menusNavigationBar = app.navigationBars["Menus"]
         menusNavigationBar.buttons["Search"].tap()
         menusNavigationBar.searchFields.element.typeText("Chicken")
         
+        //select the taco salad
         let chickenTacoSaladStaticText = app.tables.staticTexts["Chicken Taco Salad  "]
         chickenTacoSaladStaticText.tap()
         
+        //add to today's lunch
         let toolbarsQuery = app.toolbars
         toolbarsQuery.buttons["Add to Diary"].tap()
         app.buttons["Lunch"].tap()
@@ -88,7 +88,7 @@ class Dart_MouthUITests: XCTestCase {
         let tabBarsQuery = app.tabBars
         tabBarsQuery.buttons["Menus"].tap()
         
-        //shift menu date
+        //shift menu date 3 days ago
         let leftarrowwhiteButtonMenus = app.navigationBars["Menus"].buttons["LeftArrowWhite"]
         leftarrowwhiteButtonMenus.tap()
         leftarrowwhiteButtonMenus.tap()
@@ -141,15 +141,18 @@ class Dart_MouthUITests: XCTestCase {
     }
     
     func testEditServingSize(){
+        //navigate to menu
         let app = XCUIApplication()
         let tabBarsQuery = app.tabBars
         tabBarsQuery.buttons["Menus"].tap()
         
+        //navigate to hop deli at lunch
         let collectionViewsQuery = app.collectionViews
         collectionViewsQuery.staticTexts["Hop"].tap()
         collectionViewsQuery.staticTexts["Lunch"].tap()
         collectionViewsQuery.staticTexts["Deli"].tap()
         
+        //search for chicken
         let menusNavigationBar = app.navigationBars["Menus"]
         menusNavigationBar.buttons["Search"].tap()
         menusNavigationBar.searchFields.element.typeText("Chicken")
@@ -157,19 +160,21 @@ class Dart_MouthUITests: XCTestCase {
         let chickenTacoSaladStaticText = app.tables.staticTexts["Chicken Taco Salad  "]
         chickenTacoSaladStaticText.tap()
         
+        //add to diary
         let toolbarsQuery = app.toolbars
         toolbarsQuery.buttons["Add to Diary"].tap()
         app.buttons["Lunch"].tap()
         XCUIApplication().navigationBars["Menus"].buttons["Cancel"].tap()
         
-        //navigate to diary, verify and delete item
+        //navigate to diary and find food item
         tabBarsQuery.buttons["Diary"].tap()
         chickenTacoSaladStaticText.tap()
         
-        app.pickers.elementAtIndex(0).swipeUp()
+        //attempt to change serving size and save
         app.pickers.elementAtIndex(0).swipeUp()
         app.navigationBars["Edit Food"].buttons["Save"].tap()
         
+        //select and delete food item
         chickenTacoSaladStaticText.tap()
         toolbarsQuery.buttons["TrashGreen"].tap()
         app.sheets.collectionViews.buttons["Remove Food"].tap()
@@ -177,8 +182,30 @@ class Dart_MouthUITests: XCTestCase {
     }
     
     func testSearchUSDADatabase(){
+        let app = XCUIApplication()
+        let tabBarsQuery = app.tabBars
+        tabBarsQuery.buttons["Diary"].tap()
+
+        //add food item via diary
+        let tablesQuery = app.tables
+        tablesQuery.otherElements.containingType(.StaticText, identifier:"Breakfast:").buttons["PlusGray"].tap()
+        app.buttons["Database"].tap()
         
+        //search USDA database for pizza
+        let addFoodNavigationBar = app.navigationBars["Add Food"]
+        addFoodNavigationBar.searchFields.element.typeText("Pizza")
+        app.buttons["Search"].tap()
+        
+        //select pizza and add to diary
+        let pizzaHut12CheesePizzaPanCrustStaticText = tablesQuery.staticTexts["PIZZA HUT 12\" Cheese Pizza, Pan Crust"]
+        pizzaHut12CheesePizzaPanCrustStaticText.tap()
+        addFoodNavigationBar.buttons["Add"].tap()
+        addFoodNavigationBar.buttons["Cancel"].tap()
+        addFoodNavigationBar.buttons["Back"].tap()
+        
+        //verify and delete item
+        pizzaHut12CheesePizzaPanCrustStaticText.tap()
+        app.toolbars.buttons["TrashGreen"].tap()
+        app.sheets.collectionViews.buttons["Remove Food"].tap()
     }
-    
-    
 }
