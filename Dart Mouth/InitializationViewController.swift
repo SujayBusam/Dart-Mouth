@@ -29,7 +29,6 @@ class InitializationViewController: UIViewController {
         if !DEBUG {
             let currentUser = CustomUser.currentUser()
             if currentUser != nil {
-                scheduleNotifications()
                 performSegueWithIdentifier(Identifiers.StartSegue, sender: self)
             } else {
                 performSegueWithIdentifier(Identifiers.SignupSegue, sender: self)
@@ -47,7 +46,20 @@ class InitializationViewController: UIViewController {
     
     private func scheduleNotifications() {
         print("Scheduling Notifications")
-        // TODO: implement dummy ones
+        // TODO: implement real ones by querying Parse Notification objects
+    }
+    
+    private func scheduleDummyNotification() {
+        let action = UIMutableUserNotificationAction()
+        action.identifier = "TestAction"
+        action.title = "TestTitle"
+        
+        let mutableNotiCategory = UIMutableUserNotificationCategory()
+        mutableNotiCategory.identifier = "Test"
+        mutableNotiCategory.setActions([action], forContext: .Default)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(
+            forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: [mutableNotiCategory]))
     }
     
     
