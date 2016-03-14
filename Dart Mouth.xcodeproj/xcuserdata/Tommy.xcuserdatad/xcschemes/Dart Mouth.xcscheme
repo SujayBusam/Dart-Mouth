@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Dart Mouth.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "65B7AD171C91FF28009488BC"
+               BuildableName = "Dart MouthUITests.xctest"
+               BlueprintName = "Dart MouthUITests"
+               ReferencedContainer = "container:Dart Mouth.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

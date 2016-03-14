@@ -63,12 +63,20 @@
 		6503A2FA1C8B7A1C00E9E50C /* SubscriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6503A2F91C8B7A1C00E9E50C /* SubscriptionCell.swift */; };
 		6505F16D1C8A26CD001BEDD1 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6505F16C1C8A26CD001BEDD1 /* SubscriptionViewController.swift */; };
 		65804B331C7905E200F164AC /* MacroSliderThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65804B321C7905E200F164AC /* MacroSliderThumbLayer.swift */; };
+		65B7AD1B1C91FF28009488BC /* Dart_MouthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B7AD1A1C91FF28009488BC /* Dart_MouthUITests.swift */; };
 		65E682191C77B45C00B0FD7E /* MacroSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E682181C77B45C00B0FD7E /* MacroSlider.swift */; };
 		CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 263AC35C1DCD47FDFB292421 /* Pods_Dart_MouthTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		2375D5E91BDC09B70065AC14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2375D5CC1BDC09B70065AC14 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2375D5D31BDC09B70065AC14;
+			remoteInfo = "Dart Mouth";
+		};
+		65B7AD1D1C91FF28009488BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2375D5CC1BDC09B70065AC14 /* Project object */;
 			proxyType = 1;
@@ -141,6 +149,9 @@
 		6503A2F91C8B7A1C00E9E50C /* SubscriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionCell.swift; sourceTree = "<group>"; };
 		6505F16C1C8A26CD001BEDD1 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		65804B321C7905E200F164AC /* MacroSliderThumbLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacroSliderThumbLayer.swift; sourceTree = "<group>"; };
+		65B7AD181C91FF28009488BC /* Dart MouthUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dart MouthUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B7AD1A1C91FF28009488BC /* Dart_MouthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dart_MouthUITests.swift; sourceTree = "<group>"; };
+		65B7AD1C1C91FF28009488BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65E682181C77B45C00B0FD7E /* MacroSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacroSlider.swift; sourceTree = "<group>"; };
 		C571A500316D791E1742F8BE /* Pods-Dart MouthTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart MouthTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dart MouthTests/Pods-Dart MouthTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D386822DE229CD5314C72369 /* Pods-Dart Mouth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dart Mouth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dart Mouth/Pods-Dart Mouth.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +171,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD3FD0CC56377A2DA85A4A4D /* Pods_Dart_MouthTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B7AD151C91FF28009488BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +217,7 @@
 			children = (
 				2375D5D61BDC09B70065AC14 /* Dart Mouth */,
 				2375D5EB1BDC09B70065AC14 /* Dart MouthTests */,
+				65B7AD191C91FF28009488BC /* Dart MouthUITests */,
 				2375D5D51BDC09B70065AC14 /* Products */,
 				E59D1F01DE193183D3280E00 /* Pods */,
 				7B5246E95283A196AAAF038B /* Frameworks */,
@@ -210,6 +229,7 @@
 			children = (
 				2375D5D41BDC09B70065AC14 /* Dart Mouth.app */,
 				2375D5E81BDC09B70065AC14 /* Dart MouthTests.xctest */,
+				65B7AD181C91FF28009488BC /* Dart MouthUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -362,6 +382,15 @@
 			name = StatsView;
 			sourceTree = "<group>";
 		};
+		65B7AD191C91FF28009488BC /* Dart MouthUITests */ = {
+			isa = PBXGroup;
+			children = (
+				65B7AD1A1C91FF28009488BC /* Dart_MouthUITests.swift */,
+				65B7AD1C1C91FF28009488BC /* Info.plist */,
+			);
+			path = "Dart MouthUITests";
+			sourceTree = "<group>";
+		};
 		7B5246E95283A196AAAF038B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,13 +455,31 @@
 			productReference = 2375D5E81BDC09B70065AC14 /* Dart MouthTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		65B7AD171C91FF28009488BC /* Dart MouthUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65B7AD211C91FF28009488BC /* Build configuration list for PBXNativeTarget "Dart MouthUITests" */;
+			buildPhases = (
+				65B7AD141C91FF28009488BC /* Sources */,
+				65B7AD151C91FF28009488BC /* Frameworks */,
+				65B7AD161C91FF28009488BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65B7AD1E1C91FF28009488BC /* PBXTargetDependency */,
+			);
+			name = "Dart MouthUITests";
+			productName = "Dart MouthUITests";
+			productReference = 65B7AD181C91FF28009488BC /* Dart MouthUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		2375D5CC1BDC09B70065AC14 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Sujay's Dev Center";
 				TargetAttributes = {
@@ -443,6 +490,10 @@
 					2375D5E71BDC09B70065AC14 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = T26DUXEP39;
+						TestTargetID = 2375D5D31BDC09B70065AC14;
+					};
+					65B7AD171C91FF28009488BC = {
+						CreatedOnToolsVersion = 7.2.1;
 						TestTargetID = 2375D5D31BDC09B70065AC14;
 					};
 				};
@@ -462,6 +513,7 @@
 			targets = (
 				2375D5D31BDC09B70065AC14 /* Dart Mouth */,
 				2375D5E71BDC09B70065AC14 /* Dart MouthTests */,
+				65B7AD171C91FF28009488BC /* Dart MouthUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -478,6 +530,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2375D5E61BDC09B70065AC14 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B7AD161C91FF28009488BC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -647,6 +706,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		65B7AD141C91FF28009488BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65B7AD1B1C91FF28009488BC /* Dart_MouthUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -654,6 +721,11 @@
 			isa = PBXTargetDependency;
 			target = 2375D5D31BDC09B70065AC14 /* Dart Mouth */;
 			targetProxy = 2375D5E91BDC09B70065AC14 /* PBXContainerItemProxy */;
+		};
+		65B7AD1E1C91FF28009488BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2375D5D31BDC09B70065AC14 /* Dart Mouth */;
+			targetProxy = 65B7AD1D1C91FF28009488BC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -812,6 +884,32 @@
 			};
 			name = Release;
 		};
+		65B7AD1F1C91FF28009488BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Dart MouthUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CS98.Dart-MouthUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Dart Mouth";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		65B7AD201C91FF28009488BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Dart MouthUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CS98.Dart-MouthUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Dart Mouth";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -841,6 +939,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		65B7AD211C91FF28009488BC /* Build configuration list for PBXNativeTarget "Dart MouthUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B7AD1F1C91FF28009488BC /* Debug */,
+				65B7AD201C91FF28009488BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
