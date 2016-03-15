@@ -88,16 +88,8 @@ struct Constants {
         
         static let DefaultCalories : Int = 2000
         static let DefaultProteinPercent : Double = 0.3
-        static let DefaultCarbsPercent : Double = 0.3
-        static let DefaultFatPercent : Double = 0.4
-        
-        
-//        eat:
-//        – Protein: 1 gram per pound of body weight
-//        – Fat: .45 grams per pound of body weight
-//        – Carbs: The remaining number of calories left will be filled with carbs
-        
-
+        static let DefaultCarbsPercent : Double = 0.45
+        static let DefaultFatPercent : Double = 0.25
     }
     
     struct Colors {
@@ -109,6 +101,11 @@ struct Constants {
         static let ProteinColor = UIColor(hexString: "189090")
         static let CarbColor = UIColor(hexString: "F0B428")
         static let FatColor = UIColor(hexString: "E42640")
+    }
+    
+    struct Testing{
+        static let TestUsername = "test@gmail.com"
+        static let TestPassword = "password"
     }
     
     struct Validation {
