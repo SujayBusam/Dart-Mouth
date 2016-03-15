@@ -59,8 +59,8 @@ class FractionUtil {
         
         // Deal with case where decimal portion rounds to 1
         if vulgarFrac.0 == "1" {
-            return (sign * (wholePortion + 1), "0")
+            return (sign + wholePortion, "0")
         }
-        return (sign * wholePortion, vulgarFrac.0)
+        return (wholePortion, vulgarFrac.0)
     }
 }
